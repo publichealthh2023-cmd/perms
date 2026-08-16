@@ -1,0 +1,3248 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>إدارة الجولات والبنود</title>
+
+<link rel="stylesheet" href="Style.css">
+
+<style>
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+body{
+    background:#f3f6f8;
+}
+
+.management-page{
+    max-width:1300px;
+    margin:28px auto;
+    padding:0 18px 70px;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.management-header{
+    background:#fff;
+    border-bottom:4px solid #0759a6;
+    box-shadow:0 3px 12px rgba(0,0,0,.06);
+}
+
+.management-header-grid{
+    max-width:1300px;
+    margin:auto;
+
+    display:grid;
+    grid-template-columns:150px 1fr 150px;
+    align-items:center;
+
+    gap:15px;
+    padding:18px;
+}
+
+.management-logo{
+    text-align:center;
+}
+
+.management-logo img{
+    max-width:125px;
+    max-height:80px;
+    object-fit:contain;
+}
+
+.management-title{
+    text-align:center;
+}
+
+.management-title h1{
+    margin:0;
+    color:#064c92;
+    font-size:26px;
+}
+
+.management-title h2{
+    margin:6px 0 0;
+    color:#718293;
+    font-size:14px;
+    font-weight:normal;
+}
+
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.intro-card{
+    background:#fff;
+    border:1px solid #dfe8f2;
+    border-radius:16px;
+    padding:22px;
+    margin-bottom:18px;
+    box-shadow:0 4px 14px rgba(0,0,0,.04);
+}
+
+.intro-top{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.intro-icon{
+    width:64px;
+    height:64px;
+    border-radius:17px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:#f0ebff;
+    color:#5f3dc4;
+
+    font-size:32px;
+}
+
+.intro-card h2{
+    margin:0;
+    color:#064c92;
+}
+
+.intro-card p{
+    margin:7px 0 0;
+    color:#607387;
+    line-height:1.8;
+    font-size:13px;
+}
+
+
+/* =========================================================
+   STATISTICS
+========================================================= */
+
+.management-stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin-bottom:18px;
+}
+
+.management-stat{
+    background:#fff;
+    border:1px solid #dfe8f2;
+    border-radius:13px;
+    padding:18px;
+    text-align:center;
+}
+
+.management-stat strong{
+    display:block;
+    color:#064c92;
+    font-size:27px;
+}
+
+.management-stat span{
+    display:block;
+    margin-top:5px;
+    color:#718293;
+    font-size:12px;
+}
+
+
+/* =========================================================
+   TOOLBAR
+========================================================= */
+
+.toolbar{
+    background:#fff;
+    border:1px solid #dfe8f2;
+    border-radius:14px;
+    padding:15px;
+
+    display:flex;
+    gap:9px;
+    flex-wrap:wrap;
+
+    margin-bottom:18px;
+}
+
+.toolbar button,
+.toolbar a{
+    border:none;
+    border-radius:9px;
+    padding:11px 15px;
+
+    font-weight:bold;
+    cursor:pointer;
+    text-decoration:none;
+    font-size:13px;
+}
+
+.btn-add{
+    background:#0759a6;
+    color:#fff;
+}
+
+.btn-save{
+    background:#15936c;
+    color:#fff;
+}
+
+.btn-reset{
+    background:#fff3e5;
+    color:#a75a00;
+}
+
+.btn-back{
+    background:#eaf1f7;
+    color:#064c92;
+}
+
+
+/* =========================================================
+   ROUND SELECTOR
+========================================================= */
+
+.round-selector{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin-bottom:20px;
+}
+
+.round-type-card{
+    position:relative;
+
+    border:1px solid #dfe8f2;
+    border-radius:14px;
+
+    padding:17px;
+
+    background:#fff;
+
+    cursor:pointer;
+
+    transition:.15s;
+}
+
+.round-type-card:hover{
+    transform:translateY(-2px);
+}
+
+.round-type-card.active{
+    border:2px solid #0759a6;
+    background:#edf6ff;
+}
+
+.round-type-card h3{
+    margin:7px 0 3px;
+    color:#064c92;
+    font-size:16px;
+}
+
+.round-type-card p{
+    margin:0;
+    color:#718293;
+    font-size:11px;
+}
+
+.round-type-icon{
+    font-size:28px;
+}
+
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.section-card{
+    background:#fff;
+    border:1px solid #dfe8f2;
+    border-radius:15px;
+    margin-bottom:16px;
+    overflow:hidden;
+}
+
+.section-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+
+    background:#d9ebf8;
+
+    padding:13px 16px;
+
+    border-bottom:1px solid #c9dce9;
+}
+
+.section-head h3{
+    margin:0;
+    color:#174c73;
+    font-size:16px;
+}
+
+.section-head-actions{
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+}
+
+.small-btn{
+    border:none;
+    border-radius:7px;
+    padding:7px 10px;
+
+    cursor:pointer;
+
+    font-size:11px;
+    font-weight:bold;
+}
+
+.add-item-btn{
+    background:#0759a6;
+    color:#fff;
+}
+
+.edit-section-btn{
+    background:#fff;
+    color:#0759a6;
+}
+
+.section-body{
+    padding:0;
+}
+
+
+/* =========================================================
+   ITEM TABLE
+========================================================= */
+
+.items-table-wrap{
+    overflow-x:auto;
+}
+
+.items-table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:800px;
+}
+
+.items-table th{
+    background:#eef5fa;
+    color:#064c92;
+    font-size:12px;
+    padding:10px;
+    border:1px solid #dce6ed;
+}
+
+.items-table td{
+    border:1px solid #e1e8ee;
+    padding:10px;
+    vertical-align:middle;
+    font-size:13px;
+    color:#40566b;
+}
+
+.item-number{
+    width:50px;
+    text-align:center;
+    font-weight:bold;
+}
+
+.item-status{
+    width:85px;
+    text-align:center;
+}
+
+.item-actions{
+    width:225px;
+}
+
+.item-text{
+    line-height:1.8;
+}
+
+
+/* =========================================================
+   BADGES
+========================================================= */
+
+.active-badge,
+.disabled-badge{
+    display:inline-block;
+    border-radius:14px;
+    padding:5px 8px;
+    font-size:10px;
+    font-weight:bold;
+}
+
+.active-badge{
+    background:#e8f6ec;
+    color:#187b43;
+}
+
+.disabled-badge{
+    background:#eef1f4;
+    color:#687786;
+}
+
+
+/* =========================================================
+   ITEM BUTTONS
+========================================================= */
+
+.item-action-buttons{
+    display:flex;
+    gap:5px;
+    justify-content:center;
+    flex-wrap:wrap;
+}
+
+.edit-btn,
+.delete-btn,
+.toggle-btn,
+.move-btn{
+    border:none;
+    border-radius:6px;
+    padding:6px 8px;
+
+    font-size:11px;
+    cursor:pointer;
+}
+
+.edit-btn{
+    background:#e8f2ff;
+    color:#0759a6;
+}
+
+.delete-btn{
+    background:#fdecec;
+    color:#b42318;
+}
+
+.toggle-btn{
+    background:#fff4d7;
+    color:#8a6200;
+}
+
+.move-btn{
+    background:#eef1f4;
+    color:#526270;
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.empty-state{
+    padding:35px 20px;
+    text-align:center;
+    color:#718293;
+}
+
+.empty-state div{
+    font-size:38px;
+    margin-bottom:10px;
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal-overlay{
+    position:fixed;
+    inset:0;
+
+    background:rgba(21,40,55,.48);
+
+    z-index:9999;
+
+    display:none;
+    align-items:center;
+    justify-content:center;
+
+    padding:15px;
+}
+
+.modal-overlay.active{
+    display:flex;
+}
+
+.modal{
+    width:100%;
+    max-width:650px;
+
+    max-height:90vh;
+    overflow-y:auto;
+
+    background:#fff;
+
+    border-radius:16px;
+
+    box-shadow:0 15px 50px rgba(0,0,0,.22);
+}
+
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:17px 20px;
+
+    border-bottom:1px solid #e3eaf0;
+}
+
+.modal-header h3{
+    margin:0;
+    color:#064c92;
+}
+
+.close-modal{
+    width:34px;
+    height:34px;
+
+    border:none;
+    border-radius:50%;
+
+    background:#edf1f5;
+
+    font-size:18px;
+    cursor:pointer;
+}
+
+.modal-body{
+    padding:20px;
+}
+
+.modal-form{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:13px;
+}
+
+.modal-group{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.modal-group.full{
+    grid-column:1/-1;
+}
+
+.modal-group label{
+    color:#294b6a;
+    font-weight:bold;
+    font-size:13px;
+}
+
+.modal-group input,
+.modal-group select,
+.modal-group textarea{
+    width:100%;
+    border:1px solid #ccd9e5;
+    border-radius:8px;
+
+    padding:11px;
+
+    font-size:14px;
+}
+
+.modal-group textarea{
+    min-height:120px;
+    resize:vertical;
+}
+
+.modal-footer{
+    padding:15px 20px;
+
+    border-top:1px solid #e3eaf0;
+
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+}
+
+.modal-save{
+    border:none;
+    border-radius:8px;
+
+    padding:11px 18px;
+
+    background:#0759a6;
+    color:#fff;
+
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.modal-cancel{
+    border:none;
+    border-radius:8px;
+
+    padding:11px 18px;
+
+    background:#eaf1f7;
+    color:#064c92;
+
+    font-weight:bold;
+    cursor:pointer;
+}
+
+
+/* =========================================================
+   ALERT
+========================================================= */
+
+.alert-box{
+    display:none;
+
+    padding:13px 15px;
+    margin-bottom:15px;
+
+    border-radius:9px;
+
+    font-size:13px;
+}
+
+.alert-box.active{
+    display:block;
+}
+
+.alert-success{
+    background:#eef8f0;
+    border-right:5px solid #2e7d32;
+    color:#285b33;
+}
+
+.alert-error{
+    background:#fff0f0;
+    border-right:5px solid #c62828;
+    color:#7d2525;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:900px){
+
+    .round-selector,
+    .management-stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:650px){
+
+    .management-header-grid{
+        grid-template-columns:65px 1fr 65px;
+        padding:11px 7px;
+    }
+
+    .management-logo img{
+        max-width:60px;
+        max-height:50px;
+    }
+
+    .management-title h1{
+        font-size:17px;
+    }
+
+    .management-title h2{
+        font-size:9px;
+    }
+
+    .management-page{
+        padding:0 9px 60px;
+        margin-top:14px;
+    }
+
+    .round-selector,
+    .management-stats{
+        grid-template-columns:1fr 1fr;
+        gap:8px;
+    }
+
+    .modal-form{
+        grid-template-columns:1fr;
+    }
+
+    .modal-group.full{
+        grid-column:auto;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="management-header">
+
+<div class="management-header-grid">
+
+
+<div class="management-logo">
+
+<img
+    src="images/cluster-logo.png"
+    alt="شعار تجمع حفر الباطن الصحي">
+
+</div>
+
+
+<div class="management-title">
+
+<h1>
+إدارة الجولات والبنود
+</h1>
+
+<h2>
+Rounds & Inspection Items Management
+</h2>
+
+</div>
+
+
+<div class="management-logo">
+
+<img
+    src="images/hospital-logo.png"
+    alt="شعار المستشفى">
+
+</div>
+
+
+</div>
+
+</header>
+
+
+<main class="management-page">
+
+
+<!-- =========================================================
+     INTRO
+========================================================= -->
+
+<section class="intro-card">
+
+<div class="intro-top">
+
+<div class="intro-icon">
+⚙️
+</div>
+
+<div>
+
+<h2>
+إدارة نماذج الجولات
+</h2>
+
+<p>
+من هذه الصفحة تستطيع التحكم في البنود التي تظهر للموظفين
+أثناء جولات الصحة العامة والنفايات الطبية،
+بما في ذلك الإضافة والتعديل والحذف وإعادة الترتيب
+والتفعيل أو الإيقاف.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<div
+    id="alertBox"
+    class="alert-box">
+</div>
+
+
+<!-- =========================================================
+     STATS
+========================================================= -->
+
+<section class="management-stats">
+
+<div class="management-stat">
+<strong id="totalRoundTypes">4</strong>
+<span>أنواع الجولات</span>
+</div>
+
+<div class="management-stat">
+<strong id="totalSections">0</strong>
+<span>الأقسام / المحاور</span>
+</div>
+
+<div class="management-stat">
+<strong id="totalItems">0</strong>
+<span>إجمالي البنود</span>
+</div>
+
+<div class="management-stat">
+<strong id="activeItems">0</strong>
+<span>البنود المفعلة</span>
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     TOOLBAR
+========================================================= -->
+
+<section class="toolbar">
+
+<button
+    class="btn-add"
+    onclick="openSectionModal()">
+
+➕ إضافة محور جديد
+
+</button>
+
+
+<button
+    class="btn-save"
+    onclick="saveConfig()">
+
+💾 حفظ التعديلات
+
+</button>
+
+
+<button
+    class="btn-reset"
+    onclick="resetToDefault()">
+
+↻ استعادة النموذج الأصلي
+
+</button>
+
+
+<a class="btn-back" href="control.html">
+
+← العودة لصندوق التحكم
+
+</a>
+
+</section>
+
+
+<!-- =========================================================
+     TYPE SELECTOR
+========================================================= -->
+
+<section class="round-selector">
+
+
+<div
+    class="round-type-card active"
+    data-type="environment"
+    onclick="selectRoundType('environment',this)">
+
+<div class="round-type-icon">
+🌿
+</div>
+
+<h3>
+الصحة العامة والبيئة
+</h3>
+
+<p>
+Public Health & Environmental Health
+</p>
+
+</div>
+
+
+<div
+    class="round-type-card"
+    data-type="food"
+    onclick="selectRoundType('food',this)">
+
+<div class="round-type-icon">
+🍽️
+</div>
+
+<h3>
+التغذية
+</h3>
+
+<p>
+Food Services Inspection
+</p>
+
+</div>
+
+
+<div
+    class="round-type-card"
+    data-type="laundry"
+    onclick="selectRoundType('laundry',this)">
+
+<div class="round-type-icon">
+🧺
+</div>
+
+<h3>
+المغسلة
+</h3>
+
+<p>
+Laundry Inspection
+</p>
+
+</div>
+
+
+<div
+    class="round-type-card"
+    data-type="medicalWaste"
+    onclick="selectRoundType('medicalWaste',this)">
+
+<div class="round-type-icon">
+♻️
+</div>
+
+<h3>
+النفايات الطبية
+</h3>
+
+<p>
+Medical Waste Inspection
+</p>
+
+</div>
+
+
+</section>
+
+
+<!-- =========================================================
+     CONTENT
+========================================================= -->
+
+<div id="sectionsContainer">
+</div>
+
+
+</main>
+
+
+<!-- =========================================================
+     SECTION MODAL
+========================================================= -->
+
+<div
+    id="sectionModal"
+    class="modal-overlay">
+
+<div class="modal">
+
+
+<div class="modal-header">
+
+<h3 id="sectionModalTitle">
+إضافة محور جديد
+</h3>
+
+<button
+    class="close-modal"
+    onclick="closeSectionModal()">
+
+×
+</button>
+
+</div>
+
+
+<div class="modal-body">
+
+
+<div class="modal-form">
+
+
+<div class="modal-group full">
+
+<label>
+اسم المحور
+</label>
+
+<input
+    id="sectionNameInput"
+    type="text"
+    placeholder="مثال: مراقبة جودة المياه">
+
+</div>
+
+
+<div class="modal-group">
+
+<label>
+الحالة
+</label>
+
+<select id="sectionActiveInput">
+
+<option value="true">
+مفعل
+</option>
+
+<option value="false">
+موقوف
+</option>
+
+</select>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<div class="modal-footer">
+
+<button
+    class="modal-cancel"
+    onclick="closeSectionModal()">
+
+إلغاء
+
+</button>
+
+<button
+    class="modal-save"
+    onclick="saveSectionFromModal()">
+
+حفظ
+
+</button>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<!-- =========================================================
+     ITEM MODAL
+========================================================= -->
+
+<div
+    id="itemModal"
+    class="modal-overlay">
+
+<div class="modal">
+
+
+<div class="modal-header">
+
+<h3 id="itemModalTitle">
+إضافة بند
+</h3>
+
+<button
+    class="close-modal"
+    onclick="closeItemModal()">
+
+×
+</button>
+
+</div>
+
+
+<div class="modal-body">
+
+
+<div class="modal-form">
+
+
+<div class="modal-group full">
+
+<label>
+نص البند
+</label>
+
+<textarea
+    id="itemTextInput"
+    placeholder="اكتب البند كما سيظهر للموظف أثناء الجولة"></textarea>
+
+</div>
+
+
+<div class="modal-group">
+
+<label>
+الحالة
+</label>
+
+<select id="itemActiveInput">
+
+<option value="true">
+مفعل
+</option>
+
+<option value="false">
+موقوف
+</option>
+
+</select>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<div class="modal-footer">
+
+<button
+    class="modal-cancel"
+    onclick="closeItemModal()">
+
+إلغاء
+
+</button>
+
+<button
+    class="modal-save"
+    onclick="saveItemFromModal()">
+
+حفظ
+
+</button>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<script>
+
+
+/* =========================================================
+   STORAGE KEY
+========================================================= */
+
+const CONFIG_KEY =
+    "phrmsRoundsConfig";
+
+
+/* =========================================================
+   DEFAULT CONFIGURATION
+   مأخوذ من النماذج الأصلية المرسلة
+========================================================= */
+
+const defaultConfig = {
+
+
+/* =========================================================
+   الصحة العامة والبيئة
+========================================================= */
+
+environment:{
+
+    name:
+        "الصحة العامة والبيئة",
+
+    sections:[
+
+
+        {
+            id:"water",
+            name:"مراقبة جودة المياه",
+            active:true,
+
+            items:[
+
+                {
+                    id:"water-1",
+                    text:"أخذ عينات مياه شرب للفحص البكتيري والكيميائي بصورة دورية للتأكد من سلامة المياه.",
+                    active:true
+                },
+
+                {
+                    id:"water-2",
+                    text:"التأكد من فعالية واستمرارية برامج الصيانة بالمنشأة الصحية والتي تشمل الرصد والتفتيش والتنظيف والتطهير لشبكة إمدادات المياه بشكل دوري وفقاً لجدول زمني محدد.",
+                    active:true
+                },
+
+                {
+                    id:"water-3",
+                    text:"عمل فحص جرثومي للمياه.",
+                    active:true
+                }
+
+            ]
+
+        },
+
+
+        {
+            id:"cleaning",
+            name:"النظافة العامة والساحات والحدائق",
+            active:true,
+
+            items:[
+
+                {
+                    id:"cleaning-1",
+                    text:"مراقبة جودة النظافة العامة في كل مرافق المستشفى.",
+                    active:true
+                },
+
+                {
+                    id:"cleaning-2",
+                    text:"مراقبة نظافة الحدائق بشكل مستمر.",
+                    active:true
+                },
+
+                {
+                    id:"cleaning-3",
+                    text:"التأكد من عدم وجود أي تسريب أو تجمعات لمياه الري خارج نطاق الحدائق.",
+                    active:true
+                },
+
+                {
+                    id:"cleaning-4",
+                    text:"إزالة جميع مخلفات أعمال قص الأشجار واليابسة مباشرة بعد انتهاء العمل.",
+                    active:true
+                },
+
+                {
+                    id:"cleaning-5",
+                    text:"توفير حاويات كافية ومناسبة لرمي وتجميع النفايات من الساحات والحدائق.",
+                    active:true
+                },
+
+                {
+                    id:"cleaning-6",
+                    text:"مراقبة جودة النظافة العامة في كل مرافق المستشفى.",
+                    active:true
+                },
+
+                {
+                    id:"cleaning-7",
+                    text:"مراقبة نظافة الحدائق بشكل مستمر.",
+                    active:true
+                }
+
+            ]
+
+        },
+
+
+        {
+            id:"pest",
+            name:"مكافحة الحشرات وآفات الصحة العامة",
+            active:true,
+
+            items:[
+
+                {
+                    id:"pest-1",
+                    text:"وجود جهة معتمدة.",
+                    active:true
+                },
+
+                {
+                    id:"pest-2",
+                    text:"استخدام مبيدات حشرية مطابقة لمواصفات وزارة الصحة مع وجود صحيفة بيانات السلامة للمبيدات.",
+                    active:true
+                },
+
+                {
+                    id:"pest-3",
+                    text:"تدريب العاملين على كيفية التعامل مع المبيدات واستعمال وسائل الحماية الشخصية.",
+                    active:true
+                },
+
+                {
+                    id:"pest-4",
+                    text:"التأكد من وجود جدول لعملية الرش والالتزام به حسب العقد.",
+                    active:true
+                }
+
+            ]
+
+        }
+
+    ]
+
+},
+
+
+/* =========================================================
+   التغذية
+========================================================= */
+
+food:{
+
+    name:
+        "التغذية",
+
+    sections:[
+
+        {
+            id:"food-main",
+            name:"الجولات اليومية لقسم الصحة العامة - التغذية",
+            active:true,
+
+            items:[
+
+                {
+                    id:"food-1",
+                    text:"النظافة الشخصية واستعمال وسائل الحماية الشخصية.",
+                    active:true
+                },
+
+                {
+                    id:"food-2",
+                    text:"لبس الزي المطلوب أثناء ساعات الدوام وعدم ارتداء الملابس الخاصة في أماكن إعداد الطعام ولبس غطاء الرأس.",
+                    active:true
+                },
+
+                {
+                    id:"food-3",
+                    text:"التشييك على الشهادات الصحية للعاملين بالقسم وشهادات التطعيمات.",
+                    active:true
+                },
+
+                {
+                    id:"food-4",
+                    text:"وجود جدول معتمد للنظافة العامة.",
+                    active:true
+                },
+
+                {
+                    id:"food-5",
+                    text:"سلامة الأرضيات والجدران وعدم وجود تجمعات للمياه في الأرضيات أو تشققات وفتحات وغيرها.",
+                    active:true
+                },
+
+                {
+                    id:"food-6",
+                    text:"إغلاق الأبواب الخارجية للمطبخ عند عدم الاستعمال.",
+                    active:true
+                },
+
+                {
+                    id:"food-7",
+                    text:"تجنب التكدس داخل المطبخ سواء في عدد العاملين أو المعدات.",
+                    active:true
+                },
+
+                {
+                    id:"food-8",
+                    text:"فحص ومعاينة الطعام بمجرد وصوله للمطبخ والتأكد من تواريخ الصلاحية وإرجاع الطعام الفاسد.",
+                    active:true
+                },
+
+                {
+                    id:"food-9",
+                    text:"تخزين الطعام غير قابل للتلف في أماكن نظيفة وجافة وذات تهوية جيدة وبعيداً عن أماكن الغسيل أو النظافة لمنع التلوث.",
+                    active:true
+                },
+
+                {
+                    id:"food-10",
+                    text:"المخزن مستوفي الشروط.",
+                    active:true
+                },
+
+                {
+                    id:"food-11",
+                    text:"مراقبة درجات الحرارة لكل الثلاجات وتسجيلها بصورة يومية.",
+                    active:true
+                },
+
+                {
+                    id:"food-12",
+                    text:"النظافة العامة ووسائل الحماية الشخصية واستخدام أدوات نظيفة عند تحضير الطعام.",
+                    active:true
+                },
+
+                {
+                    id:"food-13",
+                    text:"نقل الطعام إلى الأقسام في حاويات مضبوطة درجة الحرارة (حار أو بارد)، ويتم تغطية حاويات الطعام لتفادي تلوثها.",
+                    active:true
+                },
+
+                {
+                    id:"food-14",
+                    text:"وضع علامات على عبوات الطعام وكتابة تاريخ انتهاء الصلاحية.",
+                    active:true
+                },
+
+                {
+                    id:"food-15",
+                    text:"متابعة فلاتر المياه.",
+                    active:true
+                }
+
+            ]
+
+        }
+
+    ]
+
+},
+
+
+/* =========================================================
+   المغسلة
+========================================================= */
+
+laundry:{
+
+    name:
+        "المغسلة",
+
+    sections:[
+
+        {
+            id:"laundry-main",
+            name:"الجولات اليومية لقسم صحة البيئة - المغسلة",
+            active:true,
+
+            items:[
+
+                {
+                    id:"laundry-1",
+                    text:"النظافة الشخصية واستعمال وسائل الحماية الشخصية.",
+                    active:true
+                },
+
+                {
+                    id:"laundry-2",
+                    text:"لبس الزي المطلوب أثناء ساعات الدوام وعدم ارتداء الملابس الخاصة.",
+                    active:true
+                },
+
+                {
+                    id:"laundry-3",
+                    text:"التشييك على الشهادات الصحية للعاملين بالقسم وشهادات التطعيمات.",
+                    active:true
+                },
+
+                {
+                    id:"laundry-4",
+                    text:"وجود جدول معتمد للنظافة العامة.",
+                    active:true
+                },
+
+                {
+                    id:"laundry-5",
+                    text:"سلامة الأرضيات والجدران وعدم وجود تجمعات للمياه في الأرضيات أو تشققات وفتحات وغيرها.",
+                    active:true
+                },
+
+                {
+                    id:"laundry-6",
+                    text:"توفير مكان لتخزين المنظفات والمطهرات.",
+                    active:true
+                },
+
+                {
+                    id:"laundry-7",
+                    text:"التهوية والإضاءة جيدة.",
+                    active:true
+                },
+
+                {
+                    id:"laundry-8",
+                    text:"الحفاظ على نظافة المغسلة والقيام بعملية النظافة بشكل منتظم.",
+                    active:true
+                },
+
+                {
+                    id:"laundry-9",
+                    text:"وجود أكياس مخصصة لجمع الملابس الملوثة (المستعملة) ومكتوب عليها عبارة ملابس متسخة.",
+                    active:true
+                },
+
+                {
+                    id:"laundry-10",
+                    text:"يوجد مسار مخصص لنقل حاويات الملابس المتسخة لا يتم تغييره.",
+                    active:true
+                },
+
+                {
+                    id:"laundry-11",
+                    text:"يلتزم العاملون بارتداء وسائل الحماية الشخصية أثناء نقل الملابس.",
+                    active:true
+                },
+
+                {
+                    id:"laundry-12",
+                    text:"يكون للملابس النظيفة حاويات خاصة وتنقل مغطاة وبطريقة تمنع إعادة تلوثها.",
+                    active:true
+                },
+
+                {
+                    id:"laundry-13",
+                    text:"يوجد فاصل بين الاستقبال والفرز ومنطقة الغسيل والتجفيف والكي والتخزين، وهناك تدفق أحادي من المنطقة المتسخة إلى المنطقة النظيفة.",
+                    active:true
+                },
+
+                {
+                    id:"laundry-14",
+                    text:"يتم تطبيق التطهير الحراري وفق درجات الحرارة والمدة المعتمدة في سياسة المنشأة.",
+                    active:true
+                },
+
+                {
+                    id:"laundry-15",
+                    text:"يتم تخزين الملابس في مكان نظيف ومغطى بعيداً عن الأماكن الملوثة.",
+                    active:true
+                }
+
+            ]
+
+        }
+
+    ]
+
+},
+
+
+/* =========================================================
+   النفايات الطبية
+========================================================= */
+
+medicalWaste:{
+
+    name:
+        "النفايات الطبية",
+
+    sections:[
+
+
+        {
+            id:"waste-containers",
+            name:"أولاً: التأكد من سلامة حاويات النفايات الطبية المعدية والحادة في",
+            active:true,
+
+            items:[
+
+                {
+                    id:"waste-container-1",
+                    text:"العيادات الخارجية رجال.",
+                    active:true
+                },
+
+                {
+                    id:"waste-container-2",
+                    text:"العيادات الخارجية نساء.",
+                    active:true
+                },
+
+                {
+                    id:"waste-container-3",
+                    text:"عيادة الأسنان.",
+                    active:true
+                },
+
+                {
+                    id:"waste-container-4",
+                    text:"عيادة الموظفين.",
+                    active:true
+                },
+
+                {
+                    id:"waste-container-5",
+                    text:"أقسام تنويم الرجال.",
+                    active:true
+                },
+
+                {
+                    id:"waste-container-6",
+                    text:"أقسام تنويم النساء.",
+                    active:true
+                },
+
+                {
+                    id:"waste-container-7",
+                    text:"قسم المختبر.",
+                    active:true
+                },
+
+                {
+                    id:"waste-container-8",
+                    text:"طوارئ الرجال.",
+                    active:true
+                },
+
+                {
+                    id:"waste-container-9",
+                    text:"طوارئ النساء.",
+                    active:true
+                }
+
+            ]
+
+        },
+
+
+        {
+            id:"waste-storage-room",
+            name:"ثانياً: غرفة تخزين النفايات الطبية",
+            active:true,
+
+            items:[
+
+                {
+                    id:"waste-storage-1",
+                    text:"التأكد من درجة حرارة الغرفة.",
+                    active:true
+                },
+
+                {
+                    id:"waste-storage-2",
+                    text:"التأكد من فرز النفايات الطبية.",
+                    active:true
+                }
+
+            ]
+
+        },
+
+
+        {
+            id:"waste-transport",
+            name:"ثالثاً: التأكد من سلامة نقل النفايات الطبية من الأقسام إلى غرفة تخزين النفايات الطبية",
+            active:true,
+
+            items:[
+
+                {
+                    id:"waste-transport-1",
+                    text:"التزام عامل النقل بارتداء مستلزمات الحماية الشخصية.",
+                    active:true
+                },
+
+                {
+                    id:"waste-transport-2",
+                    text:"التزام العامل بتعقيم عربات نقل النفايات الطبية.",
+                    active:true
+                },
+
+                {
+                    id:"waste-transport-3",
+                    text:"سلامة نقل النفايات الطبية.",
+                    active:true
+                },
+
+                {
+                    id:"waste-transport-4",
+                    text:"التأكد من وزن النفايات الطبية.",
+                    active:true
+                }
+
+            ]
+
+        },
+
+
+        {
+            id:"waste-store",
+            name:"رابعاً: جولة على مستودع النفايات الطبية",
+            active:true,
+
+            items:[
+
+                {
+                    id:"waste-store-1",
+                    text:"التأكد من توفر المستلزمات.",
+                    active:true
+                }
+
+            ]
+
+        }
+
+    ]
+
+}
+
+};
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let roundsConfig =
+    {};
+
+let currentType =
+    "environment";
+
+let editingSectionId =
+    null;
+
+let editingItemSectionId =
+    null;
+
+let editingItemId =
+    null;
+
+
+/* =========================================================
+   START
+========================================================= */
+
+document.addEventListener(
+
+    "DOMContentLoaded",
+
+    function(){
+
+        loadConfig();
+
+        renderCurrentType();
+
+        updateStats();
+
+    }
+
+);
+
+
+/* =========================================================
+   LOAD CONFIG
+========================================================= */
+
+function loadConfig(){
+
+    try{
+
+        const stored =
+            localStorage.getItem(
+                CONFIG_KEY
+            );
+
+
+        if(stored){
+
+            roundsConfig =
+                JSON.parse(
+                    stored
+                );
+
+        }
+        else{
+
+            roundsConfig =
+                deepClone(
+                    defaultConfig
+                );
+
+
+            saveConfig(
+                false
+            );
+
+        }
+
+    }
+    catch(error){
+
+        roundsConfig =
+            deepClone(
+                defaultConfig
+            );
+
+    }
+
+}
+
+
+/* =========================================================
+   CLONE
+========================================================= */
+
+function deepClone(
+    object
+){
+
+    return JSON.parse(
+        JSON.stringify(
+            object
+        )
+    );
+
+}
+
+
+/* =========================================================
+   SAVE CONFIG
+========================================================= */
+
+function saveConfig(
+    showMessage = true
+){
+
+    localStorage.setItem(
+
+        CONFIG_KEY,
+
+        JSON.stringify(
+            roundsConfig
+        )
+
+    );
+
+
+    if(showMessage){
+
+        showAlert(
+            "✅ تم حفظ إعدادات الجولات والبنود بنجاح.",
+            "success"
+        );
+
+    }
+
+
+    updateStats();
+
+}
+
+
+/* =========================================================
+   SELECT TYPE
+========================================================= */
+
+function selectRoundType(
+    type,
+    element
+){
+
+    currentType =
+        type;
+
+
+    document
+    .querySelectorAll(
+        ".round-type-card"
+    )
+    .forEach(
+        function(card){
+
+            card.classList.remove(
+                "active"
+            );
+
+        }
+    );
+
+
+    element.classList.add(
+        "active"
+    );
+
+
+    renderCurrentType();
+
+}
+
+
+/* =========================================================
+   RENDER CURRENT TYPE
+========================================================= */
+
+function renderCurrentType(){
+
+    const container =
+        document.getElementById(
+            "sectionsContainer"
+        );
+
+
+    const round =
+        roundsConfig[
+            currentType
+        ];
+
+
+    if(
+        !round ||
+        !Array.isArray(
+            round.sections
+        )
+    ){
+
+        container.innerHTML = `
+
+        <div class="empty-state">
+
+        <div>
+        📭
+        </div>
+
+        لا توجد أقسام مسجلة.
+
+        </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    if(
+        round.sections.length ===
+        0
+    ){
+
+        container.innerHTML = `
+
+        <div class="empty-state">
+
+        <div>
+        📋
+        </div>
+
+        لا توجد محاور حالياً.
+        استخدم زر «إضافة محور جديد».
+
+        </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        round.sections
+        .map(
+            function(section){
+
+                return renderSectionCard(
+                    section
+                );
+
+            }
+        )
+        .join("");
+
+}
+
+
+/* =========================================================
+   RENDER SECTION
+========================================================= */
+
+function renderSectionCard(
+    section
+){
+
+    const items =
+        Array.isArray(
+            section.items
+        )
+        ? section.items
+        : [];
+
+
+    return `
+
+    <section class="section-card">
+
+
+    <div class="section-head">
+
+
+    <h3>
+
+    ${escapeHtml(section.name)}
+
+    ${
+        section.active === false
+
+        ? '<span class="disabled-badge">موقوف</span>'
+
+        : ""
+    }
+
+    </h3>
+
+
+    <div class="section-head-actions">
+
+
+    <button
+        class="small-btn add-item-btn"
+        onclick="openItemModal('${section.id}')">
+
+    ➕ إضافة بند
+
+    </button>
+
+
+    <button
+        class="small-btn edit-section-btn"
+        onclick="editSection('${section.id}')">
+
+    ✏️ تعديل المحور
+
+    </button>
+
+
+    </div>
+
+
+    </div>
+
+
+    <div class="section-body">
+
+
+    ${
+        items.length
+
+        ? `
+
+        <div class="items-table-wrap">
+
+        <table class="items-table">
+
+        <thead>
+
+        <tr>
+
+        <th>
+        م
+        </th>
+
+        <th>
+        الإجراء / البند
+        </th>
+
+        <th>
+        الحالة
+        </th>
+
+        <th>
+        الإدارة
+        </th>
+
+        </tr>
+
+        </thead>
+
+
+        <tbody>
+
+        ${
+            items
+            .map(
+                function(item,index){
+
+                    return renderItemRow(
+                        section,
+                        item,
+                        index
+                    );
+
+                }
+            )
+            .join("")
+        }
+
+        </tbody>
+
+        </table>
+
+        </div>
+
+        `
+
+        : `
+
+        <div class="empty-state">
+
+        لا توجد بنود داخل هذا المحور.
+
+        </div>
+
+        `
+    }
+
+
+    </div>
+
+
+    </section>
+
+    `;
+
+}
+
+
+/* =========================================================
+   RENDER ITEM
+========================================================= */
+
+function renderItemRow(
+    section,
+    item,
+    index
+){
+
+    return `
+
+    <tr>
+
+
+    <td class="item-number">
+
+    ${index + 1}
+
+    </td>
+
+
+    <td class="item-text">
+
+    ${escapeHtml(item.text)}
+
+    </td>
+
+
+    <td class="item-status">
+
+    ${
+        item.active === false
+
+        ? `
+
+        <span class="disabled-badge">
+        موقوف
+        </span>
+
+        `
+
+        : `
+
+        <span class="active-badge">
+        مفعل
+        </span>
+
+        `
+    }
+
+    </td>
+
+
+    <td class="item-actions">
+
+
+    <div class="item-action-buttons">
+
+
+    <button
+        class="move-btn"
+        title="تحريك لأعلى"
+        onclick="moveItem(
+            '${section.id}',
+            '${item.id}',
+            -1
+        )">
+
+    ↑
+
+    </button>
+
+
+    <button
+        class="move-btn"
+        title="تحريك لأسفل"
+        onclick="moveItem(
+            '${section.id}',
+            '${item.id}',
+            1
+        )">
+
+    ↓
+
+    </button>
+
+
+    <button
+        class="edit-btn"
+        onclick="editItem(
+            '${section.id}',
+            '${item.id}'
+        )">
+
+    تعديل
+
+    </button>
+
+
+    <button
+        class="toggle-btn"
+        onclick="toggleItem(
+            '${section.id}',
+            '${item.id}'
+        )">
+
+    ${
+        item.active === false
+        ? "تفعيل"
+        : "إيقاف"
+    }
+
+    </button>
+
+
+    <button
+        class="delete-btn"
+        onclick="deleteItem(
+            '${section.id}',
+            '${item.id}'
+        )">
+
+    حذف
+
+    </button>
+
+
+    </div>
+
+
+    </td>
+
+
+    </tr>
+
+    `;
+
+}
+
+
+/* =========================================================
+   SECTION MODAL
+========================================================= */
+
+function openSectionModal(){
+
+    editingSectionId =
+        null;
+
+
+    document.getElementById(
+        "sectionModalTitle"
+    ).textContent =
+        "إضافة محور جديد";
+
+
+    document.getElementById(
+        "sectionNameInput"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "sectionActiveInput"
+    ).value =
+        "true";
+
+
+    document.getElementById(
+        "sectionModal"
+    )
+    .classList
+    .add(
+        "active"
+    );
+
+}
+
+
+/* =========================================================
+   EDIT SECTION
+========================================================= */
+
+function editSection(
+    sectionId
+){
+
+    const section =
+        findSection(
+            sectionId
+        );
+
+
+    if(!section){
+
+        return;
+
+    }
+
+
+    editingSectionId =
+        sectionId;
+
+
+    document.getElementById(
+        "sectionModalTitle"
+    ).textContent =
+        "تعديل المحور";
+
+
+    document.getElementById(
+        "sectionNameInput"
+    ).value =
+        section.name;
+
+
+    document.getElementById(
+        "sectionActiveInput"
+    ).value =
+        section.active === false
+        ? "false"
+        : "true";
+
+
+    document.getElementById(
+        "sectionModal"
+    )
+    .classList
+    .add(
+        "active"
+    );
+
+}
+
+
+/* =========================================================
+   CLOSE SECTION MODAL
+========================================================= */
+
+function closeSectionModal(){
+
+    document.getElementById(
+        "sectionModal"
+    )
+    .classList
+    .remove(
+        "active"
+    );
+
+}
+
+
+/* =========================================================
+   SAVE SECTION
+========================================================= */
+
+function saveSectionFromModal(){
+
+    const name =
+        document.getElementById(
+            "sectionNameInput"
+        ).value.trim();
+
+
+    const active =
+        document.getElementById(
+            "sectionActiveInput"
+        ).value ===
+        "true";
+
+
+    if(!name){
+
+        alert(
+            "يرجى كتابة اسم المحور."
+        );
+
+        return;
+
+    }
+
+
+    const sections =
+        roundsConfig[
+            currentType
+        ].sections;
+
+
+    if(editingSectionId){
+
+        const section =
+            findSection(
+                editingSectionId
+            );
+
+
+        if(section){
+
+            section.name =
+                name;
+
+
+            section.active =
+                active;
+
+        }
+
+    }
+    else{
+
+        sections.push({
+
+            id:
+                generateId(
+                    "SECTION"
+                ),
+
+            name:
+                name,
+
+            active:
+                active,
+
+            items:
+                []
+
+        });
+
+    }
+
+
+    saveConfig(
+        false
+    );
+
+
+    closeSectionModal();
+
+    renderCurrentType();
+
+    updateStats();
+
+
+    showAlert(
+        "✅ تم حفظ المحور.",
+        "success"
+    );
+
+}
+
+
+/* =========================================================
+   ITEM MODAL
+========================================================= */
+
+function openItemModal(
+    sectionId
+){
+
+    editingItemSectionId =
+        sectionId;
+
+
+    editingItemId =
+        null;
+
+
+    document.getElementById(
+        "itemModalTitle"
+    ).textContent =
+        "إضافة بند جديد";
+
+
+    document.getElementById(
+        "itemTextInput"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "itemActiveInput"
+    ).value =
+        "true";
+
+
+    document.getElementById(
+        "itemModal"
+    )
+    .classList
+    .add(
+        "active"
+    );
+
+}
+
+
+/* =========================================================
+   EDIT ITEM
+========================================================= */
+
+function editItem(
+    sectionId,
+    itemId
+){
+
+    const item =
+        findItem(
+            sectionId,
+            itemId
+        );
+
+
+    if(!item){
+
+        return;
+
+    }
+
+
+    editingItemSectionId =
+        sectionId;
+
+
+    editingItemId =
+        itemId;
+
+
+    document.getElementById(
+        "itemModalTitle"
+    ).textContent =
+        "تعديل البند";
+
+
+    document.getElementById(
+        "itemTextInput"
+    ).value =
+        item.text;
+
+
+    document.getElementById(
+        "itemActiveInput"
+    ).value =
+        item.active === false
+        ? "false"
+        : "true";
+
+
+    document.getElementById(
+        "itemModal"
+    )
+    .classList
+    .add(
+        "active"
+    );
+
+}
+
+
+/* =========================================================
+   CLOSE ITEM MODAL
+========================================================= */
+
+function closeItemModal(){
+
+    document.getElementById(
+        "itemModal"
+    )
+    .classList
+    .remove(
+        "active"
+    );
+
+}
+
+
+/* =========================================================
+   SAVE ITEM
+========================================================= */
+
+function saveItemFromModal(){
+
+    const text =
+        document.getElementById(
+            "itemTextInput"
+        ).value.trim();
+
+
+    const active =
+        document.getElementById(
+            "itemActiveInput"
+        ).value ===
+        "true";
+
+
+    if(!text){
+
+        alert(
+            "يرجى كتابة نص البند."
+        );
+
+        return;
+
+    }
+
+
+    const section =
+        findSection(
+            editingItemSectionId
+        );
+
+
+    if(!section){
+
+        return;
+
+    }
+
+
+    if(editingItemId){
+
+        const item =
+            findItem(
+                editingItemSectionId,
+                editingItemId
+            );
+
+
+        if(item){
+
+            item.text =
+                text;
+
+
+            item.active =
+                active;
+
+        }
+
+    }
+    else{
+
+        section.items.push({
+
+            id:
+                generateId(
+                    "ITEM"
+                ),
+
+            text:
+                text,
+
+            active:
+                active
+
+        });
+
+    }
+
+
+    saveConfig(
+        false
+    );
+
+
+    closeItemModal();
+
+    renderCurrentType();
+
+    updateStats();
+
+
+    showAlert(
+        "✅ تم حفظ البند.",
+        "success"
+    );
+
+}
+
+
+/* =========================================================
+   DELETE ITEM
+========================================================= */
+
+function deleteItem(
+    sectionId,
+    itemId
+){
+
+    const confirmed =
+        confirm(
+            "هل تريد حذف هذا البند؟"
+        );
+
+
+    if(!confirmed){
+
+        return;
+
+    }
+
+
+    const section =
+        findSection(
+            sectionId
+        );
+
+
+    if(!section){
+
+        return;
+
+    }
+
+
+    section.items =
+        section.items.filter(
+            function(item){
+
+                return (
+                    item.id !==
+                    itemId
+                );
+
+            }
+        );
+
+
+    saveConfig(
+        false
+    );
+
+
+    renderCurrentType();
+
+    updateStats();
+
+
+    showAlert(
+        "تم حذف البند.",
+        "success"
+    );
+
+}
+
+
+/* =========================================================
+   TOGGLE ITEM
+========================================================= */
+
+function toggleItem(
+    sectionId,
+    itemId
+){
+
+    const item =
+        findItem(
+            sectionId,
+            itemId
+        );
+
+
+    if(!item){
+
+        return;
+
+    }
+
+
+    item.active =
+        item.active === false;
+
+
+    saveConfig(
+        false
+    );
+
+
+    renderCurrentType();
+
+    updateStats();
+
+}
+
+
+/* =========================================================
+   MOVE ITEM
+========================================================= */
+
+function moveItem(
+    sectionId,
+    itemId,
+    direction
+){
+
+    const section =
+        findSection(
+            sectionId
+        );
+
+
+    if(!section){
+
+        return;
+
+    }
+
+
+    const index =
+        section.items.findIndex(
+            function(item){
+
+                return (
+                    item.id ===
+                    itemId
+                );
+
+            }
+        );
+
+
+    if(index < 0){
+
+        return;
+
+    }
+
+
+    const newIndex =
+        index +
+        direction;
+
+
+    if(
+        newIndex < 0 ||
+        newIndex >=
+        section.items.length
+    ){
+
+        return;
+
+    }
+
+
+    const temp =
+        section.items[
+            index
+        ];
+
+
+    section.items[
+        index
+    ] =
+        section.items[
+            newIndex
+        ];
+
+
+    section.items[
+        newIndex
+    ] =
+        temp;
+
+
+    saveConfig(
+        false
+    );
+
+
+    renderCurrentType();
+
+}
+
+
+/* =========================================================
+   FIND SECTION
+========================================================= */
+
+function findSection(
+    sectionId
+){
+
+    const round =
+        roundsConfig[
+            currentType
+        ];
+
+
+    if(!round){
+
+        return null;
+
+    }
+
+
+    return (
+        round.sections.find(
+            function(section){
+
+                return (
+                    section.id ===
+                    sectionId
+                );
+
+            }
+        ) ||
+        null
+    );
+
+}
+
+
+/* =========================================================
+   FIND ITEM
+========================================================= */
+
+function findItem(
+    sectionId,
+    itemId
+){
+
+    const section =
+        findSection(
+            sectionId
+        );
+
+
+    if(!section){
+
+        return null;
+
+    }
+
+
+    return (
+        section.items.find(
+            function(item){
+
+                return (
+                    item.id ===
+                    itemId
+                );
+
+            }
+        ) ||
+        null
+    );
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+function resetToDefault(){
+
+    const confirmed =
+        confirm(
+            "سيتم حذف جميع التعديلات واستعادة البنود الأصلية. هل أنت متأكد؟"
+        );
+
+
+    if(!confirmed){
+
+        return;
+
+    }
+
+
+    roundsConfig =
+        deepClone(
+            defaultConfig
+        );
+
+
+    saveConfig(
+        false
+    );
+
+
+    renderCurrentType();
+
+    updateStats();
+
+
+    showAlert(
+        "✅ تم استعادة النموذج الأصلي.",
+        "success"
+    );
+
+}
+
+
+/* =========================================================
+   STATISTICS
+========================================================= */
+
+function updateStats(){
+
+    let sections =
+        0;
+
+
+    let items =
+        0;
+
+
+    let active =
+        0;
+
+
+    Object.values(
+        roundsConfig
+    )
+    .forEach(
+        function(round){
+
+            if(
+                !Array.isArray(
+                    round.sections
+                )
+            ){
+
+                return;
+
+            }
+
+
+            sections +=
+                round.sections.length;
+
+
+            round.sections
+            .forEach(
+                function(section){
+
+                    const list =
+                        Array.isArray(
+                            section.items
+                        )
+                        ? section.items
+                        : [];
+
+
+                    items +=
+                        list.length;
+
+
+                    active +=
+                        list.filter(
+                            function(item){
+
+                                return (
+                                    item.active !==
+                                    false
+                                );
+
+                            }
+                        ).length;
+
+                }
+            );
+
+        }
+    );
+
+
+    document.getElementById(
+        "totalSections"
+    ).textContent =
+        sections;
+
+
+    document.getElementById(
+        "totalItems"
+    ).textContent =
+        items;
+
+
+    document.getElementById(
+        "activeItems"
+    ).textContent =
+        active;
+
+}
+
+
+/* =========================================================
+   GENERATE ID
+========================================================= */
+
+function generateId(
+    prefix
+){
+
+    return (
+        prefix +
+        "-" +
+        Date.now() +
+        "-" +
+        Math.floor(
+            1000 +
+            Math.random() *
+            9000
+        )
+    );
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(
+    value
+){
+
+    return String(
+        value ||
+        ""
+    )
+    .replaceAll(
+        "&",
+        "&amp;"
+    )
+    .replaceAll(
+        "<",
+        "&lt;"
+    )
+    .replaceAll(
+        ">",
+        "&gt;"
+    )
+    .replaceAll(
+        '"',
+        "&quot;"
+    )
+    .replaceAll(
+        "'",
+        "&#039;"
+    );
+
+}
+
+
+/* =========================================================
+   ALERT
+========================================================= */
+
+function showAlert(
+    message,
+    type
+){
+
+    const box =
+        document.getElementById(
+            "alertBox"
+        );
+
+
+    box.className =
+        "alert-box active " +
+        (
+            type ===
+            "error"
+            ? "alert-error"
+            : "alert-success"
+        );
+
+
+    box.innerHTML =
+        message;
+
+
+    setTimeout(
+        function(){
+
+            box.classList.remove(
+                "active"
+            );
+
+        },
+        3500
+    );
+
+}
+
+
+/* =========================================================
+   CLICK OUTSIDE MODAL
+========================================================= */
+
+document.addEventListener(
+
+    "click",
+
+    function(event){
+
+        if(
+            event.target.id ===
+            "sectionModal"
+        ){
+
+            closeSectionModal();
+
+        }
+
+
+        if(
+            event.target.id ===
+            "itemModal"
+        ){
+
+            closeItemModal();
+
+        }
+
+    }
+
+);
+
+</script>
+
+</body>
+
+</html>

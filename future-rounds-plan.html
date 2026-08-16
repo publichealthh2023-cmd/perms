@@ -1,0 +1,1740 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>خطة الجولات المستقبلية | PHRMS</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    background:#eef3f7;
+    font-family:Arial,Tahoma,sans-serif;
+    color:#20364d;
+}
+
+.page{
+    max-width:1100px;
+    margin:24px auto;
+    padding:0 15px 50px;
+}
+
+.toolbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:15px;
+}
+
+.toolbar-actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    border:none;
+    border-radius:9px;
+    padding:10px 15px;
+    font-weight:bold;
+    cursor:pointer;
+    text-decoration:none;
+    font-size:13px;
+}
+
+.btn-back{
+    background:#e6edf3;
+    color:#0759a6;
+}
+
+.btn-print{
+    background:#0759a6;
+    color:#fff;
+}
+
+.sheet{
+    background:#fff;
+    padding:28px 32px 35px;
+    box-shadow:0 4px 18px rgba(0,0,0,.07);
+    min-height:1050px;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.report-header{
+    display:grid;
+    grid-template-columns:170px 1fr 170px;
+    align-items:center;
+    gap:15px;
+    margin-bottom:18px;
+}
+
+.header-empty{
+    min-height:80px;
+}
+
+.header-center{
+    text-align:center;
+}
+
+.header-center h1{
+    margin:0;
+    color:#0759a6;
+    font-size:21px;
+}
+
+.header-center h2{
+    margin:6px 0 0;
+    color:#456985;
+    font-size:14px;
+    font-weight:normal;
+}
+
+.header-center p{
+    margin:5px 0 0;
+    color:#7a8b98;
+    font-size:11px;
+}
+
+.header-logo{
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+}
+
+.header-logo img{
+    display:block;
+    max-width:155px;
+    max-height:90px;
+    width:auto;
+    height:auto;
+    object-fit:contain;
+}
+
+.report-title{
+    background:#327db8;
+    color:#fff;
+    text-align:center;
+    font-weight:bold;
+    padding:10px;
+    margin-bottom:12px;
+    border:1px solid #2c6a99;
+}
+
+/* =========================================================
+   FILTERS
+========================================================= */
+
+.filters{
+    background:#f7fafc;
+    border:1px solid #dae5ed;
+    border-radius:12px;
+    padding:14px;
+    margin-bottom:16px;
+}
+
+.filters-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+}
+
+.filter-group{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.filter-group label{
+    font-size:11px;
+    font-weight:bold;
+    color:#37566f;
+}
+
+.filter-group input,
+.filter-group select{
+    width:100%;
+    padding:9px;
+    border:1px solid #cad7e0;
+    border-radius:7px;
+    background:#fff;
+    font-size:12px;
+}
+
+/* =========================================================
+   SUMMARY
+========================================================= */
+
+.summary-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:9px;
+    margin-bottom:15px;
+}
+
+.summary-box{
+    border:1px solid #d6e1e9;
+    background:#f8fbfd;
+    text-align:center;
+    padding:11px;
+    border-radius:9px;
+}
+
+.summary-box strong{
+    display:block;
+    color:#0759a6;
+    font-size:21px;
+}
+
+.summary-box span{
+    display:block;
+    color:#718293;
+    font-size:10px;
+    margin-top:4px;
+}
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+.plan-table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:900px;
+}
+
+.plan-table th{
+    background:#9ec3df;
+    color:#123f60;
+    border:1px solid #6f8799;
+    padding:8px;
+    font-size:11px;
+}
+
+.plan-table td{
+    border:1px solid #8998a4;
+    padding:8px;
+    font-size:11px;
+    line-height:1.6;
+    vertical-align:middle;
+}
+
+.plan-table tbody tr:nth-child(even){
+    background:#fafcfd;
+}
+
+.center{
+    text-align:center;
+}
+
+.employee-name{
+    font-weight:bold;
+    color:#294b6a;
+}
+
+.task-text{
+    min-width:230px;
+}
+
+.type-badge{
+    display:inline-block;
+    padding:4px 8px;
+    border-radius:12px;
+    font-size:9px;
+    font-weight:bold;
+}
+
+.type-public{
+    background:#e8f2ff;
+    color:#0759a6;
+}
+
+.type-waste{
+    background:#e7f6ef;
+    color:#13795b;
+}
+
+.type-other{
+    background:#f0edf9;
+    color:#5f3dc4;
+}
+
+.status-badge{
+    display:inline-block;
+    padding:4px 8px;
+    border-radius:12px;
+    font-size:9px;
+    font-weight:bold;
+}
+
+.status-planned{
+    background:#e8f2ff;
+    color:#0759a6;
+}
+
+.status-done{
+    background:#e8f6ec;
+    color:#187b43;
+}
+
+.status-late{
+    background:#fdecec;
+    color:#b42318;
+}
+
+.status-cancelled{
+    background:#eef1f4;
+    color:#687786;
+}
+
+.empty{
+    text-align:center;
+    padding:30px;
+    color:#81909d;
+}
+
+/* =========================================================
+   APPROVAL
+========================================================= */
+
+.approval{
+    margin-top:26px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+    break-inside:avoid;
+    page-break-inside:avoid;
+}
+
+.approval-box{
+    min-height:150px;
+    border:1px solid #c6d1da;
+    background:#fff;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+}
+
+.approval-title{
+    width:100%;
+    background:#edf5fc;
+    color:#294b6a;
+    font-weight:bold;
+    text-align:center;
+    padding:8px;
+    border-bottom:1px solid #c6d1da;
+    font-size:11px;
+}
+
+.approval-name{
+    margin-top:10px;
+    font-size:12px;
+    font-weight:bold;
+    color:#294b6a;
+    text-align:center;
+}
+
+.approval-role{
+    margin-top:4px;
+    color:#718293;
+    font-size:10px;
+    text-align:center;
+}
+
+.approval-signature{
+    flex:1;
+    width:100%;
+    min-height:85px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:8px;
+}
+
+.approval-signature img{
+    display:block;
+    max-width:220px;
+    max-height:85px;
+    width:auto;
+    height:auto;
+    object-fit:contain;
+}
+
+.signature-placeholder{
+    color:#9aa6af;
+    font-size:10px;
+    text-align:center;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.report-footer{
+    margin-top:25px;
+    padding-top:15px;
+    border-top:1px solid #d7e0e7;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    align-items:center;
+    gap:20px;
+    direction:ltr;
+    break-inside:avoid;
+}
+
+.footer-contact{
+    text-align:left;
+    direction:ltr;
+    color:#677784;
+    font-size:9px;
+    line-height:1.8;
+}
+
+.footer-logo{
+    display:flex;
+    justify-content:flex-end;
+}
+
+.footer-logo img{
+    display:block;
+    width:180px;
+    max-width:100%;
+    height:auto;
+    object-fit:contain;
+}
+
+/* =========================================================
+   PRINT
+========================================================= */
+
+@page{
+    size:A4 landscape;
+    margin:10mm;
+}
+
+@media print{
+
+    body{
+        background:#fff;
+    }
+
+    .page{
+        max-width:none;
+        margin:0;
+        padding:0;
+    }
+
+    .toolbar,
+    .filters{
+        display:none !important;
+    }
+
+    .sheet{
+        box-shadow:none;
+        padding:0;
+        min-height:auto;
+    }
+
+    .summary-grid,
+    .approval,
+    .report-footer{
+        break-inside:avoid;
+        page-break-inside:avoid;
+    }
+
+    tr{
+        break-inside:avoid;
+        page-break-inside:avoid;
+    }
+
+    .header-logo img,
+    .approval-signature img,
+    .footer-logo img{
+        display:block !important;
+        -webkit-print-color-adjust:exact;
+        print-color-adjust:exact;
+    }
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:800px){
+
+    .filters-grid,
+    .summary-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .report-header{
+        grid-template-columns:80px 1fr 100px;
+    }
+
+    .header-logo img{
+        max-width:90px;
+        max-height:60px;
+    }
+
+    .approval{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:550px){
+
+    .filters-grid,
+    .summary-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="page">
+
+
+<div class="toolbar">
+
+<a
+    href="employee-tasks.html"
+    class="btn btn-back">
+
+← العودة لإدارة المهام
+
+</a>
+
+
+<div class="toolbar-actions">
+
+<button
+    class="btn btn-print"
+    onclick="window.print()">
+
+🖨️ طباعة / حفظ PDF
+
+</button>
+
+</div>
+
+</div>
+
+
+<div class="sheet">
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="report-header">
+
+<div class="header-empty"></div>
+
+
+<div class="header-center">
+
+<h1>
+قسم الصحة العامة
+</h1>
+
+<h2>
+Public Health Department
+</h2>
+
+<p>
+Public Health Rounds Management System
+</p>
+
+</div>
+
+
+<div class="header-logo">
+
+<img
+    src="./images/hospital-logo.png"
+    alt="شعار مستشفى إرادة والصحة النفسية">
+
+</div>
+
+</header>
+
+
+<div class="report-title">
+
+خطة توزيع مهام وجولات موظفي إدارة الصحة العامة
+<br>
+Public Health Staff Tasks & Inspection Rounds Plan
+
+</div>
+
+
+<!-- =========================================================
+     FILTERS
+========================================================= -->
+
+<section class="filters">
+
+<div class="filters-grid">
+
+
+<div class="filter-group">
+
+<label>
+نوع العرض
+</label>
+
+<select
+    id="viewMode"
+    onchange="viewChanged()">
+
+<option value="future">
+جميع المهام المستقبلية
+</option>
+
+<option value="month">
+شهر محدد
+</option>
+
+<option value="nextMonth">
+الشهر القادم
+</option>
+
+<option value="custom">
+فترة مخصصة
+</option>
+
+</select>
+
+</div>
+
+
+<div class="filter-group">
+
+<label>
+الشهر
+</label>
+
+<input
+    id="monthFilter"
+    type="month"
+    onchange="renderPlan()">
+
+</div>
+
+
+<div class="filter-group">
+
+<label>
+من تاريخ
+</label>
+
+<input
+    id="fromDate"
+    type="date"
+    onchange="renderPlan()">
+
+</div>
+
+
+<div class="filter-group">
+
+<label>
+إلى تاريخ
+</label>
+
+<input
+    id="toDate"
+    type="date"
+    onchange="renderPlan()">
+
+</div>
+
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     SUMMARY
+========================================================= -->
+
+<section class="summary-grid">
+
+<div class="summary-box">
+
+<strong id="totalFutureTasks">
+0
+</strong>
+
+<span>
+إجمالي المهام والجولات
+</span>
+
+</div>
+
+
+<div class="summary-box">
+
+<strong id="publicRoundsCount">
+0
+</strong>
+
+<span>
+جولات الصحة العامة
+</span>
+
+</div>
+
+
+<div class="summary-box">
+
+<strong id="wasteRoundsCount">
+0
+</strong>
+
+<span>
+جولات النفايات الطبية
+</span>
+
+</div>
+
+
+<div class="summary-box">
+
+<strong id="employeesCount">
+0
+</strong>
+
+<span>
+عدد الموظفين المكلفين
+</span>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     TABLE
+========================================================= -->
+
+<div class="table-wrap">
+
+<table class="plan-table">
+
+<thead>
+
+<tr>
+
+<th>م</th>
+<th>اسم الموظف</th>
+<th>الرقم الوظيفي</th>
+<th>المهمة المطلوبة</th>
+<th>نوع الجولة / المهمة</th>
+<th>القسم / الموقع</th>
+<th>تاريخ التنفيذ المطلوب</th>
+<th>الحالة</th>
+
+</tr>
+
+</thead>
+
+<tbody id="planTableBody">
+</tbody>
+
+</table>
+
+</div>
+
+
+<!-- =========================================================
+     APPROVAL
+========================================================= -->
+
+<section class="approval">
+
+
+<!-- إعداد الخطة -->
+
+<div class="approval-box">
+
+<div class="approval-title">
+إعداد الخطة
+</div>
+
+<div class="approval-name">
+قسم الصحة العامة
+</div>
+
+<div class="approval-role">
+Public Health Department
+</div>
+
+<div class="approval-signature">
+
+<span class="signature-placeholder">
+خطة توزيع المهام والجولات
+</span>
+
+</div>
+
+</div>
+
+
+<!-- اعتماد المدير -->
+
+<div class="approval-box">
+
+<div class="approval-title">
+اعتماد مدير إدارة الصحة العامة
+</div>
+
+<div
+    id="managerName"
+    class="approval-name">
+
+مدير إدارة الصحة العامة
+
+</div>
+
+<div class="approval-role">
+مدير إدارة الصحة العامة
+</div>
+
+<div
+    id="managerSignatureArea"
+    class="approval-signature">
+
+<span class="signature-placeholder">
+لم يتم تسجيل توقيع المدير
+</span>
+
+</div>
+
+</div>
+
+
+</section>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="report-footer">
+
+<div class="footer-contact">
+
+HBHCluster@moh.gov.sa
+<br>
+Hafr AlBatin Health Cluster
+<br>
+Eradah & Mental Health Hospital
+
+</div>
+
+
+<div class="footer-logo">
+
+<img
+    src="./images/hospital-logo.png"
+    alt="شعار مستشفى إرادة والصحة النفسية">
+
+</div>
+
+</footer>
+
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+const TASKS_KEY =
+    "phrmsEmployeeTasks";
+
+const MANAGER_SIGNATURE_KEY =
+    "phrmsPublicHealthManagerSignature";
+
+
+/* =========================================================
+   START
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        setDefaults();
+
+        renderManagerSignature();
+
+        viewChanged();
+
+    }
+);
+
+
+/* =========================================================
+   DEFAULTS
+========================================================= */
+
+function setDefaults(){
+
+    const now =
+        new Date();
+
+
+    const month =
+        now.getFullYear() +
+        "-" +
+        String(
+            now.getMonth()+1
+        ).padStart(
+            2,
+            "0"
+        );
+
+
+    document.getElementById(
+        "monthFilter"
+    ).value =
+        month;
+
+}
+
+
+/* =========================================================
+   MANAGER SIGNATURE
+========================================================= */
+
+function renderManagerSignature(){
+
+    const nameElement =
+        document.getElementById(
+            "managerName"
+        );
+
+
+    const signatureArea =
+        document.getElementById(
+            "managerSignatureArea"
+        );
+
+
+    try{
+
+        const raw =
+            localStorage.getItem(
+                MANAGER_SIGNATURE_KEY
+            );
+
+
+        if(!raw){
+
+            signatureArea.innerHTML = `
+
+                <span class="signature-placeholder">
+
+                    لم يتم تسجيل توقيع مدير إدارة الصحة العامة
+
+                </span>
+
+            `;
+
+            return;
+
+        }
+
+
+        const manager =
+            JSON.parse(raw);
+
+
+        if(
+            manager.managerName
+        ){
+
+            nameElement.textContent =
+                manager.managerName;
+
+        }
+
+
+        if(
+            manager.signature
+        ){
+
+            signatureArea.innerHTML = `
+
+                <img
+                    src="${manager.signature}"
+                    alt="توقيع مدير إدارة الصحة العامة">
+
+            `;
+
+        }
+        else{
+
+            signatureArea.innerHTML = `
+
+                <span class="signature-placeholder">
+
+                    لم يتم تسجيل توقيع مدير إدارة الصحة العامة
+
+                </span>
+
+            `;
+
+        }
+
+    }
+    catch(error){
+
+        signatureArea.innerHTML = `
+
+            <span class="signature-placeholder">
+
+                تعذر تحميل توقيع مدير إدارة الصحة العامة
+
+            </span>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+function getTasks(){
+
+    try{
+
+        const data =
+            JSON.parse(
+                localStorage.getItem(
+                    TASKS_KEY
+                )
+            ) || [];
+
+
+        return Array.isArray(
+            data
+        )
+        ? data
+        : [];
+
+    }
+    catch(error){
+
+        return [];
+
+    }
+
+}
+
+
+/* =========================================================
+   VIEW
+========================================================= */
+
+function viewChanged(){
+
+    const mode =
+        document.getElementById(
+            "viewMode"
+        ).value;
+
+
+    const month =
+        document.getElementById(
+            "monthFilter"
+        );
+
+
+    const from =
+        document.getElementById(
+            "fromDate"
+        );
+
+
+    const to =
+        document.getElementById(
+            "toDate"
+        );
+
+
+    month.disabled =
+        mode !==
+        "month";
+
+
+    from.disabled =
+        mode !==
+        "custom";
+
+
+    to.disabled =
+        mode !==
+        "custom";
+
+
+    renderPlan();
+
+}
+
+
+/* =========================================================
+   RENDER
+========================================================= */
+
+function renderPlan(){
+
+    const tasks =
+        getTasks();
+
+
+    const mode =
+        document.getElementById(
+            "viewMode"
+        ).value;
+
+
+    const month =
+        document.getElementById(
+            "monthFilter"
+        ).value;
+
+
+    const fromDate =
+        document.getElementById(
+            "fromDate"
+        ).value;
+
+
+    const toDate =
+        document.getElementById(
+            "toDate"
+        ).value;
+
+
+    const today =
+        getToday();
+
+
+    const nextMonth =
+        getNextMonth();
+
+
+    const filtered =
+        tasks
+        .filter(
+            function(task){
+
+                if(
+                    !task.requiredDate
+                ){
+
+                    return false;
+
+                }
+
+
+                if(
+                    task.status ===
+                    "cancelled"
+                ){
+
+                    return false;
+
+                }
+
+
+                if(
+                    mode ===
+                    "future"
+                ){
+
+                    return (
+                        task.requiredDate >=
+                        today
+                    );
+
+                }
+
+
+                if(
+                    mode ===
+                    "month"
+                ){
+
+                    return (
+                        task.planMonth ===
+                        month
+                    );
+
+                }
+
+
+                if(
+                    mode ===
+                    "nextMonth"
+                ){
+
+                    return (
+                        task.planMonth ===
+                        nextMonth
+                    );
+
+                }
+
+
+                if(
+                    mode ===
+                    "custom"
+                ){
+
+                    if(
+                        fromDate &&
+                        task.requiredDate <
+                        fromDate
+                    ){
+
+                        return false;
+
+                    }
+
+
+                    if(
+                        toDate &&
+                        task.requiredDate >
+                        toDate
+                    ){
+
+                        return false;
+
+                    }
+
+
+                    return true;
+
+                }
+
+
+                return true;
+
+            }
+        )
+        .sort(
+            function(a,b){
+
+                return (
+                    String(
+                        a.requiredDate
+                    )
+                    .localeCompare(
+                        String(
+                            b.requiredDate
+                        )
+                    )
+                );
+
+            }
+        );
+
+
+    renderStats(
+        filtered
+    );
+
+
+    const body =
+        document.getElementById(
+            "planTableBody"
+        );
+
+
+    if(
+        !filtered.length
+    ){
+
+        body.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="8"
+                    class="empty">
+
+                    لا توجد مهام أو جولات ضمن الفترة المحددة.
+
+                </td>
+
+            </tr>
+
+        `;
+
+
+        return;
+
+    }
+
+
+    body.innerHTML =
+        filtered
+        .map(
+            function(
+                task,
+                index
+            ){
+
+                return `
+
+                <tr>
+
+                    <td class="center">
+
+                        ${index + 1}
+
+                    </td>
+
+
+                    <td class="employee-name">
+
+                        ${escapeHtml(
+                            task.employeeName
+                        )}
+
+                    </td>
+
+
+                    <td class="center">
+
+                        ${escapeHtml(
+                            task.employeeNumber
+                        )}
+
+                    </td>
+
+
+                    <td class="task-text">
+
+                        ${escapeHtml(
+                            task.taskName
+                        )}
+
+                    </td>
+
+
+                    <td class="center">
+
+                        ${roundTypeBadge(
+                            task.roundType
+                        )}
+
+                    </td>
+
+
+                    <td class="center">
+
+                        ${escapeHtml(
+                            task.locationName ||
+                            "—"
+                        )}
+
+                    </td>
+
+
+                    <td class="center">
+
+                        ${formatDate(
+                            task.requiredDate
+                        )}
+
+                    </td>
+
+
+                    <td class="center">
+
+                        ${statusBadge(
+                            task.status
+                        )}
+
+                    </td>
+
+                </tr>
+
+                `;
+
+            }
+        )
+        .join("");
+
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+function renderStats(tasks){
+
+    document.getElementById(
+        "totalFutureTasks"
+    ).textContent =
+        tasks.length;
+
+
+    const publicCount =
+        tasks.filter(
+            function(task){
+
+                return (
+                    task.roundType ===
+                    "publicHealth"
+                );
+
+            }
+        ).length;
+
+
+    const wasteCount =
+        tasks.filter(
+            function(task){
+
+                return (
+                    task.roundType ===
+                    "medicalWaste"
+                );
+
+            }
+        ).length;
+
+
+    const employees =
+        new Set(
+            tasks.map(
+                function(task){
+
+                    return (
+                        task.employeeNumber ||
+                        task.employeeName
+                    );
+
+                }
+            )
+        );
+
+
+    document.getElementById(
+        "publicRoundsCount"
+    ).textContent =
+        publicCount;
+
+
+    document.getElementById(
+        "wasteRoundsCount"
+    ).textContent =
+        wasteCount;
+
+
+    document.getElementById(
+        "employeesCount"
+    ).textContent =
+        employees.size;
+
+}
+
+
+/* =========================================================
+   ROUND TYPE
+========================================================= */
+
+function roundTypeBadge(type){
+
+    if(
+        type ===
+        "publicHealth"
+    ){
+
+        return `
+
+            <span class="type-badge type-public">
+
+                الصحة العامة
+
+            </span>
+
+        `;
+
+    }
+
+
+    if(
+        type ===
+        "medicalWaste"
+    ){
+
+        return `
+
+            <span class="type-badge type-waste">
+
+                النفايات الطبية
+
+            </span>
+
+        `;
+
+    }
+
+
+    return `
+
+        <span class="type-badge type-other">
+
+            مهمة أخرى
+
+        </span>
+
+    `;
+
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+function statusBadge(status){
+
+    if(
+        status ===
+        "done"
+    ){
+
+        return `
+
+            <span class="status-badge status-done">
+
+                منفذة
+
+            </span>
+
+        `;
+
+    }
+
+
+    if(
+        status ===
+        "late"
+    ){
+
+        return `
+
+            <span class="status-badge status-late">
+
+                متأخرة
+
+            </span>
+
+        `;
+
+    }
+
+
+    if(
+        status ===
+        "cancelled"
+    ){
+
+        return `
+
+            <span class="status-badge status-cancelled">
+
+                ملغاة
+
+            </span>
+
+        `;
+
+    }
+
+
+    return `
+
+        <span class="status-badge status-planned">
+
+            مخططة
+
+        </span>
+
+    `;
+
+}
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+function getToday(){
+
+    const now =
+        new Date();
+
+
+    return (
+        now.getFullYear() +
+        "-" +
+        String(
+            now.getMonth()+1
+        ).padStart(
+            2,
+            "0"
+        ) +
+        "-" +
+        String(
+            now.getDate()
+        ).padStart(
+            2,
+            "0"
+        )
+    );
+
+}
+
+
+function getNextMonth(){
+
+    const date =
+        new Date();
+
+
+    date.setMonth(
+        date.getMonth()+1
+    );
+
+
+    return (
+        date.getFullYear() +
+        "-" +
+        String(
+            date.getMonth()+1
+        ).padStart(
+            2,
+            "0"
+        )
+    );
+
+}
+
+
+function formatDate(value){
+
+    if(!value){
+
+        return "—";
+
+    }
+
+
+    const date =
+        new Date(
+            value +
+            "T12:00:00"
+        );
+
+
+    if(
+        isNaN(
+            date.getTime()
+        )
+    ){
+
+        return value;
+
+    }
+
+
+    return date.toLocaleDateString(
+        "ar-SA"
+    );
+
+}
+
+
+/* =========================================================
+   ESCAPE
+========================================================= */
+
+function escapeHtml(value){
+
+    return String(
+        value ||
+        ""
+    )
+    .replaceAll(
+        "&",
+        "&amp;"
+    )
+    .replaceAll(
+        "<",
+        "&lt;"
+    )
+    .replaceAll(
+        ">",
+        "&gt;"
+    )
+    .replaceAll(
+        '"',
+        "&quot;"
+    )
+    .replaceAll(
+        "'",
+        "&#039;"
+    );
+
+}
+
+</script>
+
+</body>
+
+</html>

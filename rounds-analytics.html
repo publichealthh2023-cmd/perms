@@ -1,0 +1,2397 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>لوحة المؤشرات الإدارية | PHRMS</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    background:#f3f6f8;
+    font-family:Arial,Tahoma,sans-serif;
+    color:#294b6a;
+}
+
+.page{
+    max-width:1350px;
+    margin:25px auto;
+    padding:0 15px 60px;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header{
+    background:#fff;
+    border:1px solid #dfe8f2;
+    border-radius:16px;
+    padding:20px;
+    margin-bottom:18px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    flex-wrap:wrap;
+
+    box-shadow:0 4px 14px rgba(0,0,0,.04);
+}
+
+.header h1{
+    margin:0;
+    color:#0759a6;
+    font-size:25px;
+}
+
+.header p{
+    margin:6px 0 0;
+    color:#718293;
+    font-size:13px;
+    line-height:1.8;
+}
+
+.header-actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    border:none;
+    border-radius:9px;
+    padding:10px 15px;
+    font-weight:bold;
+    cursor:pointer;
+    text-decoration:none;
+    font-size:13px;
+}
+
+.btn-back{
+    background:#eaf1f7;
+    color:#0759a6;
+}
+
+.btn-print{
+    background:#0759a6;
+    color:#fff;
+}
+
+
+/* =========================================================
+   FILTERS
+========================================================= */
+
+.filters{
+    background:#fff;
+    border:1px solid #dfe8f2;
+    border-radius:15px;
+    padding:18px;
+    margin-bottom:18px;
+}
+
+.filters-grid{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:10px;
+}
+
+.filter-group{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.filter-group label{
+    font-size:12px;
+    font-weight:bold;
+}
+
+.filter-group input,
+.filter-group select{
+    width:100%;
+    padding:10px;
+    border:1px solid #ccd9e5;
+    border-radius:8px;
+    background:#fff;
+    font-size:13px;
+}
+
+
+/* =========================================================
+   KPI
+========================================================= */
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin-bottom:18px;
+}
+
+.stat-card{
+    background:#fff;
+    border:1px solid #dfe8f2;
+    border-radius:14px;
+    padding:18px;
+    text-align:center;
+    box-shadow:0 3px 10px rgba(0,0,0,.03);
+}
+
+.stat-card strong{
+    display:block;
+    font-size:28px;
+    color:#0759a6;
+}
+
+.stat-card span{
+    display:block;
+    margin-top:5px;
+    color:#718293;
+    font-size:11px;
+}
+
+.stat-blue{
+    border-top:4px solid #0759a6;
+}
+
+.stat-green{
+    border-top:4px solid #15936c;
+}
+
+.stat-orange{
+    border-top:4px solid #ef8d22;
+}
+
+.stat-purple{
+    border-top:4px solid #5f3dc4;
+}
+
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+.section-card{
+    background:#fff;
+    border:1px solid #dfe8f2;
+    border-radius:15px;
+    padding:18px;
+    margin-bottom:18px;
+    box-shadow:0 3px 10px rgba(0,0,0,.03);
+}
+
+.section-title{
+    margin:0 0 15px;
+    color:#0759a6;
+    border-right:5px solid #0759a6;
+    padding-right:10px;
+    font-size:18px;
+}
+
+
+/* =========================================================
+   COMPARISON
+========================================================= */
+
+.comparison-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:14px;
+}
+
+.comparison-box{
+    background:#f8fbfd;
+    border:1px solid #e1e8ee;
+    border-radius:12px;
+    padding:16px;
+}
+
+.comparison-box h3{
+    margin:0 0 14px;
+    color:#294b6a;
+    font-size:15px;
+}
+
+.comparison-row{
+    margin-bottom:13px;
+}
+
+.comparison-label{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    font-size:12px;
+    margin-bottom:6px;
+}
+
+.progress-track{
+    height:9px;
+    background:#e7edf2;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress-fill{
+    height:100%;
+    border-radius:20px;
+    background:#0759a6;
+}
+
+.progress-green{
+    background:#15936c;
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+.data-table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:800px;
+}
+
+.data-table th{
+    background:#edf5fc;
+    color:#0759a6;
+    padding:10px;
+    border:1px solid #dbe5ed;
+    font-size:12px;
+}
+
+.data-table td{
+    padding:10px;
+    border:1px solid #e3e9ee;
+    text-align:center;
+    font-size:12px;
+}
+
+.data-table tbody tr:nth-child(even){
+    background:#fafcfd;
+}
+
+.badge{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:15px;
+    font-size:10px;
+    font-weight:bold;
+}
+
+.badge-good{
+    background:#e8f6ec;
+    color:#187b43;
+}
+
+.badge-medium{
+    background:#fff4d7;
+    color:#8a6200;
+}
+
+.badge-low{
+    background:#fdecec;
+    color:#b42318;
+}
+
+.empty{
+    text-align:center;
+    padding:25px;
+    color:#81909d;
+}
+
+
+/* =========================================================
+   TREND
+========================================================= */
+
+.trend-grid{
+    display:grid;
+    grid-template-columns:repeat(12,1fr);
+    gap:8px;
+    align-items:end;
+    min-height:220px;
+}
+
+.trend-column{
+    text-align:center;
+    min-width:0;
+}
+
+.trend-bar-wrap{
+    height:150px;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    gap:4px;
+}
+
+.trend-bar{
+    width:18px;
+    min-height:2px;
+    border-radius:5px 5px 0 0;
+    background:#0759a6;
+}
+
+.trend-compliance{
+    background:#15936c;
+}
+
+.trend-value{
+    font-size:9px;
+    color:#607387;
+    margin-bottom:4px;
+}
+
+.trend-label{
+    margin-top:6px;
+    font-size:9px;
+    color:#718293;
+}
+
+
+/* =========================================================
+   PRINT
+========================================================= */
+
+@page{
+    size:A4 landscape;
+    margin:9mm;
+}
+
+@media print{
+
+    body{
+        background:#fff;
+    }
+
+    .page{
+        max-width:none;
+        margin:0;
+        padding:0;
+    }
+
+    .header-actions,
+    .filters{
+        display:none !important;
+    }
+
+    .header{
+        box-shadow:none;
+    }
+
+    .section-card,
+    .stat-card,
+    .comparison-box{
+        break-inside:avoid;
+        page-break-inside:avoid;
+    }
+
+    tr{
+        break-inside:avoid;
+        page-break-inside:avoid;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1000px){
+
+    .filters-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .stats-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .comparison-grid{
+        grid-template-columns:1fr;
+    }
+
+    .trend-grid{
+        grid-template-columns:repeat(6,1fr);
+    }
+
+}
+
+@media(max-width:600px){
+
+    .filters-grid,
+    .stats-grid{
+        grid-template-columns:1fr;
+    }
+
+    .trend-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="page">
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<section class="header">
+
+<div>
+
+<h1>
+لوحة المؤشرات الإدارية
+</h1>
+
+<p>
+مؤشرات عامة لجولات الصحة العامة والنفايات الطبية لمتابعة حجم العمل ونسب الالتزام والملاحظات حسب الفترة.
+</p>
+
+</div>
+
+<div class="header-actions">
+
+<a
+    href="control.html"
+    class="btn btn-back">
+
+← العودة لصندوق التحكم
+
+</a>
+
+<button
+    class="btn btn-print"
+    onclick="window.print()">
+
+🖨️ طباعة / حفظ PDF
+
+</button>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     FILTERS
+========================================================= -->
+
+<section class="filters">
+
+<div class="filters-grid">
+
+
+<div class="filter-group">
+
+<label>
+الفترة
+</label>
+
+<select
+    id="periodFilter"
+    onchange="periodChanged()">
+
+<option value="month">
+شهري
+</option>
+
+<option value="quarter">
+ربع سنوي
+</option>
+
+<option value="half">
+نصف سنوي
+</option>
+
+<option value="year">
+سنوي
+</option>
+
+<option value="custom">
+فترة مخصصة
+</option>
+
+<option value="all">
+جميع الفترات
+</option>
+
+</select>
+
+</div>
+
+
+<div class="filter-group">
+
+<label>
+السنة
+</label>
+
+<select
+    id="yearFilter"
+    onchange="refreshDashboard()">
+</select>
+
+</div>
+
+
+<div class="filter-group">
+
+<label>
+الشهر
+</label>
+
+<select
+    id="monthFilter"
+    onchange="refreshDashboard()">
+
+<option value="1">يناير</option>
+<option value="2">فبراير</option>
+<option value="3">مارس</option>
+<option value="4">أبريل</option>
+<option value="5">مايو</option>
+<option value="6">يونيو</option>
+<option value="7">يوليو</option>
+<option value="8">أغسطس</option>
+<option value="9">سبتمبر</option>
+<option value="10">أكتوبر</option>
+<option value="11">نوفمبر</option>
+<option value="12">ديسمبر</option>
+
+</select>
+
+</div>
+
+
+<div class="filter-group">
+
+<label>
+نوع الجولة
+</label>
+
+<select
+    id="roundTypeFilter"
+    onchange="refreshDashboard()">
+
+<option value="">
+جميع الجولات
+</option>
+
+<option value="publicHealth">
+الصحة العامة
+</option>
+
+<option value="medicalWaste">
+النفايات الطبية
+</option>
+
+</select>
+
+</div>
+
+
+<div class="filter-group">
+
+<label>
+من تاريخ
+</label>
+
+<input
+    id="fromDate"
+    type="date"
+    onchange="refreshDashboard()">
+
+</div>
+
+
+<div class="filter-group">
+
+<label>
+إلى تاريخ
+</label>
+
+<input
+    id="toDate"
+    type="date"
+    onchange="refreshDashboard()">
+
+</div>
+
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     KPI
+========================================================= -->
+
+<section class="stats-grid">
+
+<div class="stat-card stat-blue">
+
+<strong id="totalRounds">
+0
+</strong>
+
+<span>
+إجمالي الجولات
+</span>
+
+</div>
+
+
+<div class="stat-card stat-green">
+
+<strong id="averageCompliance">
+0%
+</strong>
+
+<span>
+متوسط نسبة الالتزام
+</span>
+
+</div>
+
+
+<div class="stat-card stat-orange">
+
+<strong id="totalNonCompliance">
+0
+</strong>
+
+<span>
+إجمالي حالات عدم التطبيق
+</span>
+
+</div>
+
+
+<div class="stat-card stat-purple">
+
+<strong id="roundsWithIssues">
+0
+</strong>
+
+<span>
+جولات بها ملاحظات
+</span>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     COMPARISON
+========================================================= -->
+
+<section class="section-card">
+
+<h2 class="section-title">
+📊 مقارنة أنواع الجولات
+</h2>
+
+<div class="comparison-grid">
+
+
+<div class="comparison-box">
+
+<h3>
+جولات الصحة العامة
+</h3>
+
+<div class="comparison-row">
+
+<div class="comparison-label">
+
+<span>
+عدد الجولات
+</span>
+
+<strong id="publicCount">
+0
+</strong>
+
+</div>
+
+<div class="progress-track">
+
+<div
+    id="publicRoundsBar"
+    class="progress-fill"
+    style="width:0%">
+</div>
+
+</div>
+
+</div>
+
+
+<div class="comparison-row">
+
+<div class="comparison-label">
+
+<span>
+متوسط الالتزام
+</span>
+
+<strong id="publicCompliance">
+0%
+</strong>
+
+</div>
+
+<div class="progress-track">
+
+<div
+    id="publicComplianceBar"
+    class="progress-fill progress-green"
+    style="width:0%">
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="comparison-box">
+
+<h3>
+جولات النفايات الطبية
+</h3>
+
+<div class="comparison-row">
+
+<div class="comparison-label">
+
+<span>
+عدد الجولات
+</span>
+
+<strong id="wasteCount">
+0
+</strong>
+
+</div>
+
+<div class="progress-track">
+
+<div
+    id="wasteRoundsBar"
+    class="progress-fill"
+    style="width:0%">
+</div>
+
+</div>
+
+</div>
+
+
+<div class="comparison-row">
+
+<div class="comparison-label">
+
+<span>
+متوسط الالتزام
+</span>
+
+<strong id="wasteCompliance">
+0%
+</strong>
+
+</div>
+
+<div class="progress-track">
+
+<div
+    id="wasteComplianceBar"
+    class="progress-fill progress-green"
+    style="width:0%">
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     MONTHLY TREND
+========================================================= -->
+
+<section class="section-card">
+
+<h2 class="section-title">
+📈 الاتجاه الشهري للجولات والالتزام
+</h2>
+
+<div
+    id="monthlyTrend"
+    class="trend-grid">
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     LOCATIONS
+========================================================= -->
+
+<section class="section-card">
+
+<h2 class="section-title">
+🏥 توزيع الجولات حسب المواقع
+</h2>
+
+<div class="table-wrap">
+
+<table class="data-table">
+
+<thead>
+
+<tr>
+
+<th>
+الموقع
+</th>
+
+<th>
+عدد الجولات
+</th>
+
+<th>
+عدم التطبيق
+</th>
+
+<th>
+متوسط الالتزام
+</th>
+
+</tr>
+
+</thead>
+
+<tbody id="locationsTableBody">
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     TOP ISSUES
+========================================================= -->
+
+<section class="section-card">
+
+<h2 class="section-title">
+⚠️ المواقع الأعلى في الملاحظات
+</h2>
+
+<div class="table-wrap">
+
+<table class="data-table">
+
+<thead>
+
+<tr>
+
+<th>
+الترتيب
+</th>
+
+<th>
+الموقع
+</th>
+
+<th>
+عدد الجولات
+</th>
+
+<th>
+إجمالي عدم التطبيق
+</th>
+
+<th>
+نسبة الالتزام
+</th>
+
+</tr>
+
+</thead>
+
+<tbody id="issuesTableBody">
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+const PUBLIC_KEY =
+    "phrmsPublicHealthRounds";
+
+const WASTE_KEY =
+    "phrmsMedicalWasteRounds";
+
+
+let publicRounds = [];
+let wasteRounds = [];
+let allRounds = [];
+
+
+/* =========================================================
+   START
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        loadData();
+
+        buildYearFilter();
+
+        setDefaults();
+
+        periodChanged();
+
+    }
+);
+
+
+/* =========================================================
+   LOAD DATA
+========================================================= */
+
+function loadData(){
+
+    publicRounds =
+        getArray(
+            PUBLIC_KEY
+        );
+
+
+    wasteRounds =
+        getArray(
+            WASTE_KEY
+        );
+
+
+    allRounds = [
+
+        ...publicRounds,
+
+        ...wasteRounds
+
+    ];
+
+}
+
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+function getArray(key){
+
+    try{
+
+        const data =
+            JSON.parse(
+                localStorage.getItem(key)
+            ) || [];
+
+
+        return Array.isArray(data)
+            ? data
+            : [];
+
+    }
+    catch(error){
+
+        return [];
+
+    }
+
+}
+
+
+/* =========================================================
+   YEARS
+========================================================= */
+
+function buildYearFilter(){
+
+    const years =
+        new Set();
+
+
+    allRounds.forEach(
+        function(round){
+
+            if(
+                round.inspectionDate
+            ){
+
+                years.add(
+                    Number(
+                        round.inspectionDate.slice(
+                            0,
+                            4
+                        )
+                    )
+                );
+
+            }
+
+        }
+    );
+
+
+    years.add(
+        new Date().getFullYear()
+    );
+
+
+    const select =
+        document.getElementById(
+            "yearFilter"
+        );
+
+
+    [...years]
+    .filter(
+        function(year){
+
+            return (
+                year &&
+                year > 2000
+            );
+
+        }
+    )
+    .sort(
+        function(a,b){
+
+            return b-a;
+
+        }
+    )
+    .forEach(
+        function(year){
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value =
+                year;
+
+
+            option.textContent =
+                year;
+
+
+            select.appendChild(
+                option
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   DEFAULTS
+========================================================= */
+
+function setDefaults(){
+
+    const now =
+        new Date();
+
+
+    document.getElementById(
+        "yearFilter"
+    ).value =
+        now.getFullYear();
+
+
+    document.getElementById(
+        "monthFilter"
+    ).value =
+        now.getMonth()+1;
+
+}
+
+
+/* =========================================================
+   PERIOD CHANGE
+========================================================= */
+
+function periodChanged(){
+
+    const period =
+        document.getElementById(
+            "periodFilter"
+        ).value;
+
+
+    document.getElementById(
+        "monthFilter"
+    ).disabled =
+        period !==
+        "month";
+
+
+    document.getElementById(
+        "fromDate"
+    ).disabled =
+        period !==
+        "custom";
+
+
+    document.getElementById(
+        "toDate"
+    ).disabled =
+        period !==
+        "custom";
+
+
+    document.getElementById(
+        "yearFilter"
+    ).disabled =
+        period ===
+        "all";
+
+
+    refreshDashboard();
+
+}
+
+
+/* =========================================================
+   RANGE
+========================================================= */
+
+function getSelectedRange(){
+
+    const period =
+        document.getElementById(
+            "periodFilter"
+        ).value;
+
+
+    if(
+        period ===
+        "all"
+    ){
+
+        return {
+
+            from:"",
+            to:""
+
+        };
+
+    }
+
+
+    const year =
+        Number(
+            document.getElementById(
+                "yearFilter"
+            ).value
+        );
+
+
+    const month =
+        Number(
+            document.getElementById(
+                "monthFilter"
+            ).value
+        );
+
+
+    if(
+        period ===
+        "custom"
+    ){
+
+        return {
+
+            from:
+                document.getElementById(
+                    "fromDate"
+                ).value,
+
+            to:
+                document.getElementById(
+                    "toDate"
+                ).value
+
+        };
+
+    }
+
+
+    if(
+        period ===
+        "month"
+    ){
+
+        return monthRange(
+            year,
+            month
+        );
+
+    }
+
+
+    if(
+        period ===
+        "quarter"
+    ){
+
+        const currentMonth =
+            new Date().getMonth()+1;
+
+
+        const quarter =
+            Math.ceil(
+                currentMonth / 3
+            );
+
+
+        const firstMonth =
+            (
+                quarter - 1
+            ) * 3 + 1;
+
+
+        const lastMonth =
+            firstMonth + 2;
+
+
+        return {
+
+            from:
+                `${year}-${pad(firstMonth)}-01`,
+
+            to:
+                lastDateOfMonth(
+                    year,
+                    lastMonth
+                )
+
+        };
+
+    }
+
+
+    if(
+        period ===
+        "half"
+    ){
+
+        const currentMonth =
+            new Date().getMonth()+1;
+
+
+        const firstMonth =
+            currentMonth <= 6
+            ? 1
+            : 7;
+
+
+        const lastMonth =
+            currentMonth <= 6
+            ? 6
+            : 12;
+
+
+        return {
+
+            from:
+                `${year}-${pad(firstMonth)}-01`,
+
+            to:
+                lastDateOfMonth(
+                    year,
+                    lastMonth
+                )
+
+        };
+
+    }
+
+
+    return {
+
+        from:
+            `${year}-01-01`,
+
+        to:
+            `${year}-12-31`
+
+    };
+
+}
+
+
+/* =========================================================
+   FILTER DATA
+========================================================= */
+
+function getFilteredRounds(){
+
+    const range =
+        getSelectedRange();
+
+
+    const roundType =
+        document.getElementById(
+            "roundTypeFilter"
+        ).value;
+
+
+    return allRounds.filter(
+        function(round){
+
+            if(
+                !dateInside(
+                    round.inspectionDate,
+                    range
+                )
+            ){
+
+                return false;
+
+            }
+
+
+            if(
+                roundType ===
+                "medicalWaste" &&
+                round.roundType !==
+                "medicalWaste"
+            ){
+
+                return false;
+
+            }
+
+
+            if(
+                roundType ===
+                "publicHealth" &&
+                round.roundType ===
+                "medicalWaste"
+            ){
+
+                return false;
+
+            }
+
+
+            return true;
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   REFRESH
+========================================================= */
+
+function refreshDashboard(){
+
+    const rounds =
+        getFilteredRounds();
+
+
+    renderKpis(
+        rounds
+    );
+
+
+    renderComparison(
+        rounds
+    );
+
+
+    renderMonthlyTrend(
+        rounds
+    );
+
+
+    renderLocations(
+        rounds
+    );
+
+
+    renderIssueLocations(
+        rounds
+    );
+
+}
+
+
+/* =========================================================
+   KPI
+========================================================= */
+
+function renderKpis(rounds){
+
+    document.getElementById(
+        "totalRounds"
+    ).textContent =
+        rounds.length;
+
+
+    document.getElementById(
+        "averageCompliance"
+    ).textContent =
+        averageCompliance(
+            rounds
+        ) +
+        "%";
+
+
+    const noCount =
+        rounds.reduce(
+            function(sum,round){
+
+                return (
+                    sum +
+                    (
+                        Number(
+                            round.noCount
+                        ) || 0
+                    )
+                );
+
+            },
+            0
+        );
+
+
+    document.getElementById(
+        "totalNonCompliance"
+    ).textContent =
+        noCount;
+
+
+    const issueRounds =
+        rounds.filter(
+            function(round){
+
+                return (
+                    Number(
+                        round.noCount
+                    ) || 0
+                ) > 0;
+
+            }
+        ).length;
+
+
+    document.getElementById(
+        "roundsWithIssues"
+    ).textContent =
+        issueRounds;
+
+}
+
+
+/* =========================================================
+   COMPARISON
+========================================================= */
+
+function renderComparison(rounds){
+
+    const publicList =
+        rounds.filter(
+            function(round){
+
+                return (
+                    round.roundType !==
+                    "medicalWaste"
+                );
+
+            }
+        );
+
+
+    const wasteList =
+        rounds.filter(
+            function(round){
+
+                return (
+                    round.roundType ===
+                    "medicalWaste"
+                );
+
+            }
+        );
+
+
+    document.getElementById(
+        "publicCount"
+    ).textContent =
+        publicList.length;
+
+
+    document.getElementById(
+        "wasteCount"
+    ).textContent =
+        wasteList.length;
+
+
+    const publicCompliance =
+        averageCompliance(
+            publicList
+        );
+
+
+    const wasteCompliance =
+        averageCompliance(
+            wasteList
+        );
+
+
+    document.getElementById(
+        "publicCompliance"
+    ).textContent =
+        publicCompliance +
+        "%";
+
+
+    document.getElementById(
+        "wasteCompliance"
+    ).textContent =
+        wasteCompliance +
+        "%";
+
+
+    const maxCount =
+        Math.max(
+            publicList.length,
+            wasteList.length,
+            1
+        );
+
+
+    document.getElementById(
+        "publicRoundsBar"
+    ).style.width =
+        (
+            publicList.length /
+            maxCount *
+            100
+        ) +
+        "%";
+
+
+    document.getElementById(
+        "wasteRoundsBar"
+    ).style.width =
+        (
+            wasteList.length /
+            maxCount *
+            100
+        ) +
+        "%";
+
+
+    document.getElementById(
+        "publicComplianceBar"
+    ).style.width =
+        publicCompliance +
+        "%";
+
+
+    document.getElementById(
+        "wasteComplianceBar"
+    ).style.width =
+        wasteCompliance +
+        "%";
+
+}
+
+
+/* =========================================================
+   MONTHLY TREND
+========================================================= */
+
+function renderMonthlyTrend(rounds){
+
+    const months =
+        [];
+
+    for(
+        let month = 1;
+        month <= 12;
+        month++
+    ){
+
+        const list =
+            rounds.filter(
+                function(round){
+
+                    if(
+                        !round.inspectionDate
+                    ){
+
+                        return false;
+
+                    }
+
+
+                    const date =
+                        new Date(
+                            round.inspectionDate +
+                            "T12:00:00"
+                        );
+
+
+                    return (
+                        date.getMonth()+1 ===
+                        month
+                    );
+
+                }
+            );
+
+
+        months.push({
+
+            month:month,
+
+            count:
+                list.length,
+
+            compliance:
+                averageCompliance(
+                    list
+                )
+
+        });
+
+    }
+
+
+    const maxCount =
+        Math.max(
+
+            ...months.map(
+                function(item){
+
+                    return item.count;
+
+                }
+            ),
+
+            1
+
+        );
+
+
+    const container =
+        document.getElementById(
+            "monthlyTrend"
+        );
+
+
+    container.innerHTML =
+        months.map(
+            function(item){
+
+                const countHeight =
+                    Math.max(
+                        2,
+                        Math.round(
+                            item.count /
+                            maxCount *
+                            130
+                        )
+                    );
+
+
+                const complianceHeight =
+                    Math.max(
+                        2,
+                        Math.round(
+                            item.compliance /
+                            100 *
+                            130
+                        )
+                    );
+
+
+                return `
+
+                    <div class="trend-column">
+
+                        <div class="trend-value">
+
+                            ${item.count}
+                            /
+                            ${item.compliance}%
+
+                        </div>
+
+                        <div class="trend-bar-wrap">
+
+                            <div
+                                class="trend-bar"
+                                style="height:${countHeight}px"
+                                title="عدد الجولات">
+                            </div>
+
+                            <div
+                                class="trend-bar trend-compliance"
+                                style="height:${complianceHeight}px"
+                                title="الالتزام">
+                            </div>
+
+                        </div>
+
+                        <div class="trend-label">
+
+                            ${monthName(item.month)}
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+        )
+        .join("");
+
+}
+
+
+/* =========================================================
+   LOCATIONS
+========================================================= */
+
+function buildLocationStats(rounds){
+
+    const map =
+        {};
+
+
+    rounds.forEach(
+        function(round){
+
+            const location =
+                round.locationName ||
+                "غير محدد";
+
+
+            if(
+                !map[location]
+            ){
+
+                map[location] = {
+
+                    name:
+                        location,
+
+                    rounds:
+                        0,
+
+                    noCount:
+                        0,
+
+                    compliance:
+                        []
+
+                };
+
+            }
+
+
+            const item =
+                map[location];
+
+
+            item.rounds++;
+
+
+            item.noCount +=
+                Number(
+                    round.noCount
+                ) || 0;
+
+
+            const compliance =
+                Number(
+                    round.complianceRate
+                );
+
+
+            if(
+                !isNaN(
+                    compliance
+                )
+            ){
+
+                item.compliance.push(
+                    compliance
+                );
+
+            }
+
+        }
+    );
+
+
+    return Object.values(
+        map
+    )
+    .map(
+        function(item){
+
+            item.averageCompliance =
+                item.compliance.length
+
+                ? Math.round(
+                    item.compliance.reduce(
+                        function(sum,value){
+
+                            return sum + value;
+
+                        },
+                        0
+                    )
+                    /
+                    item.compliance.length
+                )
+
+                : 0;
+
+
+            return item;
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   LOCATION TABLE
+========================================================= */
+
+function renderLocations(rounds){
+
+    const list =
+        buildLocationStats(
+            rounds
+        )
+        .sort(
+            function(a,b){
+
+                return (
+                    b.rounds -
+                    a.rounds
+                );
+
+            }
+        );
+
+
+    const body =
+        document.getElementById(
+            "locationsTableBody"
+        );
+
+
+    if(
+        !list.length
+    ){
+
+        body.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="4"
+                    class="empty">
+
+                    لا توجد بيانات في الفترة المحددة.
+
+                </td>
+
+            </tr>
+
+        `;
+
+
+        return;
+
+    }
+
+
+    body.innerHTML =
+        list.map(
+            function(item){
+
+                return `
+
+                    <tr>
+
+                        <td>
+
+                            ${escapeHtml(
+                                item.name
+                            )}
+
+                        </td>
+
+
+                        <td>
+
+                            ${item.rounds}
+
+                        </td>
+
+
+                        <td>
+
+                            ${item.noCount}
+
+                        </td>
+
+
+                        <td>
+
+                            ${complianceBadge(
+                                item.averageCompliance
+                            )}
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+            }
+        )
+        .join("");
+
+}
+
+
+/* =========================================================
+   ISSUE LOCATIONS
+========================================================= */
+
+function renderIssueLocations(rounds){
+
+    const list =
+        buildLocationStats(
+            rounds
+        )
+        .filter(
+            function(item){
+
+                return (
+                    item.noCount > 0
+                );
+
+            }
+        )
+        .sort(
+            function(a,b){
+
+                return (
+                    b.noCount -
+                    a.noCount
+                );
+
+            }
+        )
+        .slice(
+            0,
+            10
+        );
+
+
+    const body =
+        document.getElementById(
+            "issuesTableBody"
+        );
+
+
+    if(
+        !list.length
+    ){
+
+        body.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="5"
+                    class="empty">
+
+                    لا توجد ملاحظات عدم تطبيق في الفترة المحددة.
+
+                </td>
+
+            </tr>
+
+        `;
+
+
+        return;
+
+    }
+
+
+    body.innerHTML =
+        list.map(
+            function(item,index){
+
+                return `
+
+                    <tr>
+
+                        <td>
+                            ${index + 1}
+                        </td>
+
+                        <td>
+                            ${escapeHtml(item.name)}
+                        </td>
+
+                        <td>
+                            ${item.rounds}
+                        </td>
+
+                        <td>
+                            ${item.noCount}
+                        </td>
+
+                        <td>
+                            ${complianceBadge(
+                                item.averageCompliance
+                            )}
+                        </td>
+
+                    </tr>
+
+                `;
+
+            }
+        )
+        .join("");
+
+}
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function averageCompliance(list){
+
+    const values =
+        list
+        .map(
+            function(round){
+
+                return Number(
+                    round.complianceRate
+                );
+
+            }
+        )
+        .filter(
+            function(value){
+
+                return (
+                    !isNaN(value)
+                );
+
+            }
+        );
+
+
+    return values.length
+
+        ? Math.round(
+
+            values.reduce(
+                function(sum,value){
+
+                    return sum + value;
+
+                },
+                0
+            )
+
+            /
+
+            values.length
+
+        )
+
+        : 0;
+
+}
+
+
+function complianceBadge(value){
+
+    let className =
+        "badge-good";
+
+
+    if(
+        value < 70
+    ){
+
+        className =
+            "badge-low";
+
+    }
+    else if(
+        value < 90
+    ){
+
+        className =
+            "badge-medium";
+
+    }
+
+
+    return `
+
+        <span class="badge ${className}">
+            ${value}%
+        </span>
+
+    `;
+
+}
+
+
+function monthRange(
+    year,
+    month
+){
+
+    return {
+
+        from:
+            `${year}-${pad(month)}-01`,
+
+        to:
+            lastDateOfMonth(
+                year,
+                month
+            )
+
+    };
+
+}
+
+
+function lastDateOfMonth(
+    year,
+    month
+){
+
+    const lastDay =
+        new Date(
+            year,
+            month,
+            0
+        ).getDate();
+
+
+    return (
+        `${year}-${pad(month)}-${pad(lastDay)}`
+    );
+
+}
+
+
+function dateInside(
+    value,
+    range
+){
+
+    if(
+        !value
+    ){
+
+        return false;
+
+    }
+
+
+    if(
+        range.from &&
+        value <
+        range.from
+    ){
+
+        return false;
+
+    }
+
+
+    if(
+        range.to &&
+        value >
+        range.to
+    ){
+
+        return false;
+
+    }
+
+
+    return true;
+
+}
+
+
+function monthName(month){
+
+    const names = [
+
+        "",
+        "يناير",
+        "فبراير",
+        "مارس",
+        "أبريل",
+        "مايو",
+        "يونيو",
+        "يوليو",
+        "أغسطس",
+        "سبتمبر",
+        "أكتوبر",
+        "نوفمبر",
+        "ديسمبر"
+
+    ];
+
+
+    return (
+        names[month] ||
+        month
+    );
+
+}
+
+
+function pad(value){
+
+    return String(
+        value
+    ).padStart(
+        2,
+        "0"
+    );
+
+}
+
+
+function escapeHtml(value){
+
+    return String(
+        value ||
+        ""
+    )
+    .replaceAll(
+        "&",
+        "&amp;"
+    )
+    .replaceAll(
+        "<",
+        "&lt;"
+    )
+    .replaceAll(
+        ">",
+        "&gt;"
+    )
+    .replaceAll(
+        '"',
+        "&quot;"
+    )
+    .replaceAll(
+        "'",
+        "&#039;"
+    );
+
+}
+
+</script>
+
+</body>
+
+</html>

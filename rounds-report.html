@@ -1,0 +1,2220 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>تقرير الجولات والملاحظات | PHRMS</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    background:#f3f6f8;
+    font-family:Arial,Tahoma,sans-serif;
+    color:#294b6a;
+}
+
+.page{
+    max-width:1350px;
+    margin:25px auto;
+    padding:0 15px 60px;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header{
+    background:#fff;
+    border:1px solid #dfe8f2;
+    border-radius:16px;
+    padding:20px;
+    margin-bottom:18px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.header h1{
+    margin:0;
+    color:#0759a6;
+    font-size:25px;
+}
+
+.header p{
+    margin:6px 0 0;
+    color:#718293;
+    font-size:13px;
+    line-height:1.8;
+}
+
+.header-actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    border:none;
+    border-radius:9px;
+    padding:10px 15px;
+    font-weight:bold;
+    cursor:pointer;
+    text-decoration:none;
+    font-size:13px;
+}
+
+.btn-back{
+    background:#eaf1f7;
+    color:#0759a6;
+}
+
+.btn-print{
+    background:#0759a6;
+    color:#fff;
+}
+
+/* =========================================================
+   FILTERS
+========================================================= */
+
+.filters{
+    background:#fff;
+    border:1px solid #dfe8f2;
+    border-radius:15px;
+    padding:18px;
+    margin-bottom:18px;
+}
+
+.filters-grid{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:10px;
+}
+
+.filter-group{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.filter-group label{
+    font-size:12px;
+    font-weight:bold;
+}
+
+.filter-group input,
+.filter-group select{
+    width:100%;
+    padding:10px;
+    border:1px solid #ccd9e5;
+    border-radius:8px;
+    background:#fff;
+    font-size:13px;
+}
+
+/* =========================================================
+   KPI
+========================================================= */
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin-bottom:18px;
+}
+
+.stat-card{
+    background:#fff;
+    border:1px solid #dfe8f2;
+    border-radius:14px;
+    padding:18px;
+    text-align:center;
+}
+
+.stat-card strong{
+    display:block;
+    font-size:27px;
+    color:#0759a6;
+}
+
+.stat-card span{
+    display:block;
+    margin-top:5px;
+    color:#718293;
+    font-size:11px;
+}
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.section-card{
+    background:#fff;
+    border:1px solid #dfe8f2;
+    border-radius:15px;
+    padding:18px;
+    margin-bottom:18px;
+}
+
+.section-title{
+    margin:0 0 15px;
+    color:#0759a6;
+    border-right:5px solid #0759a6;
+    padding-right:10px;
+    font-size:18px;
+}
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+.data-table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:1250px;
+}
+
+.data-table th{
+    background:#edf5fc;
+    color:#0759a6;
+    padding:10px;
+    border:1px solid #dbe5ed;
+    font-size:12px;
+}
+
+.data-table td{
+    padding:10px;
+    border:1px solid #e3e9ee;
+    text-align:center;
+    font-size:12px;
+    vertical-align:middle;
+}
+
+.data-table tbody tr:nth-child(even){
+    background:#fafcfd;
+}
+
+/* =========================================================
+   BADGES
+========================================================= */
+
+.badge{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:15px;
+    font-size:10px;
+    font-weight:bold;
+}
+
+.badge-public{
+    background:#e8f2ff;
+    color:#0759a6;
+}
+
+.badge-waste{
+    background:#e8f7f1;
+    color:#13795b;
+}
+
+.badge-good{
+    background:#e8f6ec;
+    color:#187b43;
+}
+
+.badge-medium{
+    background:#fff4d7;
+    color:#8a6200;
+}
+
+.badge-low{
+    background:#fdecec;
+    color:#b42318;
+}
+
+.note-cell{
+    text-align:right !important;
+    min-width:240px;
+    white-space:pre-wrap;
+    line-height:1.7;
+}
+
+.view-btn{
+    border:none;
+    background:#0759a6;
+    color:#fff;
+    padding:7px 10px;
+    border-radius:7px;
+    cursor:pointer;
+    font-weight:bold;
+    font-size:11px;
+}
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.empty{
+    text-align:center;
+    padding:25px;
+    color:#81909d;
+}
+
+/* =========================================================
+   PRINT HEADER
+========================================================= */
+
+.print-title{
+    display:none;
+}
+
+/* =========================================================
+   PRINT
+========================================================= */
+
+@page{
+    size:A4 landscape;
+    margin:9mm;
+}
+
+@media print{
+
+    body{
+        background:#fff;
+    }
+
+    .page{
+        max-width:none;
+        margin:0;
+        padding:0;
+    }
+
+    .header-actions,
+    .filters{
+        display:none !important;
+    }
+
+    .header{
+        box-shadow:none;
+        border:none;
+        padding:0 0 12px;
+    }
+
+    .print-title{
+        display:block;
+        text-align:center;
+        margin-bottom:12px;
+        font-weight:bold;
+        color:#0759a6;
+    }
+
+    .section-card,
+    .stat-card{
+        break-inside:avoid;
+        page-break-inside:avoid;
+    }
+
+    tr{
+        break-inside:avoid;
+        page-break-inside:avoid;
+    }
+
+    .view-btn{
+        display:none !important;
+    }
+
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1000px){
+
+    .filters-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .stats-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:600px){
+
+    .filters-grid,
+    .stats-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="page">
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<section class="header">
+
+<div>
+
+<h1>
+تقرير الجولات والملاحظات
+</h1>
+
+<p>
+استعراض وتحليل الجولات المسجلة وملاحظات عدم التطبيق حسب الفترة ونوع الجولة والموظف والموقع.
+</p>
+
+</div>
+
+<div class="header-actions">
+
+<a
+    href="control.html"
+    class="btn btn-back">
+
+← العودة لصندوق التحكم
+
+</a>
+
+<button
+    class="btn btn-print"
+    onclick="window.print()">
+
+🖨️ طباعة / حفظ PDF
+
+</button>
+
+</div>
+
+</section>
+
+<div class="print-title">
+
+قسم الصحة العامة
+<br>
+تقرير الجولات والملاحظات
+
+</div>
+
+
+<!-- =========================================================
+     FILTERS
+========================================================= -->
+
+<section class="filters">
+
+<div class="filters-grid">
+
+
+<div class="filter-group">
+
+<label>
+الفترة
+</label>
+
+<select
+    id="periodFilter"
+    onchange="periodChanged()">
+
+<option value="month">
+شهري
+</option>
+
+<option value="quarter">
+ربع سنوي
+</option>
+
+<option value="half">
+نصف سنوي
+</option>
+
+<option value="year">
+سنوي
+</option>
+
+<option value="custom">
+فترة مخصصة
+</option>
+
+<option value="all">
+جميع الجولات
+</option>
+
+</select>
+
+</div>
+
+
+<div class="filter-group">
+
+<label>
+السنة
+</label>
+
+<select
+    id="yearFilter"
+    onchange="refreshReport()">
+</select>
+
+</div>
+
+
+<div class="filter-group">
+
+<label>
+الشهر
+</label>
+
+<select
+    id="monthFilter"
+    onchange="refreshReport()">
+
+<option value="1">يناير</option>
+<option value="2">فبراير</option>
+<option value="3">مارس</option>
+<option value="4">أبريل</option>
+<option value="5">مايو</option>
+<option value="6">يونيو</option>
+<option value="7">يوليو</option>
+<option value="8">أغسطس</option>
+<option value="9">سبتمبر</option>
+<option value="10">أكتوبر</option>
+<option value="11">نوفمبر</option>
+<option value="12">ديسمبر</option>
+
+</select>
+
+</div>
+
+
+<div class="filter-group">
+
+<label>
+نوع الجولة
+</label>
+
+<select
+    id="roundTypeFilter"
+    onchange="refreshReport()">
+
+<option value="">
+جميع أنواع الجولات
+</option>
+
+<option value="publicHealth">
+الصحة العامة
+</option>
+
+<option value="medicalWaste">
+النفايات الطبية
+</option>
+
+</select>
+
+</div>
+
+
+<div class="filter-group">
+
+<label>
+الموظف
+</label>
+
+<select
+    id="employeeFilter"
+    onchange="refreshReport()">
+
+<option value="">
+جميع الموظفين
+</option>
+
+</select>
+
+</div>
+
+
+<div class="filter-group">
+
+<label>
+الموقع
+</label>
+
+<select
+    id="locationFilter"
+    onchange="refreshReport()">
+
+<option value="">
+جميع المواقع
+</option>
+
+</select>
+
+</div>
+
+
+<div class="filter-group">
+
+<label>
+من تاريخ
+</label>
+
+<input
+    id="fromDate"
+    type="date"
+    onchange="refreshReport()">
+
+</div>
+
+
+<div class="filter-group">
+
+<label>
+إلى تاريخ
+</label>
+
+<input
+    id="toDate"
+    type="date"
+    onchange="refreshReport()">
+
+</div>
+
+
+<div class="filter-group">
+
+<label>
+نوع النتائج
+</label>
+
+<select
+    id="issuesFilter"
+    onchange="refreshReport()">
+
+<option value="">
+جميع الجولات
+</option>
+
+<option value="issues">
+الجولات التي بها عدم تطبيق
+</option>
+
+<option value="clean">
+الجولات بدون عدم تطبيق
+</option>
+
+</select>
+
+</div>
+
+
+<div class="filter-group">
+
+<label>
+بحث
+</label>
+
+<input
+    id="searchText"
+    type="text"
+    placeholder="رقم الجولة أو ملاحظة..."
+    oninput="refreshReport()">
+
+</div>
+
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     KPI
+========================================================= -->
+
+<section class="stats-grid">
+
+<div class="stat-card">
+
+<strong id="roundsCount">
+0
+</strong>
+
+<span>
+عدد الجولات
+</span>
+
+</div>
+
+
+<div class="stat-card">
+
+<strong id="averageCompliance">
+0%
+</strong>
+
+<span>
+متوسط الالتزام
+</span>
+
+</div>
+
+
+<div class="stat-card">
+
+<strong id="nonComplianceCount">
+0
+</strong>
+
+<span>
+إجمالي عدم التطبيق
+</span>
+
+</div>
+
+
+<div class="stat-card">
+
+<strong id="roundsWithIssues">
+0
+</strong>
+
+<span>
+جولات بها ملاحظات
+</span>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     REPORT TABLE
+========================================================= -->
+
+<section class="section-card">
+
+<h2 class="section-title">
+📋 تفاصيل الجولات
+</h2>
+
+<div class="table-wrap">
+
+<table class="data-table">
+
+<thead>
+
+<tr>
+
+<th>
+م
+</th>
+
+<th>
+رقم الجولة
+</th>
+
+<th>
+التاريخ
+</th>
+
+<th>
+الموظف
+</th>
+
+<th>
+الرقم الوظيفي
+</th>
+
+<th>
+نوع الجولة
+</th>
+
+<th>
+الموقع
+</th>
+
+<th>
+يطبق
+</th>
+
+<th>
+لا يطبق
+</th>
+
+<th>
+لا ينطبق
+</th>
+
+<th>
+نسبة الالتزام
+</th>
+
+<th>
+الملاحظات العامة
+</th>
+
+<th>
+الإجراء
+</th>
+
+</tr>
+
+</thead>
+
+<tbody id="roundsTableBody">
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+const PUBLIC_KEY =
+    "phrmsPublicHealthRounds";
+
+const WASTE_KEY =
+    "phrmsMedicalWasteRounds";
+
+
+let publicRounds = [];
+let wasteRounds = [];
+let allRounds = [];
+
+
+/* =========================================================
+   START
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        loadData();
+
+        buildYearFilter();
+
+        buildEmployeeFilter();
+
+        buildLocationFilter();
+
+        setDefaults();
+
+        periodChanged();
+
+    }
+);
+
+
+/* =========================================================
+   LOAD
+========================================================= */
+
+function loadData(){
+
+    publicRounds =
+        getArray(
+            PUBLIC_KEY
+        );
+
+
+    wasteRounds =
+        getArray(
+            WASTE_KEY
+        );
+
+
+    allRounds = [
+
+        ...publicRounds,
+
+        ...wasteRounds
+
+    ];
+
+}
+
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+function getArray(key){
+
+    try{
+
+        const data =
+            JSON.parse(
+                localStorage.getItem(key)
+            ) || [];
+
+
+        return Array.isArray(data)
+            ? data
+            : [];
+
+    }
+    catch(error){
+
+        return [];
+
+    }
+
+}
+
+
+/* =========================================================
+   BUILD YEAR
+========================================================= */
+
+function buildYearFilter(){
+
+    const years =
+        new Set();
+
+
+    allRounds.forEach(
+        function(round){
+
+            if(
+                round.inspectionDate
+            ){
+
+                years.add(
+                    Number(
+                        round.inspectionDate.slice(
+                            0,
+                            4
+                        )
+                    )
+                );
+
+            }
+
+        }
+    );
+
+
+    years.add(
+        new Date().getFullYear()
+    );
+
+
+    const select =
+        document.getElementById(
+            "yearFilter"
+        );
+
+
+    [...years]
+    .filter(
+        function(year){
+
+            return (
+                year &&
+                year > 2000
+            );
+
+        }
+    )
+    .sort(
+        function(a,b){
+
+            return b-a;
+
+        }
+    )
+    .forEach(
+        function(year){
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+            option.value =
+                year;
+
+            option.textContent =
+                year;
+
+            select.appendChild(
+                option
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   EMPLOYEE FILTER
+========================================================= */
+
+function buildEmployeeFilter(){
+
+    const select =
+        document.getElementById(
+            "employeeFilter"
+        );
+
+
+    const employees =
+        new Map();
+
+
+    allRounds.forEach(
+        function(round){
+
+            const key =
+                String(
+                    round.employeeNumber ||
+                    round.employeeName ||
+                    ""
+                );
+
+
+            if(
+                key &&
+                !employees.has(key)
+            ){
+
+                employees.set(
+                    key,
+                    {
+
+                        name:
+                            round.employeeName ||
+                            key,
+
+                        number:
+                            round.employeeNumber ||
+                            ""
+
+                    }
+                );
+
+            }
+
+        }
+    );
+
+
+    employees.forEach(
+        function(employee,key){
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+            option.value =
+                key;
+
+            option.textContent =
+                employee.name;
+
+            select.appendChild(
+                option
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   LOCATION FILTER
+========================================================= */
+
+function buildLocationFilter(){
+
+    const select =
+        document.getElementById(
+            "locationFilter"
+        );
+
+
+    const locations =
+        new Set();
+
+
+    allRounds.forEach(
+        function(round){
+
+            if(
+                round.locationName
+            ){
+
+                locations.add(
+                    round.locationName
+                );
+
+            }
+
+        }
+    );
+
+
+    [...locations]
+    .sort()
+    .forEach(
+        function(location){
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+            option.value =
+                location;
+
+            option.textContent =
+                location;
+
+            select.appendChild(
+                option
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   DEFAULTS
+========================================================= */
+
+function setDefaults(){
+
+    const now =
+        new Date();
+
+
+    document.getElementById(
+        "yearFilter"
+    ).value =
+        now.getFullYear();
+
+
+    document.getElementById(
+        "monthFilter"
+    ).value =
+        now.getMonth()+1;
+
+}
+
+
+/* =========================================================
+   PERIOD
+========================================================= */
+
+function periodChanged(){
+
+    const period =
+        document.getElementById(
+            "periodFilter"
+        ).value;
+
+
+    document.getElementById(
+        "monthFilter"
+    ).disabled =
+        period !==
+        "month";
+
+
+    document.getElementById(
+        "fromDate"
+    ).disabled =
+        period !==
+        "custom";
+
+
+    document.getElementById(
+        "toDate"
+    ).disabled =
+        period !==
+        "custom";
+
+
+    document.getElementById(
+        "yearFilter"
+    ).disabled =
+        period ===
+        "all";
+
+
+    refreshReport();
+
+}
+
+
+/* =========================================================
+   RANGE
+========================================================= */
+
+function getSelectedRange(){
+
+    const period =
+        document.getElementById(
+            "periodFilter"
+        ).value;
+
+
+    if(
+        period ===
+        "all"
+    ){
+
+        return {
+
+            from:"",
+            to:""
+
+        };
+
+    }
+
+
+    const year =
+        Number(
+            document.getElementById(
+                "yearFilter"
+            ).value
+        );
+
+
+    const month =
+        Number(
+            document.getElementById(
+                "monthFilter"
+            ).value
+        );
+
+
+    if(
+        period ===
+        "custom"
+    ){
+
+        return {
+
+            from:
+                document.getElementById(
+                    "fromDate"
+                ).value,
+
+            to:
+                document.getElementById(
+                    "toDate"
+                ).value
+
+        };
+
+    }
+
+
+    if(
+        period ===
+        "month"
+    ){
+
+        return monthRange(
+            year,
+            month
+        );
+
+    }
+
+
+    if(
+        period ===
+        "quarter"
+    ){
+
+        const currentMonth =
+            new Date().getMonth()+1;
+
+
+        const quarter =
+            Math.ceil(
+                currentMonth /
+                3
+            );
+
+
+        const firstMonth =
+            (
+                quarter - 1
+            ) * 3 + 1;
+
+
+        const lastMonth =
+            firstMonth + 2;
+
+
+        return {
+
+            from:
+                `${year}-${pad(firstMonth)}-01`,
+
+            to:
+                lastDateOfMonth(
+                    year,
+                    lastMonth
+                )
+
+        };
+
+    }
+
+
+    if(
+        period ===
+        "half"
+    ){
+
+        const currentMonth =
+            new Date().getMonth()+1;
+
+
+        const firstMonth =
+            currentMonth <= 6
+            ? 1
+            : 7;
+
+
+        const lastMonth =
+            currentMonth <= 6
+            ? 6
+            : 12;
+
+
+        return {
+
+            from:
+                `${year}-${pad(firstMonth)}-01`,
+
+            to:
+                lastDateOfMonth(
+                    year,
+                    lastMonth
+                )
+
+        };
+
+    }
+
+
+    return {
+
+        from:
+            `${year}-01-01`,
+
+        to:
+            `${year}-12-31`
+
+    };
+
+}
+
+
+/* =========================================================
+   REFRESH
+========================================================= */
+
+function refreshReport(){
+
+    const range =
+        getSelectedRange();
+
+
+    const roundType =
+        document.getElementById(
+            "roundTypeFilter"
+        ).value;
+
+
+    const employee =
+        document.getElementById(
+            "employeeFilter"
+        ).value;
+
+
+    const location =
+        document.getElementById(
+            "locationFilter"
+        ).value;
+
+
+    const issuesFilter =
+        document.getElementById(
+            "issuesFilter"
+        ).value;
+
+
+    const search =
+        normalizeText(
+            document.getElementById(
+                "searchText"
+            ).value
+        );
+
+
+    const filtered =
+        allRounds
+        .filter(
+            function(round){
+
+                if(
+                    !dateInside(
+                        round.inspectionDate,
+                        range
+                    )
+                ){
+
+                    return false;
+
+                }
+
+
+                if(
+                    roundType ===
+                    "medicalWaste" &&
+                    round.roundType !==
+                    "medicalWaste"
+                ){
+
+                    return false;
+
+                }
+
+
+                if(
+                    roundType ===
+                    "publicHealth" &&
+                    round.roundType ===
+                    "medicalWaste"
+                ){
+
+                    return false;
+
+                }
+
+
+                if(
+                    employee &&
+                    employeeKey(round) !==
+                    employee
+                ){
+
+                    return false;
+
+                }
+
+
+                if(
+                    location &&
+                    round.locationName !==
+                    location
+                ){
+
+                    return false;
+
+                }
+
+
+                const noCount =
+                    Number(
+                        round.noCount
+                    ) || 0;
+
+
+                if(
+                    issuesFilter ===
+                    "issues" &&
+                    noCount === 0
+                ){
+
+                    return false;
+
+                }
+
+
+                if(
+                    issuesFilter ===
+                    "clean" &&
+                    noCount > 0
+                ){
+
+                    return false;
+
+                }
+
+
+                if(search){
+
+                    const text =
+                        normalizeText(
+
+                            [
+                                round.id,
+                                round.employeeName,
+                                round.employeeNumber,
+                                round.categoryName,
+                                round.locationName,
+                                round.generalNotes,
+                                getItemNotes(round)
+                            ]
+                            .join(" ")
+
+                        );
+
+
+                    if(
+                        !text.includes(
+                            search
+                        )
+                    ){
+
+                        return false;
+
+                    }
+
+                }
+
+
+                return true;
+
+            }
+        )
+        .sort(
+            function(a,b){
+
+                return (
+                    String(
+                        b.inspectionDate ||
+                        ""
+                    )
+                    .localeCompare(
+                        String(
+                            a.inspectionDate ||
+                            ""
+                        )
+                    )
+                );
+
+            }
+        );
+
+
+    renderStats(
+        filtered
+    );
+
+
+    renderTable(
+        filtered
+    );
+
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+function renderStats(rounds){
+
+    document.getElementById(
+        "roundsCount"
+    ).textContent =
+        rounds.length;
+
+
+    const complianceValues =
+        rounds
+        .map(
+            function(round){
+
+                return Number(
+                    round.complianceRate
+                );
+
+            }
+        )
+        .filter(
+            function(value){
+
+                return !isNaN(
+                    value
+                );
+
+            }
+        );
+
+
+    const average =
+        complianceValues.length
+
+        ? Math.round(
+
+            complianceValues.reduce(
+                function(sum,value){
+
+                    return sum + value;
+
+                },
+                0
+            )
+
+            /
+
+            complianceValues.length
+
+        )
+
+        : 0;
+
+
+    document.getElementById(
+        "averageCompliance"
+    ).textContent =
+        average +
+        "%";
+
+
+    const noCount =
+        rounds.reduce(
+            function(sum,round){
+
+                return (
+                    sum +
+                    (
+                        Number(
+                            round.noCount
+                        ) || 0
+                    )
+                );
+
+            },
+            0
+        );
+
+
+    document.getElementById(
+        "nonComplianceCount"
+    ).textContent =
+        noCount;
+
+
+    const roundsIssues =
+        rounds.filter(
+            function(round){
+
+                return (
+                    Number(
+                        round.noCount
+                    ) || 0
+                ) > 0;
+
+            }
+        ).length;
+
+
+    document.getElementById(
+        "roundsWithIssues"
+    ).textContent =
+        roundsIssues;
+
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+function renderTable(rounds){
+
+    const body =
+        document.getElementById(
+            "roundsTableBody"
+        );
+
+
+    if(
+        !rounds.length
+    ){
+
+        body.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="13"
+                    class="empty">
+
+                    لا توجد جولات مطابقة للفلاتر المحددة.
+
+                </td>
+
+            </tr>
+
+        `;
+
+
+        return;
+
+    }
+
+
+    body.innerHTML =
+        rounds.map(
+            function(round,index){
+
+                const isWaste =
+                    round.roundType ===
+                    "medicalWaste";
+
+
+                const typeName =
+                    isWaste
+                    ? "النفايات الطبية"
+                    : (
+                        round.categoryName ||
+                        "الصحة العامة"
+                    );
+
+
+                const typeClass =
+                    isWaste
+                    ? "badge-waste"
+                    : "badge-public";
+
+
+                return `
+
+                    <tr>
+
+                        <td>
+                            ${index + 1}
+                        </td>
+
+
+                        <td>
+                            ${escapeHtml(
+                                round.id ||
+                                "—"
+                            )}
+                        </td>
+
+
+                        <td>
+                            ${formatDate(
+                                round.inspectionDate
+                            )}
+                        </td>
+
+
+                        <td>
+                            ${escapeHtml(
+                                round.employeeName ||
+                                "—"
+                            )}
+                        </td>
+
+
+                        <td>
+                            ${escapeHtml(
+                                round.employeeNumber ||
+                                "—"
+                            )}
+                        </td>
+
+
+                        <td>
+
+                            <span class="badge ${typeClass}">
+
+                                ${escapeHtml(
+                                    typeName
+                                )}
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+                            ${escapeHtml(
+                                round.locationName ||
+                                "—"
+                            )}
+                        </td>
+
+
+                        <td>
+                            ${
+                                Number(
+                                    round.yesCount
+                                ) || 0
+                            }
+                        </td>
+
+
+                        <td>
+                            ${
+                                Number(
+                                    round.noCount
+                                ) || 0
+                            }
+                        </td>
+
+
+                        <td>
+                            ${
+                                Number(
+                                    round.notApplicableCount
+                                ) || 0
+                            }
+                        </td>
+
+
+                        <td>
+
+                            ${complianceBadge(
+                                Number(
+                                    round.complianceRate
+                                ) || 0
+                            )}
+
+                        </td>
+
+
+                        <td class="note-cell">
+
+                            ${escapeHtml(
+                                buildNotesText(round)
+                            )}
+
+                        </td>
+
+
+                        <td>
+
+                            <button
+                                class="view-btn"
+                                onclick="openRound('${encodeURIComponent(round.id || "")}')">
+
+                                عرض
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+            }
+        )
+        .join("");
+
+}
+
+
+/* =========================================================
+   NOTES
+========================================================= */
+
+function getItemNotes(round){
+
+    if(
+        !Array.isArray(
+            round.items
+        )
+    ){
+
+        return "";
+
+    }
+
+
+    return round.items
+        .filter(
+            function(item){
+
+                return (
+                    item.note
+                );
+
+            }
+        )
+        .map(
+            function(item){
+
+                return item.note;
+
+            }
+        )
+        .join(" ");
+
+}
+
+
+function buildNotesText(round){
+
+    const notes =
+        [];
+
+
+    if(
+        round.generalNotes
+    ){
+
+        notes.push(
+            round.generalNotes
+        );
+
+    }
+
+
+    if(
+        Array.isArray(
+            round.items
+        )
+    ){
+
+        round.items.forEach(
+            function(item){
+
+                if(
+                    item.status ===
+                    "no" &&
+                    item.note
+                ){
+
+                    notes.push(
+
+                        (
+                            item.text
+                            ? item.text + ": "
+                            : ""
+                        )
+                        +
+                        item.note
+
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    return notes.length
+        ? notes.join(" | ")
+        : "لا توجد ملاحظات";
+
+}
+
+
+/* =========================================================
+   OPEN ROUND
+========================================================= */
+
+function openRound(encodedId){
+
+    const id =
+        decodeURIComponent(
+            encodedId
+        );
+
+
+    sessionStorage.setItem(
+        "phrmsSelectedRoundId",
+        id
+    );
+
+
+    window.location.href =
+        "round-details.html";
+
+}
+
+
+/* =========================================================
+   BADGE
+========================================================= */
+
+function complianceBadge(value){
+
+    let className =
+        "badge-good";
+
+
+    if(
+        value < 70
+    ){
+
+        className =
+            "badge-low";
+
+    }
+    else if(
+        value < 90
+    ){
+
+        className =
+            "badge-medium";
+
+    }
+
+
+    return `
+
+        <span class="badge ${className}">
+            ${value}%
+        </span>
+
+    `;
+
+}
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function employeeKey(item){
+
+    return String(
+        item.employeeNumber ||
+        item.employeeName ||
+        ""
+    ).trim();
+
+}
+
+
+function normalizeText(value){
+
+    return String(
+        value ||
+        ""
+    )
+    .trim()
+    .replace(
+        /\s+/g,
+        " "
+    )
+    .toLowerCase();
+
+}
+
+
+function monthRange(
+    year,
+    month
+){
+
+    return {
+
+        from:
+            `${year}-${pad(month)}-01`,
+
+        to:
+            lastDateOfMonth(
+                year,
+                month
+            )
+
+    };
+
+}
+
+
+function lastDateOfMonth(
+    year,
+    month
+){
+
+    const lastDay =
+        new Date(
+            year,
+            month,
+            0
+        ).getDate();
+
+
+    return (
+        `${year}-${pad(month)}-${pad(lastDay)}`
+    );
+
+}
+
+
+function dateInside(
+    value,
+    range
+){
+
+    if(
+        !value
+    ){
+
+        return false;
+
+    }
+
+
+    if(
+        range.from &&
+        value <
+        range.from
+    ){
+
+        return false;
+
+    }
+
+
+    if(
+        range.to &&
+        value >
+        range.to
+    ){
+
+        return false;
+
+    }
+
+
+    return true;
+
+}
+
+
+function pad(value){
+
+    return String(
+        value
+    ).padStart(
+        2,
+        "0"
+    );
+
+}
+
+
+function formatDate(value){
+
+    if(
+        !value
+    ){
+
+        return "—";
+
+    }
+
+
+    const date =
+        new Date(
+            value +
+            "T12:00:00"
+        );
+
+
+    if(
+        isNaN(
+            date.getTime()
+        )
+    ){
+
+        return value;
+
+    }
+
+
+    return date.toLocaleDateString(
+        "ar-SA"
+    );
+
+}
+
+
+function escapeHtml(value){
+
+    return String(
+        value ||
+        ""
+    )
+    .replaceAll(
+        "&",
+        "&amp;"
+    )
+    .replaceAll(
+        "<",
+        "&lt;"
+    )
+    .replaceAll(
+        ">",
+        "&gt;"
+    )
+    .replaceAll(
+        '"',
+        "&quot;"
+    )
+    .replaceAll(
+        "'",
+        "&#039;"
+    );
+
+}
+
+</script>
+
+</body>
+
+</html>

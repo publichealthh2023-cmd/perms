@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>تفاصيل الجولة</title>
+
+<link rel="stylesheet" href="Style.css">
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    background:#f3f6f8;
+    font-family:Arial,Tahoma,sans-serif;
+    color:#294b6a;
+}
+
+.details-header{
+    background:#fff;
+    border-bottom:4px solid #0759a6;
+    box-shadow:0 3px 12px rgba(0,0,0,.06);
+}
+
+.details-header-grid{
+    max-width:1200px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:140px 1fr 140px;
+    align-items:center;
+    gap:10px;
+    padding:16px;
+}
+
+.details-logo{
+    text-align:center;
+}
+
+.details-logo img{
+    max-width:110px;
+    max-height:70px;
+    object-fit:contain;
+}
+
+.details-title{
+    text-align:center;
+}
+
+.details-title h1{
+    margin:0;
+    color:#064c92;
+    font-size:24px;
+}
+
+.details-title p{
+    margin:5px 0 0;
+    color:#718293;
+    font-size:12px;
+}
+
+.page{
+    max-width:1200px;
+    margin:25px auto;
+    padding:0 15px 70px;
+}
+
+.card{
+    background:#fff;
+    border:1px solid #dfe8f2;
+    border-radius:14px;
+    padding:18px;
+    margin-bottom:16px;
+    box-shadow:0 3px 10px rgba(0,0,0,.03);
+}
+
+.section-title{
+    margin:0 0 15px;
+    color:#064c92;
+    border-right:5px solid #0759a6;
+    padding-right:10px;
+}
+
+.info-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+}
+
+.info-box{
+    background:#f8fbfd;
+    border-radius:10px;
+    padding:14px;
+}
+
+.info-box span{
+    display:block;
+    color:#718293;
+    font-size:11px;
+    margin-bottom:5px;
+}
+
+.info-box strong{
+    color:#294b6a;
+    font-size:14px;
+}
+
+.summary-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+}
+
+.summary-box{
+    text-align:center;
+    background:#f8fbfd;
+    border-radius:10px;
+    padding:15px;
+}
+
+.summary-box strong{
+    display:block;
+    font-size:25px;
+    color:#064c92;
+}
+
+.summary-box span{
+    display:block;
+    font-size:11px;
+    color:#718293;
+    margin-top:5px;
+}
+
+.section-block{
+    margin-bottom:18px;
+    border:1px solid #dce6ed;
+    border-radius:11px;
+    overflow:hidden;
+}
+
+.section-block-title{
+    background:#d9ebf8;
+    color:#174c73;
+    padding:11px 14px;
+    font-weight:bold;
+}
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+.items-table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:800px;
+}
+
+.items-table th{
+    background:#eef5fa;
+    color:#064c92;
+    padding:10px;
+    border:1px solid #dce6ed;
+    font-size:12px;
+}
+
+.items-table td{
+    padding:10px;
+    border:1px solid #e1e8ee;
+    font-size:12px;
+    vertical-align:top;
+}
+
+.badge{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:14px;
+    font-size:10px;
+    font-weight:bold;
+}
+
+.yes{
+    background:#e8f6ec;
+    color:#187b43;
+}
+
+.no{
+    background:#fdecec;
+    color:#b42318;
+}
+
+.na{
+    background:#eef1f4;
+    color:#687786;
+}
+
+.notes-box{
+    background:#fafcfd;
+    border-radius:9px;
+    padding:14px;
+    line-height:1.8;
+    min-height:60px;
+}
+
+.signature-box{
+    text-align:center;
+}
+
+.signature-box img{
+    max-width:350px;
+    width:100%;
+    border:1px solid #d5e0e8;
+    border-radius:10px;
+    background:#fff;
+    padding:8px;
+}
+
+.actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+    margin-top:20px;
+}
+
+.actions button,
+.actions a{
+    border:none;
+    border-radius:8px;
+    padding:11px 16px;
+    text-decoration:none;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.back-btn{
+    background:#eaf1f7;
+    color:#064c92;
+}
+
+.print-btn{
+    background:#0759a6;
+    color:#fff;
+}
+
+@media(max-width:850px){
+
+    .info-grid,
+    .summary-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:600px){
+
+    .details-header-grid{
+        grid-template-columns:60px 1fr 60px;
+        padding:10px 6px;
+    }
+
+    .details-logo img{
+        max-width:55px;
+        max-height:45px;
+    }
+
+    .details-title h1{
+        font-size:17px;
+    }
+
+    .details-title p{
+        font-size:9px;
+    }
+
+    .info-grid,
+    .summary-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header class="details-header">
+
+<div class="details-header-grid">
+
+<div class="details-logo">
+<img src="images/cluster-logo.png" alt="شعار التجمع">
+</div>
+
+<div class="details-title">
+<h1>تفاصيل الجولة</h1>
+<p>Inspection Round Details</p>
+</div>
+
+<div class="details-logo">
+<img src="images/hospital-logo.png" alt="شعار المستشفى">
+</div>
+
+</div>
+
+</header>
+
+<main class="page">
+
+<div id="notFound" class="card" style="display:none;text-align:center;">
+    لم يتم العثور على بيانات الجولة المطلوبة.
+</div>
+
+<div id="detailsContent" style="display:none;">
+
+<section class="card">
+
+<h2 class="section-title">بيانات الجولة</h2>
+
+<div class="info-grid">
+
+<div class="info-box">
+<span>رقم الجولة</span>
+<strong id="roundId">—</strong>
+</div>
+
+<div class="info-box">
+<span>نوع الجولة</span>
+<strong id="roundType">—</strong>
+</div>
+
+<div class="info-box">
+<span>التاريخ</span>
+<strong id="roundDate">—</strong>
+</div>
+
+<div class="info-box">
+<span>الوقت</span>
+<strong id="roundTime">—</strong>
+</div>
+
+<div class="info-box">
+<span>اسم الموظف</span>
+<strong id="employeeName">—</strong>
+</div>
+
+<div class="info-box">
+<span>الرقم الوظيفي</span>
+<strong id="employeeNumber">—</strong>
+</div>
+
+<div class="info-box">
+<span>القسم / الموقع</span>
+<strong id="locationName">—</strong>
+</div>
+
+<div class="info-box">
+<span>حالة الجولة</span>
+<strong id="roundStatus">مرسلة</strong>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h2 class="section-title">ملخص النتائج</h2>
+
+<div class="summary-grid">
+
+<div class="summary-box">
+<strong id="yesCount">0</strong>
+<span>يطبق</span>
+</div>
+
+<div class="summary-box">
+<strong id="noCount">0</strong>
+<span>لا يطبق</span>
+</div>
+
+<div class="summary-box">
+<strong id="naCount">0</strong>
+<span>لا ينطبق</span>
+</div>
+
+<div class="summary-box">
+<strong id="complianceRate">0%</strong>
+<span>نسبة الالتزام</span>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h2 class="section-title">بنود الجولة</h2>
+
+<div id="itemsContainer"></div>
+
+</section>
+
+<section class="card">
+
+<h2 class="section-title">الملاحظات العامة</h2>
+
+<div id="generalNotes" class="notes-box">
+لا توجد ملاحظات عامة.
+</div>
+
+</section>
+
+<section class="card">
+
+<h2 class="section-title">توقيع منفذ الجولة</h2>
+
+<div class="signature-box">
+
+<img id="signatureImage" alt="توقيع منفذ الجولة">
+
+</div>
+
+</section>
+
+<div class="actions">
+
+<a href="control.html" class="back-btn">
+← العودة لصندوق التحكم
+</a>
+
+<button
+    class="print-btn"
+    onclick="window.location.href='round-print.html'">
+🖨️ فتح النموذج الرسمي للطباعة
+</button>
+
+</div>
+
+</div>
+
+</main>
+
+<script>
+
+const PUBLIC_KEY =
+    "phrmsPublicHealthRounds";
+
+const WASTE_KEY =
+    "phrmsMedicalWasteRounds";
+
+document.addEventListener(
+    "DOMContentLoaded",
+    loadRoundDetails
+);
+
+function loadRoundDetails(){
+
+    const selectedId =
+        sessionStorage.getItem(
+            "phrmsSelectedRoundId"
+        );
+
+    if(!selectedId){
+
+        showNotFound();
+        return;
+
+    }
+
+    const publicRounds =
+        getRecords(PUBLIC_KEY);
+
+    const wasteRounds =
+        getRecords(WASTE_KEY);
+
+    const allRounds =
+        [
+            ...publicRounds,
+            ...wasteRounds
+        ];
+
+    const round =
+        allRounds.find(
+            function(item){
+
+                return (
+                    String(item.id) ===
+                    String(selectedId)
+                );
+
+            }
+        );
+
+    if(!round){
+
+        showNotFound();
+        return;
+
+    }
+
+    renderRound(round);
+
+}
+
+function getRecords(key){
+
+    try{
+
+        const data =
+            JSON.parse(
+                localStorage.getItem(key)
+            ) || [];
+
+        return Array.isArray(data)
+            ? data
+            : [];
+
+    }
+    catch(error){
+
+        return [];
+
+    }
+
+}
+
+function showNotFound(){
+
+    document.getElementById(
+        "notFound"
+    ).style.display =
+        "block";
+
+}
+
+function renderRound(round){
+
+    document.getElementById(
+        "detailsContent"
+    ).style.display =
+        "block";
+
+    document.getElementById(
+        "roundId"
+    ).textContent =
+        round.id || "—";
+
+    document.getElementById(
+        "roundType"
+    ).textContent =
+        round.categoryName ||
+        (
+            round.roundType ===
+            "medicalWaste"
+            ? "النفايات الطبية"
+            : "الصحة العامة"
+        );
+
+    document.getElementById(
+        "roundDate"
+    ).textContent =
+        round.inspectionDate ||
+        "—";
+
+    document.getElementById(
+        "roundTime"
+    ).textContent =
+        round.inspectionTime ||
+        "—";
+
+    document.getElementById(
+        "employeeName"
+    ).textContent =
+        round.employeeName ||
+        "—";
+
+    document.getElementById(
+        "employeeNumber"
+    ).textContent =
+        round.employeeNumber ||
+        "—";
+
+    document.getElementById(
+        "locationName"
+    ).textContent =
+        round.locationName ||
+        "—";
+
+    document.getElementById(
+        "yesCount"
+    ).textContent =
+        Number(round.yesCount) || 0;
+
+    document.getElementById(
+        "noCount"
+    ).textContent =
+        Number(round.noCount) || 0;
+
+    document.getElementById(
+        "naCount"
+    ).textContent =
+        Number(round.notApplicableCount) || 0;
+
+    document.getElementById(
+        "complianceRate"
+    ).textContent =
+        (
+            Number(
+                round.complianceRate
+            ) || 0
+        ) + "%";
+
+    document.getElementById(
+        "generalNotes"
+    ).textContent =
+        round.generalNotes ||
+        "لا توجد ملاحظات عامة.";
+
+    const signature =
+        document.getElementById(
+            "signatureImage"
+        );
+
+    if(round.signature){
+
+        signature.src =
+            round.signature;
+
+    }
+    else{
+
+        signature.style.display =
+            "none";
+
+    }
+
+    renderItems(
+        Array.isArray(round.items)
+        ? round.items
+        : []
+    );
+
+}
+
+function renderItems(items){
+
+    const container =
+        document.getElementById(
+            "itemsContainer"
+        );
+
+    if(!items.length){
+
+        container.innerHTML =
+            "<div class='notes-box'>لا توجد بنود محفوظة.</div>";
+
+        return;
+
+    }
+
+    const groups =
+        [];
+
+    items.forEach(
+        function(item){
+
+            const sectionName =
+                item.sectionName ||
+                "بنود الجولة";
+
+            let group =
+                groups.find(
+                    function(current){
+
+                        return (
+                            current.name ===
+                            sectionName
+                        );
+
+                    }
+                );
+
+            if(!group){
+
+                group = {
+                    name:sectionName,
+                    items:[]
+                };
+
+                groups.push(group);
+
+            }
+
+            group.items.push(item);
+
+        }
+    );
+
+    container.innerHTML =
+        groups
+        .map(
+            function(group){
+
+                return `
+
+                <section class="section-block">
+
+                <div class="section-block-title">
+                ${escapeHtml(group.name)}
+                </div>
+
+                <div class="table-wrap">
+
+                <table class="items-table">
+
+                <thead>
+
+                <tr>
+                <th>م</th>
+                <th>البند</th>
+                <th>النتيجة</th>
+                <th>الملاحظة</th>
+                </tr>
+
+                </thead>
+
+                <tbody>
+
+                ${
+                    group.items
+                    .map(
+                        function(item,index){
+
+                            return `
+
+                            <tr>
+
+                            <td>
+                            ${index + 1}
+                            </td>
+
+                            <td>
+                            ${escapeHtml(item.text || "")}
+                            </td>
+
+                            <td>
+                            ${statusBadge(item.status)}
+                            </td>
+
+                            <td>
+                            ${escapeHtml(item.note || "—")}
+                            </td>
+
+                            </tr>
+
+                            `;
+
+                        }
+                    )
+                    .join("")
+                }
+
+                </tbody>
+
+                </table>
+
+                </div>
+
+                </section>
+
+                `;
+
+            }
+        )
+        .join("");
+
+}
+
+function statusBadge(status){
+
+    if(status === "yes"){
+
+        return `
+        <span class="badge yes">
+        ✓ يطبق
+        </span>
+        `;
+
+    }
+
+    if(status === "no"){
+
+        return `
+        <span class="badge no">
+        ✕ لا يطبق
+        </span>
+        `;
+
+    }
+
+    return `
+    <span class="badge na">
+    — لا ينطبق
+    </span>
+    `;
+
+}
+
+function escapeHtml(value){
+
+    return String(
+        value || ""
+    )
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+</script>
+
+</body>
+
+</html>

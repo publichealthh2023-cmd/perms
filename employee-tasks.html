@@ -1,0 +1,2300 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>إدارة مهام وخطة جولات الموظفين | PHRMS</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    background:#f3f6f8;
+    font-family:Arial,Tahoma,sans-serif;
+    color:#294b6a;
+}
+
+.page{
+    max-width:1300px;
+    margin:25px auto;
+    padding:0 15px 70px;
+}
+
+.page-header{
+    background:#fff;
+    border:1px solid #dfe8f2;
+    border-radius:16px;
+    padding:20px;
+    margin-bottom:18px;
+    box-shadow:0 4px 14px rgba(0,0,0,.04);
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.page-header h1{
+    margin:0;
+    color:#0759a6;
+    font-size:25px;
+}
+
+.page-header p{
+    margin:6px 0 0;
+    color:#718293;
+    font-size:13px;
+    line-height:1.7;
+}
+
+.header-actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    border:none;
+    border-radius:9px;
+    padding:10px 15px;
+    text-decoration:none;
+    cursor:pointer;
+    font-weight:bold;
+    font-size:13px;
+}
+
+.btn-back{
+    background:#eaf1f7;
+    color:#0759a6;
+}
+
+.btn-primary{
+    background:#0759a6;
+    color:#fff;
+}
+
+.btn-secondary{
+    background:#e9eef3;
+    color:#36536b;
+}
+
+.btn-plan{
+    background:#15936c;
+    color:#fff;
+}
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:12px;
+    margin-bottom:18px;
+}
+
+.stat-card{
+    background:#fff;
+    border:1px solid #dfe8f2;
+    border-radius:14px;
+    padding:18px;
+    text-align:center;
+}
+
+.stat-card strong{
+    display:block;
+    font-size:27px;
+    color:#0759a6;
+}
+
+.stat-card span{
+    display:block;
+    margin-top:5px;
+    color:#718293;
+    font-size:11px;
+}
+
+.card{
+    background:#fff;
+    border:1px solid #dfe8f2;
+    border-radius:15px;
+    padding:20px;
+    margin-bottom:18px;
+    box-shadow:0 3px 10px rgba(0,0,0,.03);
+}
+
+.card-title{
+    margin:0 0 16px;
+    color:#0759a6;
+    border-right:5px solid #0759a6;
+    padding-right:10px;
+    font-size:18px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:13px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.form-group.full{
+    grid-column:1/-1;
+}
+
+.form-group label{
+    font-size:12px;
+    font-weight:bold;
+    color:#36536b;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+    width:100%;
+    padding:11px 12px;
+    border:1px solid #ccd9e5;
+    border-radius:9px;
+    background:#fff;
+    font-size:14px;
+    outline:none;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+    border-color:#0759a6;
+    box-shadow:0 0 0 3px rgba(7,89,166,.08);
+}
+
+.form-group input[readonly]{
+    background:#f3f6f8;
+}
+
+.form-group textarea{
+    min-height:85px;
+    resize:vertical;
+}
+
+.form-actions{
+    display:flex;
+    gap:8px;
+    margin-top:16px;
+    flex-wrap:wrap;
+}
+
+.filter-row{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin-bottom:14px;
+}
+
+.filter-group{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.filter-group label{
+    font-size:12px;
+    font-weight:bold;
+}
+
+.filter-group input,
+.filter-group select{
+    padding:10px;
+    border:1px solid #ccd9e5;
+    border-radius:8px;
+    background:#fff;
+}
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+.data-table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:1250px;
+}
+
+.data-table th{
+    background:#edf5fc;
+    color:#0759a6;
+    padding:10px;
+    border:1px solid #dbe5ed;
+    font-size:12px;
+}
+
+.data-table td{
+    padding:10px;
+    border:1px solid #e3e9ee;
+    text-align:center;
+    font-size:12px;
+}
+
+.data-table tbody tr:nth-child(even){
+    background:#fafcfd;
+}
+
+.status-badge{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:15px;
+    font-size:10px;
+    font-weight:bold;
+}
+
+.status-planned{
+    background:#e8f2ff;
+    color:#0759a6;
+}
+
+.status-done{
+    background:#e8f6ec;
+    color:#187b43;
+}
+
+.status-late{
+    background:#fdecec;
+    color:#b42318;
+}
+
+.status-cancelled{
+    background:#eef1f4;
+    color:#687786;
+}
+
+.table-btn{
+    border:none;
+    border-radius:7px;
+    padding:7px 9px;
+    cursor:pointer;
+    font-weight:bold;
+    font-size:11px;
+    margin:2px;
+}
+
+.edit-btn{
+    background:#edf5fc;
+    color:#0759a6;
+}
+
+.delete-btn{
+    background:#fdecec;
+    color:#b42318;
+}
+
+.alert{
+    display:none;
+    border-radius:9px;
+    padding:12px;
+    margin-bottom:14px;
+    font-size:12px;
+}
+
+.alert.active{
+    display:block;
+}
+
+.alert.success{
+    background:#eef8f0;
+    color:#285b33;
+    border-right:5px solid #2e7d32;
+}
+
+.alert.error{
+    background:#fff0f0;
+    color:#7d2525;
+    border-right:5px solid #c62828;
+}
+
+.empty{
+    text-align:center;
+    color:#81909d;
+    padding:25px;
+}
+
+@media(max-width:950px){
+
+    .form-grid,
+    .filter-row{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .stats-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:600px){
+
+    .form-grid,
+    .filter-row,
+    .stats-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-group.full{
+        grid-column:auto;
+    }
+
+}
+
+@media print{
+
+    .page-header,
+    .form-card,
+    .filter-row,
+    .form-actions{
+        display:none !important;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="page">
+
+<section class="page-header">
+
+<div>
+
+<h1>
+إدارة مهام وخطة جولات الموظفين
+</h1>
+
+<p>
+تحديد الجولات المطلوبة ومتابعة تنفيذها تلقائيًا من خلال الجولات المسجلة في النظام.
+</p>
+
+</div>
+
+<div class="header-actions">
+
+<a href="control.html" class="btn btn-back">
+← صندوق التحكم
+</a>
+
+<a href="future-rounds-plan.html" class="btn btn-plan">
+🖨️ خطة الجولات المستقبلية
+</a>
+
+<a href="employee-performance-report.html" class="btn btn-primary">
+📊 تقرير الأداء
+</a>
+
+</div>
+
+</section>
+
+
+<section class="stats-grid">
+
+<div class="stat-card">
+<strong id="totalTasksCount">0</strong>
+<span>إجمالي الجولات المطلوبة</span>
+</div>
+
+<div class="stat-card">
+<strong id="monthTasksCount">0</strong>
+<span>جولات الشهر</span>
+</div>
+
+<div class="stat-card">
+<strong id="completedCount">0</strong>
+<span>تم تنفيذها</span>
+</div>
+
+<div class="stat-card">
+<strong id="lateCount">0</strong>
+<span>متأخرة</span>
+</div>
+
+<div class="stat-card">
+<strong id="achievementRate">0%</strong>
+<span>نسبة الإنجاز</span>
+</div>
+
+</section>
+
+
+<section class="card form-card">
+
+<h2 class="card-title">
+➕ إضافة مهمة / جولة مطلوبة
+</h2>
+
+<div id="formAlert" class="alert"></div>
+
+<div class="form-grid">
+
+
+<div class="form-group">
+
+<label>
+اسم الموظف *
+</label>
+
+<select
+    id="employeeSelect"
+    onchange="employeeChanged()">
+
+<option value="">
+اختر الموظف
+</option>
+
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+الرقم الوظيفي
+</label>
+
+<input
+    id="employeeNumber"
+    type="text"
+    readonly>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+شهر الخطة *
+</label>
+
+<input
+    id="planMonth"
+    type="month">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+نوع الجولة / المهمة *
+</label>
+
+<select id="roundType">
+
+<option value="">
+اختر النوع
+</option>
+
+<option value="publicHealth">
+الصحة العامة
+</option>
+
+<option value="medicalWaste">
+النفايات الطبية
+</option>
+
+<option value="other">
+مهمة أخرى
+</option>
+
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+القسم / الموقع
+</label>
+
+<select id="locationName">
+
+<option value="">
+اختر الموقع
+</option>
+
+<option value="العيادات الخارجية">العيادات الخارجية</option>
+<option value="الطوارئ">الطوارئ</option>
+<option value="أقسام التنويم">أقسام التنويم</option>
+<option value="الصيدلية">الصيدلية</option>
+<option value="المختبر">المختبر</option>
+<option value="التغذية / المطبخ">التغذية / المطبخ</option>
+<option value="المغسلة">المغسلة</option>
+<option value="الأقسام الإدارية">الأقسام الإدارية</option>
+<option value="الساحات والحدائق">الساحات والحدائق</option>
+<option value="مرافق المياه">مرافق المياه</option>
+<option value="النفايات الطبية">النفايات الطبية</option>
+<option value="أخرى">أخرى</option>
+
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+تاريخ التنفيذ المطلوب *
+</label>
+
+<input
+    id="requiredDate"
+    type="date">
+
+</div>
+
+
+<div class="form-group full">
+
+<label>
+المهمة *
+</label>
+
+<textarea
+    id="taskName"
+    placeholder="اكتب المهمة أو وصف الجولة المطلوبة"></textarea>
+
+</div>
+
+</div>
+
+
+<div class="form-actions">
+
+<button
+    class="btn btn-primary"
+    onclick="saveTask()">
+
+💾 حفظ المهمة
+
+</button>
+
+<button
+    class="btn btn-secondary"
+    onclick="clearForm()">
+
+مسح الحقول
+
+</button>
+
+</div>
+
+</section>
+
+
+<section class="card">
+
+<h2 class="card-title">
+📅 خطة المهام والجولات
+</h2>
+
+
+<div class="filter-row">
+
+
+<div class="filter-group">
+
+<label>
+الشهر
+</label>
+
+<input
+    id="filterMonth"
+    type="month"
+    onchange="renderTasks()">
+
+</div>
+
+
+<div class="filter-group">
+
+<label>
+الموظف
+</label>
+
+<select
+    id="filterEmployee"
+    onchange="renderTasks()">
+
+<option value="">
+جميع الموظفين
+</option>
+
+</select>
+
+</div>
+
+
+<div class="filter-group">
+
+<label>
+الحالة
+</label>
+
+<select
+    id="filterStatus"
+    onchange="renderTasks()">
+
+<option value="">
+جميع الحالات
+</option>
+
+<option value="planned">
+مخططة
+</option>
+
+<option value="done">
+منفذة
+</option>
+
+<option value="late">
+متأخرة
+</option>
+
+</select>
+
+</div>
+
+
+<div class="filter-group">
+
+<label>
+بحث
+</label>
+
+<input
+    id="searchText"
+    type="text"
+    placeholder="اسم الموظف أو المهمة..."
+    oninput="renderTasks()">
+
+</div>
+
+
+</div>
+
+
+<div class="table-wrap">
+
+<table class="data-table">
+
+<thead>
+
+<tr>
+
+<th>م</th>
+<th>الموظف</th>
+<th>الرقم الوظيفي</th>
+<th>المهمة</th>
+<th>نوع الجولة</th>
+<th>الموقع</th>
+<th>التاريخ المطلوب</th>
+<th>الحالة</th>
+<th>تاريخ التنفيذ الفعلي</th>
+<th>الإجراء</th>
+
+</tr>
+
+</thead>
+
+<tbody id="tasksTableBody">
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+const TASKS_KEY =
+    "phrmsEmployeeTasks";
+
+const EMPLOYEE_SIGNATURES_KEY =
+    "phrmsEmployeeSignatures";
+
+const PUBLIC_KEY =
+    "phrmsPublicHealthRounds";
+
+const WASTE_KEY =
+    "phrmsMedicalWasteRounds";
+
+
+let employees = [];
+
+let editingTaskId = null;
+
+
+/* =========================================================
+   START
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        setDefaultMonth();
+
+        loadEmployees();
+
+        renderTasks();
+
+    }
+);
+
+
+/* =========================================================
+   STORAGE HELPERS
+========================================================= */
+
+function getArray(key){
+
+    try{
+
+        const data =
+            JSON.parse(
+                localStorage.getItem(key)
+            ) || [];
+
+        return Array.isArray(data)
+            ? data
+            : [];
+
+    }
+    catch(error){
+
+        return [];
+
+    }
+
+}
+
+
+function getTasks(){
+
+    return getArray(
+        TASKS_KEY
+    );
+
+}
+
+
+function getRounds(){
+
+    return [
+
+        ...getArray(
+            PUBLIC_KEY
+        ),
+
+        ...getArray(
+            WASTE_KEY
+        )
+
+    ];
+
+}
+
+
+function saveTasks(tasks){
+
+    localStorage.setItem(
+        TASKS_KEY,
+        JSON.stringify(tasks)
+    );
+
+}
+
+
+/* =========================================================
+   DEFAULT MONTH
+========================================================= */
+
+function setDefaultMonth(){
+
+    const now =
+        new Date();
+
+
+    const month =
+        now.getFullYear() +
+        "-" +
+        pad(
+            now.getMonth()+1
+        );
+
+
+    document.getElementById(
+        "planMonth"
+    ).value =
+        month;
+
+
+    document.getElementById(
+        "filterMonth"
+    ).value =
+        month;
+
+}
+
+
+/* =========================================================
+   EMPLOYEES
+========================================================= */
+
+function loadEmployees(){
+
+    employees =
+        getArray(
+            EMPLOYEE_SIGNATURES_KEY
+        );
+
+
+    const employeeSelect =
+        document.getElementById(
+            "employeeSelect"
+        );
+
+
+    const filterEmployee =
+        document.getElementById(
+            "filterEmployee"
+        );
+
+
+    employeeSelect.innerHTML = `
+
+        <option value="">
+            اختر الموظف
+        </option>
+
+    `;
+
+
+    filterEmployee.innerHTML = `
+
+        <option value="">
+            جميع الموظفين
+        </option>
+
+    `;
+
+
+    employees.forEach(
+        function(employee){
+
+            const value =
+                employee.employeeNumber ||
+                employee.employeeName;
+
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value =
+                value;
+
+
+            option.textContent =
+                employee.employeeName;
+
+
+            employeeSelect.appendChild(
+                option
+            );
+
+
+            const copy =
+                option.cloneNode(
+                    true
+                );
+
+
+            filterEmployee.appendChild(
+                copy
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   EMPLOYEE CHANGE
+========================================================= */
+
+function employeeChanged(){
+
+    const value =
+        document.getElementById(
+            "employeeSelect"
+        ).value;
+
+
+    const employee =
+        employees.find(
+            function(item){
+
+                return (
+                    employeeKey(item) ===
+                    String(value)
+                );
+
+            }
+        );
+
+
+    document.getElementById(
+        "employeeNumber"
+    ).value =
+        employee
+        ? employee.employeeNumber || ""
+        : "";
+
+}
+
+
+/* =========================================================
+   SAVE TASK
+========================================================= */
+
+function saveTask(){
+
+    const employeeValue =
+        document.getElementById(
+            "employeeSelect"
+        ).value;
+
+
+    const employee =
+        employees.find(
+            function(item){
+
+                return (
+                    employeeKey(item) ===
+                    String(employeeValue)
+                );
+
+            }
+        );
+
+
+    const employeeNumber =
+        document.getElementById(
+            "employeeNumber"
+        ).value.trim();
+
+
+    const planMonth =
+        document.getElementById(
+            "planMonth"
+        ).value;
+
+
+    const roundType =
+        document.getElementById(
+            "roundType"
+        ).value;
+
+
+    const locationName =
+        document.getElementById(
+            "locationName"
+        ).value;
+
+
+    const requiredDate =
+        document.getElementById(
+            "requiredDate"
+        ).value;
+
+
+    const taskName =
+        document.getElementById(
+            "taskName"
+        ).value.trim();
+
+
+    if(
+        !employee ||
+        !employeeNumber ||
+        !planMonth ||
+        !roundType ||
+        !requiredDate ||
+        !taskName
+    ){
+
+        showAlert(
+            "يرجى استكمال بيانات المهمة الأساسية.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const tasks =
+        getTasks();
+
+
+    if(editingTaskId){
+
+        const index =
+            tasks.findIndex(
+                function(task){
+
+                    return (
+                        task.id ===
+                        editingTaskId
+                    );
+
+                }
+            );
+
+
+        if(index >= 0){
+
+            tasks[index] = {
+
+                ...tasks[index],
+
+                employeeName:
+                    employee.employeeName,
+
+                employeeNumber:
+                    employeeNumber,
+
+                planMonth:
+                    planMonth,
+
+                taskName:
+                    taskName,
+
+                roundType:
+                    roundType,
+
+                locationName:
+                    locationName,
+
+                requiredDate:
+                    requiredDate,
+
+                updatedAt:
+                    new Date()
+                    .toISOString()
+
+            };
+
+        }
+
+    }
+    else{
+
+        tasks.unshift({
+
+            id:
+                generateTaskId(),
+
+            employeeName:
+                employee.employeeName,
+
+            employeeNumber:
+                employeeNumber,
+
+            planMonth:
+                planMonth,
+
+            taskName:
+                taskName,
+
+            roundType:
+                roundType,
+
+            locationName:
+                locationName,
+
+            requiredDate:
+                requiredDate,
+
+            status:
+                "planned",
+
+            createdAt:
+                new Date()
+                .toISOString()
+
+        });
+
+    }
+
+
+    saveTasks(
+        tasks
+    );
+
+
+    showAlert(
+        editingTaskId
+        ? "✅ تم تحديث المهمة."
+        : "✅ تم حفظ المهمة.",
+        "success"
+    );
+
+
+    clearForm();
+
+    renderTasks();
+
+}
+
+
+/* =========================================================
+   AUTOMATIC MATCHING
+========================================================= */
+
+function buildTaskMatches(tasks){
+
+    const rounds =
+        getRounds()
+        .map(
+            function(round){
+
+                return {
+
+                    ...round,
+
+                    _used:false
+
+                };
+
+            }
+        );
+
+
+    return tasks.map(
+        function(task){
+
+            if(
+                task.status ===
+                "cancelled"
+            ){
+
+                return {
+
+                    task:task,
+
+                    status:
+                        "cancelled",
+
+                    matchedRound:
+                        null
+
+                };
+
+            }
+
+
+            if(
+                task.roundType ===
+                "other"
+            ){
+
+                return {
+
+                    task:task,
+
+                    status:
+                        task.requiredDate <
+                        getToday()
+                        ? "late"
+                        : "planned",
+
+                    matchedRound:
+                        null
+
+                };
+
+            }
+
+
+            const candidates =
+                rounds.filter(
+                    function(round){
+
+                        if(round._used){
+
+                            return false;
+
+                        }
+
+
+                        if(
+                            employeeKey(round) !==
+                            employeeKey(task)
+                        ){
+
+                            return false;
+
+                        }
+
+
+                        if(
+                            !sameRoundType(
+                                task,
+                                round
+                            )
+                        ){
+
+                            return false;
+
+                        }
+
+
+                        if(
+                            task.locationName &&
+                            round.locationName &&
+                            normalizeText(
+                                task.locationName
+                            ) !==
+                            normalizeText(
+                                round.locationName
+                            )
+                        ){
+
+                            return false;
+
+                        }
+
+
+                        return true;
+
+                    }
+                );
+
+
+            let best =
+                null;
+
+
+            let bestDistance =
+                Infinity;
+
+
+            candidates.forEach(
+                function(round){
+
+                    const distance =
+                        dateDistance(
+                            task.requiredDate,
+                            round.inspectionDate
+                        );
+
+
+                    if(
+                        distance <
+                        bestDistance
+                    ){
+
+                        bestDistance =
+                            distance;
+
+                        best =
+                            round;
+
+                    }
+
+                }
+            );
+
+
+            /*
+              تعتبر الجولة منفذة إذا تمت
+              خلال 14 يوماً قبل أو بعد الموعد.
+            */
+
+            if(
+                best &&
+                bestDistance <= 14
+            ){
+
+                best._used =
+                    true;
+
+
+                return {
+
+                    task:task,
+
+                    status:
+                        "done",
+
+                    matchedRound:
+                        best
+
+                };
+
+            }
+
+
+            return {
+
+                task:task,
+
+                status:
+                    task.requiredDate <
+                    getToday()
+                    ? "late"
+                    : "planned",
+
+                matchedRound:
+                    null
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   RENDER
+========================================================= */
+
+function renderTasks(){
+
+    const tasks =
+        getTasks();
+
+
+    const matches =
+        buildTaskMatches(
+            tasks
+        );
+
+
+    const filterMonth =
+        document.getElementById(
+            "filterMonth"
+        ).value;
+
+
+    const filterEmployee =
+        document.getElementById(
+            "filterEmployee"
+        ).value;
+
+
+    const filterStatus =
+        document.getElementById(
+            "filterStatus"
+        ).value;
+
+
+    const search =
+        normalizeText(
+            document.getElementById(
+                "searchText"
+            ).value
+        );
+
+
+    const filtered =
+        matches
+        .filter(
+            function(result){
+
+                const task =
+                    result.task;
+
+
+                if(
+                    filterMonth &&
+                    task.planMonth !==
+                    filterMonth
+                ){
+
+                    return false;
+
+                }
+
+
+                if(
+                    filterEmployee &&
+                    employeeKey(task) !==
+                    filterEmployee
+                ){
+
+                    return false;
+
+                }
+
+
+                if(
+                    filterStatus &&
+                    result.status !==
+                    filterStatus
+                ){
+
+                    return false;
+
+                }
+
+
+                if(search){
+
+                    const text =
+                        normalizeText(
+
+                            [
+                                task.employeeName,
+                                task.employeeNumber,
+                                task.taskName,
+                                task.locationName
+                            ]
+                            .join(" ")
+
+                        );
+
+
+                    if(
+                        !text.includes(
+                            search
+                        )
+                    ){
+
+                        return false;
+
+                    }
+
+                }
+
+
+                return true;
+
+            }
+        )
+        .sort(
+            function(a,b){
+
+                return String(
+                    a.task.requiredDate
+                )
+                .localeCompare(
+                    String(
+                        b.task.requiredDate
+                    )
+                );
+
+            }
+        );
+
+
+    const body =
+        document.getElementById(
+            "tasksTableBody"
+        );
+
+
+    if(!filtered.length){
+
+        body.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="10"
+                    class="empty">
+
+                    لا توجد مهام مطابقة.
+
+                </td>
+
+            </tr>
+
+        `;
+
+    }
+    else{
+
+        body.innerHTML =
+            filtered.map(
+                function(result,index){
+
+                    const task =
+                        result.task;
+
+
+                    const actualDate =
+                        result.matchedRound
+                        ? result.matchedRound.inspectionDate
+                        : "";
+
+
+                    return `
+
+                        <tr>
+
+                            <td>
+                                ${index + 1}
+                            </td>
+
+
+                            <td>
+                                ${escapeHtml(task.employeeName)}
+                            </td>
+
+
+                            <td>
+                                ${escapeHtml(task.employeeNumber)}
+                            </td>
+
+
+                            <td>
+                                ${escapeHtml(task.taskName)}
+                            </td>
+
+
+                            <td>
+                                ${escapeHtml(
+                                    roundTypeName(
+                                        task.roundType
+                                    )
+                                )}
+                            </td>
+
+
+                            <td>
+                                ${escapeHtml(
+                                    task.locationName ||
+                                    "—"
+                                )}
+                            </td>
+
+
+                            <td>
+                                ${formatDate(
+                                    task.requiredDate
+                                )}
+                            </td>
+
+
+                            <td>
+                                ${statusBadge(
+                                    result.status
+                                )}
+                            </td>
+
+
+                            <td>
+
+                                ${
+                                    actualDate
+                                    ? formatDate(actualDate)
+                                    : "—"
+                                }
+
+                            </td>
+
+
+                            <td>
+
+                                <button
+                                    class="table-btn edit-btn"
+                                    onclick="editTask('${escapeJs(task.id)}')">
+
+                                    تعديل
+
+                                </button>
+
+
+                                <button
+                                    class="table-btn delete-btn"
+                                    onclick="deleteTask('${escapeJs(task.id)}')">
+
+                                    حذف
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+                    `;
+
+                }
+            )
+            .join("");
+
+    }
+
+
+    renderStats(
+        matches,
+        filterMonth
+    );
+
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+function renderStats(
+    matches,
+    month
+){
+
+    const monthMatches =
+        month
+        ? matches.filter(
+            function(result){
+
+                return (
+                    result.task.planMonth ===
+                    month
+                );
+
+            }
+        )
+        : matches;
+
+
+    const required =
+        monthMatches.filter(
+            function(result){
+
+                return (
+                    result.task.roundType ===
+                    "publicHealth" ||
+                    result.task.roundType ===
+                    "medicalWaste"
+                );
+
+            }
+        );
+
+
+    const completed =
+        required.filter(
+            function(result){
+
+                return (
+                    result.status ===
+                    "done"
+                );
+
+            }
+        ).length;
+
+
+    const late =
+        required.filter(
+            function(result){
+
+                return (
+                    result.status ===
+                    "late"
+                );
+
+            }
+        ).length;
+
+
+    const achievement =
+        required.length
+
+        ? Math.round(
+            completed /
+            required.length *
+            100
+        )
+
+        : 0;
+
+
+    document.getElementById(
+        "totalTasksCount"
+    ).textContent =
+        matches.length;
+
+
+    document.getElementById(
+        "monthTasksCount"
+    ).textContent =
+        required.length;
+
+
+    document.getElementById(
+        "completedCount"
+    ).textContent =
+        completed;
+
+
+    document.getElementById(
+        "lateCount"
+    ).textContent =
+        late;
+
+
+    document.getElementById(
+        "achievementRate"
+    ).textContent =
+        achievement +
+        "%";
+
+}
+
+
+/* =========================================================
+   EDIT
+========================================================= */
+
+function editTask(id){
+
+    const task =
+        getTasks()
+        .find(
+            function(item){
+
+                return (
+                    item.id === id
+                );
+
+            }
+        );
+
+
+    if(!task){
+
+        return;
+
+    }
+
+
+    editingTaskId =
+        task.id;
+
+
+    document.getElementById(
+        "employeeSelect"
+    ).value =
+        employeeKey(task);
+
+
+    employeeChanged();
+
+
+    document.getElementById(
+        "planMonth"
+    ).value =
+        task.planMonth || "";
+
+
+    document.getElementById(
+        "roundType"
+    ).value =
+        task.roundType || "";
+
+
+    document.getElementById(
+        "locationName"
+    ).value =
+        task.locationName || "";
+
+
+    document.getElementById(
+        "requiredDate"
+    ).value =
+        task.requiredDate || "";
+
+
+    document.getElementById(
+        "taskName"
+    ).value =
+        task.taskName || "";
+
+
+    window.scrollTo({
+
+        top:0,
+
+        behavior:"smooth"
+
+    });
+
+}
+
+
+/* =========================================================
+   DELETE
+========================================================= */
+
+function deleteTask(id){
+
+    if(
+        !confirm(
+            "هل تريد حذف هذه المهمة؟"
+        )
+    ){
+
+        return;
+
+    }
+
+
+    const tasks =
+        getTasks()
+        .filter(
+            function(task){
+
+                return (
+                    task.id !== id
+                );
+
+            }
+        );
+
+
+    saveTasks(
+        tasks
+    );
+
+
+    renderTasks();
+
+}
+
+
+/* =========================================================
+   CLEAR
+========================================================= */
+
+function clearForm(){
+
+    editingTaskId =
+        null;
+
+
+    document.getElementById(
+        "employeeSelect"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "employeeNumber"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "roundType"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "locationName"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "requiredDate"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "taskName"
+    ).value =
+        "";
+
+}
+
+
+/* =========================================================
+   MATCH HELPERS
+========================================================= */
+
+function employeeKey(item){
+
+    return String(
+        item.employeeNumber ||
+        item.employeeName ||
+        ""
+    ).trim();
+
+}
+
+
+function sameRoundType(
+    task,
+    round
+){
+
+    if(
+        task.roundType ===
+        "medicalWaste"
+    ){
+
+        return (
+            round.roundType ===
+            "medicalWaste"
+        );
+
+    }
+
+
+    if(
+        task.roundType ===
+        "publicHealth"
+    ){
+
+        return (
+            round.roundType !==
+            "medicalWaste"
+        );
+
+    }
+
+
+    return false;
+
+}
+
+
+function dateDistance(
+    value1,
+    value2
+){
+
+    if(
+        !value1 ||
+        !value2
+    ){
+
+        return Infinity;
+
+    }
+
+
+    const a =
+        new Date(
+            value1 +
+            "T12:00:00"
+        );
+
+
+    const b =
+        new Date(
+            value2 +
+            "T12:00:00"
+        );
+
+
+    if(
+        isNaN(a.getTime()) ||
+        isNaN(b.getTime())
+    ){
+
+        return Infinity;
+
+    }
+
+
+    return Math.abs(
+        Math.round(
+            (
+                a-b
+            ) /
+            86400000
+        )
+    );
+
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+function statusBadge(status){
+
+    if(
+        status ===
+        "done"
+    ){
+
+        return `
+
+            <span class="status-badge status-done">
+                ✓ منفذة
+            </span>
+
+        `;
+
+    }
+
+
+    if(
+        status ===
+        "late"
+    ){
+
+        return `
+
+            <span class="status-badge status-late">
+                متأخرة
+            </span>
+
+        `;
+
+    }
+
+
+    if(
+        status ===
+        "cancelled"
+    ){
+
+        return `
+
+            <span class="status-badge status-cancelled">
+                ملغاة
+            </span>
+
+        `;
+
+    }
+
+
+    return `
+
+        <span class="status-badge status-planned">
+            مخططة
+        </span>
+
+    `;
+
+}
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function roundTypeName(value){
+
+    const map = {
+
+        publicHealth:
+            "الصحة العامة",
+
+        medicalWaste:
+            "النفايات الطبية",
+
+        other:
+            "مهمة أخرى"
+
+    };
+
+
+    return (
+        map[value] ||
+        value ||
+        "—"
+    );
+
+}
+
+
+function generateTaskId(){
+
+    return (
+
+        "TASK-" +
+        Date.now() +
+        "-" +
+        Math.floor(
+            1000 +
+            Math.random() *
+            9000
+        )
+
+    );
+
+}
+
+
+function getToday(){
+
+    const now =
+        new Date();
+
+
+    return (
+
+        now.getFullYear() +
+        "-" +
+        pad(
+            now.getMonth()+1
+        ) +
+        "-" +
+        pad(
+            now.getDate()
+        )
+
+    );
+
+}
+
+
+function pad(value){
+
+    return String(
+        value
+    ).padStart(
+        2,
+        "0"
+    );
+
+}
+
+
+function normalizeText(value){
+
+    return String(
+        value ||
+        ""
+    )
+    .trim()
+    .replace(
+        /\s+/g,
+        " "
+    )
+    .toLowerCase();
+
+}
+
+
+function formatDate(value){
+
+    if(!value){
+
+        return "—";
+
+    }
+
+
+    const date =
+        new Date(
+            value +
+            "T12:00:00"
+        );
+
+
+    if(
+        isNaN(
+            date.getTime()
+        )
+    ){
+
+        return value;
+
+    }
+
+
+    return date.toLocaleDateString(
+        "ar-SA"
+    );
+
+}
+
+
+function showAlert(
+    message,
+    type
+){
+
+    const alert =
+        document.getElementById(
+            "formAlert"
+        );
+
+
+    alert.className =
+        "alert active " +
+        type;
+
+
+    alert.textContent =
+        message;
+
+}
+
+
+function escapeHtml(value){
+
+    return String(
+        value || ""
+    )
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+function escapeJs(value){
+
+    return String(
+        value || ""
+    )
+    .replaceAll("\\","\\\\")
+    .replaceAll("'","\\'");
+
+}
+
+</script>
+
+</body>
+
+</html>

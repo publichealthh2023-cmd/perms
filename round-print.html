@@ -1,0 +1,1992 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>طباعة الجولة | PHRMS</title>
+
+<style>
+
+/* =========================================================
+   GENERAL
+========================================================= */
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    background:#eef3f7;
+    font-family:Arial,Tahoma,sans-serif;
+    color:#111;
+}
+
+.page-shell{
+    max-width:1050px;
+    margin:20px auto;
+    padding:0 15px 40px;
+}
+
+
+/* =========================================================
+   TOOLBAR
+========================================================= */
+
+.toolbar{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin-bottom:15px;
+    flex-wrap:wrap;
+}
+
+.toolbar button,
+.toolbar a{
+    border:none;
+    border-radius:8px;
+    padding:11px 18px;
+    font-weight:bold;
+    cursor:pointer;
+    text-decoration:none;
+    font-size:14px;
+}
+
+.print-btn{
+    background:#0b66b2;
+    color:#fff;
+}
+
+.back-btn{
+    background:#e2e8ee;
+    color:#164c74;
+}
+
+
+/* =========================================================
+   PRINT SHEET
+========================================================= */
+
+.print-sheet{
+    background:#fff;
+    min-height:1120px;
+    box-shadow:0 4px 20px rgba(0,0,0,.08);
+    padding:28px 34px 35px;
+    position:relative;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header{
+    display:grid;
+    grid-template-columns:170px 1fr 170px;
+    grid-template-areas:"empty center hospital";
+    align-items:center;
+    gap:15px;
+    margin-bottom:20px;
+    direction:ltr;
+}
+
+.header-empty{
+    grid-area:empty;
+}
+
+.header-center{
+    grid-area:center;
+    text-align:center;
+    direction:rtl;
+}
+
+.header-hospital{
+    grid-area:hospital;
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+    min-height:95px;
+}
+
+.header-hospital img{
+    display:block;
+    max-width:165px;
+    max-height:100px;
+    width:auto;
+    height:auto;
+    object-fit:contain;
+}
+
+.header-center h1{
+    margin:0;
+    color:#68a8d6;
+    font-size:22px;
+}
+
+.header-center h2{
+    margin:7px 0 0;
+    color:#2c6e9e;
+    font-size:17px;
+}
+
+.header-center p{
+    margin:5px 0 0;
+    color:#607789;
+    font-size:12px;
+}
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.round-title{
+    background:#327db8;
+    color:#fff;
+    font-weight:bold;
+    text-align:center;
+    padding:9px 10px;
+    border:1px solid #2a648f;
+    font-size:15px;
+}
+
+
+/* =========================================================
+   TABLES
+========================================================= */
+
+.meta-table,
+.items-table,
+.footer-table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.meta-table{
+    margin-top:8px;
+    margin-bottom:12px;
+}
+
+.meta-table td{
+    border:1px solid #7d8a96;
+    padding:8px 9px;
+    font-size:12px;
+}
+
+.meta-label{
+    background:#d8e7f4;
+    font-weight:bold;
+    width:15%;
+    color:#133e5e;
+}
+
+.meta-value{
+    width:35%;
+}
+
+
+/* =========================================================
+   ITEMS
+========================================================= */
+
+.items-table th,
+.items-table td{
+    border:1px solid #757575;
+    padding:7px 6px;
+    vertical-align:middle;
+}
+
+.items-table th{
+    background:#9ec3df;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.items-table td{
+    font-size:12px;
+    line-height:1.65;
+}
+
+.num-col{
+    width:5%;
+    text-align:center;
+}
+
+.action-col{
+    width:50%;
+}
+
+.check-col{
+    width:9%;
+    text-align:center;
+}
+
+.note-col{
+    width:18%;
+}
+
+.section-row td{
+    background:#d6e4f0;
+    font-weight:bold;
+    color:#123f60;
+    text-align:right;
+}
+
+.checkmark{
+    font-size:18px !important;
+    font-weight:bold;
+    text-align:center;
+}
+
+
+/* =========================================================
+   NOTES
+========================================================= */
+
+.notes-title{
+    margin-top:0;
+    background:#9ec3df;
+    border:1px solid #757575;
+    border-bottom:none;
+    padding:7px;
+    text-align:center;
+    font-weight:bold;
+    font-size:12px;
+}
+
+.notes-box{
+    border:1px solid #757575;
+    min-height:85px;
+    padding:10px;
+    font-size:12px;
+    white-space:pre-wrap;
+}
+
+
+/* =========================================================
+   SUMMARY
+========================================================= */
+
+.summary{
+    margin-top:14px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:8px;
+}
+
+.summary-box{
+    border:1px solid #b5c2ce;
+    background:#f6f9fb;
+    text-align:center;
+    padding:10px;
+}
+
+.summary-box strong{
+    display:block;
+    color:#1b5f91;
+    font-size:19px;
+}
+
+.summary-box span{
+    display:block;
+    margin-top:3px;
+    color:#5f7180;
+    font-size:10px;
+}
+
+
+/* =========================================================
+   REPORT INFO
+========================================================= */
+
+.footer-table{
+    margin-top:15px;
+}
+
+.footer-table td{
+    border:1px solid #7d8a96;
+    padding:8px;
+    font-size:12px;
+}
+
+.footer-label{
+    background:#d8e7f4;
+    font-weight:bold;
+    width:14%;
+}
+
+
+/* =========================================================
+   ELECTRONIC SIGNATURES
+========================================================= */
+
+.signatures-section{
+    margin-top:15px;
+
+    display:grid;
+    grid-template-columns:1fr 1fr;
+
+    gap:12px;
+
+    break-inside:avoid;
+    page-break-inside:avoid;
+}
+
+
+/* البطاقة */
+
+.signature-card{
+    border:1px solid #9baab7;
+
+    min-height:145px;
+
+    background:#fff;
+
+    display:flex;
+    flex-direction:column;
+
+    overflow:hidden;
+}
+
+
+/* عنوان الاعتماد */
+
+.signature-title{
+    background:#d8e7f4;
+    color:#123f60;
+
+    font-weight:bold;
+
+    text-align:center;
+
+    padding:7px 8px;
+
+    border-bottom:1px solid #9baab7;
+
+    font-size:12px;
+}
+
+
+/* الاسم */
+
+.signature-name{
+    font-weight:bold;
+
+    text-align:center;
+
+    padding:7px 8px 1px;
+
+    font-size:11.5px;
+
+    color:#243e52;
+
+    line-height:1.4;
+}
+
+
+/* المسمى */
+
+.signature-role{
+    text-align:center;
+
+    color:#71808c;
+
+    font-size:9.5px;
+
+    min-height:14px;
+
+    line-height:1.4;
+}
+
+
+/* مساحة التوقيع */
+
+.signature-image-area{
+    flex:1;
+
+    min-height:70px;
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    padding:3px 8px 8px;
+}
+
+
+/* صورة التوقيع */
+
+.signature-image-area img{
+    display:block;
+
+    width:auto;
+    height:auto;
+
+    max-width:155px;
+    max-height:60px;
+
+    object-fit:contain;
+}
+
+
+/* في حال عدم وجود توقيع */
+
+.signature-placeholder{
+    color:#9aa6af;
+
+    font-size:10px;
+
+    text-align:center;
+
+    line-height:1.6;
+}
+
+
+/* =========================================================
+   OFFICIAL FOOTER
+========================================================= */
+
+.official-footer{
+    margin-top:22px;
+    padding-top:15px;
+
+    border-top:1px solid #d7e0e7;
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    grid-template-areas:"contact hospital";
+
+    align-items:center;
+
+    gap:25px;
+
+    direction:ltr;
+
+    break-inside:avoid;
+    page-break-inside:avoid;
+}
+
+.footer-contact{
+    grid-area:contact;
+
+    text-align:left;
+
+    direction:ltr;
+
+    font-size:10px;
+
+    color:#606d77;
+
+    line-height:1.8;
+}
+
+.footer-hospital{
+    grid-area:hospital;
+
+    display:flex;
+
+    justify-content:flex-end;
+    align-items:center;
+}
+
+.footer-hospital img{
+    display:block;
+
+    width:190px;
+
+    max-width:100%;
+
+    height:auto;
+
+    object-fit:contain;
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.empty-state{
+    background:#fff;
+
+    padding:35px;
+
+    text-align:center;
+
+    color:#7a8791;
+
+    border-radius:12px;
+}
+
+
+/* =========================================================
+   PRINT
+========================================================= */
+
+@page{
+    size:A4;
+    margin:10mm;
+}
+
+@media print{
+
+    html,
+    body{
+        background:#fff !important;
+    }
+
+    .page-shell{
+        max-width:none;
+        margin:0;
+        padding:0;
+    }
+
+    .toolbar{
+        display:none !important;
+    }
+
+    .print-sheet{
+        box-shadow:none;
+        padding:0;
+        min-height:auto;
+    }
+
+    .header,
+    .summary,
+    .footer-table,
+    .signatures-section,
+    .official-footer{
+        break-inside:avoid;
+        page-break-inside:avoid;
+    }
+
+    tr{
+        break-inside:avoid;
+        page-break-inside:avoid;
+    }
+
+    .signature-card{
+        min-height:135px;
+    }
+
+    .signature-image-area{
+        min-height:62px;
+    }
+
+    .signature-image-area img{
+        max-width:145px !important;
+        max-height:55px !important;
+    }
+
+    .header-hospital img,
+    .signature-image-area img,
+    .footer-hospital img{
+        display:block !important;
+
+        print-color-adjust:exact;
+        -webkit-print-color-adjust:exact;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:700px){
+
+    .header{
+        grid-template-columns:70px 1fr 100px;
+    }
+
+    .header-hospital img{
+        max-width:90px;
+        max-height:65px;
+    }
+
+    .header-center h1{
+        font-size:17px;
+    }
+
+    .header-center h2{
+        font-size:14px;
+    }
+
+    .print-sheet{
+        padding:18px 12px;
+    }
+
+    .summary{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .signatures-section{
+        grid-template-columns:1fr;
+    }
+
+    .official-footer{
+        grid-template-columns:1fr;
+
+        grid-template-areas:
+            "hospital"
+            "contact";
+    }
+
+    .footer-hospital{
+        justify-content:center;
+    }
+
+    .footer-contact{
+        text-align:center;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="page-shell">
+
+
+    <!-- =====================================================
+         TOOLBAR
+    ====================================================== -->
+
+    <div class="toolbar">
+
+        <button
+            class="print-btn"
+            onclick="window.print()">
+
+            🖨️ طباعة / حفظ PDF
+
+        </button>
+
+
+        <a
+            class="back-btn"
+            href="round-details.html">
+
+            ← العودة لتفاصيل الجولة
+
+        </a>
+
+    </div>
+
+
+    <!-- =====================================================
+         NOT FOUND
+    ====================================================== -->
+
+    <div
+        id="notFound"
+        class="empty-state"
+        style="display:none;">
+
+        لم يتم العثور على بيانات الجولة المطلوبة.
+
+    </div>
+
+
+    <!-- =====================================================
+         DOCUMENT
+    ====================================================== -->
+
+    <div
+        id="printContent"
+        class="print-sheet"
+        style="display:none;">
+
+
+        <!-- =================================================
+             HEADER
+        ================================================== -->
+
+        <header class="header">
+
+
+            <div class="header-empty"></div>
+
+
+            <div class="header-center">
+
+                <h1>
+                    قسم الصحة العامة
+                    <br>
+                    Public Health
+                </h1>
+
+                <h2 id="documentTitle">
+                    نموذج جولة
+                </h2>
+
+                <p>
+                    Public Health Rounds Management System
+                </p>
+
+            </div>
+
+
+            <div class="header-hospital">
+
+                <img
+                    src="./images/hospital-logo.png"
+                    alt="شعار مستشفى إرادة والصحة النفسية">
+
+            </div>
+
+
+        </header>
+
+
+        <!-- =================================================
+             ROUND TITLE
+        ================================================== -->
+
+        <div
+            id="roundMainTitle"
+            class="round-title">
+
+            الجولات اليومية لقسم الصحة العامة
+
+        </div>
+
+
+        <!-- =================================================
+             INFORMATION
+        ================================================== -->
+
+        <table class="meta-table">
+
+            <tr>
+
+                <td class="meta-label">
+                    رقم الجولة
+                </td>
+
+                <td
+                    class="meta-value"
+                    id="roundId">
+                    —
+                </td>
+
+                <td class="meta-label">
+                    نوع الجولة
+                </td>
+
+                <td
+                    class="meta-value"
+                    id="roundType">
+                    —
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td class="meta-label">
+                    اسم الموظف
+                </td>
+
+                <td
+                    class="meta-value"
+                    id="employeeName">
+                    —
+                </td>
+
+                <td class="meta-label">
+                    الرقم الوظيفي
+                </td>
+
+                <td
+                    class="meta-value"
+                    id="employeeNumber">
+                    —
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td class="meta-label">
+                    القسم / الموقع
+                </td>
+
+                <td
+                    class="meta-value"
+                    id="locationName">
+                    —
+                </td>
+
+                <td class="meta-label">
+                    التاريخ والوقت
+                </td>
+
+                <td
+                    class="meta-value"
+                    id="dateTime">
+                    —
+                </td>
+
+            </tr>
+
+        </table>
+
+
+        <!-- =================================================
+             ITEMS
+        ================================================== -->
+
+        <table class="items-table">
+
+            <thead>
+
+                <tr>
+
+                    <th class="num-col">
+                        م
+                    </th>
+
+                    <th class="action-col">
+                        الإجراء / البند
+                    </th>
+
+                    <th class="check-col">
+                        يطبق
+                    </th>
+
+                    <th class="check-col">
+                        لا يطبق
+                    </th>
+
+                    <th class="check-col">
+                        لا ينطبق
+                    </th>
+
+                    <th class="note-col">
+                        ملاحظات
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody id="itemsBody">
+            </tbody>
+
+        </table>
+
+
+        <!-- =================================================
+             GENERAL NOTES
+        ================================================== -->
+
+        <div class="notes-title">
+            الملاحظات العامة
+        </div>
+
+
+        <div
+            id="generalNotes"
+            class="notes-box">
+
+            لا توجد ملاحظات.
+
+        </div>
+
+
+        <!-- =================================================
+             SUMMARY
+        ================================================== -->
+
+        <div class="summary">
+
+
+            <div class="summary-box">
+
+                <strong id="yesCount">
+                    0
+                </strong>
+
+                <span>
+                    يطبق
+                </span>
+
+            </div>
+
+
+            <div class="summary-box">
+
+                <strong id="noCount">
+                    0
+                </strong>
+
+                <span>
+                    لا يطبق
+                </span>
+
+            </div>
+
+
+            <div class="summary-box">
+
+                <strong id="naCount">
+                    0
+                </strong>
+
+                <span>
+                    لا ينطبق
+                </span>
+
+            </div>
+
+
+            <div class="summary-box">
+
+                <strong id="complianceRate">
+                    0%
+                </strong>
+
+                <span>
+                    نسبة الالتزام
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =================================================
+             REPORT INFORMATION
+        ================================================== -->
+
+        <table class="footer-table">
+
+            <tr>
+
+                <td class="footer-label">
+                    معد التقرير
+                </td>
+
+                <td id="preparedBy">
+                    —
+                </td>
+
+                <td class="footer-label">
+                    التاريخ
+                </td>
+
+                <td id="footerDate">
+                    —
+                </td>
+
+            </tr>
+
+        </table>
+
+
+        <!-- =================================================
+             ELECTRONIC SIGNATURES
+        ================================================== -->
+
+        <section class="signatures-section">
+
+
+            <!-- توقيع منفذ الجولة -->
+
+            <div class="signature-card">
+
+                <div class="signature-title">
+                    توقيع منفذ الجولة
+                </div>
+
+
+                <div
+                    id="employeeSignatureName"
+                    class="signature-name">
+
+                    —
+
+                </div>
+
+
+                <div class="signature-role">
+                    منفذ الجولة
+                </div>
+
+
+                <div
+                    id="employeeSignatureArea"
+                    class="signature-image-area">
+
+                    <span class="signature-placeholder">
+                        لا يوجد توقيع إلكتروني مسجل
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- اعتماد المدير -->
+
+            <div class="signature-card">
+
+                <div class="signature-title">
+                    اعتماد مدير إدارة الصحة العامة
+                </div>
+
+
+                <div
+                    id="managerSignatureName"
+                    class="signature-name">
+
+                    مدير إدارة الصحة العامة
+
+                </div>
+
+
+                <div class="signature-role">
+                    مدير إدارة الصحة العامة
+                </div>
+
+
+                <div
+                    id="managerSignatureArea"
+                    class="signature-image-area">
+
+                    <span class="signature-placeholder">
+                        لم يتم تسجيل توقيع المدير
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+        <!-- =================================================
+             OFFICIAL FOOTER
+        ================================================== -->
+
+        <footer class="official-footer">
+
+
+            <div class="footer-contact">
+
+                <div>
+                    HBHCluster@moh.gov.sa
+                </div>
+
+                <div>
+                    Hafr AlBatin Health Cluster
+                </div>
+
+                <div>
+                    Eradah & Mental Health Hospital
+                </div>
+
+            </div>
+
+
+            <div class="footer-hospital">
+
+                <img
+                    src="./images/hospital-logo.png"
+                    alt="شعار مستشفى إرادة والصحة النفسية">
+
+            </div>
+
+
+        </footer>
+
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   STORAGE KEYS
+========================================================= */
+
+const PUBLIC_KEY =
+    "phrmsPublicHealthRounds";
+
+const WASTE_KEY =
+    "phrmsMedicalWasteRounds";
+
+const EMPLOYEE_SIGNATURES_KEY =
+    "phrmsEmployeeSignatures";
+
+const MANAGER_SIGNATURE_KEY =
+    "phrmsPublicHealthManagerSignature";
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    loadPrintRound
+);
+
+
+/* =========================================================
+   LOAD ROUND
+========================================================= */
+
+function loadPrintRound(){
+
+    const selectedId =
+        sessionStorage.getItem(
+            "phrmsSelectedRoundId"
+        );
+
+
+    if(!selectedId){
+
+        showNotFound();
+
+        return;
+
+    }
+
+
+    const allRounds = [
+
+        ...getRecords(
+            PUBLIC_KEY
+        ),
+
+        ...getRecords(
+            WASTE_KEY
+        )
+
+    ];
+
+
+    const round =
+        allRounds.find(
+            function(item){
+
+                return (
+                    String(
+                        item.id
+                    ) ===
+                    String(
+                        selectedId
+                    )
+                );
+
+            }
+        );
+
+
+    if(!round){
+
+        showNotFound();
+
+        return;
+
+    }
+
+
+    renderRound(
+        round
+    );
+
+}
+
+
+/* =========================================================
+   GET ROUND RECORDS
+========================================================= */
+
+function getRecords(
+    key
+){
+
+    try{
+
+        const data =
+            JSON.parse(
+                localStorage.getItem(
+                    key
+                )
+            ) || [];
+
+
+        return Array.isArray(
+            data
+        )
+        ? data
+        : [];
+
+    }
+    catch(error){
+
+        console.error(
+            "Storage Error:",
+            error
+        );
+
+
+        return [];
+
+    }
+
+}
+
+
+/* =========================================================
+   NOT FOUND
+========================================================= */
+
+function showNotFound(){
+
+    document.getElementById(
+        "notFound"
+    ).style.display =
+        "block";
+
+}
+
+
+/* =========================================================
+   RENDER ROUND
+========================================================= */
+
+function renderRound(
+    round
+){
+
+    document.getElementById(
+        "printContent"
+    ).style.display =
+        "block";
+
+
+    const isWaste =
+        round.roundType ===
+        "medicalWaste";
+
+
+    const title =
+        round.categoryName ||
+        (
+            isWaste
+            ? "جولة النفايات الطبية"
+            : "جولة الصحة العامة"
+        );
+
+
+    document.getElementById(
+        "documentTitle"
+    ).textContent =
+        title;
+
+
+    document.getElementById(
+        "roundMainTitle"
+    ).textContent =
+        isWaste
+        ? "جولات موظفي قسم النفايات الطبية"
+        : "الجولات اليومية لقسم الصحة العامة";
+
+
+    document.getElementById(
+        "roundId"
+    ).textContent =
+        round.id ||
+        "—";
+
+
+    document.getElementById(
+        "roundType"
+    ).textContent =
+        title;
+
+
+    document.getElementById(
+        "employeeName"
+    ).textContent =
+        round.employeeName ||
+        "—";
+
+
+    document.getElementById(
+        "employeeNumber"
+    ).textContent =
+        round.employeeNumber ||
+        "—";
+
+
+    document.getElementById(
+        "locationName"
+    ).textContent =
+        round.locationName ||
+        "—";
+
+
+    const dateTimeText = [
+
+        round.inspectionDate || "",
+
+        round.inspectionTime || ""
+
+    ]
+    .filter(
+        Boolean
+    )
+    .join(
+        " - "
+    );
+
+
+    document.getElementById(
+        "dateTime"
+    ).textContent =
+        dateTimeText ||
+        "—";
+
+
+    document.getElementById(
+        "preparedBy"
+    ).textContent =
+        round.employeeName ||
+        "—";
+
+
+    document.getElementById(
+        "footerDate"
+    ).textContent =
+        round.inspectionDate ||
+        "—";
+
+
+    document.getElementById(
+        "yesCount"
+    ).textContent =
+        Number(
+            round.yesCount
+        ) ||
+        0;
+
+
+    document.getElementById(
+        "noCount"
+    ).textContent =
+        Number(
+            round.noCount
+        ) ||
+        0;
+
+
+    document.getElementById(
+        "naCount"
+    ).textContent =
+        Number(
+            round.notApplicableCount
+        ) ||
+        0;
+
+
+    document.getElementById(
+        "complianceRate"
+    ).textContent =
+        (
+            Number(
+                round.complianceRate
+            ) ||
+            0
+        ) +
+        "%";
+
+
+    document.getElementById(
+        "generalNotes"
+    ).textContent =
+        round.generalNotes ||
+        "لا توجد ملاحظات.";
+
+
+    renderItems(
+
+        Array.isArray(
+            round.items
+        )
+        ? round.items
+        : []
+
+    );
+
+
+    renderEmployeeSignature(
+        round
+    );
+
+
+    renderManagerSignature();
+
+}
+
+
+/* =========================================================
+   EMPLOYEE SIGNATURES STORAGE
+========================================================= */
+
+function getEmployeeSignatures(){
+
+    try{
+
+        const data =
+            JSON.parse(
+                localStorage.getItem(
+                    EMPLOYEE_SIGNATURES_KEY
+                )
+            ) ||
+            [];
+
+
+        return Array.isArray(
+            data
+        )
+        ? data
+        : [];
+
+    }
+    catch(error){
+
+        return [];
+
+    }
+
+}
+
+
+/* =========================================================
+   NORMALIZE TEXT
+========================================================= */
+
+function normalizeText(
+    value
+){
+
+    return String(
+        value ||
+        ""
+    )
+    .trim()
+    .replace(
+        /\s+/g,
+        " "
+    )
+    .toLowerCase();
+
+}
+
+
+/* =========================================================
+   EMPLOYEE SIGNATURE
+========================================================= */
+
+function renderEmployeeSignature(
+    round
+){
+
+    const employeeName =
+        round.employeeName ||
+        "";
+
+
+    const employeeNumber =
+        round.employeeNumber ||
+        "";
+
+
+    document.getElementById(
+        "employeeSignatureName"
+    ).textContent =
+        employeeName ||
+        "—";
+
+
+    const signatures =
+        getEmployeeSignatures();
+
+
+    let employeeRecord =
+        null;
+
+
+    /* البحث بالرقم الوظيفي أولاً */
+
+    if(employeeNumber){
+
+        employeeRecord =
+            signatures.find(
+                function(item){
+
+                    return (
+                        String(
+                            item.employeeNumber ||
+                            ""
+                        ).trim() ===
+                        String(
+                            employeeNumber
+                        ).trim()
+                    );
+
+                }
+            );
+
+    }
+
+
+    /* ثم البحث بالاسم */
+
+    if(
+        !employeeRecord &&
+        employeeName
+    ){
+
+        employeeRecord =
+            signatures.find(
+                function(item){
+
+                    return (
+                        normalizeText(
+                            item.employeeName
+                        ) ===
+                        normalizeText(
+                            employeeName
+                        )
+                    );
+
+                }
+            );
+
+    }
+
+
+    const area =
+        document.getElementById(
+            "employeeSignatureArea"
+        );
+
+
+    if(
+        employeeRecord &&
+        employeeRecord.signature
+    ){
+
+        area.innerHTML = `
+
+            <img
+                src="${employeeRecord.signature}"
+                alt="توقيع ${escapeHtml(employeeName)}">
+
+        `;
+
+
+        return;
+
+    }
+
+
+    /* دعم الجولات القديمة */
+
+    if(round.signature){
+
+        area.innerHTML = `
+
+            <img
+                src="${round.signature}"
+                alt="توقيع منفذ الجولة">
+
+        `;
+
+
+        return;
+
+    }
+
+
+    area.innerHTML = `
+
+        <span class="signature-placeholder">
+
+            لا يوجد توقيع إلكتروني مسجل لهذا الموظف
+
+        </span>
+
+    `;
+
+}
+
+
+/* =========================================================
+   MANAGER SIGNATURE
+========================================================= */
+
+function renderManagerSignature(){
+
+    const nameElement =
+        document.getElementById(
+            "managerSignatureName"
+        );
+
+
+    const area =
+        document.getElementById(
+            "managerSignatureArea"
+        );
+
+
+    try{
+
+        const manager =
+            JSON.parse(
+                localStorage.getItem(
+                    MANAGER_SIGNATURE_KEY
+                )
+            );
+
+
+        if(!manager){
+
+            area.innerHTML = `
+
+                <span class="signature-placeholder">
+
+                    لم يتم تسجيل توقيع مدير إدارة الصحة العامة
+
+                </span>
+
+            `;
+
+
+            return;
+
+        }
+
+
+        nameElement.textContent =
+            manager.managerName ||
+            "مدير إدارة الصحة العامة";
+
+
+        if(manager.signature){
+
+            area.innerHTML = `
+
+                <img
+                    src="${manager.signature}"
+                    alt="توقيع مدير إدارة الصحة العامة">
+
+            `;
+
+        }
+        else{
+
+            area.innerHTML = `
+
+                <span class="signature-placeholder">
+
+                    لم يتم تسجيل توقيع مدير إدارة الصحة العامة
+
+                </span>
+
+            `;
+
+        }
+
+    }
+    catch(error){
+
+        area.innerHTML = `
+
+            <span class="signature-placeholder">
+
+                تعذر تحميل توقيع مدير إدارة الصحة العامة
+
+            </span>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+   RENDER ITEMS
+========================================================= */
+
+function renderItems(
+    items
+){
+
+    const body =
+        document.getElementById(
+            "itemsBody"
+        );
+
+
+    if(!items.length){
+
+        body.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="6"
+                    style="
+                        text-align:center;
+                        padding:20px;
+                    ">
+
+                    لا توجد بنود محفوظة.
+
+                </td>
+
+            </tr>
+
+        `;
+
+
+        return;
+
+    }
+
+
+    const groups =
+        [];
+
+
+    items.forEach(
+        function(item){
+
+            const section =
+                item.sectionName ||
+                "بنود الجولة";
+
+
+            let group =
+                groups.find(
+                    function(current){
+
+                        return (
+                            current.section ===
+                            section
+                        );
+
+                    }
+                );
+
+
+            if(!group){
+
+                group = {
+
+                    section:
+                        section,
+
+                    items:
+                        []
+
+                };
+
+
+                groups.push(
+                    group
+                );
+
+            }
+
+
+            group.items.push(
+                item
+            );
+
+        }
+    );
+
+
+    let html =
+        "";
+
+
+    groups.forEach(
+        function(group){
+
+            html += `
+
+                <tr class="section-row">
+
+                    <td colspan="6">
+
+                        ${escapeHtml(
+                            group.section
+                        )}
+
+                    </td>
+
+                </tr>
+
+            `;
+
+
+            group.items.forEach(
+                function(
+                    item,
+                    index
+                ){
+
+                    html += `
+
+                        <tr>
+
+                            <td class="num-col">
+
+                                ${index + 1}
+
+                            </td>
+
+
+                            <td>
+
+                                ${escapeHtml(
+                                    item.text ||
+                                    ""
+                                )}
+
+                            </td>
+
+
+                            <td class="checkmark">
+
+                                ${
+                                    item.status ===
+                                    "yes"
+                                    ? "✓"
+                                    : ""
+                                }
+
+                            </td>
+
+
+                            <td class="checkmark">
+
+                                ${
+                                    item.status ===
+                                    "no"
+                                    ? "✓"
+                                    : ""
+                                }
+
+                            </td>
+
+
+                            <td class="checkmark">
+
+                                ${
+                                    item.status ===
+                                    "na"
+                                    ? "✓"
+                                    : ""
+                                }
+
+                            </td>
+
+
+                            <td>
+
+                                ${escapeHtml(
+                                    item.note ||
+                                    ""
+                                )}
+
+                            </td>
+
+                        </tr>
+
+                    `;
+
+                }
+            );
+
+        }
+    );
+
+
+    body.innerHTML =
+        html;
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(
+    value
+){
+
+    return String(
+        value ||
+        ""
+    )
+
+    .replaceAll(
+        "&",
+        "&amp;"
+    )
+
+    .replaceAll(
+        "<",
+        "&lt;"
+    )
+
+    .replaceAll(
+        ">",
+        "&gt;"
+    )
+
+    .replaceAll(
+        '"',
+        "&quot;"
+    )
+
+    .replaceAll(
+        "'",
+        "&#039;"
+    );
+
+}
+
+</script>
+
+</body>
+
+</html>
