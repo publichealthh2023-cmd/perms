@@ -267,11 +267,11 @@ th{
 
             <div class="actions">
 
-                <button
-                    class="btn-primary"
-                    onclick="saveEmployeeSignature()">
-                    حفظ الموظف والتوقيع
-                </button>
+               <button
+    class="btn-primary"
+    onclick="saveEmployeeSignature()">
+    حفظ الموظف والتوقيع
+</button>
 
                 <button
                     class="btn-secondary"
@@ -1182,15 +1182,14 @@ async function loadManager(){
         manager.signature || "";
 
 
-    if(manager.signature){
+   if(manager.signature){
 
-        document.getElementById(
-            "managerPreview"
-        ).innerHTML =
-            ⁠ <img src="${manager.signature}" alt="توقيع المدير"> ⁠;
+    document.getElementById(
+        "managerPreview"
+    ).innerHTML =
+        '<img src="' + manager.signature + '" alt="توقيع المدير">';
 
-    }
-
+}
 }
 
 function deleteManagerSignature(){
