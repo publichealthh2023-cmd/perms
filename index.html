@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>نظام إدارة جولات الصحة العامة</title>
+
+<link rel="stylesheet" href="Style.css">
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f3f6f8;
+    color:#294b6a;
+}
+
+.header{
+    background:#ffffff;
+    border-bottom:4px solid #0759a6;
+    box-shadow:0 3px 12px rgba(0,0,0,.06);
+}
+
+.header-grid{
+    max-width:1200px;
+    margin:auto;
+    padding:22px;
+
+    display:grid;
+    grid-template-columns:170px 1fr 170px;
+    align-items:center;
+    gap:20px;
+}
+
+.logo{
+    text-align:center;
+}
+
+.logo img{
+    max-width:145px;
+    max-height:90px;
+    object-fit:contain;
+}
+
+.header-center{
+    text-align:center;
+}
+
+.header-center h1{
+    margin:0;
+    color:#064c92;
+    font-size:28px;
+}
+
+.header-center h2{
+    margin:7px 0 0;
+    color:#607387;
+    font-size:16px;
+    font-weight:normal;
+}
+
+.header-center p{
+    margin:8px 0 0;
+    color:#718293;
+    font-size:14px;
+}
+
+.page{
+    max-width:1150px;
+    margin:35px auto;
+    padding:0 20px 60px;
+}
+
+.intro{
+    background:#fff;
+    border:1px solid #dfe8f2;
+    border-radius:18px;
+    padding:30px;
+    text-align:center;
+    box-shadow:0 5px 18px rgba(0,0,0,.05);
+    margin-bottom:25px;
+}
+
+.intro-icon{
+    width:82px;
+    height:82px;
+    border-radius:22px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    margin:0 auto 15px;
+
+    background:#eaf4ff;
+    font-size:42px;
+}
+
+.intro h2{
+    margin:0;
+    color:#064c92;
+    font-size:25px;
+}
+
+.intro p{
+    max-width:760px;
+    margin:12px auto 0;
+    color:#607387;
+    line-height:1.9;
+    font-size:14px;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.card{
+    position:relative;
+    overflow:hidden;
+
+    background:#fff;
+    border:1px solid #dfe8f2;
+    border-radius:18px;
+    padding:26px;
+
+    box-shadow:0 5px 16px rgba(0,0,0,.05);
+
+    transition:
+        transform .18s,
+        box-shadow .18s;
+}
+
+.card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 10px 25px rgba(0,0,0,.09);
+}
+
+.card::before{
+    content:"";
+    position:absolute;
+    top:0;
+    right:0;
+    left:0;
+    height:6px;
+}
+
+.public-card::before{
+    background:#0759a6;
+}
+
+.waste-card::before{
+    background:#15936c;
+}
+
+.admin-card::before{
+    background:#5f3dc4;
+}
+
+.card-icon{
+    width:72px;
+    height:72px;
+    border-radius:18px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:36px;
+    margin-bottom:18px;
+}
+
+.public-card .card-icon{
+    background:#eaf4ff;
+}
+
+.waste-card .card-icon{
+    background:#e9f8f2;
+}
+
+.admin-card .card-icon{
+    background:#f0ebff;
+}
+
+.card h2{
+    margin:0 0 7px;
+    color:#064c92;
+    font-size:21px;
+}
+
+.card h3{
+    margin:0 0 14px;
+    color:#718293;
+    font-size:13px;
+    font-weight:normal;
+}
+
+.card p{
+    color:#53697c;
+    line-height:1.8;
+    font-size:14px;
+    min-height:90px;
+}
+
+.open-btn{
+    width:100%;
+    border:none;
+    border-radius:10px;
+    padding:14px;
+
+    cursor:pointer;
+    font-weight:bold;
+    font-size:14px;
+}
+
+.public-btn{
+    background:#0759a6;
+    color:white;
+}
+
+.waste-btn{
+    background:#15936c;
+    color:white;
+}
+
+.admin-btn{
+    background:#5f3dc4;
+    color:white;
+}
+
+.note{
+    margin-top:25px;
+
+    background:#eef6fb;
+    border-right:5px solid #0759a6;
+    border-radius:12px;
+
+    padding:18px 20px;
+
+    color:#40566b;
+    line-height:1.9;
+    font-size:13px;
+}
+
+.note strong{
+    color:#064c92;
+}
+
+@media(max-width:900px){
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .header-grid{
+        grid-template-columns:75px 1fr 75px;
+        gap:8px;
+        padding:15px 8px;
+    }
+
+    .logo img{
+        max-width:70px;
+        max-height:55px;
+    }
+
+    .header-center h1{
+        font-size:19px;
+    }
+
+    .header-center h2{
+        font-size:11px;
+    }
+
+    .header-center p{
+        font-size:10px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header class="header">
+
+<div class="header-grid">
+
+<div class="logo">
+<img src="images/cluster-logo.png" alt="شعار تجمع حفر الباطن الصحي">
+</div>
+
+<div class="header-center">
+
+<h1>
+نظام إدارة جولات الصحة العامة
+</h1>
+
+<h2>
+Public Health Rounds Management System
+</h2>
+
+<p>
+مستشفى إرادة والصحة النفسية
+</p>
+
+</div>
+
+<div class="logo">
+<img src="images/hospital-logo.png" alt="شعار المستشفى">
+</div>
+
+</div>
+
+</header>
+
+
+<main class="page">
+
+
+<section class="intro">
+
+<div class="intro-icon">
+📋
+</div>
+
+<h2>
+بوابة الجولات الرقابية
+</h2>
+
+<p>
+
+نظام مستقل لإدارة وتوثيق جولات الصحة العامة والنفايات الطبية،
+وحفظ الاستمارات والملاحظات والتوقيعات،
+مع توفير صندوق تحكم للإدارة والتقارير والإحصائيات ومؤشرات الإنجاز.
+
+</p>
+
+</section>
+
+
+<section class="cards">
+
+
+<article class="card public-card">
+
+<div class="card-icon">
+🏥
+</div>
+
+<h2>
+جولات الصحة العامة
+</h2>
+
+<h3>
+Public Health Inspection
+</h3>
+
+<p>
+
+تنفيذ جولات الصحة العامة وفق النماذج المعتمدة،
+وتوثيق تطبيق البنود والملاحظات والتوقيع الإلكتروني.
+
+</p>
+
+<button
+    class="open-btn public-btn"
+    onclick="openPublicHealthRound()">
+
+بدء جولة صحة عامة
+←
+
+</button>
+
+</article>
+
+
+<article class="card waste-card">
+
+<div class="card-icon">
+♻️
+</div>
+
+<h2>
+جولات النفايات الطبية
+</h2>
+
+<h3>
+Medical Waste Inspection
+</h3>
+
+<p>
+
+تنفيذ جولات النفايات الطبية ومتابعة الحاويات
+والتخزين والنقل والمستودعات وفق النموذج المعتمد.
+
+</p>
+
+<button
+    class="open-btn waste-btn"
+    onclick="openWasteRound()">
+
+بدء جولة نفايات طبية
+←
+
+</button>
+
+</article>
+
+
+<article class="card admin-card">
+
+<div class="card-icon">
+📊
+</div>
+
+<h2>
+صندوق التحكم والإدارة
+</h2>
+
+<h3>
+Control Center
+</h3>
+
+<p>
+
+استعراض جميع الجولات،
+إدارة الملاحظات،
+طباعة الاستمارات،
+ومتابعة الإحصائيات ومؤشرات أداء الموظفين.
+
+</p>
+
+<button
+    class="open-btn admin-btn"
+    onclick="openControlCenter()">
+
+فتح صندوق التحكم
+←
+
+</button>
+
+</article>
+
+
+</section>
+
+
+<section class="note">
+
+<strong>
+🔒 نظام مستقل:
+</strong>
+
+هذا المشروع مستقل تمامًا عن بوابة الفرز الذكي والأمراض المعدية،
+ولا يشارك معها الملفات أو البيانات أو التخزين.
+
+</section>
+
+
+</main>
+
+
+<script>
+
+function openPublicHealthRound(){
+
+    window.location.href =
+        "public-health-inspection.html";
+
+}
+
+
+function openWasteRound(){
+
+    window.location.href =
+        "medical-waste-inspection.html";
+
+}
+
+
+function openControlCenter(){
+
+    window.location.href =
+        "control.html";
+
+}
+
+</script>
+
+</body>
+
+</html>
