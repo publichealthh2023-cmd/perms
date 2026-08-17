@@ -736,7 +736,7 @@ body{
 }
 
 </style>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 
@@ -1286,7 +1286,13 @@ Public Health Inspection
 
 <script>
 
+const SUPABASE_URL = "ضع هنا Project URL";
+const SUPABASE_PUBLISHABLE_KEY = "ضع هنا Publishable key";
 
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
 /* =========================================================
    STORAGE
 ========================================================= */
@@ -2825,10 +2831,13 @@ function submitInspection(){
    SAVE RECORD
 ========================================================= */
 
-function saveInspectionRecord(record){
+async function saveInspectionRecord(record){
+
+    // ==========================================
+    // 1) الحفظ المحلي LocalStorage كما هو
+    // ==========================================
 
     let records = [];
-
 
     try{
 
@@ -2839,18 +2848,18 @@ function saveInspectionRecord(record){
                 )
             ) || [];
 
-
         if(!Array.isArray(records)){
-
             records = [];
-
         }
 
-    }
-    catch(error){
+    }catch(error){
 
         records = [];
 
+        console.error(
+            "LocalStorage read error:",
+            error
+        );
     }
 
 
@@ -2859,12 +2868,86 @@ function saveInspectionRecord(record){
     );
 
 
-    localStorage.setItem(
-        RECORDS_KEY,
-        JSON.stringify(
-            records
-        )
-    );
+    try{
+
+        localStorage.setItem(
+            RECORDS_KEY,
+            JSON.stringify(
+                records
+            )
+        );
+
+        console.log(
+            "✅ Round saved locally:",
+            record.id
+        );
+
+    }catch(error){
+
+        console.error(
+            "LocalStorage save error:",
+            error
+        );
+    }
+
+
+
+    // ==========================================
+    // 2) إرسال نسخة إلى Supabase
+    // ==========================================
+
+    try{
+
+        const {
+            error
+        } = await supabaseClient
+            .from(
+                "inspection_records"
+            )
+            .insert([
+                {
+                    round_id:
+                        String(
+                            record.id || ""
+                        ),
+
+                    round_type:
+                        String(
+                            record.roundType ||
+                            "publicHealth"
+                        ),
+
+                    record_data:
+                        record
+                }
+            ]);
+
+
+        if(error){
+
+            console.error(
+                "❌ Supabase save error:",
+                error
+            );
+
+            return;
+        }
+
+
+        console.log(
+            "☁️ Round saved to Supabase:",
+            record.id
+        );
+
+
+    }catch(error){
+
+        console.error(
+            "❌ Supabase connection error:",
+            error
+        );
+
+    }
 
 }
 
