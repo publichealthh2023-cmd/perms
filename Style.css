@@ -1,0 +1,615 @@
+/* =========================================================
+   PHRMS
+   Public Health Rounds Management System
+   Shared Style
+========================================================= */
+
+:root{
+    --primary:#0759a6;
+    --primary-dark:#064c92;
+    --primary-light:#eaf4ff;
+
+    --green:#15936c;
+    --green-light:#e9f8f2;
+
+    --purple:#5f3dc4;
+    --purple-light:#f0ebff;
+
+    --red:#c62828;
+    --red-light:#fff0f0;
+
+    --orange:#ef8d22;
+    --orange-light:#fff4e5;
+
+    --gray-900:#294b6a;
+    --gray-700:#53697c;
+    --gray-500:#718293;
+
+    --border:#dfe8f2;
+    --background:#f3f6f8;
+    --white:#ffffff;
+
+    --radius:14px;
+    --shadow:0 5px 16px rgba(0,0,0,.05);
+}
+
+
+/* =========================================================
+   GENERAL
+========================================================= */
+
+*{
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    margin:0;
+    font-family:
+        Arial,
+        "Tahoma",
+        sans-serif;
+
+    background:var(--background);
+    color:var(--gray-900);
+}
+
+button,
+input,
+select,
+textarea{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+img{
+    max-width:100%;
+}
+
+
+/* =========================================================
+   STANDARD PAGE
+========================================================= */
+
+.page-container{
+    max-width:1200px;
+    margin:30px auto;
+    padding:0 20px 60px;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.system-header{
+    background:white;
+    border-bottom:4px solid var(--primary);
+    box-shadow:0 3px 12px rgba(0,0,0,.06);
+}
+
+.system-header-grid{
+    max-width:1200px;
+    margin:auto;
+
+    display:grid;
+    grid-template-columns:170px 1fr 170px;
+    align-items:center;
+
+    gap:20px;
+    padding:20px;
+}
+
+.system-logo{
+    text-align:center;
+}
+
+.system-logo img{
+    max-width:145px;
+    max-height:85px;
+    object-fit:contain;
+}
+
+.system-title{
+    text-align:center;
+}
+
+.system-title h1{
+    margin:0;
+    color:var(--primary-dark);
+    font-size:26px;
+}
+
+.system-title h2{
+    margin:7px 0 0;
+    color:var(--gray-500);
+    font-size:15px;
+    font-weight:normal;
+}
+
+
+/* =========================================================
+   CARDS
+========================================================= */
+
+.panel{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:22px;
+    box-shadow:var(--shadow);
+    margin-bottom:18px;
+}
+
+.panel-title{
+    margin:0 0 18px;
+    padding-bottom:11px;
+
+    border-bottom:1px solid #e8eef3;
+
+    color:var(--primary-dark);
+    font-size:20px;
+}
+
+
+/* =========================================================
+   FORM GRID
+========================================================= */
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+}
+
+.form-group label{
+    font-weight:bold;
+    color:var(--gray-900);
+    font-size:14px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+    width:100%;
+    padding:11px 12px;
+
+    background:white;
+
+    border:1px solid #ccd9e5;
+    border-radius:8px;
+
+    outline:none;
+    transition:.15s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+    border-color:var(--primary);
+    box-shadow:0 0 0 3px rgba(7,89,166,.08);
+}
+
+.form-group textarea{
+    min-height:95px;
+    resize:vertical;
+}
+
+
+/* =========================================================
+   INSPECTION TABLE
+========================================================= */
+
+.inspection-table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+}
+
+.inspection-table th,
+.inspection-table td{
+    border:1px solid #d9e2ea;
+    padding:11px;
+    vertical-align:middle;
+}
+
+.inspection-table th{
+    background:#edf4fa;
+    color:var(--primary-dark);
+    font-size:13px;
+}
+
+.inspection-table td{
+    color:#40566b;
+    font-size:13px;
+}
+
+.inspection-table tbody tr:nth-child(even){
+    background:#fafcfd;
+}
+
+.item-number{
+    width:55px;
+    text-align:center;
+    font-weight:bold;
+}
+
+.status-cell{
+    width:250px;
+}
+
+
+/* =========================================================
+   STATUS OPTIONS
+========================================================= */
+
+.status-options{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+}
+
+.status-option{
+    display:flex;
+    align-items:center;
+    gap:5px;
+
+    padding:7px 9px;
+
+    border:1px solid var(--border);
+    border-radius:7px;
+
+    background:#f8fbfd;
+
+    cursor:pointer;
+    font-size:12px;
+}
+
+.status-option input{
+    margin:0;
+}
+
+.status-yes{
+    color:#187b43;
+}
+
+.status-no{
+    color:#b42318;
+}
+
+.status-na{
+    color:#687786;
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:20px;
+}
+
+.btn{
+    border:none;
+    border-radius:9px;
+
+    padding:12px 18px;
+
+    font-size:14px;
+    font-weight:bold;
+
+    transition:.15s;
+}
+
+.btn:hover{
+    transform:translateY(-1px);
+}
+
+.btn-primary{
+    background:var(--primary);
+    color:white;
+}
+
+.btn-green{
+    background:var(--green);
+    color:white;
+}
+
+.btn-purple{
+    background:var(--purple);
+    color:white;
+}
+
+.btn-danger{
+    background:var(--red);
+    color:white;
+}
+
+.btn-light{
+    background:#eaf1f7;
+    color:var(--primary-dark);
+}
+
+
+/* =========================================================
+   STAT CARDS
+========================================================= */
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+}
+
+.stat-card{
+    background:white;
+
+    border:1px solid var(--border);
+    border-radius:13px;
+
+    padding:20px;
+
+    text-align:center;
+
+    box-shadow:var(--shadow);
+}
+
+.stat-value{
+    display:block;
+
+    color:var(--primary-dark);
+
+    font-size:29px;
+    font-weight:bold;
+
+    margin-bottom:7px;
+}
+
+.stat-label{
+    color:var(--gray-500);
+    font-size:12px;
+}
+
+
+/* =========================================================
+   ALERTS
+========================================================= */
+
+.alert{
+    border-radius:10px;
+    padding:14px 16px;
+    line-height:1.8;
+    margin-bottom:15px;
+}
+
+.alert-info{
+    background:#eef7ff;
+    border-right:5px solid var(--primary);
+    color:#31556f;
+}
+
+.alert-success{
+    background:#eef8f0;
+    border-right:5px solid #2e7d32;
+    color:#285b33;
+}
+
+.alert-warning{
+    background:#fff8e1;
+    border-right:5px solid #f9a825;
+    color:#735b11;
+}
+
+.alert-danger{
+    background:#fff0f0;
+    border-right:5px solid var(--red);
+    color:#7d2525;
+}
+
+
+/* =========================================================
+   SIGNATURE
+========================================================= */
+
+.signature-box{
+    background:#fafcfd;
+
+    border:1px dashed #aebdca;
+    border-radius:10px;
+
+    padding:18px;
+
+    text-align:center;
+}
+
+.signature-box canvas{
+    width:100%;
+    max-width:500px;
+    height:180px;
+
+    background:white;
+
+    border:1px solid #d6e0e8;
+    border-radius:8px;
+
+    touch-action:none;
+}
+
+
+/* =========================================================
+   CONTROL CENTER TABLE
+========================================================= */
+
+.data-table-wrapper{
+    overflow-x:auto;
+}
+
+.data-table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.data-table th,
+.data-table td{
+    padding:11px;
+    border-bottom:1px solid #e4ebf1;
+    text-align:right;
+    white-space:nowrap;
+}
+
+.data-table th{
+    background:#edf4fa;
+    color:var(--primary-dark);
+    font-size:13px;
+}
+
+.data-table td{
+    color:#53697c;
+    font-size:13px;
+}
+
+
+/* =========================================================
+   BADGES
+========================================================= */
+
+.badge{
+    display:inline-block;
+
+    padding:5px 9px;
+    border-radius:15px;
+
+    font-size:11px;
+    font-weight:bold;
+}
+
+.badge-success{
+    background:#e8f6ec;
+    color:#187b43;
+}
+
+.badge-danger{
+    background:#fdecec;
+    color:#b42318;
+}
+
+.badge-warning{
+    background:#fff4d7;
+    color:#8a6200;
+}
+
+.badge-info{
+    background:#e8f2ff;
+    color:#0759a6;
+}
+
+
+/* =========================================================
+   PRINT
+========================================================= */
+
+.print-only{
+    display:none;
+}
+
+@media print{
+
+    body{
+        background:white;
+    }
+
+    .no-print{
+        display:none !important;
+    }
+
+    .print-only{
+        display:block;
+    }
+
+    .page-container{
+        max-width:none;
+        margin:0;
+        padding:0;
+    }
+
+    .panel{
+        box-shadow:none;
+        break-inside:avoid;
+    }
+
+    @page{
+        size:A4;
+        margin:12mm;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:900px){
+
+    .form-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .stats-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+
+@media(max-width:650px){
+
+    .system-header-grid{
+        grid-template-columns:70px 1fr 70px;
+        gap:7px;
+        padding:13px 7px;
+    }
+
+    .system-logo img{
+        max-width:65px;
+        max-height:55px;
+    }
+
+    .system-title h1{
+        font-size:18px;
+    }
+
+    .system-title h2{
+        font-size:10px;
+    }
+
+    .form-grid,
+    .stats-grid{
+        grid-template-columns:1fr;
+    }
+
+    .inspection-table{
+        min-width:750px;
+    }
+
+    .panel{
+        padding:15px;
+    }
+
+}

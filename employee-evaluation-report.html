@@ -1,0 +1,1934 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>تقرير تقييم أداء الموظف | PHRMS</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    background:#eef3f7;
+    font-family:Arial,Tahoma,sans-serif;
+    color:#23384a;
+}
+
+.page-shell{
+    max-width:1100px;
+    margin:20px auto;
+    padding:0 15px 40px;
+}
+
+.toolbar{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin-bottom:15px;
+    flex-wrap:wrap;
+}
+
+.toolbar button,
+.toolbar a{
+    border:none;
+    border-radius:8px;
+    padding:11px 18px;
+    font-weight:bold;
+    cursor:pointer;
+    text-decoration:none;
+    font-size:14px;
+}
+
+.print-btn{
+    background:#0b66b2;
+    color:#fff;
+}
+
+.back-btn{
+    background:#e2e8ee;
+    color:#164c74;
+}
+
+.report-sheet{
+    background:#fff;
+    min-height:1120px;
+    box-shadow:0 4px 20px rgba(0,0,0,.08);
+    padding:28px 34px 35px;
+}
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header{
+    display:grid;
+    grid-template-columns:170px 1fr 170px;
+    align-items:center;
+    gap:15px;
+    margin-bottom:18px;
+    direction:ltr;
+}
+
+.header-logo{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.header-logo img{
+    max-width:155px;
+    max-height:95px;
+    object-fit:contain;
+}
+
+.header-center{
+    text-align:center;
+    direction:rtl;
+}
+
+.header-center h1{
+    margin:0;
+    color:#155a8a;
+    font-size:22px;
+}
+
+.header-center h2{
+    margin:5px 0 0;
+    color:#155a8a;
+    font-size:16px;
+}
+
+.header-center p{
+    margin:5px 0 0;
+    color:#607789;
+    font-size:11px;
+}
+
+/* =====================================================
+   TITLE
+===================================================== */
+
+.report-title{
+    text-align:center;
+    color:#c76516;
+    margin:15px 0;
+}
+
+.report-title h2{
+    margin:0;
+    font-size:25px;
+}
+
+.report-title h3{
+    margin:5px 0 0;
+    font-size:17px;
+    font-weight:bold;
+}
+
+.report-purpose{
+    border:1px solid #e8c6a4;
+    background:#fffaf5;
+    border-radius:9px;
+    padding:14px;
+    text-align:center;
+    line-height:1.9;
+    font-size:13px;
+    margin-bottom:18px;
+}
+
+/* =====================================================
+   SECTION
+===================================================== */
+
+.section-title{
+    text-align:center;
+    color:#155a8a;
+    font-weight:bold;
+    font-size:15px;
+    margin:15px 0 8px;
+    padding-bottom:7px;
+    border-bottom:1px solid #ccd8e2;
+}
+
+/* =====================================================
+   EMPLOYEE INFO
+===================================================== */
+
+.info-table,
+.performance-table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.info-table td,
+.performance-table td{
+    border:1px solid #9baab7;
+    padding:9px;
+    font-size:12px;
+}
+
+.info-label{
+    background:#eaf2f8;
+    font-weight:bold;
+    color:#164c74;
+    width:15%;
+}
+
+.info-value{
+    width:35%;
+}
+
+/* =====================================================
+   KPI
+===================================================== */
+
+.kpi-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:9px;
+    margin-top:18px;
+}
+
+.kpi{
+    border:1px solid #d6e0e8;
+    border-radius:10px;
+    padding:15px 8px;
+    text-align:center;
+    background:#fff;
+}
+
+.kpi strong{
+    display:block;
+    font-size:25px;
+    color:#c76516;
+}
+
+.kpi span{
+    display:block;
+    margin-top:5px;
+    font-size:11px;
+    color:#607789;
+}
+
+/* =====================================================
+   PERFORMANCE TABLE
+===================================================== */
+
+.performance-table{
+    margin-top:15px;
+}
+
+.performance-table th{
+    background:#eaf2f8;
+    color:#155a8a;
+    border:1px solid #9baab7;
+    padding:8px;
+    font-size:13px;
+}
+
+.performance-table td:first-child{
+    background:#f8fafc;
+    font-weight:bold;
+    color:#344f66;
+    width:50%;
+}
+
+/* =====================================================
+   PROGRESS
+===================================================== */
+
+.progress-card{
+    margin-top:15px;
+    border:1px solid #d7e1e9;
+    border-radius:10px;
+    padding:12px;
+}
+
+.progress-head{
+    display:flex;
+    justify-content:space-between;
+    font-size:12px;
+    color:#155a8a;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+.progress-track{
+    background:#e8edf1;
+    height:13px;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress-fill{
+    height:100%;
+    background:#15936c;
+    width:0%;
+    border-radius:20px;
+}
+
+/* =====================================================
+   SUMMARY
+===================================================== */
+
+.summary-box{
+    margin-top:18px;
+    border:1px solid #d7e1e9;
+    border-radius:10px;
+    padding:15px;
+}
+
+.summary-box h3{
+    margin:0 0 10px;
+    color:#155a8a;
+    font-size:14px;
+}
+
+.summary-box p{
+    margin:0;
+    line-height:2;
+    font-size:12px;
+    color:#344f66;
+}
+
+/* =====================================================
+   APPROVAL
+===================================================== */
+
+.approval-section{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:0;
+    margin-top:22px;
+    border:1px solid #9baab7;
+
+    break-inside:avoid;
+    page-break-inside:avoid;
+}
+
+.approval-card{
+    min-height:205px;
+    text-align:center;
+    padding:12px;
+}
+
+.approval-card + .approval-card{
+    border-right:1px solid #9baab7;
+}
+
+.approval-title{
+    color:#155a8a;
+    font-weight:bold;
+    font-size:13px;
+    margin-bottom:10px;
+}
+
+.system-name{
+    font-size:12px;
+    line-height:2;
+    margin-top:25px;
+}
+
+.manager-name{
+    font-size:13px;
+    font-weight:bold;
+    color:#23384a;
+    margin-top:5px;
+}
+
+.manager-role{
+    color:#71808c;
+    font-size:10px;
+    margin-top:3px;
+}
+
+.manager-signature{
+    height:90px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:5px 0;
+}
+
+.manager-signature img{
+    display:block;
+    max-width:230px;
+    max-height:85px;
+    width:auto;
+    height:auto;
+    object-fit:contain;
+}
+
+.signature-placeholder{
+    color:#9aa6af;
+    font-size:11px;
+}
+
+.signature-status{
+    display:inline-block;
+    background:#e9f7ef;
+    color:#187b43;
+    border-radius:15px;
+    padding:4px 10px;
+    font-size:9px;
+    font-weight:bold;
+}
+
+.approval-date{
+    font-size:11px;
+    margin-top:8px;
+    color:#40566b;
+}
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.official-footer{
+    margin-top:25px;
+    padding-top:15px;
+    border-top:1px solid #d7e0e7;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    align-items:center;
+    direction:ltr;
+
+    break-inside:avoid;
+    page-break-inside:avoid;
+}
+
+.footer-contact{
+    text-align:left;
+    font-size:10px;
+    line-height:1.8;
+    color:#607080;
+}
+
+.footer-logo{
+    text-align:right;
+}
+
+.footer-logo img{
+    max-width:190px;
+    max-height:100px;
+    object-fit:contain;
+}
+
+/* =====================================================
+   EMPTY
+===================================================== */
+
+.empty{
+    padding:35px;
+    text-align:center;
+    color:#718293;
+}
+
+/* =====================================================
+   PRINT
+===================================================== */
+
+@page{
+    size:A4;
+    margin:9mm;
+}
+
+@media print{
+
+    body{
+        background:#fff;
+    }
+
+    .toolbar{
+        display:none !important;
+    }
+
+    .page-shell{
+        margin:0;
+        padding:0;
+        max-width:none;
+    }
+
+    .report-sheet{
+        box-shadow:none;
+        padding:0;
+        min-height:auto;
+    }
+
+    .approval-section,
+    .official-footer,
+    .kpi-grid{
+        break-inside:avoid;
+        page-break-inside:avoid;
+    }
+
+    .manager-signature img,
+    .header-logo img,
+    .footer-logo img{
+        display:block !important;
+
+        -webkit-print-color-adjust:exact;
+        print-color-adjust:exact;
+    }
+
+}
+
+@media(max-width:700px){
+
+    .header{
+        grid-template-columns:80px 1fr 80px;
+    }
+
+    .header-logo img{
+        max-width:75px;
+    }
+
+    .report-sheet{
+        padding:15px 10px;
+    }
+
+    .kpi-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .approval-section{
+        grid-template-columns:1fr;
+    }
+
+    .approval-card + .approval-card{
+        border-right:none;
+        border-top:1px solid #9baab7;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="page-shell">
+
+<div class="toolbar">
+
+<button
+    class="print-btn"
+    onclick="window.print()">
+🖨️ طباعة / حفظ PDF
+</button>
+
+<a
+    class="back-btn"
+    href="employee-performance.html">
+← العودة
+</a>
+
+</div>
+
+
+<div
+    id="emptyState"
+    class="empty"
+    style="display:none;">
+تعذر العثور على بيانات تقييم الموظف.
+</div>
+
+
+<div
+    id="report"
+    class="report-sheet"
+    style="display:none;">
+
+
+<header class="header">
+
+<div class="header-logo">
+<img
+    src="./images/cluster-logo.png"
+    alt="شعار تجمع حفر الباطن الصحي">
+</div>
+
+
+<div class="header-center">
+
+<h1>
+قسم الصحة العامة
+</h1>
+
+<h2>
+Public Health Department
+</h2>
+
+<p>
+نظام إدارة جولات الصحة العامة
+<br>
+Public Health Rounds Management System
+</p>
+
+</div>
+
+
+<div class="header-logo">
+
+<img
+    src="./images/hospital-logo.png"
+    alt="شعار مستشفى إرادة والصحة النفسية">
+
+</div>
+
+</header>
+
+
+<div class="report-title">
+
+<h2>
+تقرير تقييم أداء الموظف
+</h2>
+
+<h3>
+Employee Performance Evaluation Report
+</h3>
+
+</div>
+
+
+<div class="report-purpose">
+
+هذا التقرير مخصص لتقييم أداء الموظف خلال الفترة المحددة،
+ويعتمد على المهام والجولات المسندة إليه وما تم تنفيذه فعلياً
+في نظام إدارة جولات الصحة العامة (PHRMS).
+
+</div>
+
+
+<div class="section-title">
+بيانات الموظف
+</div>
+
+
+<table class="info-table">
+
+<tr>
+
+<td class="info-label">
+اسم الموظف
+</td>
+
+<td
+    class="info-value"
+    id="employeeName">
+—
+</td>
+
+<td class="info-label">
+الرقم الوظيفي
+</td>
+
+<td
+    class="info-value"
+    id="employeeNumber">
+—
+</td>
+
+</tr>
+
+
+<tr>
+
+<td class="info-label">
+فترة التقييم
+</td>
+
+<td
+    class="info-value"
+    id="evaluationPeriod">
+—
+</td>
+
+<td class="info-label">
+تاريخ إصدار التقرير
+</td>
+
+<td
+    class="info-value"
+    id="reportDate">
+—
+</td>
+
+</tr>
+
+</table>
+
+
+<div class="kpi-grid">
+
+<div class="kpi">
+<strong id="requiredCount">0</strong>
+<span>المهام / الجولات المطلوبة</span>
+</div>
+
+<div class="kpi">
+<strong id="completedCount">0</strong>
+<span>المنفذة</span>
+</div>
+
+<div class="kpi">
+<strong id="remainingCount">0</strong>
+<span>المتبقية</span>
+</div>
+
+<div class="kpi">
+<strong id="completionRate">0%</strong>
+<span>نسبة الإنجاز</span>
+</div>
+
+</div>
+
+
+<table class="performance-table">
+
+<thead>
+
+<tr>
+<th colspan="2">
+تفاصيل تقييم الأداء
+</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+<td>عدد الجولات المطلوبة</td>
+<td id="requiredRounds">0</td>
+</tr>
+
+<tr>
+<td>عدد الجولات المنفذة</td>
+<td id="completedRounds">0</td>
+</tr>
+
+<tr>
+<td>عدد الجولات المتبقية</td>
+<td id="remainingRounds">0</td>
+</tr>
+
+<tr>
+<td>متوسط الالتزام في الجولات المنفذة</td>
+<td id="averageCompliance">0%</td>
+</tr>
+
+<tr>
+<td>إجمالي حالات عدم التطبيق</td>
+<td id="nonComplianceCount">0</td>
+</tr>
+
+</tbody>
+
+</table>
+
+
+<div class="progress-card">
+
+<div class="progress-head">
+
+<span>
+نسبة إنجاز المهام والجولات المطلوبة
+</span>
+
+<span id="progressText">
+0%
+</span>
+
+</div>
+
+<div class="progress-track">
+
+<div
+    id="progressFill"
+    class="progress-fill">
+</div>
+
+</div>
+
+</div>
+
+
+<div class="summary-box">
+
+<h3>
+ملخص تقييم الأداء
+</h3>
+
+<p id="performanceSummary">
+—
+</p>
+
+</div>
+
+
+<!-- =====================================================
+     ELECTRONIC APPROVAL
+===================================================== -->
+
+<section class="approval-section">
+
+
+<!-- إعداد التقرير -->
+
+<div class="approval-card">
+
+<div class="approval-title">
+إعداد
+</div>
+
+<div class="system-name">
+
+النظام الآلي
+<br>
+نظام إدارة جولات الصحة العامة (PHRMS)
+
+</div>
+
+<div
+    id="systemReportDate"
+    class="approval-date">
+—
+</div>
+
+</div>
+
+
+<!-- اعتماد المدير -->
+
+<div class="approval-card">
+
+<div class="approval-title">
+اعتماد مدير إدارة الصحة العامة
+</div>
+
+<div
+    id="managerName"
+    class="manager-name">
+
+مدير إدارة الصحة العامة
+
+</div>
+
+<div class="manager-role">
+مدير إدارة الصحة العامة
+</div>
+
+
+<div
+    id="managerSignature"
+    class="manager-signature">
+
+<span class="signature-placeholder">
+جاري تحميل التوقيع الإلكتروني...
+</span>
+
+</div>
+
+
+<div
+    id="signatureStatus"
+    style="display:none;">
+
+<span class="signature-status">
+✓ توقيع إلكتروني معتمد
+</span>
+
+</div>
+
+
+<div
+    id="managerApprovalDate"
+    class="approval-date">
+—
+</div>
+
+</div>
+
+
+</section>
+
+
+<footer class="official-footer">
+
+<div class="footer-contact">
+
+<div>
+HBHCluster@moh.gov.sa
+</div>
+
+<div>
+Hafr AlBatin Health Cluster
+</div>
+
+<div>
+Eradah & Mental Health Hospital
+</div>
+
+</div>
+
+
+<div class="footer-logo">
+
+<img
+    src="./images/hospital-logo.png"
+    alt="شعار مستشفى إرادة والصحة النفسية">
+
+</div>
+
+</footer>
+
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   STORAGE
+===================================================== */
+
+const TASKS_KEY =
+    "phrmsEmployeeTasks";
+
+const PUBLIC_ROUNDS_KEY =
+    "phrmsPublicHealthRounds";
+
+const WASTE_ROUNDS_KEY =
+    "phrmsMedicalWasteRounds";
+
+/*
+نفس مفتاح توقيع المدير المستخدم
+في تقرير الجولات
+*/
+const MANAGER_SIGNATURE_KEY =
+    "phrmsPublicHealthManagerSignature";
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    loadReport
+);
+
+
+/* =====================================================
+   HELPERS
+===================================================== */
+
+function getArray(key){
+
+    try{
+
+        const data =
+            JSON.parse(
+                localStorage.getItem(key)
+            ) || [];
+
+        return Array.isArray(data)
+            ? data
+            : [];
+
+    }
+    catch(error){
+
+        return [];
+
+    }
+
+}
+
+
+function normalize(value){
+
+    return String(value || "")
+        .trim()
+        .replace(/\s+/g," ")
+        .toLowerCase();
+
+}
+
+
+function getReportSettings(){
+
+    const keys = [
+
+        "phrmsEmployeeEvaluationFilter",
+
+        "phrmsEmployeeEvaluationReport",
+
+        "phrmsEvaluationReportFilter"
+
+    ];
+
+
+    for(const key of keys){
+
+        try{
+
+            const value =
+                JSON.parse(
+                    sessionStorage.getItem(key)
+                );
+
+
+            if(value){
+
+                return value;
+
+            }
+
+        }
+        catch(error){}
+
+    }
+
+
+    return {
+
+        employeeName:
+            sessionStorage.getItem(
+                "phrmsEvaluationEmployeeName"
+            ) || "",
+
+        employeeNumber:
+            sessionStorage.getItem(
+                "phrmsEvaluationEmployeeNumber"
+            ) || "",
+
+        fromDate:
+            sessionStorage.getItem(
+                "phrmsEvaluationFromDate"
+            ) || "",
+
+        toDate:
+            sessionStorage.getItem(
+                "phrmsEvaluationToDate"
+            ) || ""
+
+    };
+
+}
+
+
+function dateInside(
+    date,
+    from,
+    to
+){
+
+    if(!date){
+        return false;
+    }
+
+    if(
+        from &&
+        date < from
+    ){
+        return false;
+    }
+
+    if(
+        to &&
+        date > to
+    ){
+        return false;
+    }
+
+    return true;
+
+}
+
+
+function sameEmployee(
+    item,
+    employeeName,
+    employeeNumber
+){
+
+    if(
+        employeeNumber &&
+        String(
+            item.employeeNumber || ""
+        ).trim() ===
+        String(
+            employeeNumber
+        ).trim()
+    ){
+
+        return true;
+
+    }
+
+
+    if(
+        employeeName &&
+        normalize(
+            item.employeeName
+        ) ===
+        normalize(
+            employeeName
+        )
+    ){
+
+        return true;
+
+    }
+
+
+    return false;
+
+}
+
+
+/* =====================================================
+   LOAD REPORT
+===================================================== */
+
+function loadReport(){
+
+    const settings =
+        getReportSettings();
+
+
+    let employeeName =
+        settings.employeeName ||
+        settings.name ||
+        "";
+
+
+    let employeeNumber =
+        settings.employeeNumber ||
+        settings.empNo ||
+        settings.number ||
+        "";
+
+
+    const fromDate =
+        settings.fromDate ||
+        settings.startDate ||
+        "";
+
+
+    const toDate =
+        settings.toDate ||
+        settings.endDate ||
+        "";
+
+
+    const tasks =
+        getArray(
+            TASKS_KEY
+        );
+
+
+    const rounds = [
+
+        ...getArray(
+            PUBLIC_ROUNDS_KEY
+        ),
+
+        ...getArray(
+            WASTE_ROUNDS_KEY
+        )
+
+    ];
+
+
+    /*
+    إذا لم تصل بيانات الموظف من صفحة الأداء،
+    نحاول التعرف عليه من البيانات
+    */
+
+    if(
+        !employeeName &&
+        !employeeNumber
+    ){
+
+        const firstTask =
+            tasks[0];
+
+        const firstRound =
+            rounds[0];
+
+
+        const source =
+            firstTask ||
+            firstRound;
+
+
+        if(source){
+
+            employeeName =
+                source.employeeName ||
+                "";
+
+            employeeNumber =
+                source.employeeNumber ||
+                "";
+
+        }
+
+    }
+
+
+    if(
+        !employeeName &&
+        !employeeNumber
+    ){
+
+        document.getElementById(
+            "emptyState"
+        ).style.display =
+            "block";
+
+        return;
+
+    }
+
+
+    const employeeTasks =
+        tasks.filter(
+            function(task){
+
+                const taskDate =
+                    task.taskDate ||
+                    task.requiredDate ||
+                    task.dueDate ||
+                    task.inspectionDate ||
+                    "";
+
+
+                return (
+
+                    sameEmployee(
+                        task,
+                        employeeName,
+                        employeeNumber
+                    )
+
+                    &&
+
+                    (
+                        !fromDate &&
+                        !toDate
+
+                        ||
+
+                        dateInside(
+                            taskDate,
+                            fromDate,
+                            toDate
+                        )
+                    )
+
+                );
+
+            }
+        );
+
+
+    const employeeRounds =
+        rounds.filter(
+            function(round){
+
+                return (
+
+                    sameEmployee(
+                        round,
+                        employeeName,
+                        employeeNumber
+                    )
+
+                    &&
+
+                    (
+                        !fromDate &&
+                        !toDate
+
+                        ||
+
+                        dateInside(
+                            round.inspectionDate,
+                            fromDate,
+                            toDate
+                        )
+                    )
+
+                );
+
+            }
+        );
+
+
+    /*
+    بيانات الموظف النهائية
+    */
+
+    const source =
+        employeeTasks[0] ||
+        employeeRounds[0] ||
+        {};
+
+
+    employeeName =
+        employeeName ||
+        source.employeeName ||
+        "—";
+
+
+    employeeNumber =
+        employeeNumber ||
+        source.employeeNumber ||
+        "—";
+
+
+    renderReport({
+
+        employeeName,
+        employeeNumber,
+        fromDate,
+        toDate,
+        tasks:
+            employeeTasks,
+        rounds:
+            employeeRounds
+
+    });
+
+}
+
+
+/* =====================================================
+   RENDER REPORT
+===================================================== */
+
+function renderReport(data){
+
+    document.getElementById(
+        "report"
+    ).style.display =
+        "block";
+
+
+    const tasks =
+        data.tasks;
+
+
+    const rounds =
+        data.rounds;
+
+
+    /*
+    المهام المطلوبة
+    */
+
+    const required =
+        tasks.length;
+
+
+    /*
+    المهام المنفذة
+
+    ندعم أكثر من صيغة للحالة
+    */
+
+    const completedTasks =
+        tasks.filter(
+            function(task){
+
+                const status =
+                    normalize(
+                        task.status
+                    );
+
+
+                return (
+
+                    status === "completed" ||
+                    status === "done" ||
+                    status === "منفذة" ||
+                    status === "مكتملة" ||
+                    status === "تم التنفيذ"
+
+                );
+
+            }
+        ).length;
+
+
+    /*
+    إذا كانت الجولات الفعلية مرتبطة
+    بالمهام فإن عدد المنفذ لا يتجاوز المطلوب
+    */
+
+    let completed =
+        completedTasks;
+
+
+    if(
+        completed === 0 &&
+        required > 0
+    ){
+
+        completed =
+            Math.min(
+                rounds.length,
+                required
+            );
+
+    }
+
+
+    const remaining =
+        Math.max(
+            required -
+            completed,
+            0
+        );
+
+
+    const completionRate =
+        required
+
+        ? Math.round(
+            completed /
+            required *
+            100
+        )
+
+        : 0;
+
+
+    /*
+    متوسط الالتزام
+    */
+
+    const complianceValues =
+        rounds
+        .map(
+            function(round){
+
+                return Number(
+                    round.complianceRate
+                );
+
+            }
+        )
+        .filter(
+            function(value){
+
+                return !isNaN(value);
+
+            }
+        );
+
+
+    const averageCompliance =
+        complianceValues.length
+
+        ? Math.round(
+
+            complianceValues.reduce(
+                function(sum,value){
+
+                    return sum + value;
+
+                },
+                0
+            )
+
+            /
+
+            complianceValues.length
+
+        )
+
+        : 0;
+
+
+    /*
+    حالات عدم التطبيق
+    */
+
+    const nonCompliance =
+        rounds.reduce(
+            function(sum,round){
+
+                return (
+                    sum +
+                    (
+                        Number(
+                            round.noCount
+                        ) || 0
+                    )
+                );
+
+            },
+            0
+        );
+
+
+    /*
+    البيانات
+    */
+
+    document.getElementById(
+        "employeeName"
+    ).textContent =
+        data.employeeName;
+
+
+    document.getElementById(
+        "employeeNumber"
+    ).textContent =
+        data.employeeNumber;
+
+
+    document.getElementById(
+        "evaluationPeriod"
+    ).textContent =
+        formatPeriod(
+            data.fromDate,
+            data.toDate
+        );
+
+
+    const today =
+        getToday();
+
+
+    document.getElementById(
+        "reportDate"
+    ).textContent =
+        today;
+
+
+    document.getElementById(
+        "systemReportDate"
+    ).textContent =
+        "التاريخ: " +
+        today;
+
+
+    document.getElementById(
+        "managerApprovalDate"
+    ).textContent =
+        "التاريخ: " +
+        today;
+
+
+    /*
+    KPI
+    */
+
+    document.getElementById(
+        "requiredCount"
+    ).textContent =
+        required;
+
+
+    document.getElementById(
+        "completedCount"
+    ).textContent =
+        completed;
+
+
+    document.getElementById(
+        "remainingCount"
+    ).textContent =
+        remaining;
+
+
+    document.getElementById(
+        "completionRate"
+    ).textContent =
+        completionRate +
+        "%";
+
+
+    /*
+    DETAILS
+    */
+
+    document.getElementById(
+        "requiredRounds"
+    ).textContent =
+        required;
+
+
+    document.getElementById(
+        "completedRounds"
+    ).textContent =
+        completed;
+
+
+    document.getElementById(
+        "remainingRounds"
+    ).textContent =
+        remaining;
+
+
+    document.getElementById(
+        "averageCompliance"
+    ).textContent =
+        averageCompliance +
+        "%";
+
+
+    document.getElementById(
+        "nonComplianceCount"
+    ).textContent =
+        nonCompliance;
+
+
+    /*
+    PROGRESS
+    */
+
+    document.getElementById(
+        "progressText"
+    ).textContent =
+        completionRate +
+        "%";
+
+
+    document.getElementById(
+        "progressFill"
+    ).style.width =
+        completionRate +
+        "%";
+
+
+    /*
+    SUMMARY
+    */
+
+    document.getElementById(
+        "performanceSummary"
+    ).textContent =
+        createSummary(
+            required,
+            completed,
+            remaining,
+            completionRate,
+            averageCompliance,
+            nonCompliance
+        );
+
+
+    /*
+    MANAGER ELECTRONIC SIGNATURE
+    */
+
+    renderManagerElectronicSignature();
+
+}
+
+
+/* =====================================================
+   MANAGER ELECTRONIC SIGNATURE
+===================================================== */
+
+function renderManagerElectronicSignature(){
+
+    const nameElement =
+        document.getElementById(
+            "managerName"
+        );
+
+
+    const signatureArea =
+        document.getElementById(
+            "managerSignature"
+        );
+
+
+    const statusElement =
+        document.getElementById(
+            "signatureStatus"
+        );
+
+
+    try{
+
+        const raw =
+            localStorage.getItem(
+                MANAGER_SIGNATURE_KEY
+            );
+
+
+        if(!raw){
+
+            signatureArea.innerHTML = `
+
+                <span class="signature-placeholder">
+
+                    لم يتم تسجيل التوقيع الإلكتروني
+                    لمدير إدارة الصحة العامة
+
+                </span>
+
+            `;
+
+            return;
+
+        }
+
+
+        const manager =
+            JSON.parse(raw);
+
+
+        if(
+            manager.managerName
+        ){
+
+            nameElement.textContent =
+                manager.managerName;
+
+        }
+
+
+        if(
+            manager.signature
+        ){
+
+            signatureArea.innerHTML = `
+
+                <img
+                    src="${manager.signature}"
+                    alt="التوقيع الإلكتروني لمدير إدارة الصحة العامة">
+
+            `;
+
+
+            statusElement.style.display =
+                "block";
+
+        }
+        else{
+
+            signatureArea.innerHTML = `
+
+                <span class="signature-placeholder">
+
+                    لم يتم تسجيل التوقيع الإلكتروني
+                    لمدير إدارة الصحة العامة
+
+                </span>
+
+            `;
+
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            "Manager Signature Error:",
+            error
+        );
+
+
+        signatureArea.innerHTML = `
+
+            <span class="signature-placeholder">
+
+                تعذر تحميل التوقيع الإلكتروني
+
+            </span>
+
+        `;
+
+    }
+
+}
+
+
+/* =====================================================
+   SUMMARY
+===================================================== */
+
+function createSummary(
+    required,
+    completed,
+    remaining,
+    rate,
+    compliance,
+    nonCompliance
+){
+
+    let evaluation =
+        "";
+
+
+    if(
+        required === 0
+    ){
+
+        evaluation =
+            "لا توجد مهام أو جولات مطلوبة مسجلة خلال فترة التقييم.";
+
+    }
+    else if(
+        rate >= 90
+    ){
+
+        evaluation =
+            "مستوى الإنجاز مرتفع.";
+
+    }
+    else if(
+        rate >= 75
+    ){
+
+        evaluation =
+            "مستوى الإنجاز جيد.";
+
+    }
+    else if(
+        rate >= 50
+    ){
+
+        evaluation =
+            "مستوى الإنجاز متوسط ويحتاج إلى متابعة.";
+
+    }
+    else{
+
+        evaluation =
+            "مستوى الإنجاز يحتاج إلى متابعة.";
+
+    }
+
+
+    return (
+
+        "خلال فترة التقييم تم تكليف الموظف بـ " +
+        required +
+        " مهمة/جولة، ونُفذ منها " +
+        completed +
+        "، بنسبة إنجاز بلغت " +
+        rate +
+        "%. " +
+
+        evaluation +
+
+        " عدد المهام المتبقية " +
+        remaining +
+        ". وبلغ متوسط الالتزام في الجولات المنفذة " +
+        compliance +
+        "%، وإجمالي حالات عدم التطبيق " +
+        nonCompliance +
+        "."
+
+    );
+
+}
+
+
+/* =====================================================
+   DATE
+===================================================== */
+
+function getToday(){
+
+    const now =
+        new Date();
+
+
+    const year =
+        now.getFullYear();
+
+
+    const month =
+        String(
+            now.getMonth()+1
+        ).padStart(
+            2,
+            "0"
+        );
+
+
+    const day =
+        String(
+            now.getDate()
+        ).padStart(
+            2,
+            "0"
+        );
+
+
+    return (
+        year +
+        "/" +
+        month +
+        "/" +
+        day
+    );
+
+}
+
+
+function formatPeriod(
+    from,
+    to
+){
+
+    if(
+        from &&
+        to
+    ){
+
+        return (
+            "من " +
+            from.replaceAll("-","/") +
+            " إلى " +
+            to.replaceAll("-","/")
+        );
+
+    }
+
+
+    if(from){
+
+        return (
+            "من " +
+            from.replaceAll("-","/")
+        );
+
+    }
+
+
+    if(to){
+
+        return (
+            "حتى " +
+            to.replaceAll("-","/")
+        );
+
+    }
+
+
+    return "جميع الفترات";
+
+}
+
+</script>
+
+</body>
+</html>

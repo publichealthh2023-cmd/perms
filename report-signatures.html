@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>إدارة التواقيع | PHRMS</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    background:#f3f6f8;
+    font-family:Arial,Tahoma,sans-serif;
+    color:#20364d;
+}
+
+.page{
+    max-width:1200px;
+    margin:25px auto;
+    padding:0 15px 60px;
+}
+
+.header{
+    background:#fff;
+    border:1px solid #dfe7ee;
+    border-radius:16px;
+    padding:22px;
+    box-shadow:0 4px 16px rgba(0,0,0,.05);
+    margin-bottom:18px;
+}
+
+.header h1{
+    margin:0;
+    color:#0b5fa5;
+    font-size:25px;
+}
+
+.header p{
+    margin:7px 0 0;
+    color:#718295;
+    font-size:13px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+}
+
+.card{
+    background:#fff;
+    border:1px solid #dfe7ee;
+    border-radius:16px;
+    padding:20px;
+    box-shadow:0 4px 14px rgba(0,0,0,.04);
+}
+
+.card h2{
+    margin:0 0 16px;
+    color:#0b5fa5;
+    font-size:18px;
+}
+
+.form-group{
+    margin-bottom:14px;
+}
+
+label{
+    display:block;
+    font-size:12px;
+    font-weight:bold;
+    margin-bottom:6px;
+    color:#42566b;
+}
+
+input[type="text"],
+input[type="file"],
+select{
+    width:100%;
+    padding:10px 12px;
+    border:1px solid #cfd9e2;
+    border-radius:9px;
+    background:#fff;
+    font-size:13px;
+}
+
+.signature-preview{
+    margin-top:12px;
+    min-height:120px;
+    border:1px dashed #bccad6;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#fafcfd;
+    overflow:hidden;
+}
+
+.signature-preview img{
+    max-width:90%;
+    max-height:110px;
+    object-fit:contain;
+}
+
+.actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-top:15px;
+}
+
+button,
+.back-btn{
+    border:none;
+    border-radius:8px;
+    padding:10px 15px;
+    font-weight:bold;
+    cursor:pointer;
+    text-decoration:none;
+    font-size:13px;
+}
+
+.btn-primary{
+    background:#0b66b2;
+    color:#fff;
+}
+
+.btn-secondary{
+    background:#e9eef3;
+    color:#2d4d67;
+}
+
+.btn-danger{
+    background:#fde8e8;
+    color:#a82222;
+}
+
+.table-card{
+    margin-top:18px;
+}
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:850px;
+}
+
+th,
+td{
+    border-bottom:1px solid #e3e9ef;
+    padding:11px 9px;
+    text-align:right;
+    font-size:12px;
+}
+
+th{
+    background:#edf5fb;
+    color:#0b5fa5;
+}
+
+.signature-mini{
+    width:110px;
+    height:45px;
+    object-fit:contain;
+}
+
+.empty{
+    text-align:center;
+    color:#8493a0;
+    padding:22px;
+}
+
+.top-actions{
+    display:flex;
+    justify-content:flex-start;
+    margin-bottom:14px;
+}
+
+@media(max-width:850px){
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <div class="top-actions">
+
+        <a href="control.html" class="back-btn btn-secondary">
+            ← العودة لصندوق التحكم
+        </a>
+
+    </div>
+
+    <section class="header">
+
+        <h1>إدارة التواقيع والتقارير</h1>
+
+        <p>
+            ربط كل موظف بتوقيعه الإلكتروني وإدارة توقيع مدير إدارة الصحة العامة الثابت.
+        </p>
+
+    </section>
+
+    <div class="grid">
+
+        <!-- الموظفون -->
+
+        <section class="card">
+
+            <h2>توقيع موظف</h2>
+
+            <div class="form-group">
+
+                <label>اسم الموظف</label>
+
+                <input
+                    type="text"
+                    id="employeeName"
+                    placeholder="اكتب اسم الموظف">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>الرقم الوظيفي</label>
+
+                <input
+                    type="text"
+                    id="employeeNumber"
+                    placeholder="اكتب الرقم الوظيفي">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>رفع التوقيع الإلكتروني</label>
+
+                <input
+                    type="file"
+                    id="employeeSignatureFile"
+                    accept="image/*">
+
+            </div>
+
+            <div class="signature-preview" id="employeePreview">
+                لا يوجد توقيع مرفوع
+            </div>
+
+            <div class="actions">
+
+                <button
+                    class="btn-primary"
+                    onclick="saveEmployeeSignature()">
+                    حفظ الموظف والتوقيع
+                </button>
+
+                <button
+                    class="btn-secondary"
+                    onclick="clearEmployeeForm()">
+                    مسح الحقول
+                </button>
+
+            </div>
+
+        </section>
+
+        <!-- المدير -->
+
+        <section class="card">
+
+            <h2>توقيع مدير إدارة الصحة العامة</h2>
+
+            <div class="form-group">
+
+                <label>اسم المدير</label>
+
+                <input
+                    type="text"
+                    id="managerName"
+                    placeholder="اسم مدير إدارة الصحة العامة">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>رفع التوقيع الثابت</label>
+
+                <input
+                    type="file"
+                    id="managerSignatureFile"
+                    accept="image/*">
+
+            </div>
+
+            <div class="signature-preview" id="managerPreview">
+                لا يوجد توقيع مرفوع
+            </div>
+
+            <div class="actions">
+
+                <button
+                    class="btn-primary"
+                    onclick="saveManagerSignature()">
+                    حفظ توقيع المدير
+                </button>
+
+                <button
+                    class="btn-danger"
+                    onclick="deleteManagerSignature()">
+                    حذف توقيع المدير
+                </button>
+
+            </div>
+
+        </section>
+
+    </div>
+
+    <!-- سجل الموظفين -->
+
+    <section class="card table-card">
+
+        <h2>الموظفون المسجلون</h2>
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>م</th>
+                        <th>اسم الموظف</th>
+                        <th>الرقم الوظيفي</th>
+                        <th>التوقيع</th>
+                        <th>الإجراء</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="employeesBody">
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</div>
+
+<script>
+
+const EMPLOYEE_SIGNATURES_KEY =
+    "phrmsEmployeeSignatures";
+
+const MANAGER_SIGNATURE_KEY =
+    "phrmsPublicHealthManagerSignature";
+
+let employeeSignatureData = "";
+
+let managerSignatureData = "";
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        loadEmployees();
+        loadManager();
+        bindFileInputs();
+
+    }
+);
+
+function bindFileInputs(){
+
+    document
+        .getElementById("employeeSignatureFile")
+        .addEventListener(
+            "change",
+            function(event){
+
+                readImageFile(
+                    event.target.files[0],
+                    function(data){
+
+                        employeeSignatureData = data;
+
+                        document.getElementById(
+                            "employeePreview"
+                        ).innerHTML =
+                            `<img src="${data}" alt="توقيع الموظف">`;
+
+                    }
+                );
+
+            }
+        );
+
+    document
+        .getElementById("managerSignatureFile")
+        .addEventListener(
+            "change",
+            function(event){
+
+                readImageFile(
+                    event.target.files[0],
+                    function(data){
+
+                        managerSignatureData = data;
+
+                        document.getElementById(
+                            "managerPreview"
+                        ).innerHTML =
+                            `<img src="${data}" alt="توقيع المدير">`;
+
+                    }
+                );
+
+            }
+        );
+
+}
+
+function readImageFile(file,callback){
+
+    if(!file){
+        return;
+    }
+
+    const reader =
+        new FileReader();
+
+    reader.onload =
+        function(e){
+
+            callback(
+                e.target.result
+            );
+
+        };
+
+    reader.readAsDataURL(file);
+
+}
+
+function getEmployees(){
+
+    try{
+
+        const data =
+            JSON.parse(
+                localStorage.getItem(
+                    EMPLOYEE_SIGNATURES_KEY
+                )
+            ) || [];
+
+        return Array.isArray(data)
+            ? data
+            : [];
+
+    }
+    catch(error){
+
+        return [];
+
+    }
+
+}
+
+function saveEmployees(list){
+
+    localStorage.setItem(
+        EMPLOYEE_SIGNATURES_KEY,
+        JSON.stringify(list)
+    );
+
+}
+
+function saveEmployeeSignature(){
+
+    const name =
+        document.getElementById(
+            "employeeName"
+        ).value.trim();
+
+    const number =
+        document.getElementById(
+            "employeeNumber"
+        ).value.trim();
+
+    if(!name){
+
+        alert("اكتب اسم الموظف.");
+        return;
+
+    }
+
+    if(!number){
+
+        alert("اكتب الرقم الوظيفي.");
+        return;
+
+    }
+
+    if(!employeeSignatureData){
+
+        alert("ارفع توقيع الموظف.");
+        return;
+
+    }
+
+    const employees =
+        getEmployees();
+
+    const existingIndex =
+        employees.findIndex(
+            function(item){
+
+                return (
+                    String(item.employeeNumber) ===
+                    String(number)
+                );
+
+            }
+        );
+
+    const record = {
+
+        employeeName:name,
+        employeeNumber:number,
+        signature:employeeSignatureData
+
+    };
+
+    if(existingIndex >= 0){
+
+        employees[existingIndex] =
+            record;
+
+    }
+    else{
+
+        employees.push(record);
+
+    }
+
+    saveEmployees(employees);
+
+    clearEmployeeForm();
+
+    loadEmployees();
+
+    alert("تم حفظ الموظف والتوقيع بنجاح.");
+
+}
+
+function clearEmployeeForm(){
+
+    document.getElementById(
+        "employeeName"
+    ).value = "";
+
+    document.getElementById(
+        "employeeNumber"
+    ).value = "";
+
+    document.getElementById(
+        "employeeSignatureFile"
+    ).value = "";
+
+    employeeSignatureData = "";
+
+    document.getElementById(
+        "employeePreview"
+    ).textContent =
+        "لا يوجد توقيع مرفوع";
+
+}
+
+function loadEmployees(){
+
+    const body =
+        document.getElementById(
+            "employeesBody"
+        );
+
+    const employees =
+        getEmployees();
+
+    if(!employees.length){
+
+        body.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="5"
+                    class="empty">
+
+                    لا يوجد موظفون مسجلون حتى الآن.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+    body.innerHTML =
+        employees
+        .map(
+            function(item,index){
+
+                return `
+
+                    <tr>
+
+                        <td>
+                            ${index + 1}
+                        </td>
+
+                        <td>
+                            ${escapeHtml(item.employeeName)}
+                        </td>
+
+                        <td>
+                            ${escapeHtml(item.employeeNumber)}
+                        </td>
+
+                        <td>
+
+                            <img
+                                class="signature-mini"
+                                src="${item.signature}"
+                                alt="التوقيع">
+
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="btn-danger"
+                                onclick="deleteEmployee('${escapeAttribute(item.employeeNumber)}')">
+
+                                حذف
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+            }
+        )
+        .join("");
+
+}
+
+function deleteEmployee(number){
+
+    if(!confirm("هل تريد حذف هذا الموظف وتوقيعه؟")){
+        return;
+    }
+
+    const employees =
+        getEmployees()
+        .filter(
+            function(item){
+
+                return (
+                    String(item.employeeNumber) !==
+                    String(number)
+                );
+
+            }
+        );
+
+    saveEmployees(employees);
+
+    loadEmployees();
+
+}
+
+function saveManagerSignature(){
+
+    const name =
+        document.getElementById(
+            "managerName"
+        ).value.trim();
+
+    if(!name){
+
+        alert("اكتب اسم مدير إدارة الصحة العامة.");
+        return;
+
+    }
+
+    if(!managerSignatureData){
+
+        alert("ارفع توقيع المدير.");
+        return;
+
+    }
+
+    const record = {
+
+        managerName:name,
+        signature:managerSignatureData
+
+    };
+
+    localStorage.setItem(
+        MANAGER_SIGNATURE_KEY,
+        JSON.stringify(record)
+    );
+
+    loadManager();
+
+    alert("تم حفظ توقيع مدير إدارة الصحة العامة.");
+
+}
+
+function loadManager(){
+
+    try{
+
+        const manager =
+            JSON.parse(
+                localStorage.getItem(
+                    MANAGER_SIGNATURE_KEY
+                )
+            );
+
+        if(!manager){
+            return;
+        }
+
+        document.getElementById(
+            "managerName"
+        ).value =
+            manager.managerName || "";
+
+        managerSignatureData =
+            manager.signature || "";
+
+        if(manager.signature){
+
+            document.getElementById(
+                "managerPreview"
+            ).innerHTML =
+                `<img src="${manager.signature}" alt="توقيع المدير">`;
+
+        }
+
+    }
+    catch(error){
+    }
+
+}
+
+function deleteManagerSignature(){
+
+    if(!confirm("هل تريد حذف توقيع مدير إدارة الصحة العامة؟")){
+        return;
+    }
+
+    localStorage.removeItem(
+        MANAGER_SIGNATURE_KEY
+    );
+
+    managerSignatureData = "";
+
+    document.getElementById(
+        "managerName"
+    ).value = "";
+
+    document.getElementById(
+        "managerSignatureFile"
+    ).value = "";
+
+    document.getElementById(
+        "managerPreview"
+    ).textContent =
+        "لا يوجد توقيع مرفوع";
+
+}
+
+function escapeHtml(value){
+
+    return String(value || "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+function escapeAttribute(value){
+
+    return String(value || "")
+        .replaceAll("\\","\\\\")
+        .replaceAll("'","\\'");
+
+}
+
+</script>
+
+</body>
+</html>

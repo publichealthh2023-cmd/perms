@@ -1,0 +1,1888 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>صندوق التحكم والإدارة</title>
+
+<link rel="stylesheet" href="Style.css">
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    background:#f3f6f8;
+    font-family:Arial,Tahoma,sans-serif;
+    color:#294b6a;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.control-header{
+    background:#fff;
+    border-bottom:4px solid #5f3dc4;
+    box-shadow:0 3px 12px rgba(0,0,0,.06);
+}
+
+.control-header-grid{
+    max-width:1300px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:150px 1fr 150px;
+    align-items:center;
+    gap:15px;
+    padding:18px;
+}
+
+.control-logo{
+    text-align:center;
+}
+
+.control-logo img{
+    max-width:125px;
+    max-height:80px;
+    object-fit:contain;
+}
+
+.control-title{
+    text-align:center;
+}
+
+.control-title h1{
+    margin:0;
+    color:#4d2fa9;
+    font-size:27px;
+}
+
+.control-title h2{
+    margin:6px 0 0;
+    color:#718293;
+    font-size:14px;
+    font-weight:normal;
+}
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.page{
+    max-width:1300px;
+    margin:28px auto;
+    padding:0 18px 70px;
+}
+
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.intro-card{
+    background:#fff;
+    border:1px solid #dfe8f2;
+    border-radius:16px;
+    padding:22px;
+    margin-bottom:18px;
+    box-shadow:0 4px 14px rgba(0,0,0,.04);
+}
+
+.intro-top{
+    display:flex;
+    gap:14px;
+    align-items:center;
+}
+
+.intro-icon{
+    width:65px;
+    height:65px;
+    flex-shrink:0;
+    border-radius:18px;
+    background:#f0ebff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:32px;
+}
+
+.intro-card h2{
+    margin:0;
+    color:#4d2fa9;
+}
+
+.intro-card p{
+    margin:7px 0 0;
+    color:#607387;
+    line-height:1.8;
+    font-size:13px;
+}
+
+
+/* =========================================================
+   KPI
+========================================================= */
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:13px;
+    margin-bottom:20px;
+}
+
+.stat-card{
+    background:#fff;
+    border:1px solid #dfe8f2;
+    border-radius:14px;
+    padding:20px;
+    box-shadow:0 3px 10px rgba(0,0,0,.03);
+    text-align:center;
+}
+
+.stat-card strong{
+    display:block;
+    font-size:29px;
+    color:#064c92;
+}
+
+.stat-card span{
+    display:block;
+    margin-top:6px;
+    font-size:12px;
+    color:#718293;
+}
+
+.stat-card.public{
+    border-top:4px solid #0759a6;
+}
+
+.stat-card.waste{
+    border-top:4px solid #15936c;
+}
+
+.stat-card.warning{
+    border-top:4px solid #ef8d22;
+}
+
+.stat-card.compliance{
+    border-top:4px solid #5f3dc4;
+}
+
+.stat-card.compliance strong{
+    color:#5f3dc4;
+}
+
+
+/* =========================================================
+   MANAGEMENT CARDS
+========================================================= */
+
+.management-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-bottom:22px;
+}
+
+.management-card{
+    background:#fff;
+    border:1px solid #dfe8f2;
+    border-radius:15px;
+    padding:21px;
+    box-shadow:0 4px 14px rgba(0,0,0,.04);
+    position:relative;
+    overflow:hidden;
+    transition:.15s;
+}
+
+.management-card:hover{
+    transform:translateY(-2px);
+}
+
+.management-card::before{
+    content:"";
+    position:absolute;
+    top:0;
+    right:0;
+    left:0;
+    height:5px;
+}
+
+.card-purple::before{
+    background:#5f3dc4;
+}
+
+.card-blue::before{
+    background:#0759a6;
+}
+
+.card-green::before{
+    background:#15936c;
+}
+
+.card-orange::before{
+    background:#ef8d22;
+}
+
+.card-gray::before{
+    background:#607387;
+}
+
+.card-icon{
+    width:55px;
+    height:55px;
+    border-radius:15px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    background:#f5f7fa;
+    margin-bottom:13px;
+}
+
+.management-card h3{
+    margin:0 0 6px;
+    color:#064c92;
+    font-size:18px;
+}
+
+.management-card p{
+    margin:0 0 15px;
+    min-height:55px;
+    color:#607387;
+    line-height:1.7;
+    font-size:12px;
+}
+
+.management-card a{
+    display:block;
+    text-decoration:none;
+    text-align:center;
+    border-radius:8px;
+    padding:11px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.card-purple > a{
+    background:#5f3dc4;
+    color:#fff;
+}
+
+.card-blue > a{
+    background:#0759a6;
+    color:#fff;
+}
+
+.card-green > a{
+    background:#15936c;
+    color:#fff;
+}
+
+.card-gray > a{
+    background:#607387;
+    color:#fff;
+}
+
+
+/* =========================================================
+   EMPLOYEE CARD BUTTONS
+========================================================= */
+
+.employee-card-actions{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:8px;
+}
+
+.employee-card-actions a{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    min-height:42px;
+}
+
+.employee-report-btn{
+    background:#ef8d22;
+    color:#fff;
+}
+
+.employee-tasks-btn{
+    background:#fff5e8;
+    color:#a65d00;
+    border:1px solid #f0c98e;
+}
+
+.employee-plan-btn{
+    background:#f3f6f8;
+    color:#526879;
+    border:1px solid #d4dee6;
+}
+
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.section-card{
+    background:#fff;
+    border:1px solid #dfe8f2;
+    border-radius:15px;
+    padding:20px;
+    margin-bottom:18px;
+    box-shadow:0 3px 10px rgba(0,0,0,.03);
+}
+
+.section-title{
+    margin:0 0 16px;
+    color:#064c92;
+    border-right:5px solid #0759a6;
+    padding-right:10px;
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+.data-table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:900px;
+}
+
+.data-table th{
+    background:#edf5fc;
+    color:#064c92;
+    padding:11px;
+    font-size:12px;
+    border:1px solid #dbe5ed;
+}
+
+.data-table td{
+    padding:11px;
+    font-size:12px;
+    color:#40566b;
+    border:1px solid #e3e9ee;
+    text-align:center;
+}
+
+.data-table tbody tr:nth-child(even){
+    background:#fafcfd;
+}
+
+
+/* =========================================================
+   BADGES
+========================================================= */
+
+.badge{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:15px;
+    font-size:10px;
+    font-weight:bold;
+}
+
+.badge-public{
+    background:#e8f2ff;
+    color:#0759a6;
+}
+
+.badge-waste{
+    background:#e8f7f1;
+    color:#13795b;
+}
+
+.badge-good{
+    background:#e8f6ec;
+    color:#187b43;
+}
+
+.badge-medium{
+    background:#fff4d7;
+    color:#8a6200;
+}
+
+.badge-low{
+    background:#fdecec;
+    color:#b42318;
+}
+
+
+/* =========================================================
+   EMPLOYEE PERFORMANCE
+========================================================= */
+
+.employee-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+}
+
+.employee-stat{
+    background:#f8fbfd;
+    border-radius:11px;
+    padding:16px;
+    text-align:center;
+}
+
+.employee-stat strong{
+    display:block;
+    font-size:24px;
+    color:#064c92;
+}
+
+.employee-stat span{
+    font-size:11px;
+    color:#718293;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:22px;
+}
+
+.footer-actions a,
+.footer-actions button{
+    border:none;
+    border-radius:9px;
+    padding:11px 16px;
+    text-decoration:none;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.back-btn{
+    background:#eaf1f7;
+    color:#064c92;
+}
+
+.refresh-btn{
+    background:#5f3dc4;
+    color:#fff;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1000px){
+
+    .stats-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .management-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .employee-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:650px){
+
+    .control-header-grid{
+        grid-template-columns:65px 1fr 65px;
+        padding:11px 7px;
+    }
+
+    .control-logo img{
+        max-width:60px;
+        max-height:50px;
+    }
+
+    .control-title h1{
+        font-size:17px;
+    }
+
+    .control-title h2{
+        font-size:9px;
+    }
+
+    .page{
+        margin-top:14px;
+        padding:0 9px 60px;
+    }
+
+    .stats-grid,
+    .management-grid,
+    .employee-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media print{
+
+    .management-grid,
+    .footer-actions{
+        display:none !important;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header class="control-header">
+
+<div class="control-header-grid">
+
+<div class="control-logo">
+
+<img
+    src="images/cluster-logo.png"
+    alt="شعار تجمع حفر الباطن الصحي">
+
+</div>
+
+
+<div class="control-title">
+
+<h1>
+صندوق التحكم والإدارة
+</h1>
+
+<h2>
+Public Health Rounds Control Center
+</h2>
+
+</div>
+
+
+<div class="control-logo">
+
+<img
+    src="images/hospital-logo.png"
+    alt="شعار المستشفى">
+
+</div>
+
+</div>
+
+</header>
+
+
+<main class="page">
+
+
+<!-- =========================================================
+     INTRO
+========================================================= -->
+
+<section class="intro-card">
+
+<div class="intro-top">
+
+<div class="intro-icon">
+📊
+</div>
+
+<div>
+
+<h2>
+لوحة إدارة جولات الصحة العامة
+</h2>
+
+<p>
+إدارة الجولات الميدانية ومتابعة عدم المطابقة
+والتقارير والإحصائيات ومؤشرات الالتزام وأداء الموظفين.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     KPI
+========================================================= -->
+
+<section class="stats-grid">
+
+
+<div class="stat-card public">
+
+<strong id="publicRoundsCount">
+0
+</strong>
+
+<span>
+جولات الصحة العامة
+</span>
+
+</div>
+
+
+<div class="stat-card waste">
+
+<strong id="wasteRoundsCount">
+0
+</strong>
+
+<span>
+جولات النفايات الطبية
+</span>
+
+</div>
+
+
+<div class="stat-card warning">
+
+<strong id="nonComplianceCount">
+0
+</strong>
+
+<span>
+إجمالي ملاحظات عدم التطبيق
+</span>
+
+</div>
+
+
+<div class="stat-card compliance">
+
+<strong id="averageCompliance">
+0%
+</strong>
+
+<span>
+متوسط نسبة الالتزام
+</span>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     CONTROL CARDS
+========================================================= -->
+
+<section class="management-grid">
+
+
+<!-- إدارة الجولات والبنود -->
+
+<article class="management-card card-purple">
+
+<div class="card-icon">
+⚙️
+</div>
+
+<h3>
+إدارة الجولات والبنود
+</h3>
+
+<p>
+إضافة وتعديل وحذف وترتيب وتفعيل بنود
+الصحة العامة والنفايات الطبية.
+</p>
+
+<a href="rounds-management.html">
+فتح إدارة الجولات
+</a>
+
+</article>
+
+
+<!-- جميع الجولات -->
+
+<article class="management-card card-blue">
+
+<div class="card-icon">
+📋
+</div>
+
+<h3>
+جميع الجولات
+</h3>
+
+<p>
+استعراض الجولات المسجلة والبحث فيها
+وفتح تفاصيل أي جولة.
+</p>
+
+<a href="#recentRounds">
+عرض الجولات
+</a>
+
+</article>
+
+
+<!-- الإحصائيات -->
+
+<article class="management-card card-green">
+
+<div class="card-icon">
+📈
+</div>
+
+<h3>
+الإحصائيات والمؤشرات
+</h3>
+
+<p>
+تحليل شهري وربع سنوي وسنوي ومخصص
+للجولات ونسب الالتزام.
+</p>
+
+<a href="rounds-analytics.html">
+فتح المؤشرات
+</a>
+
+</article>
+
+
+<!-- =========================================================
+     أداء الموظفين + المهام
+========================================================= -->
+
+<article class="management-card card-orange">
+
+<div class="card-icon">
+👥
+</div>
+
+<h3>
+أداء الموظفين والمهام
+</h3>
+
+<p>
+إدارة المهام والجولات المطلوبة للموظفين،
+ومقارنتها بالجولات المنفذة وقياس نسب الإنجاز.
+</p>
+
+
+<div class="employee-card-actions">
+
+
+<a
+    href="employee-performance-report.html"
+    class="employee-report-btn">
+
+📊 تقرير أداء الموظفين
+
+</a>
+
+
+<a
+    href="employee-tasks.html"
+    class="employee-tasks-btn">
+
+📅 إدارة مهام وجولات الموظفين
+
+</a>
+
+
+<a
+    href="future-rounds-plan.html"
+    class="employee-plan-btn">
+
+🖨️ جدول الجولات المستقبلية
+
+</a>
+
+
+</div>
+
+</article>
+
+
+<!-- التقارير -->
+
+<article class="management-card card-gray">
+
+<div class="card-icon">
+🖨️
+</div>
+
+<h3>
+تقارير الجولات والملاحظات
+</h3>
+
+<p>
+عرض تقارير الجولات حسب الفترة والموظف والموقع،
+ومتابعة حالات عدم التطبيق والملاحظات وطباعتها PDF.
+</p>
+
+<a href="rounds-report.html">
+فتح تقرير الجولات
+</a>
+
+</article>
+
+
+<!-- بوابة الموظفين -->
+
+<article class="management-card card-blue">
+
+<div class="card-icon">
+🏠
+</div>
+
+<h3>
+بوابة إدخال الجولات
+</h3>
+
+<p>
+العودة إلى بوابة الموظفين لبدء
+جولة صحة عامة أو نفايات طبية.
+</p>
+
+<a href="portal.html">
+فتح بوابة الجولات
+</a>
+
+</article>
+
+
+</section>
+
+
+<!-- =========================================================
+     EMPLOYEE PERFORMANCE SUMMARY
+========================================================= -->
+
+<section
+    id="employeePerformance"
+    class="section-card">
+
+<h2 class="section-title">
+👥 ملخص أداء الموظفين
+</h2>
+
+
+<div class="employee-grid">
+
+
+<div class="employee-stat">
+
+<strong id="employeeCount">
+0
+</strong>
+
+<span>
+عدد الموظفين المنفذين للجولات
+</span>
+
+</div>
+
+
+<div class="employee-stat">
+
+<strong id="topEmployeeRounds">
+0
+</strong>
+
+<span>
+أعلى عدد جولات لموظف
+</span>
+
+</div>
+
+
+<div class="employee-stat">
+
+<strong id="employeesAverageRounds">
+0
+</strong>
+
+<span>
+متوسط الجولات لكل موظف
+</span>
+
+</div>
+
+
+<div class="employee-stat">
+
+<strong id="bestEmployeeCompliance">
+0%
+</strong>
+
+<span>
+أعلى متوسط التزام
+</span>
+
+</div>
+
+</div>
+
+
+<div
+    class="table-wrap"
+    style="margin-top:18px">
+
+<table class="data-table">
+
+<thead>
+
+<tr>
+
+<th>
+الموظف
+</th>
+
+<th>
+الرقم الوظيفي
+</th>
+
+<th>
+عدد الجولات
+</th>
+
+<th>
+جولات الصحة العامة
+</th>
+
+<th>
+جولات النفايات
+</th>
+
+<th>
+الملاحظات
+</th>
+
+<th>
+متوسط الالتزام
+</th>
+
+</tr>
+
+</thead>
+
+<tbody id="employeeTableBody">
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     RECENT ROUNDS
+========================================================= -->
+
+<section
+    id="recentRounds"
+    class="section-card">
+
+<h2 class="section-title">
+📋 آخر الجولات المسجلة
+</h2>
+
+
+<div class="table-wrap">
+
+<table class="data-table">
+
+<thead>
+
+<tr>
+
+<th>
+رقم الجولة
+</th>
+
+<th>
+نوع الجولة
+</th>
+
+<th>
+التاريخ
+</th>
+
+<th>
+الموظف
+</th>
+
+<th>
+القسم / الموقع
+</th>
+
+<th>
+عدم التطبيق
+</th>
+
+<th>
+نسبة الالتزام
+</th>
+
+<th>
+الإجراء
+</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="roundsTableBody">
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     FOOTER ACTIONS
+========================================================= -->
+
+<div class="footer-actions">
+
+<a
+    href="portal.html"
+    class="back-btn">
+
+← العودة للبوابة الرئيسية
+
+</a>
+
+
+<button
+    class="refresh-btn"
+    onclick="refreshDashboard()">
+
+↻ تحديث البيانات
+
+</button>
+
+</div>
+
+
+</main>
+
+
+<script>
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+const PUBLIC_KEY =
+    "phrmsPublicHealthRounds";
+
+const WASTE_KEY =
+    "phrmsMedicalWasteRounds";
+
+let publicRounds = [];
+
+let wasteRounds = [];
+
+let allRounds = [];
+
+
+/* =========================================================
+   START
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        refreshDashboard();
+
+    }
+);
+
+
+/* =========================================================
+   LOAD
+========================================================= */
+
+function loadRecords(){
+
+    publicRounds =
+        getArrayFromStorage(
+            PUBLIC_KEY
+        );
+
+    wasteRounds =
+        getArrayFromStorage(
+            WASTE_KEY
+        );
+
+    allRounds = [
+        ...publicRounds,
+        ...wasteRounds
+    ];
+
+
+    allRounds.sort(
+        function(a,b){
+
+            return (
+
+                new Date(
+                    b.createdAt ||
+                    b.inspectionDate ||
+                    0
+                )
+
+                -
+
+                new Date(
+                    a.createdAt ||
+                    a.inspectionDate ||
+                    0
+                )
+
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   STORAGE HELPER
+========================================================= */
+
+function getArrayFromStorage(key){
+
+    try{
+
+        const data =
+            JSON.parse(
+                localStorage.getItem(key)
+            ) || [];
+
+        return Array.isArray(data)
+            ? data
+            : [];
+
+    }
+    catch(error){
+
+        console.error(
+            "Storage error:",
+            error
+        );
+
+        return [];
+
+    }
+
+}
+
+
+/* =========================================================
+   REFRESH
+========================================================= */
+
+function refreshDashboard(){
+
+    loadRecords();
+
+    renderMainStats();
+
+    renderEmployeePerformance();
+
+    renderRoundsTable();
+
+}
+
+
+/* =========================================================
+   MAIN STATS
+========================================================= */
+
+function renderMainStats(){
+
+    document.getElementById(
+        "publicRoundsCount"
+    ).textContent =
+        publicRounds.length;
+
+
+    document.getElementById(
+        "wasteRoundsCount"
+    ).textContent =
+        wasteRounds.length;
+
+
+    const nonCompliance =
+        allRounds.reduce(
+            function(sum,round){
+
+                return (
+                    sum +
+                    (
+                        Number(
+                            round.noCount
+                        ) || 0
+                    )
+                );
+
+            },
+            0
+        );
+
+
+    document.getElementById(
+        "nonComplianceCount"
+    ).textContent =
+        nonCompliance;
+
+
+    const complianceValues =
+        allRounds
+        .map(
+            function(round){
+
+                return Number(
+                    round.complianceRate
+                );
+
+            }
+        )
+        .filter(
+            function(value){
+
+                return !isNaN(value);
+
+            }
+        );
+
+
+    const average =
+        complianceValues.length
+
+        ? Math.round(
+
+            complianceValues.reduce(
+                function(sum,value){
+
+                    return sum + value;
+
+                },
+                0
+            )
+
+            /
+
+            complianceValues.length
+
+        )
+
+        : 0;
+
+
+    document.getElementById(
+        "averageCompliance"
+    ).textContent =
+        average + "%";
+
+}
+
+
+/* =========================================================
+   EMPLOYEE PERFORMANCE
+========================================================= */
+
+function renderEmployeePerformance(){
+
+    const employeeMap = {};
+
+
+    allRounds.forEach(
+        function(round){
+
+            const employeeNumber =
+                round.employeeNumber ||
+                "غير محدد";
+
+
+            const key =
+                employeeNumber +
+                "|" +
+                (
+                    round.employeeName ||
+                    ""
+                );
+
+
+            if(!employeeMap[key]){
+
+                employeeMap[key] = {
+
+                    employeeName:
+                        round.employeeName ||
+                        "غير محدد",
+
+                    employeeNumber:
+                        employeeNumber,
+
+                    totalRounds:0,
+
+                    publicRounds:0,
+
+                    wasteRounds:0,
+
+                    notes:0,
+
+                    complianceTotal:0,
+
+                    complianceCount:0
+
+                };
+
+            }
+
+
+            const employee =
+                employeeMap[key];
+
+
+            employee.totalRounds++;
+
+
+            if(
+                round.roundType ===
+                "medicalWaste"
+            ){
+
+                employee.wasteRounds++;
+
+            }
+            else{
+
+                employee.publicRounds++;
+
+            }
+
+
+            employee.notes +=
+                Number(
+                    round.noCount
+                ) || 0;
+
+
+            const compliance =
+                Number(
+                    round.complianceRate
+                );
+
+
+            if(!isNaN(compliance)){
+
+                employee.complianceTotal +=
+                    compliance;
+
+                employee.complianceCount++;
+
+            }
+
+        }
+    );
+
+
+    const employees =
+        Object.values(
+            employeeMap
+        );
+
+
+    employees.forEach(
+        function(employee){
+
+            employee.averageCompliance =
+                employee.complianceCount
+
+                ? Math.round(
+                    employee.complianceTotal /
+                    employee.complianceCount
+                )
+
+                : 0;
+
+        }
+    );
+
+
+    employees.sort(
+        function(a,b){
+
+            return (
+                b.totalRounds -
+                a.totalRounds
+            );
+
+        }
+    );
+
+
+    document.getElementById(
+        "employeeCount"
+    ).textContent =
+        employees.length;
+
+
+    const topRounds =
+        employees.length
+
+        ? Math.max(
+            ...employees.map(
+                function(item){
+
+                    return item.totalRounds;
+
+                }
+            )
+        )
+
+        : 0;
+
+
+    document.getElementById(
+        "topEmployeeRounds"
+    ).textContent =
+        topRounds;
+
+
+    const averageRounds =
+        employees.length
+
+        ? Math.round(
+            allRounds.length /
+            employees.length
+        )
+
+        : 0;
+
+
+    document.getElementById(
+        "employeesAverageRounds"
+    ).textContent =
+        averageRounds;
+
+
+    const bestCompliance =
+        employees.length
+
+        ? Math.max(
+            ...employees.map(
+                function(item){
+
+                    return item.averageCompliance;
+
+                }
+            )
+        )
+
+        : 0;
+
+
+    document.getElementById(
+        "bestEmployeeCompliance"
+    ).textContent =
+        bestCompliance + "%";
+
+
+    const body =
+        document.getElementById(
+            "employeeTableBody"
+        );
+
+
+    if(!employees.length){
+
+        body.innerHTML = `
+
+        <tr>
+
+        <td colspan="7">
+
+        لا توجد جولات مسجلة حتى الآن.
+
+        </td>
+
+        </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    body.innerHTML =
+        employees.map(
+            function(employee){
+
+                return `
+
+                <tr>
+
+                <td>
+                ${escapeHtml(employee.employeeName)}
+                </td>
+
+                <td>
+                ${escapeHtml(employee.employeeNumber)}
+                </td>
+
+                <td>
+                ${employee.totalRounds}
+                </td>
+
+                <td>
+                ${employee.publicRounds}
+                </td>
+
+                <td>
+                ${employee.wasteRounds}
+                </td>
+
+                <td>
+                ${employee.notes}
+                </td>
+
+                <td>
+
+                ${complianceBadge(
+                    employee.averageCompliance
+                )}
+
+                </td>
+
+                </tr>
+
+                `;
+
+            }
+        )
+        .join("");
+
+}
+
+
+/* =========================================================
+   ROUNDS TABLE
+========================================================= */
+
+function renderRoundsTable(){
+
+    const body =
+        document.getElementById(
+            "roundsTableBody"
+        );
+
+
+    if(!allRounds.length){
+
+        body.innerHTML = `
+
+        <tr>
+
+        <td colspan="8">
+
+        لا توجد جولات مسجلة حتى الآن.
+
+        </td>
+
+        </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    body.innerHTML =
+        allRounds
+        .slice(0,25)
+        .map(
+            function(round){
+
+                const typeName =
+                    round.roundType ===
+                    "medicalWaste"
+
+                    ? "النفايات الطبية"
+
+                    : (
+                        round.categoryName ||
+                        "الصحة العامة"
+                    );
+
+
+                const badgeClass =
+                    round.roundType ===
+                    "medicalWaste"
+
+                    ? "badge-waste"
+
+                    : "badge-public";
+
+
+                return `
+
+                <tr>
+
+                <td>
+                ${escapeHtml(round.id || "—")}
+                </td>
+
+
+                <td>
+
+                <span class="badge ${badgeClass}">
+
+                ${escapeHtml(typeName)}
+
+                </span>
+
+                </td>
+
+
+                <td>
+
+                ${formatDate(
+                    round.inspectionDate
+                )}
+
+                </td>
+
+
+                <td>
+
+                ${escapeHtml(
+                    round.employeeName ||
+                    "—"
+                )}
+
+                </td>
+
+
+                <td>
+
+                ${escapeHtml(
+                    round.locationName ||
+                    "—"
+                )}
+
+                </td>
+
+
+                <td>
+
+                ${Number(
+                    round.noCount
+                ) || 0}
+
+                </td>
+
+
+                <td>
+
+                ${complianceBadge(
+                    Number(
+                        round.complianceRate
+                    ) || 0
+                )}
+
+                </td>
+
+
+                <td>
+
+                <button
+                    onclick="openRound('${encodeURIComponent(round.id || "")}')"
+                    style="
+                        border:none;
+                        background:#0759a6;
+                        color:#fff;
+                        padding:7px 10px;
+                        border-radius:7px;
+                        cursor:pointer;
+                        font-weight:bold;
+                    ">
+
+                عرض
+
+                </button>
+
+                </td>
+
+                </tr>
+
+                `;
+
+            }
+        )
+        .join("");
+
+}
+
+
+/* =========================================================
+   COMPLIANCE BADGE
+========================================================= */
+
+function complianceBadge(value){
+
+    let className =
+        "badge-good";
+
+
+    if(value < 70){
+
+        className =
+            "badge-low";
+
+    }
+    else if(value < 90){
+
+        className =
+            "badge-medium";
+
+    }
+
+
+    return `
+
+    <span class="badge ${className}">
+    ${value}%
+    </span>
+
+    `;
+
+}
+
+
+/* =========================================================
+   OPEN ROUND
+========================================================= */
+
+function openRound(encodedId){
+
+    const id =
+        decodeURIComponent(
+            encodedId
+        );
+
+
+    sessionStorage.setItem(
+        "phrmsSelectedRoundId",
+        id
+    );
+
+
+    window.location.href =
+        "round-details.html";
+
+}
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+function formatDate(value){
+
+    if(!value){
+
+        return "—";
+
+    }
+
+
+    const date =
+        new Date(
+            value +
+            "T12:00:00"
+        );
+
+
+    if(isNaN(date.getTime())){
+
+        return value;
+
+    }
+
+
+    return date.toLocaleDateString(
+        "ar-SA"
+    );
+
+}
+
+
+/* =========================================================
+   ESCAPE
+========================================================= */
+
+function escapeHtml(value){
+
+    return String(
+        value || ""
+    )
+    .replaceAll(
+        "&",
+        "&amp;"
+    )
+    .replaceAll(
+        "<",
+        "&lt;"
+    )
+    .replaceAll(
+        ">",
+        "&gt;"
+    )
+    .replaceAll(
+        '"',
+        "&quot;"
+    )
+    .replaceAll(
+        "'",
+        "&#039;"
+    );
+
+}
+
+</script>
+
+</body>
+
+</html>
