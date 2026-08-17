@@ -1191,13 +1191,13 @@ async function loadManager(){
 
 }
 }
-
-function deleteManagerSignature(){
+async function deleteManagerSignature(){
 
     if(!confirm("هل تريد حذف توقيع مدير إدارة الصحة العامة؟")){
         return;
     }
 
+    // 1) الحذف المحلي
     localStorage.removeItem(
         MANAGER_SIGNATURE_KEY
     );
@@ -1217,16 +1217,39 @@ function deleteManagerSignature(){
     ).textContent =
         "لا يوجد توقيع مرفوع";
 
-}
 
-function escapeHtml(value){
+    // 2) الحذف من Supabase
+    try{
 
-    return String(value || "")
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
+        const {
+            error
+        } = await supabaseClient
+            .from("manager_signature")
+            .delete()
+            .neq("id", 0);
+
+        if(error){
+
+            console.error(
+                "Supabase manager delete error:",
+                error
+            );
+
+            alert(
+                "تم الحذف محليًا، لكن تعذر الحذف من قاعدة البيانات المركزية."
+            );
+
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            "Supabase manager delete connection error:",
+            error
+        );
+
+    }
 
 }
 
