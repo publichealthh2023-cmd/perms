@@ -195,6 +195,7 @@ th{
 }
 
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 <body>
@@ -370,6 +371,14 @@ th{
 </div>
 
 <script>
+    const SUPABASE_URL = "ضع هنا نفس الرابط الموجود في public-health-inspection.html";
+
+const SUPABASE_PUBLISHABLE_KEY = "ضع هنا نفس المفتاح الموجود في public-health-inspection.html";
+
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
 
 const EMPLOYEE_SIGNATURES_KEY =
     "phrmsEmployeeSignatures";
@@ -496,8 +505,7 @@ function saveEmployees(list){
     );
 
 }
-
-function saveEmployeeSignature(){
+async function saveEmployeeSignature(){
 
     const name =
         document.getElementById(
@@ -510,25 +518,24 @@ function saveEmployeeSignature(){
         ).value.trim();
 
     if(!name){
-
         alert("اكتب اسم الموظف.");
         return;
-
     }
 
     if(!number){
-
         alert("اكتب الرقم الوظيفي.");
         return;
-
     }
 
     if(!employeeSignatureData){
-
         alert("ارفع توقيع الموظف.");
         return;
-
     }
+
+
+    // ==========================================
+    // 1) الحفظ المحلي LocalStorage
+    // ==========================================
 
     const employees =
         getEmployees();
@@ -536,36 +543,110 @@ function saveEmployeeSignature(){
     const existingIndex =
         employees.findIndex(
             function(item){
-
                 return (
                     String(item.employeeNumber) ===
                     String(number)
                 );
-
             }
         );
 
     const record = {
-
         employeeName:name,
         employeeNumber:number,
         signature:employeeSignatureData
-
     };
 
     if(existingIndex >= 0){
-
-        employees[existingIndex] =
-            record;
-
+        employees[existingIndex] = record;
     }
     else{
-
         employees.push(record);
-
     }
 
     saveEmployees(employees);
+
+
+    // ==========================================
+    // 2) الحفظ المركزي Supabase
+    // ==========================================
+
+    try{
+
+        const {
+            data: existingRows,
+            error: selectError
+        } = await supabaseClient
+            .from("employees")
+            .select("id")
+            .eq("employee_number", number)
+            .limit(1);
+
+
+        if(selectError){
+            console.error(
+                "Supabase employee search error:",
+                selectError
+            );
+        }
+        else if(
+            existingRows &&
+            existingRows.length > 0
+        ){
+
+            const { error: updateError } =
+                await supabaseClient
+                    .from("employees")
+                    .update({
+                        employee_name: name,
+                        signature_data:
+                            employeeSignatureData
+                    })
+                    .eq(
+                        "employee_number",
+                        number
+                    );
+
+            if(updateError){
+                console.error(
+                    "Supabase employee update error:",
+                    updateError
+                );
+            }
+
+        }
+        else{
+
+            const { error: insertError } =
+                await supabaseClient
+                    .from("employees")
+                    .insert([
+                        {
+                            employee_name: name,
+                            employee_number: number,
+                            signature_data:
+                                employeeSignatureData
+                        }
+                    ]);
+
+            if(insertError){
+                console.error(
+                    "Supabase employee insert error:",
+                    insertError
+                );
+            }
+
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            "Supabase employee connection error:",
+            error
+        );
+
+    }
+
 
     clearEmployeeForm();
 
@@ -598,15 +679,91 @@ function clearEmployeeForm(){
 
 }
 
-function loadEmployees(){
+async function loadEmployees(){
 
     const body =
         document.getElementById(
             "employeesBody"
         );
 
-    const employees =
-        getEmployees();
+    let employees = [];
+
+    // ==========================================
+    // 1) محاولة القراءة من Supabase
+    // ==========================================
+
+    try{
+
+        const {
+            data,
+            error
+        } = await supabaseClient
+            .from("employees")
+            .select(
+                "employee_name, employee_number, signature_data"
+            )
+            .order(
+                "created_at",
+                {
+                    ascending:true
+                }
+            );
+
+        if(error){
+
+            console.error(
+                "Supabase employees load error:",
+                error
+            );
+
+            employees =
+                getEmployees();
+
+        }
+        else{
+
+            employees =
+                (data || []).map(
+                    function(item){
+
+                        return {
+                            employeeName:
+                                item.employee_name || "",
+
+                            employeeNumber:
+                                item.employee_number || "",
+
+                            signature:
+                                item.signature_data || ""
+                        };
+
+                    }
+                );
+
+            // حفظ نسخة محلية احتياطية
+            saveEmployees(
+                employees
+            );
+
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            "Supabase employees connection error:",
+            error
+        );
+
+        employees =
+            getEmployees();
+
+    }
+
+
+    // ==========================================
+    // 2) عرض الموظفين
+    // ==========================================
 
     if(!employees.length){
 
@@ -630,6 +787,7 @@ function loadEmployees(){
 
     }
 
+
     body.innerHTML =
         employees
         .map(
@@ -644,11 +802,15 @@ function loadEmployees(){
                         </td>
 
                         <td>
-                            ${escapeHtml(item.employeeName)}
+                            ${escapeHtml(
+                                item.employeeName
+                            )}
                         </td>
 
                         <td>
-                            ${escapeHtml(item.employeeNumber)}
+                            ${escapeHtml(
+                                item.employeeNumber
+                            )}
                         </td>
 
                         <td>
@@ -664,7 +826,9 @@ function loadEmployees(){
 
                             <button
                                 class="btn-danger"
-                                onclick="deleteEmployee('${escapeAttribute(item.employeeNumber)}')">
+                                onclick="deleteEmployee('${escapeAttribute(
+                                    item.employeeNumber
+                                )}')">
 
                                 حذف
 
@@ -682,11 +846,16 @@ function loadEmployees(){
 
 }
 
-function deleteEmployee(number){
+async function deleteEmployee(number){
 
     if(!confirm("هل تريد حذف هذا الموظف وتوقيعه؟")){
         return;
     }
+
+
+    // ==========================================
+    // 1) الحذف المحلي
+    // ==========================================
 
     const employees =
         getEmployees()
@@ -701,13 +870,59 @@ function deleteEmployee(number){
             }
         );
 
-    saveEmployees(employees);
+    saveEmployees(
+        employees
+    );
 
-    loadEmployees();
 
-}
+    // ==========================================
+    // 2) الحذف من Supabase
+    // ==========================================
 
-function saveManagerSignature(){
+    try{
+
+        const {
+            error
+        } = await supabaseClient
+            .from("employees")
+            .delete()
+            .eq(
+                "employee_number",
+                String(number)
+            );
+
+
+        if(error){
+
+            console.error(
+                "Supabase employee delete error:",
+                error
+            );
+
+            alert(
+                "تم الحذف محليًا، لكن تعذر حذف الموظف من قاعدة البيانات المركزية."
+            );
+
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            "Supabase employee delete connection error:",
+            error
+        );
+
+    }
+
+
+    // ==========================================
+    // 3) إعادة تحميل القائمة
+    // ==========================================
+
+    await loadEmployees();
+
+}async function saveManagerSignature(){
 
     const name =
         document.getElementById(
@@ -716,17 +931,22 @@ function saveManagerSignature(){
 
     if(!name){
 
-        alert("اكتب اسم مدير إدارة الصحة العامة.");
-        return;
+        alert(
+            "اكتب اسم مدير إدارة الصحة العامة."
+        );
 
+        return;
     }
 
     if(!managerSignatureData){
 
-        alert("ارفع توقيع المدير.");
-        return;
+        alert(
+            "ارفع توقيع المدير."
+        );
 
+        return;
     }
+
 
     const record = {
 
@@ -735,51 +955,240 @@ function saveManagerSignature(){
 
     };
 
+
+    // ==========================================
+    // 1) الحفظ المحلي LocalStorage
+    // ==========================================
+
     localStorage.setItem(
         MANAGER_SIGNATURE_KEY,
         JSON.stringify(record)
     );
 
-    loadManager();
 
-    alert("تم حفظ توقيع مدير إدارة الصحة العامة.");
-
-}
-
-function loadManager(){
+    // ==========================================
+    // 2) الحفظ المركزي Supabase
+    // ==========================================
 
     try{
 
-        const manager =
-            JSON.parse(
-                localStorage.getItem(
-                    MANAGER_SIGNATURE_KEY
-                )
+        const {
+            data: existingRows,
+            error: selectError
+        } = await supabaseClient
+            .from("manager_signature")
+            .select("id")
+            .limit(1);
+
+
+        if(selectError){
+
+            console.error(
+                "Supabase manager search error:",
+                selectError
             );
 
-        if(!manager){
-            return;
         }
+        else if(
+            existingRows &&
+            existingRows.length > 0
+        ){
 
-        document.getElementById(
-            "managerName"
-        ).value =
-            manager.managerName || "";
+            const {
+                error: updateError
+            } = await supabaseClient
+                .from("manager_signature")
+                .update({
 
-        managerSignatureData =
-            manager.signature || "";
+                    manager_name:name,
 
-        if(manager.signature){
+                    signature_data:
+                        managerSignatureData
 
-            document.getElementById(
-                "managerPreview"
-            ).innerHTML =
-                `<img src="${manager.signature}" alt="توقيع المدير">`;
+                })
+                .eq(
+                    "id",
+                    existingRows[0].id
+                );
+
+
+            if(updateError){
+
+                console.error(
+                    "Supabase manager update error:",
+                    updateError
+                );
+
+            }
+
+        }
+        else{
+
+            const {
+                error: insertError
+            } = await supabaseClient
+                .from("manager_signature")
+                .insert([
+                    {
+
+                        manager_name:name,
+
+                        signature_data:
+                            managerSignatureData
+
+                    }
+                ]);
+
+
+            if(insertError){
+
+                console.error(
+                    "Supabase manager insert error:",
+                    insertError
+                );
+
+            }
 
         }
 
     }
     catch(error){
+
+        console.error(
+            "Supabase manager connection error:",
+            error
+        );
+
+    }
+
+
+    await loadManager();
+
+    alert(
+        "تم حفظ توقيع مدير إدارة الصحة العامة."
+    );
+
+}
+
+
+
+async function loadManager(){
+
+    let manager = null;
+
+
+    // ==========================================
+    // 1) محاولة القراءة من Supabase
+    // ==========================================
+
+    try{
+
+        const {
+            data,
+            error
+        } = await supabaseClient
+            .from("manager_signature")
+            .select(
+                "manager_name, signature_data"
+            )
+            .limit(1);
+
+
+        if(error){
+
+            console.error(
+                "Supabase manager load error:",
+                error
+            );
+
+        }
+        else if(
+            data &&
+            data.length > 0
+        ){
+
+            manager = {
+
+                managerName:
+                    data[0].manager_name || "",
+
+                signature:
+                    data[0].signature_data || ""
+
+            };
+
+
+            // حفظ نسخة محلية احتياطية
+
+            localStorage.setItem(
+                MANAGER_SIGNATURE_KEY,
+                JSON.stringify(manager)
+            );
+
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            "Supabase manager connection error:",
+            error
+        );
+
+    }
+
+
+    // ==========================================
+    // 2) الرجوع إلى LocalStorage عند الحاجة
+    // ==========================================
+
+    if(!manager){
+
+        try{
+
+            manager =
+                JSON.parse(
+                    localStorage.getItem(
+                        MANAGER_SIGNATURE_KEY
+                    )
+                );
+
+        }
+        catch(error){
+
+            manager = null;
+
+        }
+
+    }
+
+
+    if(!manager){
+        return;
+    }
+
+
+    // ==========================================
+    // 3) عرض بيانات المدير
+    // ==========================================
+
+    document.getElementById(
+        "managerName"
+    ).value =
+        manager.managerName || "";
+
+
+    managerSignatureData =
+        manager.signature || "";
+
+
+    if(manager.signature){
+
+        document.getElementById(
+            "managerPreview"
+        ).innerHTML =
+            ⁠ <img src="${manager.signature}" alt="توقيع المدير"> ⁠;
+
     }
 
 }
