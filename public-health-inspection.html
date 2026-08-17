@@ -736,64 +736,39 @@ body{
 }
 
 </style>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 </head>
 
-
 <body>
-
-
-<!-- =========================================================
-     HEADER
-========================================================= -->
 
 <header class="mobile-header">
 
 <div class="mobile-header-grid">
 
-
 <div class="mobile-logo">
-
 <img
     src="./images/cluster-logo.png"
     alt="شعار تجمع حفر الباطن الصحي">
-
 </div>
-
 
 <div class="mobile-title">
-
-<h1>
-جولة الصحة العامة
-</h1>
-
-<h2>
-Public Health Inspection
-</h2>
-
+<h1>جولة الصحة العامة</h1>
+<h2>Public Health Inspection</h2>
 </div>
 
-
 <div class="mobile-logo">
-
 <img
     src="./images/hospital-logo.png"
     alt="شعار المستشفى">
-
 </div>
-
 
 </div>
 
 </header>
 
-
 <main class="inspection-page">
-
-
-<!-- =========================================================
-     INTRO
-========================================================= -->
 
 <section class="round-intro">
 
@@ -805,9 +780,7 @@ Public Health Inspection
 
 <div>
 
-<h2>
-استمارة الجولة الميدانية
-</h2>
+<h2>استمارة الجولة الميدانية</h2>
 
 <p>
 قم بتعبئة بيانات الجولة ثم تقييم جميع البنود.
@@ -820,16 +793,10 @@ Public Health Inspection
 
 </section>
 
-
 <div
     id="formAlert"
     class="mobile-alert">
 </div>
-
-
-<!-- =========================================================
-     PROGRESS
-========================================================= -->
 
 <section class="progress-area">
 
@@ -845,7 +812,6 @@ Public Health Inspection
 
 </div>
 
-
 <div class="progress-track">
 
 <div
@@ -857,23 +823,15 @@ Public Health Inspection
 
 </section>
 
-
-<!-- =========================================================
-     BASIC INFORMATION
-========================================================= -->
-
 <section class="mobile-section">
 
 <div class="mobile-section-header">
 👤 بيانات الجولة
 </div>
 
-
 <div class="mobile-section-body">
 
-
 <div class="mobile-form-grid">
-
 
 <div class="mobile-group">
 
@@ -893,7 +851,6 @@ Public Health Inspection
 
 </div>
 
-
 <div class="mobile-group">
 
 <label>
@@ -907,7 +864,6 @@ Public Health Inspection
     placeholder="يظهر تلقائياً بعد اختيار الموظف">
 
 </div>
-
 
 <div class="mobile-group">
 
@@ -969,7 +925,6 @@ Public Health Inspection
 
 </div>
 
-
 <div class="mobile-group">
 
 <label>
@@ -1000,7 +955,6 @@ Public Health Inspection
 
 </div>
 
-
 <div class="mobile-group">
 
 <label>
@@ -1013,7 +967,6 @@ Public Health Inspection
 
 </div>
 
-
 <div class="mobile-group">
 
 <label>
@@ -1025,7 +978,6 @@ Public Health Inspection
     type="time">
 
 </div>
-
 
 <div
     id="otherLocationGroup"
@@ -1043,11 +995,7 @@ Public Health Inspection
 
 </div>
 
-
 </div>
-
-
-<!-- حالة التوقيع الإلكتروني -->
 
 <div
     id="employeeSignatureStatus"
@@ -1072,15 +1020,9 @@ Public Health Inspection
 
 </div>
 
-
 </div>
 
 </section>
-
-
-<!-- =========================================================
-     ITEMS
-========================================================= -->
 
 <section class="mobile-section">
 
@@ -1088,9 +1030,7 @@ Public Health Inspection
 📋 بنود الجولة
 </div>
 
-
 <div class="mobile-section-body">
-
 
 <div
     id="categoryMessage"
@@ -1100,21 +1040,14 @@ Public Health Inspection
 
 </div>
 
-
 <div
     id="inspectionItems"
     class="items-container">
 </div>
 
-
 </div>
 
 </section>
-
-
-<!-- =========================================================
-     LIVE RESULT
-========================================================= -->
 
 <section class="mobile-section">
 
@@ -1122,52 +1055,26 @@ Public Health Inspection
 📊 ملخص الجولة
 </div>
 
-
 <div class="mobile-section-body">
-
 
 <div class="result-preview">
 
 <div class="result-box">
-
-<strong id="yesCount">
-0
-</strong>
-
-<span>
-يطبق
-</span>
-
+<strong id="yesCount">0</strong>
+<span>يطبق</span>
 </div>
-
 
 <div class="result-box">
-
-<strong id="noCount">
-0
-</strong>
-
-<span>
-لا يطبق
-</span>
-
+<strong id="noCount">0</strong>
+<span>لا يطبق</span>
 </div>
-
 
 <div class="result-box">
-
-<strong id="naCount">
-0
-</strong>
-
-<span>
-لا ينطبق
-</span>
-
+<strong id="naCount">0</strong>
+<span>لا ينطبق</span>
 </div>
 
 </div>
-
 
 <div class="compliance-box">
 
@@ -1181,22 +1088,15 @@ Public Health Inspection
 
 </div>
 
-
 </div>
 
 </section>
-
-
-<!-- =========================================================
-     GENERAL NOTES
-========================================================= -->
 
 <section class="mobile-section">
 
 <div class="mobile-section-header">
 📝 الملاحظات العامة
 </div>
-
 
 <div class="mobile-section-body">
 
@@ -1216,17 +1116,11 @@ Public Health Inspection
 
 </section>
 
-
-<!-- =========================================================
-     AUTOMATIC SIGNATURE
-========================================================= -->
-
 <section class="mobile-section">
 
 <div class="mobile-section-header">
 ✍️ التوقيع الإلكتروني
 </div>
-
 
 <div class="mobile-section-body">
 
@@ -1238,13 +1132,13 @@ Public Health Inspection
 
 <div class="auto-signature-text">
 
-    <strong>
-        التوقيع الإلكتروني
-    </strong>
+<strong>
+التوقيع الإلكتروني
+</strong>
 
-    <p>
-        سيتم التوقيع إلكترونياً بعد إرسال الجولة.
-    </p>
+<p>
+سيتم التوقيع إلكترونياً بعد إرسال الجولة.
+</p>
 
 </div>
 
@@ -1253,11 +1147,6 @@ Public Health Inspection
 </div>
 
 </section>
-
-
-<!-- =========================================================
-     ACTIONS
-========================================================= -->
 
 <div class="final-actions">
 
@@ -1269,7 +1158,6 @@ Public Health Inspection
 
 </button>
 
-
 <button
     class="cancel-btn"
     onclick="cancelInspection()">
@@ -1280,20 +1168,23 @@ Public Health Inspection
 
 </div>
 
-
 </main>
-
 
 <script>
 
-const SUPABASE_URL = "https://xbivmhkqxmrkpjxfvemc.supabase.co";
+const SUPABASE_URL =
+    "https://xbivmhkqxmrkpjxfvemc.supabase.co";
 
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_jTXNyxYwDMmJDUzg46rcdA_rySASiuE";
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_jTXNyxYwDMmJDUzg46rcdA_rySASiuE";
 
-const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
-);
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
+
+
 /* =========================================================
    STORAGE
 ========================================================= */
@@ -1323,13 +1214,13 @@ let employees = [];
 
 document.addEventListener(
     "DOMContentLoaded",
-    function(){
+    async function(){
 
         setCurrentDateTime();
 
         setupLocation();
 
-        loadEmployees();
+        await loadEmployees();
 
         verifyConfiguration();
 
@@ -1338,7 +1229,7 @@ document.addEventListener(
 
 
 /* =========================================================
-   EMPLOYEES
+   EMPLOYEES LOCAL BACKUP
 ========================================================= */
 
 function getEmployeeSignatures(){
@@ -1366,17 +1257,118 @@ function getEmployeeSignatures(){
 }
 
 
-function loadEmployees(){
+/* =========================================================
+   LOAD EMPLOYEES
+========================================================= */
 
-    employees =
-        getEmployeeSignatures();
-
+async function loadEmployees(){
 
     const select =
         document.getElementById(
             "employeeName"
         );
 
+    employees = [];
+
+
+    // ==========================================
+    // 1) Supabase
+    // ==========================================
+
+    try{
+
+        const {
+            data,
+            error
+        } = await supabaseClient
+            .from("employees")
+            .select(
+                "employee_name, employee_number, signature_data"
+            )
+            .order(
+                "created_at",
+                {
+                    ascending:true
+                }
+            );
+
+
+        if(error){
+
+            console.error(
+                "Supabase employees load error:",
+                error
+            );
+
+            employees =
+                getEmployeeSignatures();
+
+        }
+        else{
+
+            employees =
+                (data || []).map(
+                    function(item){
+
+                        return {
+
+                            employeeName:
+                                item.employee_name || "",
+
+                            employeeNumber:
+                                item.employee_number || "",
+
+                            signature:
+                                item.signature_data || ""
+
+                        };
+
+                    }
+                );
+
+
+            // ==========================================
+            // نسخة محلية احتياطية
+            // ==========================================
+
+            try{
+
+                localStorage.setItem(
+                    EMPLOYEE_SIGNATURES_KEY,
+                    JSON.stringify(
+                        employees
+                    )
+                );
+
+            }
+            catch(error){
+
+                console.error(
+                    "Employee local backup error:",
+                    error
+                );
+
+            }
+
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            "Supabase employees connection error:",
+            error
+        );
+
+        employees =
+            getEmployeeSignatures();
+
+    }
+
+
+    // ==========================================
+    // 2) عرض القائمة
+    // ==========================================
 
     select.innerHTML = `
 
@@ -1536,13 +1528,10 @@ function employeeChanged(){
             "✓ التوقيع الإلكتروني مسجل وسيظهر تلقائياً في التقرير النهائي.";
 
 
-        preview.innerHTML = `
-
-            <img
-                src="${employee.signature}"
-                alt="توقيع الموظف">
-
-        `;
+        preview.innerHTML =
+            '<img src="' +
+            employee.signature +
+            '" alt="توقيع الموظف">';
 
     }
     else{
@@ -2461,7 +2450,7 @@ function showAlert(message,type){
    SUBMIT
 ========================================================= */
 
-function submitInspection(){
+async function submitInspection(){
 
     const employeeSelect =
         document.getElementById(
@@ -2541,11 +2530,8 @@ function submitInspection(){
     }
 
 
-    /*
-       نتأكد أن الموظف لديه توقيع مسجل.
-    */
-
     if(
+        !selectedEmployee ||
         !selectedEmployee.signature
     ){
 
@@ -2784,25 +2770,32 @@ function submitInspection(){
                 "generalNotes"
             ).value.trim(),
 
-        /*
-          لا نحفظ صورة التوقيع داخل كل جولة.
-          التقرير يجلب آخر توقيع مسجل للموظف
-          من إدارة التواقيع حسب الرقم الوظيفي.
-        */
-
         status:
             "submitted",
 
         createdAt:
             new Date()
-            .toISOString()
+                .toISOString()
 
     };
 
 
-    saveInspectionRecord(
-        record
-    );
+    const saved =
+        await saveInspectionRecord(
+            record
+        );
+
+
+    if(!saved){
+
+        showAlert(
+            "⚠️ تم حفظ الجولة محلياً، لكن تعذر إرسالها إلى قاعدة البيانات المركزية. تحقق من الاتصال ثم حاول مرة أخرى.",
+            "error"
+        );
+
+        return;
+
+    }
 
 
     showAlert(
@@ -2834,11 +2827,12 @@ function submitInspection(){
 
 async function saveInspectionRecord(record){
 
-    // ==========================================
-    // 1) الحفظ المحلي LocalStorage كما هو
-    // ==========================================
-
     let records = [];
+
+
+    // ==========================================
+    // 1) LocalStorage
+    // ==========================================
 
     try{
 
@@ -2849,11 +2843,15 @@ async function saveInspectionRecord(record){
                 )
             ) || [];
 
+
         if(!Array.isArray(records)){
+
             records = [];
+
         }
 
-    }catch(error){
+    }
+    catch(error){
 
         records = [];
 
@@ -2861,6 +2859,7 @@ async function saveInspectionRecord(record){
             "LocalStorage read error:",
             error
         );
+
     }
 
 
@@ -2883,18 +2882,19 @@ async function saveInspectionRecord(record){
             record.id
         );
 
-    }catch(error){
+    }
+    catch(error){
 
         console.error(
             "LocalStorage save error:",
             error
         );
+
     }
 
 
-
     // ==========================================
-    // 2) إرسال نسخة إلى Supabase
+    // 2) Supabase
     // ==========================================
 
     try{
@@ -2907,6 +2907,7 @@ async function saveInspectionRecord(record){
             )
             .insert([
                 {
+
                     round_id:
                         String(
                             record.id || ""
@@ -2920,6 +2921,7 @@ async function saveInspectionRecord(record){
 
                     record_data:
                         record
+
                 }
             ]);
 
@@ -2931,7 +2933,8 @@ async function saveInspectionRecord(record){
                 error
             );
 
-            return;
+            return false;
+
         }
 
 
@@ -2941,12 +2944,17 @@ async function saveInspectionRecord(record){
         );
 
 
-    }catch(error){
+        return true;
+
+    }
+    catch(error){
 
         console.error(
             "❌ Supabase connection error:",
             error
         );
+
+        return false;
 
     }
 
