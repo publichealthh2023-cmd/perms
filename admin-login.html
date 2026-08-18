@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>دخول الإدارة | PHRMS</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+    background:#f3f6f8;
+    font-family:Arial,Tahoma,sans-serif;
+    color:#294b6a;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+}
+
+.login-card{
+    width:100%;
+    max-width:430px;
+
+    background:#fff;
+    border:1px solid #dfe8f2;
+    border-radius:18px;
+
+    padding:28px;
+
+    box-shadow:0 6px 25px rgba(0,0,0,.07);
+}
+
+.logo-area{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.logo-area img{
+    max-width:150px;
+    max-height:90px;
+    object-fit:contain;
+}
+
+h1{
+    text-align:center;
+    color:#0759a6;
+    margin:0 0 7px;
+    font-size:24px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#718293;
+    font-size:13px;
+    line-height:1.7;
+    margin-bottom:24px;
+}
+
+.form-group{
+    margin-bottom:15px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:6px;
+    font-weight:bold;
+    font-size:13px;
+}
+
+.form-group input{
+    width:100%;
+    padding:13px;
+
+    border:1px solid #ccd9e5;
+    border-radius:9px;
+
+    font-size:15px;
+    outline:none;
+}
+
+.form-group input:focus{
+    border-color:#0759a6;
+    box-shadow:0 0 0 3px rgba(7,89,166,.08);
+}
+
+.login-btn{
+    width:100%;
+
+    border:none;
+    border-radius:10px;
+
+    padding:14px;
+
+    background:#0759a6;
+    color:#fff;
+
+    font-size:15px;
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+.login-btn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+.alert{
+    display:none;
+    margin-bottom:15px;
+
+    padding:12px;
+
+    border-radius:9px;
+
+    font-size:12px;
+    line-height:1.7;
+}
+
+.alert.active{
+    display:block;
+}
+
+.alert.error{
+    background:#fff0f0;
+    color:#7d2525;
+    border-right:5px solid #c62828;
+}
+
+.alert.success{
+    background:#eef8f0;
+    color:#285b33;
+    border-right:5px solid #2e7d32;
+}
+
+.back-link{
+    text-align:center;
+    margin-top:18px;
+}
+
+.back-link a{
+    text-decoration:none;
+    color:#607387;
+    font-size:12px;
+}
+
+.security-note{
+    margin-top:20px;
+    background:#f7fafc;
+    border-radius:9px;
+    padding:10px;
+    text-align:center;
+    font-size:11px;
+    color:#718293;
+    line-height:1.7;
+}
+
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+</head>
+
+<body>
+
+<div class="login-card">
+
+<div class="logo-area">
+
+<img
+    src="./images/hospital-logo.png"
+    alt="شعار المستشفى">
+
+</div>
+
+<h1>
+دخول الإدارة
+</h1>
+
+<div class="subtitle">
+بوابة إدارة نظام الجولات الرقابية
+<br>
+PHRMS Administration
+</div>
+
+<div
+    id="loginAlert"
+    class="alert">
+</div>
+
+<div class="form-group">
+
+<label>
+البريد الإلكتروني
+</label>
+
+<input
+    id="email"
+    type="email"
+    autocomplete="username"
+    placeholder="البريد الإلكتروني الإداري">
+
+</div>
+
+<div class="form-group">
+
+<label>
+كلمة المرور
+</label>
+
+<input
+    id="password"
+    type="password"
+    autocomplete="current-password"
+    placeholder="كلمة المرور">
+
+</div>
+
+<button
+    id="loginButton"
+    class="login-btn"
+    onclick="loginAdmin()">
+
+🔐 دخول الإدارة
+
+</button>
+
+<div class="back-link">
+
+<a href="portal.html">
+← العودة لبوابة الجولات
+</a>
+
+</div>
+
+<div class="security-note">
+هذه الصفحة مخصصة لإدارة النظام فقط.
+</div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   SUPABASE
+========================================================= */
+
+const SUPABASE_URL =
+    "https://xbivmhkqxmrkpjxfvemc.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_jTXNyxYwDMmJDUzg46rcdA_rySASiuE";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
+
+
+/* =========================================================
+   START
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async function(){
+
+        /*
+        إذا كان المدير مسجل الدخول مسبقاً
+        ينتقل مباشرة إلى صندوق التحكم
+        */
+
+        const {
+            data
+        } =
+            await supabaseClient.auth.getSession();
+
+
+        if(
+            data &&
+            data.session
+        ){
+
+            window.location.href =
+                "control.html";
+
+            return;
+
+        }
+
+
+        document.getElementById(
+            "password"
+        ).addEventListener(
+            "keydown",
+            function(event){
+
+                if(
+                    event.key ===
+                    "Enter"
+                ){
+
+                    loginAdmin();
+
+                }
+
+            }
+        );
+
+    }
+);
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+async function loginAdmin(){
+
+    const email =
+        document.getElementById(
+            "email"
+        ).value.trim();
+
+
+    const password =
+        document.getElementById(
+            "password"
+        ).value;
+
+
+    const button =
+        document.getElementById(
+            "loginButton"
+        );
+
+
+    if(
+        !email ||
+        !password
+    ){
+
+        showAlert(
+            "يرجى إدخال البريد الإلكتروني وكلمة المرور.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    button.disabled =
+        true;
+
+
+    button.textContent =
+        "جاري تسجيل الدخول...";
+
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient.auth
+            .signInWithPassword({
+
+                email:
+                    email,
+
+                password:
+                    password
+
+            });
+
+
+        if(error){
+
+            console.error(
+                "Login error:",
+                error
+            );
+
+
+            showAlert(
+                "بيانات الدخول غير صحيحة.",
+                "error"
+            );
+
+
+            button.disabled =
+                false;
+
+
+            button.textContent =
+                "🔐 دخول الإدارة";
+
+
+            return;
+
+        }
+
+
+        if(
+            data &&
+            data.session
+        ){
+
+            showAlert(
+                "✅ تم تسجيل الدخول بنجاح.",
+                "success"
+            );
+
+
+            setTimeout(
+                function(){
+
+                    window.location.href =
+                        "control.html";
+
+                },
+                600
+            );
+
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            "Login connection error:",
+            error
+        );
+
+
+        showAlert(
+            "تعذر الاتصال بنظام تسجيل الدخول.",
+            "error"
+        );
+
+
+        button.disabled =
+            false;
+
+
+        button.textContent =
+            "🔐 دخول الإدارة";
+
+    }
+
+}
+
+
+/* =========================================================
+   ALERT
+========================================================= */
+
+function showAlert(
+    message,
+    type
+){
+
+    const alert =
+        document.getElementById(
+            "loginAlert"
+        );
+
+
+    alert.className =
+        "alert active " +
+        type;
+
+
+    alert.textContent =
+        message;
+
+}
+
+</script>
+
+</body>
+
+</html>
