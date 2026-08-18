@@ -12,6 +12,8 @@
 
 <style>
 
+/* نفس التنسيق السابق بدون تغيير */
+
 *{
     box-sizing:border-box;
 }
@@ -23,11 +25,6 @@ body{
     color:#294b6a;
 }
 
-
-/* =========================================================
-   HEADER
-========================================================= */
-
 .mobile-header{
     background:#ffffff;
     border-bottom:4px solid #15936c;
@@ -37,11 +34,9 @@ body{
 .mobile-header-grid{
     max-width:1100px;
     margin:auto;
-
     display:grid;
     grid-template-columns:115px 1fr 115px;
     align-items:center;
-
     gap:10px;
     padding:15px 12px;
 }
@@ -73,21 +68,11 @@ body{
     font-weight:normal;
 }
 
-
-/* =========================================================
-   PAGE
-========================================================= */
-
 .inspection-page{
     max-width:1000px;
     margin:22px auto;
     padding:0 14px 80px;
 }
-
-
-/* =========================================================
-   INTRO
-========================================================= */
 
 .round-intro{
     background:#fff;
@@ -108,11 +93,9 @@ body{
     height:60px;
     border-radius:16px;
     background:#e9f8f2;
-
     display:flex;
     align-items:center;
     justify-content:center;
-
     font-size:30px;
     flex-shrink:0;
 }
@@ -130,17 +113,10 @@ body{
     font-size:13px;
 }
 
-
-/* =========================================================
-   ALERT
-========================================================= */
-
 .mobile-alert{
     display:none;
-
     border-radius:10px;
     padding:14px 16px;
-
     line-height:1.7;
     margin-bottom:15px;
     font-size:13px;
@@ -161,11 +137,6 @@ body{
     border-right:5px solid #2e7d32;
     color:#285b33;
 }
-
-
-/* =========================================================
-   PROGRESS
-========================================================= */
 
 .progress-area{
     background:#fff;
@@ -204,11 +175,6 @@ body{
     transition:.2s;
 }
 
-
-/* =========================================================
-   SECTION
-========================================================= */
-
 .mobile-section{
     background:#fff;
     border:1px solid #dfe8f2;
@@ -230,11 +196,6 @@ body{
 .mobile-section-body{
     padding:17px;
 }
-
-
-/* =========================================================
-   FORM
-========================================================= */
 
 .mobile-form-grid{
     display:grid;
@@ -286,11 +247,6 @@ body{
     min-height:90px;
     resize:vertical;
 }
-
-
-/* =========================================================
-   EMPLOYEE SIGNATURE STATUS
-========================================================= */
 
 .employee-signature-status{
     margin-top:15px;
@@ -349,11 +305,6 @@ body{
     color:#b42318 !important;
 }
 
-
-/* =========================================================
-   CATEGORY MESSAGE
-========================================================= */
-
 .category-message{
     background:#eef8f4;
     border-right:5px solid #15936c;
@@ -363,11 +314,6 @@ body{
     line-height:1.8;
     font-size:13px;
 }
-
-
-/* =========================================================
-   DYNAMIC SECTIONS
-========================================================= */
 
 .dynamic-section{
     border:1px solid #cfdde8;
@@ -389,11 +335,6 @@ body{
 .dynamic-section-items{
     padding:12px;
 }
-
-
-/* =========================================================
-   ITEM
-========================================================= */
 
 .inspection-item{
     background:#fff;
@@ -433,11 +374,6 @@ body{
     line-height:1.9;
     font-weight:bold;
 }
-
-
-/* =========================================================
-   STATUS
-========================================================= */
 
 .item-status{
     display:grid;
@@ -493,11 +429,6 @@ body{
     border-color:#9ca8b2;
 }
 
-
-/* =========================================================
-   NOTE
-========================================================= */
-
 .item-note{
     margin-top:11px;
     display:none;
@@ -517,11 +448,6 @@ body{
     resize:vertical;
     font-size:14px;
 }
-
-
-/* =========================================================
-   RESULTS
-========================================================= */
 
 .result-preview{
     display:grid;
@@ -568,11 +494,6 @@ body{
     color:#15936c;
 }
 
-
-/* =========================================================
-   AUTO SIGNATURE
-========================================================= */
-
 .auto-signature-box{
     background:#f2faf6;
     border:1px solid #cae5da;
@@ -609,11 +530,6 @@ body{
     color:#637789;
 }
 
-
-/* =========================================================
-   FINAL ACTIONS
-========================================================= */
-
 .final-actions{
     position:sticky;
     bottom:0;
@@ -644,11 +560,6 @@ body{
     background:#e5edf3;
     color:#064c92;
 }
-
-
-/* =========================================================
-   RESPONSIVE
-========================================================= */
 
 @media(max-width:650px){
 
@@ -711,11 +622,6 @@ body{
 
 }
 
-
-/* =========================================================
-   PRINT
-========================================================= */
-
 @media print{
 
     .final-actions,
@@ -727,25 +633,19 @@ body{
 
 </style>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 </head>
 
-
 <body>
-
 
 <header class="mobile-header">
 
 <div class="mobile-header-grid">
 
-
 <div class="mobile-logo">
-
-<img
-    src="./images/cluster-logo.png"
-    alt="شعار تجمع حفر الباطن الصحي">
-
+<img src="./images/cluster-logo.png" alt="شعار تجمع حفر الباطن الصحي">
 </div>
-
 
 <div class="mobile-title">
 
@@ -759,15 +659,9 @@ Medical Waste Inspection
 
 </div>
 
-
 <div class="mobile-logo">
-
-<img
-    src="./images/hospital-logo.png"
-    alt="شعار المستشفى">
-
+<img src="./images/hospital-logo.png" alt="شعار المستشفى">
 </div>
-
 
 </div>
 
@@ -775,7 +669,6 @@ Medical Waste Inspection
 
 
 <main class="inspection-page">
-
 
 <section class="round-intro">
 
@@ -803,10 +696,7 @@ Medical Waste Inspection
 </section>
 
 
-<div
-    id="formAlert"
-    class="mobile-alert">
-</div>
+<div id="formAlert" class="mobile-alert"></div>
 
 
 <section class="progress-area">
@@ -824,20 +714,11 @@ Medical Waste Inspection
 </div>
 
 <div class="progress-track">
-
-<div
-    id="progressFill"
-    class="progress-fill">
-</div>
-
+<div id="progressFill" class="progress-fill"></div>
 </div>
 
 </section>
 
-
-<!-- =========================================================
-     DATA
-========================================================= -->
 
 <section class="mobile-section">
 
@@ -848,7 +729,6 @@ Medical Waste Inspection
 <div class="mobile-section-body">
 
 <div class="mobile-form-grid">
-
 
 <div class="mobile-group">
 
@@ -909,7 +789,6 @@ Medical Waste Inspection
 
 </div>
 
-
 </div>
 
 
@@ -936,15 +815,10 @@ Medical Waste Inspection
 
 </div>
 
-
 </div>
 
 </section>
 
-
-<!-- =========================================================
-     ITEMS
-========================================================= -->
 
 <section class="mobile-section">
 
@@ -968,10 +842,6 @@ Medical Waste Inspection
 
 </section>
 
-
-<!-- =========================================================
-     RESULT
-========================================================= -->
 
 <section class="mobile-section">
 
@@ -1017,10 +887,6 @@ Medical Waste Inspection
 </section>
 
 
-<!-- =========================================================
-     NOTES
-========================================================= -->
-
 <section class="mobile-section">
 
 <div class="mobile-section-header">
@@ -1045,10 +911,6 @@ Medical Waste Inspection
 
 </section>
 
-
-<!-- =========================================================
-     AUTOMATIC SIGNATURE
-========================================================= -->
 
 <section class="mobile-section">
 
@@ -1083,10 +945,6 @@ Medical Waste Inspection
 </section>
 
 
-<!-- =========================================================
-     ACTIONS
-========================================================= -->
-
 <div class="final-actions">
 
 <button
@@ -1107,11 +965,26 @@ Medical Waste Inspection
 
 </div>
 
-
 </main>
 
 
 <script>
+
+/* =========================================================
+   SUPABASE
+========================================================= */
+
+const SUPABASE_URL =
+    "https://xbivmhkqxmrkpjxfvemc.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_jTXNyxYwDMmJDUzg46rcdA_rySASiuE";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
 
 
 /* =========================================================
@@ -1143,11 +1016,11 @@ let employees = [];
 
 document.addEventListener(
     "DOMContentLoaded",
-    function(){
+    async function(){
 
         setCurrentDateTime();
 
-        loadEmployees();
+        await loadEmployees();
 
         loadMedicalWasteItems();
 
@@ -1156,7 +1029,7 @@ document.addEventListener(
 
 
 /* =========================================================
-   EMPLOYEES
+   LOCAL EMPLOYEES
 ========================================================= */
 
 function getEmployeeSignatures(){
@@ -1169,6 +1042,7 @@ function getEmployeeSignatures(){
                     EMPLOYEE_SIGNATURES_KEY
                 )
             ) || [];
+
 
         return Array.isArray(data)
             ? data
@@ -1184,11 +1058,129 @@ function getEmployeeSignatures(){
 }
 
 
-function loadEmployees(){
+/* =========================================================
+   LOAD EMPLOYEES
+========================================================= */
 
-    employees =
+async function loadEmployees(){
+
+    const localEmployees =
         getEmployeeSignatures();
 
+
+    try{
+
+        const {
+            data,
+            error
+        } = await supabaseClient
+            .from(
+                "employees"
+            )
+            .select(
+                "employee_name, employee_number, signature_data"
+            )
+            .order(
+                "employee_name",
+                {
+                    ascending:true
+                }
+            );
+
+
+        if(error){
+
+            console.error(
+                "Supabase employees error:",
+                error
+            );
+
+
+            employees =
+                localEmployees;
+
+        }
+        else{
+
+            employees =
+                (data || [])
+                .map(
+                    function(item){
+
+                        return {
+
+                            employeeName:
+                                item.employee_name ||
+                                "",
+
+                            employeeNumber:
+                                item.employee_number ||
+                                "",
+
+                            signature:
+                                item.signature_data ||
+                                ""
+
+                        };
+
+                    }
+                );
+
+
+            if(!employees.length){
+
+                employees =
+                    localEmployees;
+
+            }
+
+
+            try{
+
+                localStorage.setItem(
+                    EMPLOYEE_SIGNATURES_KEY,
+                    JSON.stringify(
+                        employees
+                    )
+                );
+
+            }
+            catch(error){
+
+                console.error(
+                    "Employee cache error:",
+                    error
+                );
+
+            }
+
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            "Employee connection error:",
+            error
+        );
+
+
+        employees =
+            localEmployees;
+
+    }
+
+
+    renderEmployeeOptions();
+
+}
+
+
+/* =========================================================
+   EMPLOYEE OPTIONS
+========================================================= */
+
+function renderEmployeeOptions(){
 
     const select =
         document.getElementById(
@@ -1316,7 +1308,9 @@ function employeeChanged(){
                         item.employeeNumber ||
                         item.employeeName
                     ) ===
-                    String(value)
+                    String(
+                        value
+                    )
                 );
 
             }
@@ -1331,7 +1325,8 @@ function employeeChanged(){
 
 
     numberInput.value =
-        employee.employeeNumber || "";
+        employee.employeeNumber ||
+        "";
 
 
     status.classList.add(
@@ -1401,7 +1396,8 @@ function getRoundsConfig(){
 
         return (
             config &&
-            typeof config === "object"
+            typeof config ===
+            "object"
         )
         ? config
         : {};
@@ -1481,7 +1477,7 @@ function setCurrentDateTime(){
 
 
 /* =========================================================
-   LOAD WASTE ITEMS
+   LOAD ITEMS
 ========================================================= */
 
 function loadMedicalWasteItems(){
@@ -1543,7 +1539,10 @@ function loadMedicalWasteItems(){
     data.sections.forEach(
         function(section){
 
-            if(section.active === false){
+            if(
+                section.active ===
+                false
+            ){
 
                 return;
 
@@ -1561,7 +1560,10 @@ function loadMedicalWasteItems(){
             items.forEach(
                 function(item){
 
-                    if(item.active === false){
+                    if(
+                        item.active ===
+                        false
+                    ){
 
                         return;
 
@@ -1570,7 +1572,8 @@ function loadMedicalWasteItems(){
 
                     currentItems.push({
 
-                        id:item.id,
+                        id:
+                            item.id,
 
                         sectionId:
                             section.id,
@@ -1581,9 +1584,11 @@ function loadMedicalWasteItems(){
                         text:
                             item.text,
 
-                        status:"",
+                        status:
+                            "",
 
-                        note:""
+                        note:
+                            ""
 
                     });
 
@@ -1621,7 +1626,7 @@ function loadMedicalWasteItems(){
 
 
 /* =========================================================
-   RENDER GROUPED ITEMS
+   RENDER ITEMS
 ========================================================= */
 
 function renderItems(){
@@ -1636,7 +1641,10 @@ function renderItems(){
 
 
     currentItems.forEach(
-        function(item,index){
+        function(
+            item,
+            index
+        ){
 
             let group =
                 groups.find(
@@ -1661,7 +1669,8 @@ function renderItems(){
                     sectionName:
                         item.sectionName,
 
-                    items:[]
+                    items:
+                        []
 
                 };
 
@@ -1675,9 +1684,11 @@ function renderItems(){
 
             group.items.push({
 
-                item:item,
+                item:
+                    item,
 
-                index:index
+                index:
+                    index
 
             });
 
@@ -1696,10 +1707,11 @@ function renderItems(){
 
                     <div class="dynamic-section-title">
 
-                        ${escapeHtml(group.sectionName)}
+                        ${escapeHtml(
+                            group.sectionName
+                        )}
 
                     </div>
-
 
                     <div class="dynamic-section-items">
 
@@ -1738,7 +1750,10 @@ function renderItems(){
    RENDER ITEM
 ========================================================= */
 
-function renderItem(item,index){
+function renderItem(
+    item,
+    index
+){
 
     return `
 
@@ -1751,7 +1766,9 @@ function renderItem(item,index){
             </div>
 
             <div class="item-text">
-                ${escapeHtml(item.text)}
+                ${escapeHtml(
+                    item.text
+                )}
             </div>
 
         </div>
@@ -1827,7 +1844,10 @@ function renderItem(item,index){
    STATUS
 ========================================================= */
 
-function setItemStatus(index,status){
+function setItemStatus(
+    index,
+    status
+){
 
     if(!currentItems[index]){
 
@@ -1875,7 +1895,10 @@ function setItemStatus(index,status){
 
     if(note){
 
-        if(status === "no"){
+        if(
+            status ===
+            "no"
+        ){
 
             note.classList.add(
                 "active"
@@ -1889,7 +1912,8 @@ function setItemStatus(index,status){
             );
 
 
-            currentItems[index].note = "";
+            currentItems[index].note =
+                "";
 
 
             const textarea =
@@ -1900,7 +1924,8 @@ function setItemStatus(index,status){
 
             if(textarea){
 
-                textarea.value = "";
+                textarea.value =
+                    "";
 
             }
 
@@ -1918,7 +1943,10 @@ function setItemStatus(index,status){
    NOTE
 ========================================================= */
 
-function setItemNote(index,value){
+function setItemNote(
+    index,
+    value
+){
 
     if(!currentItems[index]){
 
@@ -1957,7 +1985,10 @@ function updateResults(){
         currentItems.filter(
             function(item){
 
-                return item.status === "yes";
+                return (
+                    item.status ===
+                    "yes"
+                );
 
             }
         ).length;
@@ -1967,7 +1998,10 @@ function updateResults(){
         currentItems.filter(
             function(item){
 
-                return item.status === "no";
+                return (
+                    item.status ===
+                    "no"
+                );
 
             }
         ).length;
@@ -1977,7 +2011,10 @@ function updateResults(){
         currentItems.filter(
             function(item){
 
-                return item.status === "na";
+                return (
+                    item.status ===
+                    "na"
+                );
 
             }
         ).length;
@@ -2028,13 +2065,15 @@ function updateResults(){
     document.getElementById(
         "complianceRate"
     ).textContent =
-        compliance + "%";
+        compliance +
+        "%";
 
 
     document.getElementById(
         "progressText"
     ).textContent =
-        completion + "%";
+        completion +
+        "%";
 
 
     document.getElementById(
@@ -2048,7 +2087,8 @@ function updateResults(){
     document.getElementById(
         "progressFill"
     ).style.width =
-        completion + "%";
+        completion +
+        "%";
 
 }
 
@@ -2067,10 +2107,16 @@ function generateRoundId(){
         now.getFullYear() +
         String(
             now.getMonth()+1
-        ).padStart(2,"0") +
+        ).padStart(
+            2,
+            "0"
+        ) +
         String(
             now.getDate()
-        ).padStart(2,"0");
+        ).padStart(
+            2,
+            "0"
+        );
 
 
     const random =
@@ -2095,7 +2141,10 @@ function generateRoundId(){
    ALERT
 ========================================================= */
 
-function showAlert(message,type){
+function showAlert(
+    message,
+    type
+){
 
     const box =
         document.getElementById(
@@ -2117,9 +2166,11 @@ function showAlert(message,type){
 
     box.scrollIntoView({
 
-        behavior:"smooth",
+        behavior:
+            "smooth",
 
-        block:"center"
+        block:
+            "center"
 
     });
 
@@ -2130,7 +2181,7 @@ function showAlert(message,type){
    SUBMIT
 ========================================================= */
 
-function submitInspection(){
+async function submitInspection(){
 
     const employeeSelect =
         document.getElementById(
@@ -2211,7 +2262,9 @@ function submitInspection(){
     }
 
 
-    if(!currentItems.length){
+    if(
+        !currentItems.length
+    ){
 
         showAlert(
             "لا توجد بنود مفعلة لهذه الجولة.",
@@ -2233,7 +2286,9 @@ function submitInspection(){
         );
 
 
-    if(unanswered.length){
+    if(
+        unanswered.length
+    ){
 
         showAlert(
             "يرجى تقييم جميع البنود. بقي " +
@@ -2252,7 +2307,8 @@ function submitInspection(){
             function(item){
 
                 return (
-                    item.status === "no" &&
+                    item.status ===
+                    "no" &&
                     !item.note
                 );
 
@@ -2260,7 +2316,9 @@ function submitInspection(){
         );
 
 
-    if(missingNotes.length){
+    if(
+        missingNotes.length
+    ){
 
         showAlert(
             "كل بند تم اختياره «لا يطبق» يجب كتابة الملاحظة الخاصة به.",
@@ -2276,7 +2334,10 @@ function submitInspection(){
         currentItems.filter(
             function(item){
 
-                return item.status === "yes";
+                return (
+                    item.status ===
+                    "yes"
+                );
 
             }
         ).length;
@@ -2286,7 +2347,10 @@ function submitInspection(){
         currentItems.filter(
             function(item){
 
-                return item.status === "no";
+                return (
+                    item.status ===
+                    "no"
+                );
 
             }
         ).length;
@@ -2296,7 +2360,10 @@ function submitInspection(){
         currentItems.filter(
             function(item){
 
-                return item.status === "na";
+                return (
+                    item.status ===
+                    "na"
+                );
 
             }
         ).length;
@@ -2351,7 +2418,8 @@ function submitInspection(){
 
                     return {
 
-                        id:item.id,
+                        id:
+                            item.id,
 
                         sectionId:
                             item.sectionId,
@@ -2403,14 +2471,27 @@ function submitInspection(){
     };
 
 
-    saveRecord(
-        record
-    );
+    const saved =
+        await saveRecord(
+            record
+        );
+
+
+    if(!saved){
+
+        showAlert(
+            "⚠️ تم حفظ الجولة محلياً، لكن تعذر إرسالها إلى قاعدة البيانات المركزية. تحقق من الاتصال ثم حاول مرة أخرى.",
+            "error"
+        );
+
+        return;
+
+    }
 
 
     showAlert(
         "✅ تم إرسال جولة النفايات الطبية بنجاح.<br>" +
-        "تم ربط التوقيع الإلكتروني تلقائياً.<br>" +
+        "تم حفظ الجولة في النظام المركزي.<br>" +
         "رقم الجولة: <strong>" +
         record.id +
         "</strong>",
@@ -2435,7 +2516,7 @@ function submitInspection(){
    SAVE
 ========================================================= */
 
-function saveRecord(record){
+async function saveRecord(record){
 
     let records = [];
 
@@ -2450,7 +2531,11 @@ function saveRecord(record){
             ) || [];
 
 
-        if(!Array.isArray(records)){
+        if(
+            !Array.isArray(
+                records
+            )
+        ){
 
             records = [];
 
@@ -2469,12 +2554,86 @@ function saveRecord(record){
     );
 
 
-    localStorage.setItem(
-        RECORDS_KEY,
-        JSON.stringify(
-            records
-        )
-    );
+    try{
+
+        localStorage.setItem(
+            RECORDS_KEY,
+            JSON.stringify(
+                records
+            )
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "Local waste save error:",
+            error
+        );
+
+    }
+
+
+    try{
+
+        const {
+            error
+        } = await supabaseClient
+            .from(
+                "inspection_records"
+            )
+            .insert(
+                [
+                    {
+                        round_id:
+                            String(
+                                record.id ||
+                                ""
+                            ),
+
+                        round_type:
+                            "medicalWaste",
+
+                        record_data:
+                            record
+                    }
+                ]
+            );
+
+
+        if(error){
+
+            console.error(
+                "Supabase waste save error:",
+                error
+            );
+
+
+            return false;
+
+        }
+
+
+        console.log(
+            "☁️ Medical waste round saved:",
+            record.id
+        );
+
+
+        return true;
+
+    }
+    catch(error){
+
+        console.error(
+            "Supabase waste connection error:",
+            error
+        );
+
+
+        return false;
+
+    }
 
 }
 
@@ -2511,7 +2670,8 @@ function cancelInspection(){
 function escapeHtml(value){
 
     return String(
-        value || ""
+        value ||
+        ""
     )
     .replaceAll(
         "&",
