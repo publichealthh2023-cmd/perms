@@ -366,6 +366,8 @@ body{
 
 </style>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 </head>
 
 
@@ -802,6 +804,23 @@ body{
 <script>
 
 /* =========================================================
+   SUPABASE
+========================================================= */
+
+const SUPABASE_URL =
+    "https://xbivmhkqxmrkpjxfvemc.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_jTXNyxYwDMmJDUzg46rcdA_rySASiuE";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
+
+
+/* =========================================================
    STORAGE
 ========================================================= */
 
@@ -823,9 +842,9 @@ let allRounds = [];
 
 document.addEventListener(
     "DOMContentLoaded",
-    function(){
+    async function(){
 
-        loadData();
+        await loadData();
 
         buildYearFilter();
 
@@ -842,22 +861,202 @@ document.addEventListener(
 
 
 /* =========================================================
-   LOAD
+   LOAD DATA
 ========================================================= */
 
-function loadData(){
+async function loadData(){
 
-    publicRounds =
+    const localPublicRounds =
         getArray(
             PUBLIC_KEY
         );
 
-
-    wasteRounds =
+    const localWasteRounds =
         getArray(
             WASTE_KEY
         );
 
+
+    let remoteRounds = [];
+
+    let supabaseLoaded = false;
+
+
+    /* =====================================================
+       1) القراءة من Supabase
+    ===================================================== */
+
+    try{
+
+        const {
+            data,
+            error
+        } = await supabaseClient
+            .from(
+                "inspection_records"
+            )
+            .select(
+                "round_id, round_type, record_data, created_at"
+            )
+            .order(
+                "created_at",
+                {
+                    ascending:false
+                }
+            );
+
+
+        if(error){
+
+            console.error(
+                "Supabase rounds load error:",
+                error
+            );
+
+        }
+        else{
+
+            supabaseLoaded = true;
+
+
+            remoteRounds =
+                (data || [])
+                .map(
+                    function(row){
+
+                        if(
+                            row.record_data &&
+                            typeof row.record_data ===
+                            "object"
+                        ){
+
+                            return row.record_data;
+
+                        }
+
+
+                        return null;
+
+                    }
+                )
+                .filter(
+                    function(round){
+
+                        return !!round;
+
+                    }
+                );
+
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            "Supabase rounds connection error:",
+            error
+        );
+
+    }
+
+
+    /* =====================================================
+       2) دمج Supabase مع LocalStorage بدون تكرار
+    ===================================================== */
+
+    if(supabaseLoaded){
+
+        const remotePublic =
+            remoteRounds.filter(
+                function(round){
+
+                    return (
+                        round.roundType !==
+                        "medicalWaste"
+                    );
+
+                }
+            );
+
+
+        const remoteWaste =
+            remoteRounds.filter(
+                function(round){
+
+                    return (
+                        round.roundType ===
+                        "medicalWaste"
+                    );
+
+                }
+            );
+
+
+        publicRounds =
+            mergeRounds(
+                remotePublic,
+                localPublicRounds
+            );
+
+
+        wasteRounds =
+            mergeRounds(
+                remoteWaste,
+                localWasteRounds
+            );
+
+
+        /* =================================================
+           تحديث النسخة المحلية الاحتياطية
+        ================================================= */
+
+        try{
+
+            localStorage.setItem(
+                PUBLIC_KEY,
+                JSON.stringify(
+                    publicRounds
+                )
+            );
+
+
+            localStorage.setItem(
+                WASTE_KEY,
+                JSON.stringify(
+                    wasteRounds
+                )
+            );
+
+        }
+        catch(error){
+
+            console.error(
+                "Rounds local backup error:",
+                error
+            );
+
+        }
+
+    }
+    else{
+
+        /* =================================================
+           إذا فشل Supabase نستخدم LocalStorage
+        ================================================= */
+
+        publicRounds =
+            localPublicRounds;
+
+
+        wasteRounds =
+            localWasteRounds;
+
+    }
+
+
+    /* =====================================================
+       3) جميع الجولات
+    ===================================================== */
 
     allRounds = [
 
@@ -867,11 +1066,101 @@ function loadData(){
 
     ];
 
+
+    console.log(
+        "Rounds loaded:",
+        allRounds.length
+    );
+
 }
 
 
 /* =========================================================
-   STORAGE
+   MERGE ROUNDS
+========================================================= */
+
+function mergeRounds(
+    primary,
+    secondary
+){
+
+    const map =
+        new Map();
+
+
+    [
+        ...(Array.isArray(primary)
+            ? primary
+            : []),
+
+        ...(Array.isArray(secondary)
+            ? secondary
+            : [])
+
+    ]
+    .forEach(
+        function(round){
+
+            if(
+                !round ||
+                typeof round !==
+                "object"
+            ){
+
+                return;
+
+            }
+
+
+            const key =
+                String(
+                    round.id ||
+                    (
+                        round.roundType ||
+                        ""
+                    ) +
+                    "|" +
+                    (
+                        round.employeeNumber ||
+                        ""
+                    ) +
+                    "|" +
+                    (
+                        round.inspectionDate ||
+                        ""
+                    ) +
+                    "|" +
+                    (
+                        round.inspectionTime ||
+                        ""
+                    )
+                );
+
+
+            if(
+                !map.has(key)
+            ){
+
+                map.set(
+                    key,
+                    round
+                );
+
+            }
+
+        }
+    );
+
+
+    return Array.from(
+        map.values()
+    );
+
+}
+
+
+/* =========================================================
+   LOCAL STORAGE
 ========================================================= */
 
 function getArray(key){
@@ -880,13 +1169,17 @@ function getArray(key){
 
         const data =
             JSON.parse(
-                localStorage.getItem(key)
+                localStorage.getItem(
+                    key
+                )
             ) || [];
 
 
-        return Array.isArray(data)
-            ? data
-            : [];
+        return Array.isArray(
+            data
+        )
+        ? data
+        : [];
 
     }
     catch(error){
@@ -941,6 +1234,9 @@ function buildYearFilter(){
         );
 
 
+    select.innerHTML = "";
+
+
     [...years]
     .filter(
         function(year){
@@ -993,6 +1289,15 @@ function buildEmployeeFilter(){
         document.getElementById(
             "employeeFilter"
         );
+
+
+    select.innerHTML = `
+
+        <option value="">
+            جميع الموظفين
+        </option>
+
+    `;
 
 
     const employees =
@@ -1070,6 +1375,15 @@ function buildLocationFilter(){
         document.getElementById(
             "locationFilter"
         );
+
+
+    select.innerHTML = `
+
+        <option value="">
+            جميع المواقع
+        </option>
+
+    `;
 
 
     const locations =
@@ -1530,7 +1844,7 @@ function refreshReport(){
         .sort(
             function(a,b){
 
-                return (
+                const dateCompare =
                     String(
                         b.inspectionDate ||
                         ""
@@ -1540,6 +1854,24 @@ function refreshReport(){
                             a.inspectionDate ||
                             ""
                         )
+                    );
+
+
+                if(dateCompare !== 0){
+
+                    return dateCompare;
+
+                }
+
+
+                return String(
+                    b.inspectionTime ||
+                    ""
+                )
+                .localeCompare(
+                    String(
+                        a.inspectionTime ||
+                        ""
                     )
                 );
 
@@ -1843,7 +2175,10 @@ function renderTable(rounds){
 
                             <button
                                 class="view-btn"
-                                onclick="openRound('${encodeURIComponent(round.id || "")}')">
+                                onclick="openRound('${encodeURIComponent(
+                                    round.id ||
+                                    ""
+                                )}')">
 
                                 عرض
 
