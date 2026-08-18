@@ -325,123 +325,71 @@ body{
 
 .signatures-section{
     margin-top:15px;
-
     display:grid;
     grid-template-columns:1fr 1fr;
-
     gap:12px;
-
     break-inside:avoid;
     page-break-inside:avoid;
 }
 
-
-/* البطاقة */
-
 .signature-card{
     border:1px solid #9baab7;
-
     min-height:145px;
-
     background:#fff;
-
     display:flex;
     flex-direction:column;
-
     overflow:hidden;
 }
-
-
-/* عنوان الاعتماد */
 
 .signature-title{
     background:#d8e7f4;
     color:#123f60;
-
     font-weight:bold;
-
     text-align:center;
-
     padding:7px 8px;
-
     border-bottom:1px solid #9baab7;
-
     font-size:12px;
 }
 
-
-/* الاسم */
-
 .signature-name{
     font-weight:bold;
-
     text-align:center;
-
     padding:7px 8px 1px;
-
     font-size:11.5px;
-
     color:#243e52;
-
     line-height:1.4;
 }
-
-
-/* المسمى */
 
 .signature-role{
     text-align:center;
-
     color:#71808c;
-
     font-size:9.5px;
-
     min-height:14px;
-
     line-height:1.4;
 }
 
-
-/* مساحة التوقيع */
-
 .signature-image-area{
     flex:1;
-
     min-height:70px;
-
     display:flex;
-
     justify-content:center;
     align-items:center;
-
     padding:3px 8px 8px;
 }
 
-
-/* صورة التوقيع */
-
 .signature-image-area img{
     display:block;
-
     width:auto;
     height:auto;
-
     max-width:155px;
     max-height:60px;
-
     object-fit:contain;
 }
 
-
-/* في حال عدم وجود توقيع */
-
 .signature-placeholder{
     color:#9aa6af;
-
     font-size:10px;
-
     text-align:center;
-
     line-height:1.6;
 }
 
@@ -453,57 +401,38 @@ body{
 .official-footer{
     margin-top:22px;
     padding-top:15px;
-
     border-top:1px solid #d7e0e7;
-
     display:grid;
-
     grid-template-columns:1fr 1fr;
-
     grid-template-areas:"contact hospital";
-
     align-items:center;
-
     gap:25px;
-
     direction:ltr;
-
     break-inside:avoid;
     page-break-inside:avoid;
 }
 
 .footer-contact{
     grid-area:contact;
-
     text-align:left;
-
     direction:ltr;
-
     font-size:10px;
-
     color:#606d77;
-
     line-height:1.8;
 }
 
 .footer-hospital{
     grid-area:hospital;
-
     display:flex;
-
     justify-content:flex-end;
     align-items:center;
 }
 
 .footer-hospital img{
     display:block;
-
     width:190px;
-
     max-width:100%;
-
     height:auto;
-
     object-fit:contain;
 }
 
@@ -514,13 +443,9 @@ body{
 
 .empty-state{
     background:#fff;
-
     padding:35px;
-
     text-align:center;
-
     color:#7a8791;
-
     border-radius:12px;
 }
 
@@ -588,7 +513,6 @@ body{
     .signature-image-area img,
     .footer-hospital img{
         display:block !important;
-
         print-color-adjust:exact;
         -webkit-print-color-adjust:exact;
     }
@@ -633,7 +557,6 @@ body{
 
     .official-footer{
         grid-template-columns:1fr;
-
         grid-template-areas:
             "hospital"
             "contact";
@@ -651,17 +574,14 @@ body{
 
 </style>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 </head>
 
 
 <body>
 
 <div class="page-shell">
-
-
-    <!-- =====================================================
-         TOOLBAR
-    ====================================================== -->
 
     <div class="toolbar">
 
@@ -672,7 +592,6 @@ body{
             🖨️ طباعة / حفظ PDF
 
         </button>
-
 
         <a
             class="back-btn"
@@ -685,10 +604,6 @@ body{
     </div>
 
 
-    <!-- =====================================================
-         NOT FOUND
-    ====================================================== -->
-
     <div
         id="notFound"
         class="empty-state"
@@ -699,25 +614,15 @@ body{
     </div>
 
 
-    <!-- =====================================================
-         DOCUMENT
-    ====================================================== -->
-
     <div
         id="printContent"
         class="print-sheet"
         style="display:none;">
 
 
-        <!-- =================================================
-             HEADER
-        ================================================== -->
-
         <header class="header">
 
-
             <div class="header-empty"></div>
-
 
             <div class="header-center">
 
@@ -737,7 +642,6 @@ body{
 
             </div>
 
-
             <div class="header-hospital">
 
                 <img
@@ -746,13 +650,8 @@ body{
 
             </div>
 
-
         </header>
 
-
-        <!-- =================================================
-             ROUND TITLE
-        ================================================== -->
 
         <div
             id="roundMainTitle"
@@ -762,10 +661,6 @@ body{
 
         </div>
 
-
-        <!-- =================================================
-             INFORMATION
-        ================================================== -->
 
         <table class="meta-table">
 
@@ -846,10 +741,6 @@ body{
         </table>
 
 
-        <!-- =================================================
-             ITEMS
-        ================================================== -->
-
         <table class="items-table">
 
             <thead>
@@ -884,16 +775,11 @@ body{
 
             </thead>
 
-
             <tbody id="itemsBody">
             </tbody>
 
         </table>
 
-
-        <!-- =================================================
-             GENERAL NOTES
-        ================================================== -->
 
         <div class="notes-title">
             الملاحظات العامة
@@ -909,12 +795,7 @@ body{
         </div>
 
 
-        <!-- =================================================
-             SUMMARY
-        ================================================== -->
-
         <div class="summary">
-
 
             <div class="summary-box">
 
@@ -967,13 +848,8 @@ body{
 
             </div>
 
-
         </div>
 
-
-        <!-- =================================================
-             REPORT INFORMATION
-        ================================================== -->
 
         <table class="footer-table">
 
@@ -1000,21 +876,13 @@ body{
         </table>
 
 
-        <!-- =================================================
-             ELECTRONIC SIGNATURES
-        ================================================== -->
-
         <section class="signatures-section">
-
-
-            <!-- توقيع منفذ الجولة -->
 
             <div class="signature-card">
 
                 <div class="signature-title">
                     توقيع منفذ الجولة
                 </div>
-
 
                 <div
                     id="employeeSignatureName"
@@ -1024,34 +892,28 @@ body{
 
                 </div>
 
-
                 <div class="signature-role">
                     منفذ الجولة
                 </div>
-
 
                 <div
                     id="employeeSignatureArea"
                     class="signature-image-area">
 
                     <span class="signature-placeholder">
-                        لا يوجد توقيع إلكتروني مسجل
+                        جاري تحميل التوقيع...
                     </span>
 
                 </div>
 
-
             </div>
 
-
-            <!-- اعتماد المدير -->
 
             <div class="signature-card">
 
                 <div class="signature-title">
                     اعتماد مدير إدارة الصحة العامة
                 </div>
-
 
                 <div
                     id="managerSignatureName"
@@ -1061,35 +923,26 @@ body{
 
                 </div>
 
-
                 <div class="signature-role">
                     مدير إدارة الصحة العامة
                 </div>
-
 
                 <div
                     id="managerSignatureArea"
                     class="signature-image-area">
 
                     <span class="signature-placeholder">
-                        لم يتم تسجيل توقيع المدير
+                        جاري تحميل توقيع المدير...
                     </span>
 
                 </div>
 
-
             </div>
-
 
         </section>
 
 
-        <!-- =================================================
-             OFFICIAL FOOTER
-        ================================================== -->
-
         <footer class="official-footer">
-
 
             <div class="footer-contact">
 
@@ -1107,7 +960,6 @@ body{
 
             </div>
 
-
             <div class="footer-hospital">
 
                 <img
@@ -1116,9 +968,7 @@ body{
 
             </div>
 
-
         </footer>
-
 
     </div>
 
@@ -1126,6 +976,23 @@ body{
 
 
 <script>
+
+/* =========================================================
+   SUPABASE
+========================================================= */
+
+const SUPABASE_URL =
+    "https://xbivmhkqxmrkpjxfvemc.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_jTXNyxYwDMmJDUzg46rcdA_rySASiuE";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
+
 
 /* =========================================================
    STORAGE KEYS
@@ -1144,9 +1011,17 @@ const MANAGER_SIGNATURE_KEY =
     "phrmsPublicHealthManagerSignature";
 
 
+/* =========================================================
+   START
+========================================================= */
+
 document.addEventListener(
     "DOMContentLoaded",
-    loadPrintRound
+    async function(){
+
+        await loadPrintRound();
+
+    }
 );
 
 
@@ -1154,7 +1029,7 @@ document.addEventListener(
    LOAD ROUND
 ========================================================= */
 
-function loadPrintRound(){
+async function loadPrintRound(){
 
     const selectedId =
         sessionStorage.getItem(
@@ -1171,34 +1046,100 @@ function loadPrintRound(){
     }
 
 
-    const allRounds = [
-
-        ...getRecords(
-            PUBLIC_KEY
-        ),
-
-        ...getRecords(
-            WASTE_KEY
-        )
-
-    ];
+    let round = null;
 
 
-    const round =
-        allRounds.find(
-            function(item){
+    /* =====================================================
+       1) Supabase
+    ===================================================== */
 
-                return (
-                    String(
-                        item.id
-                    ) ===
-                    String(
-                        selectedId
-                    )
-                );
+    try{
 
-            }
+        const {
+            data,
+            error
+        } = await supabaseClient
+            .from(
+                "inspection_records"
+            )
+            .select(
+                "round_id, round_type, record_data"
+            )
+            .eq(
+                "round_id",
+                String(
+                    selectedId
+                )
+            )
+            .limit(1);
+
+
+        if(error){
+
+            console.error(
+                "Supabase print round error:",
+                error
+            );
+
+        }
+        else if(
+            data &&
+            data.length > 0 &&
+            data[0].record_data
+        ){
+
+            round =
+                data[0].record_data;
+
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            "Supabase print connection error:",
+            error
         );
+
+    }
+
+
+    /* =====================================================
+       2) LocalStorage fallback
+    ===================================================== */
+
+    if(!round){
+
+        const allRounds = [
+
+            ...getRecords(
+                PUBLIC_KEY
+            ),
+
+            ...getRecords(
+                WASTE_KEY
+            )
+
+        ];
+
+
+        round =
+            allRounds.find(
+                function(item){
+
+                    return (
+                        String(
+                            item.id
+                        ) ===
+                        String(
+                            selectedId
+                        )
+                    );
+
+                }
+            ) || null;
+
+    }
 
 
     if(!round){
@@ -1214,6 +1155,17 @@ function loadPrintRound(){
         round
     );
 
+
+    await Promise.all([
+
+        renderEmployeeSignature(
+            round
+        ),
+
+        renderManagerSignature()
+
+    ]);
+
 }
 
 
@@ -1221,9 +1173,7 @@ function loadPrintRound(){
    GET ROUND RECORDS
 ========================================================= */
 
-function getRecords(
-    key
-){
+function getRecords(key){
 
     try{
 
@@ -1264,6 +1214,12 @@ function getRecords(
 function showNotFound(){
 
     document.getElementById(
+        "printContent"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
         "notFound"
     ).style.display =
         "block";
@@ -1275,9 +1231,13 @@ function showNotFound(){
    RENDER ROUND
 ========================================================= */
 
-function renderRound(
-    round
-){
+function renderRound(round){
+
+    document.getElementById(
+        "notFound"
+    ).style.display =
+        "none";
+
 
     document.getElementById(
         "printContent"
@@ -1439,69 +1399,6 @@ function renderRound(
 
     );
 
-
-    renderEmployeeSignature(
-        round
-    );
-
-
-    renderManagerSignature();
-
-}
-
-
-/* =========================================================
-   EMPLOYEE SIGNATURES STORAGE
-========================================================= */
-
-function getEmployeeSignatures(){
-
-    try{
-
-        const data =
-            JSON.parse(
-                localStorage.getItem(
-                    EMPLOYEE_SIGNATURES_KEY
-                )
-            ) ||
-            [];
-
-
-        return Array.isArray(
-            data
-        )
-        ? data
-        : [];
-
-    }
-    catch(error){
-
-        return [];
-
-    }
-
-}
-
-
-/* =========================================================
-   NORMALIZE TEXT
-========================================================= */
-
-function normalizeText(
-    value
-){
-
-    return String(
-        value ||
-        ""
-    )
-    .trim()
-    .replace(
-        /\s+/g,
-        " "
-    )
-    .toLowerCase();
-
 }
 
 
@@ -1509,9 +1406,7 @@ function normalizeText(
    EMPLOYEE SIGNATURE
 ========================================================= */
 
-function renderEmployeeSignature(
-    round
-){
+async function renderEmployeeSignature(round){
 
     const employeeName =
         round.employeeName ||
@@ -1530,90 +1425,15 @@ function renderEmployeeSignature(
         "—";
 
 
-    const signatures =
-        getEmployeeSignatures();
-
-
-    let employeeRecord =
-        null;
-
-
-    /* البحث بالرقم الوظيفي أولاً */
-
-    if(employeeNumber){
-
-        employeeRecord =
-            signatures.find(
-                function(item){
-
-                    return (
-                        String(
-                            item.employeeNumber ||
-                            ""
-                        ).trim() ===
-                        String(
-                            employeeNumber
-                        ).trim()
-                    );
-
-                }
-            );
-
-    }
-
-
-    /* ثم البحث بالاسم */
-
-    if(
-        !employeeRecord &&
-        employeeName
-    ){
-
-        employeeRecord =
-            signatures.find(
-                function(item){
-
-                    return (
-                        normalizeText(
-                            item.employeeName
-                        ) ===
-                        normalizeText(
-                            employeeName
-                        )
-                    );
-
-                }
-            );
-
-    }
-
-
     const area =
         document.getElementById(
             "employeeSignatureArea"
         );
 
 
-    if(
-        employeeRecord &&
-        employeeRecord.signature
-    ){
-
-        area.innerHTML = `
-
-            <img
-                src="${employeeRecord.signature}"
-                alt="توقيع ${escapeHtml(employeeName)}">
-
-        `;
-
-
-        return;
-
-    }
-
-
-    /* دعم الجولات القديمة */
+    /* =====================================================
+       دعم الجولات القديمة
+    ===================================================== */
 
     if(round.signature){
 
@@ -1627,6 +1447,237 @@ function renderEmployeeSignature(
 
 
         return;
+
+    }
+
+
+    /* =====================================================
+       1) Supabase
+    ===================================================== */
+
+    try{
+
+        let query =
+            supabaseClient
+            .from(
+                "employees"
+            )
+            .select(
+                "employee_name, employee_number, signature_data"
+            );
+
+
+        if(employeeNumber){
+
+            query =
+                query.eq(
+                    "employee_number",
+                    String(
+                        employeeNumber
+                    )
+                );
+
+        }
+        else if(employeeName){
+
+            query =
+                query.eq(
+                    "employee_name",
+                    employeeName
+                );
+
+        }
+        else{
+
+            renderLocalEmployeeSignature(
+                round
+            );
+
+            return;
+
+        }
+
+
+        const {
+            data,
+            error
+        } = await query.limit(1);
+
+
+        if(error){
+
+            console.error(
+                "Supabase employee signature error:",
+                error
+            );
+
+
+            renderLocalEmployeeSignature(
+                round
+            );
+
+            return;
+
+        }
+
+
+        if(
+            data &&
+            data.length > 0 &&
+            data[0].signature_data
+        ){
+
+            area.innerHTML = `
+
+                <img
+                    src="${data[0].signature_data}"
+                    alt="توقيع ${escapeHtml(employeeName)}">
+
+            `;
+
+
+            return;
+
+        }
+
+
+        renderLocalEmployeeSignature(
+            round
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "Employee signature connection error:",
+            error
+        );
+
+
+        renderLocalEmployeeSignature(
+            round
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   LOCAL EMPLOYEE SIGNATURE
+========================================================= */
+
+function renderLocalEmployeeSignature(round){
+
+    const area =
+        document.getElementById(
+            "employeeSignatureArea"
+        );
+
+
+    const employeeName =
+        round.employeeName ||
+        "";
+
+
+    const employeeNumber =
+        round.employeeNumber ||
+        "";
+
+
+    try{
+
+        const signatures =
+            JSON.parse(
+                localStorage.getItem(
+                    EMPLOYEE_SIGNATURES_KEY
+                )
+            ) || [];
+
+
+        let employeeRecord =
+            null;
+
+
+        if(
+            Array.isArray(
+                signatures
+            )
+        ){
+
+            if(employeeNumber){
+
+                employeeRecord =
+                    signatures.find(
+                        function(item){
+
+                            return (
+                                String(
+                                    item.employeeNumber ||
+                                    ""
+                                ).trim() ===
+                                String(
+                                    employeeNumber
+                                ).trim()
+                            );
+
+                        }
+                    );
+
+            }
+
+
+            if(
+                !employeeRecord &&
+                employeeName
+            ){
+
+                employeeRecord =
+                    signatures.find(
+                        function(item){
+
+                            return (
+                                normalizeText(
+                                    item.employeeName
+                                ) ===
+                                normalizeText(
+                                    employeeName
+                                )
+                            );
+
+                        }
+                    );
+
+            }
+
+        }
+
+
+        if(
+            employeeRecord &&
+            employeeRecord.signature
+        ){
+
+            area.innerHTML = `
+
+                <img
+                    src="${employeeRecord.signature}"
+                    alt="توقيع ${escapeHtml(employeeName)}">
+
+            `;
+
+
+            return;
+
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            "Local employee signature error:",
+            error
+        );
 
     }
 
@@ -1648,7 +1699,117 @@ function renderEmployeeSignature(
    MANAGER SIGNATURE
 ========================================================= */
 
-function renderManagerSignature(){
+async function renderManagerSignature(){
+
+    const nameElement =
+        document.getElementById(
+            "managerSignatureName"
+        );
+
+
+    const area =
+        document.getElementById(
+            "managerSignatureArea"
+        );
+
+
+    /* =====================================================
+       1) Supabase
+    ===================================================== */
+
+    try{
+
+        const {
+            data,
+            error
+        } = await supabaseClient
+            .from(
+                "manager_signature"
+            )
+            .select(
+                "manager_name, signature_data"
+            )
+            .order(
+                "created_at",
+                {
+                    ascending:false
+                }
+            )
+            .limit(1);
+
+
+        if(error){
+
+            console.error(
+                "Supabase manager signature error:",
+                error
+            );
+
+
+            renderLocalManagerSignature();
+
+            return;
+
+        }
+
+
+        if(
+            data &&
+            data.length > 0
+        ){
+
+            const manager =
+                data[0];
+
+
+            nameElement.textContent =
+                manager.manager_name ||
+                "مدير إدارة الصحة العامة";
+
+
+            if(
+                manager.signature_data
+            ){
+
+                area.innerHTML = `
+
+                    <img
+                        src="${manager.signature_data}"
+                        alt="توقيع مدير إدارة الصحة العامة">
+
+                `;
+
+
+                return;
+
+            }
+
+        }
+
+
+        renderLocalManagerSignature();
+
+    }
+    catch(error){
+
+        console.error(
+            "Manager signature connection error:",
+            error
+        );
+
+
+        renderLocalManagerSignature();
+
+    }
+
+}
+
+
+/* =========================================================
+   LOCAL MANAGER SIGNATURE
+========================================================= */
+
+function renderLocalManagerSignature(){
 
     const nameElement =
         document.getElementById(
@@ -1672,68 +1833,70 @@ function renderManagerSignature(){
             );
 
 
-        if(!manager){
+        if(manager){
 
-            area.innerHTML = `
-
-                <span class="signature-placeholder">
-
-                    لم يتم تسجيل توقيع مدير إدارة الصحة العامة
-
-                </span>
-
-            `;
+            nameElement.textContent =
+                manager.managerName ||
+                "مدير إدارة الصحة العامة";
 
 
-            return;
+            if(manager.signature){
 
-        }
+                area.innerHTML = `
+
+                    <img
+                        src="${manager.signature}"
+                        alt="توقيع مدير إدارة الصحة العامة">
+
+                `;
 
 
-        nameElement.textContent =
-            manager.managerName ||
-            "مدير إدارة الصحة العامة";
+                return;
 
-
-        if(manager.signature){
-
-            area.innerHTML = `
-
-                <img
-                    src="${manager.signature}"
-                    alt="توقيع مدير إدارة الصحة العامة">
-
-            `;
-
-        }
-        else{
-
-            area.innerHTML = `
-
-                <span class="signature-placeholder">
-
-                    لم يتم تسجيل توقيع مدير إدارة الصحة العامة
-
-                </span>
-
-            `;
+            }
 
         }
 
     }
     catch(error){
 
-        area.innerHTML = `
-
-            <span class="signature-placeholder">
-
-                تعذر تحميل توقيع مدير إدارة الصحة العامة
-
-            </span>
-
-        `;
+        console.error(
+            "Local manager signature error:",
+            error
+        );
 
     }
+
+
+    area.innerHTML = `
+
+        <span class="signature-placeholder">
+
+            لم يتم تسجيل توقيع مدير إدارة الصحة العامة
+
+        </span>
+
+    `;
+
+}
+
+
+/* =========================================================
+   NORMALIZE TEXT
+========================================================= */
+
+function normalizeText(value){
+
+    return String(
+        value ||
+        ""
+    )
+    .trim()
+    .replace(
+        /\s+/g,
+        " "
+    )
+    .toLowerCase();
 
 }
 
@@ -1742,9 +1905,7 @@ function renderManagerSignature(){
    RENDER ITEMS
 ========================================================= */
 
-function renderItems(
-    items
-){
+function renderItems(items){
 
     const body =
         document.getElementById(
@@ -1949,9 +2110,7 @@ function renderItems(
    ESCAPE HTML
 ========================================================= */
 
-function escapeHtml(
-    value
-){
+function escapeHtml(value){
 
     return String(
         value ||
