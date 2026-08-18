@@ -209,15 +209,26 @@ body{
 
 .signature-box{
     text-align:center;
+    min-height:100px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
 .signature-box img{
     max-width:350px;
     width:100%;
+    max-height:130px;
+    object-fit:contain;
     border:1px solid #d5e0e8;
     border-radius:10px;
     background:#fff;
     padding:8px;
+}
+
+.signature-message{
+    color:#718293;
+    font-size:13px;
 }
 
 .actions{
@@ -285,6 +296,8 @@ body{
 
 </style>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 </head>
 
 <body>
@@ -312,15 +325,24 @@ body{
 
 <main class="page">
 
-<div id="notFound" class="card" style="display:none;text-align:center;">
+<div
+    id="notFound"
+    class="card"
+    style="display:none;text-align:center;">
+
     لم يتم العثور على بيانات الجولة المطلوبة.
+
 </div>
 
-<div id="detailsContent" style="display:none;">
+<div
+    id="detailsContent"
+    style="display:none;">
 
 <section class="card">
 
-<h2 class="section-title">بيانات الجولة</h2>
+<h2 class="section-title">
+بيانات الجولة
+</h2>
 
 <div class="info-grid">
 
@@ -368,9 +390,12 @@ body{
 
 </section>
 
+
 <section class="card">
 
-<h2 class="section-title">ملخص النتائج</h2>
+<h2 class="section-title">
+ملخص النتائج
+</h2>
 
 <div class="summary-grid">
 
@@ -398,46 +423,70 @@ body{
 
 </section>
 
+
 <section class="card">
 
-<h2 class="section-title">بنود الجولة</h2>
+<h2 class="section-title">
+بنود الجولة
+</h2>
 
 <div id="itemsContainer"></div>
 
 </section>
 
+
 <section class="card">
 
-<h2 class="section-title">الملاحظات العامة</h2>
+<h2 class="section-title">
+الملاحظات العامة
+</h2>
 
-<div id="generalNotes" class="notes-box">
-لا توجد ملاحظات عامة.
+<div
+    id="generalNotes"
+    class="notes-box">
+
+    لا توجد ملاحظات عامة.
+
 </div>
 
 </section>
 
+
 <section class="card">
 
-<h2 class="section-title">توقيع منفذ الجولة</h2>
+<h2 class="section-title">
+توقيع منفذ الجولة
+</h2>
 
-<div class="signature-box">
+<div
+    id="signatureBox"
+    class="signature-box">
 
-<img id="signatureImage" alt="توقيع منفذ الجولة">
+    <span class="signature-message">
+        جاري تحميل التوقيع...
+    </span>
 
 </div>
 
 </section>
+
 
 <div class="actions">
 
-<a href="control.html" class="back-btn">
+<a
+    href="control.html"
+    class="back-btn">
+
 ← العودة لصندوق التحكم
+
 </a>
 
 <button
     class="print-btn"
     onclick="window.location.href='round-print.html'">
+
 🖨️ فتح النموذج الرسمي للطباعة
+
 </button>
 
 </div>
@@ -446,7 +495,29 @@ body{
 
 </main>
 
+
 <script>
+
+/* =========================================================
+   SUPABASE
+========================================================= */
+
+const SUPABASE_URL =
+    "https://xbivmhkqxmrkpjxfvemc.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_jTXNyxYwDMmJDUzg46rcdA_rySASiuE";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
+
+
+/* =========================================================
+   STORAGE
+========================================================= */
 
 const PUBLIC_KEY =
     "phrmsPublicHealthRounds";
@@ -454,59 +525,172 @@ const PUBLIC_KEY =
 const WASTE_KEY =
     "phrmsMedicalWasteRounds";
 
+
+/* =========================================================
+   START
+========================================================= */
+
 document.addEventListener(
     "DOMContentLoaded",
-    loadRoundDetails
+    async function(){
+
+        await loadRoundDetails();
+
+    }
 );
 
-function loadRoundDetails(){
+
+/* =========================================================
+   LOAD ROUND
+========================================================= */
+
+async function loadRoundDetails(){
 
     const selectedId =
         sessionStorage.getItem(
             "phrmsSelectedRoundId"
         );
 
+
     if(!selectedId){
 
         showNotFound();
+
         return;
 
     }
 
-    const publicRounds =
-        getRecords(PUBLIC_KEY);
 
-    const wasteRounds =
-        getRecords(WASTE_KEY);
+    let round = null;
 
-    const allRounds =
-        [
+
+    /* =====================================================
+       1) Supabase أولاً
+    ===================================================== */
+
+    try{
+
+        const {
+            data,
+            error
+        } = await supabaseClient
+            .from(
+                "inspection_records"
+            )
+            .select(
+                "round_id, round_type, record_data"
+            )
+            .eq(
+                "round_id",
+                String(selectedId)
+            )
+            .limit(1);
+
+
+        if(error){
+
+            console.error(
+                "Supabase round details error:",
+                error
+            );
+
+        }
+        else if(
+            data &&
+            data.length > 0 &&
+            data[0].record_data
+        ){
+
+            round =
+                data[0].record_data;
+
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            "Supabase round connection error:",
+            error
+        );
+
+    }
+
+
+    /* =====================================================
+       2) LocalStorage احتياطي
+    ===================================================== */
+
+    if(!round){
+
+        const publicRounds =
+            getRecords(
+                PUBLIC_KEY
+            );
+
+
+        const wasteRounds =
+            getRecords(
+                WASTE_KEY
+            );
+
+
+        const allRounds = [
+
             ...publicRounds,
+
             ...wasteRounds
+
         ];
 
-    const round =
-        allRounds.find(
-            function(item){
 
-                return (
-                    String(item.id) ===
-                    String(selectedId)
-                );
+        round =
+            allRounds.find(
+                function(item){
 
-            }
-        );
+                    return (
+                        String(
+                            item.id
+                        ) ===
+                        String(
+                            selectedId
+                        )
+                    );
+
+                }
+            ) || null;
+
+    }
+
 
     if(!round){
 
         showNotFound();
+
         return;
 
     }
 
-    renderRound(round);
+
+    renderRound(
+        round
+    );
+
+
+    /* =====================================================
+       3) تحميل توقيع الموظف
+    ===================================================== */
+
+    await loadEmployeeSignature(
+        round
+    );
 
 }
+
+
+/* =========================================================
+   LOCAL RECORDS
+========================================================= */
 
 function getRecords(key){
 
@@ -514,12 +698,17 @@ function getRecords(key){
 
         const data =
             JSON.parse(
-                localStorage.getItem(key)
+                localStorage.getItem(
+                    key
+                )
             ) || [];
 
-        return Array.isArray(data)
-            ? data
-            : [];
+
+        return Array.isArray(
+            data
+        )
+        ? data
+        : [];
 
     }
     catch(error){
@@ -530,7 +719,236 @@ function getRecords(key){
 
 }
 
+
+/* =========================================================
+   EMPLOYEE SIGNATURE
+========================================================= */
+
+async function loadEmployeeSignature(round){
+
+    const box =
+        document.getElementById(
+            "signatureBox"
+        );
+
+
+    /*
+       دعم الجولات القديمة إذا كانت تحتوي
+       على التوقيع داخل السجل نفسه.
+    */
+
+    if(round.signature){
+
+        showSignature(
+            round.signature
+        );
+
+        return;
+
+    }
+
+
+    if(!round.employeeNumber){
+
+        box.innerHTML = `
+
+            <span class="signature-message">
+                لا يوجد رقم وظيفي مرتبط بهذه الجولة.
+            </span>
+
+        `;
+
+        return;
+
+    }
+
+
+    try{
+
+        const {
+            data,
+            error
+        } = await supabaseClient
+            .from(
+                "employees"
+            )
+            .select(
+                "signature_data"
+            )
+            .eq(
+                "employee_number",
+                String(
+                    round.employeeNumber
+                )
+            )
+            .limit(1);
+
+
+        if(error){
+
+            console.error(
+                "Employee signature load error:",
+                error
+            );
+
+            loadLocalEmployeeSignature(
+                round
+            );
+
+            return;
+
+        }
+
+
+        if(
+            data &&
+            data.length > 0 &&
+            data[0].signature_data
+        ){
+
+            showSignature(
+                data[0].signature_data
+            );
+
+            return;
+
+        }
+
+
+        loadLocalEmployeeSignature(
+            round
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "Employee signature connection error:",
+            error
+        );
+
+
+        loadLocalEmployeeSignature(
+            round
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   LOCAL EMPLOYEE SIGNATURE BACKUP
+========================================================= */
+
+function loadLocalEmployeeSignature(round){
+
+    const box =
+        document.getElementById(
+            "signatureBox"
+        );
+
+
+    try{
+
+        const employees =
+            JSON.parse(
+                localStorage.getItem(
+                    "phrmsEmployeeSignatures"
+                )
+            ) || [];
+
+
+        const employee =
+            Array.isArray(
+                employees
+            )
+            ? employees.find(
+                function(item){
+
+                    return (
+                        String(
+                            item.employeeNumber
+                        ) ===
+                        String(
+                            round.employeeNumber
+                        )
+                    );
+
+                }
+            )
+            : null;
+
+
+        if(
+            employee &&
+            employee.signature
+        ){
+
+            showSignature(
+                employee.signature
+            );
+
+            return;
+
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            "Local employee signature error:",
+            error
+        );
+
+    }
+
+
+    box.innerHTML = `
+
+        <span class="signature-message">
+            لا يوجد توقيع إلكتروني مسجل لهذا الموظف.
+        </span>
+
+    `;
+
+}
+
+
+/* =========================================================
+   SHOW SIGNATURE
+========================================================= */
+
+function showSignature(signatureData){
+
+    const box =
+        document.getElementById(
+            "signatureBox"
+        );
+
+
+    box.innerHTML = `
+
+        <img
+            src="${signatureData}"
+            alt="توقيع منفذ الجولة">
+
+    `;
+
+}
+
+
+/* =========================================================
+   NOT FOUND
+========================================================= */
+
 function showNotFound(){
+
+    document.getElementById(
+        "detailsContent"
+    ).style.display =
+        "none";
+
 
     document.getElementById(
         "notFound"
@@ -539,17 +957,31 @@ function showNotFound(){
 
 }
 
+
+/* =========================================================
+   RENDER ROUND
+========================================================= */
+
 function renderRound(round){
+
+    document.getElementById(
+        "notFound"
+    ).style.display =
+        "none";
+
 
     document.getElementById(
         "detailsContent"
     ).style.display =
         "block";
 
+
     document.getElementById(
         "roundId"
     ).textContent =
-        round.id || "—";
+        round.id ||
+        "—";
+
 
     document.getElementById(
         "roundType"
@@ -562,11 +994,13 @@ function renderRound(round){
             : "الصحة العامة"
         );
 
+
     document.getElementById(
         "roundDate"
     ).textContent =
         round.inspectionDate ||
         "—";
+
 
     document.getElementById(
         "roundTime"
@@ -574,11 +1008,13 @@ function renderRound(round){
         round.inspectionTime ||
         "—";
 
+
     document.getElementById(
         "employeeName"
     ).textContent =
         round.employeeName ||
         "—";
+
 
     document.getElementById(
         "employeeNumber"
@@ -586,26 +1022,49 @@ function renderRound(round){
         round.employeeNumber ||
         "—";
 
+
     document.getElementById(
         "locationName"
     ).textContent =
         round.locationName ||
         "—";
 
+
+    document.getElementById(
+        "roundStatus"
+    ).textContent =
+        round.status ===
+        "submitted"
+        ? "مرسلة"
+        : (
+            round.status ||
+            "مرسلة"
+        );
+
+
     document.getElementById(
         "yesCount"
     ).textContent =
-        Number(round.yesCount) || 0;
+        Number(
+            round.yesCount
+        ) || 0;
+
 
     document.getElementById(
         "noCount"
     ).textContent =
-        Number(round.noCount) || 0;
+        Number(
+            round.noCount
+        ) || 0;
+
 
     document.getElementById(
         "naCount"
     ).textContent =
-        Number(round.notApplicableCount) || 0;
+        Number(
+            round.notApplicableCount
+        ) || 0;
+
 
     document.getElementById(
         "complianceRate"
@@ -614,7 +1073,9 @@ function renderRound(round){
             Number(
                 round.complianceRate
             ) || 0
-        ) + "%";
+        ) +
+        "%";
+
 
     document.getElementById(
         "generalNotes"
@@ -622,31 +1083,21 @@ function renderRound(round){
         round.generalNotes ||
         "لا توجد ملاحظات عامة.";
 
-    const signature =
-        document.getElementById(
-            "signatureImage"
-        );
-
-    if(round.signature){
-
-        signature.src =
-            round.signature;
-
-    }
-    else{
-
-        signature.style.display =
-            "none";
-
-    }
 
     renderItems(
-        Array.isArray(round.items)
+        Array.isArray(
+            round.items
+        )
         ? round.items
         : []
     );
 
 }
+
+
+/* =========================================================
+   ITEMS
+========================================================= */
 
 function renderItems(items){
 
@@ -654,6 +1105,7 @@ function renderItems(items){
         document.getElementById(
             "itemsContainer"
         );
+
 
     if(!items.length){
 
@@ -664,8 +1116,10 @@ function renderItems(items){
 
     }
 
+
     const groups =
         [];
+
 
     items.forEach(
         function(item){
@@ -673,6 +1127,7 @@ function renderItems(items){
             const sectionName =
                 item.sectionName ||
                 "بنود الجولة";
+
 
             let group =
                 groups.find(
@@ -686,21 +1141,34 @@ function renderItems(items){
                     }
                 );
 
+
             if(!group){
 
                 group = {
-                    name:sectionName,
-                    items:[]
+
+                    name:
+                        sectionName,
+
+                    items:
+                        []
+
                 };
 
-                groups.push(group);
+
+                groups.push(
+                    group
+                );
 
             }
 
-            group.items.push(item);
+
+            group.items.push(
+                item
+            );
 
         }
     );
+
 
     container.innerHTML =
         groups
@@ -711,66 +1179,83 @@ function renderItems(items){
 
                 <section class="section-block">
 
-                <div class="section-block-title">
-                ${escapeHtml(group.name)}
-                </div>
+                    <div class="section-block-title">
 
-                <div class="table-wrap">
+                        ${escapeHtml(
+                            group.name
+                        )}
 
-                <table class="items-table">
+                    </div>
 
-                <thead>
+                    <div class="table-wrap">
 
-                <tr>
-                <th>م</th>
-                <th>البند</th>
-                <th>النتيجة</th>
-                <th>الملاحظة</th>
-                </tr>
+                        <table class="items-table">
 
-                </thead>
+                            <thead>
 
-                <tbody>
+                                <tr>
 
-                ${
-                    group.items
-                    .map(
-                        function(item,index){
+                                    <th>م</th>
+                                    <th>البند</th>
+                                    <th>النتيجة</th>
+                                    <th>الملاحظة</th>
 
-                            return `
+                                </tr>
 
-                            <tr>
+                            </thead>
 
-                            <td>
-                            ${index + 1}
-                            </td>
+                            <tbody>
 
-                            <td>
-                            ${escapeHtml(item.text || "")}
-                            </td>
+                                ${
+                                    group.items
+                                    .map(
+                                        function(
+                                            item,
+                                            index
+                                        ){
 
-                            <td>
-                            ${statusBadge(item.status)}
-                            </td>
+                                            return `
 
-                            <td>
-                            ${escapeHtml(item.note || "—")}
-                            </td>
+                                            <tr>
 
-                            </tr>
+                                                <td>
+                                                    ${index + 1}
+                                                </td>
 
-                            `;
+                                                <td>
+                                                    ${escapeHtml(
+                                                        item.text ||
+                                                        ""
+                                                    )}
+                                                </td>
 
-                        }
-                    )
-                    .join("")
-                }
+                                                <td>
+                                                    ${statusBadge(
+                                                        item.status
+                                                    )}
+                                                </td>
 
-                </tbody>
+                                                <td>
+                                                    ${escapeHtml(
+                                                        item.note ||
+                                                        "—"
+                                                    )}
+                                                </td>
 
-                </table>
+                                            </tr>
 
-                </div>
+                                            `;
+
+                                        }
+                                    )
+                                    .join("")
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
 
                 </section>
 
@@ -782,46 +1267,86 @@ function renderItems(items){
 
 }
 
+
+/* =========================================================
+   STATUS
+========================================================= */
+
 function statusBadge(status){
 
-    if(status === "yes"){
+    if(
+        status ===
+        "yes"
+    ){
 
         return `
-        <span class="badge yes">
-        ✓ يطبق
-        </span>
+
+            <span class="badge yes">
+                ✓ يطبق
+            </span>
+
         `;
 
     }
 
-    if(status === "no"){
+
+    if(
+        status ===
+        "no"
+    ){
 
         return `
-        <span class="badge no">
-        ✕ لا يطبق
-        </span>
+
+            <span class="badge no">
+                ✕ لا يطبق
+            </span>
+
         `;
 
     }
+
 
     return `
-    <span class="badge na">
-    — لا ينطبق
-    </span>
+
+        <span class="badge na">
+            — لا ينطبق
+        </span>
+
     `;
 
 }
 
+
+/* =========================================================
+   ESCAPE
+========================================================= */
+
 function escapeHtml(value){
 
     return String(
-        value || ""
+        value ||
+        ""
     )
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
+    .replaceAll(
+        "&",
+        "&amp;"
+    )
+    .replaceAll(
+        "<",
+        "&lt;"
+    )
+    .replaceAll(
+        ">",
+        "&gt;"
+    )
+    .replaceAll(
+        '"',
+        "&quot;"
+    )
+    .replaceAll(
+        "'",
+        "&#039;"
+    );
 
 }
 
