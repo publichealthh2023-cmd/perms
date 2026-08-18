@@ -27,24 +27,17 @@ body{
     padding:0 15px 60px;
 }
 
-
-/* =========================================================
-   HEADER
-========================================================= */
-
 .header{
     background:#fff;
     border:1px solid #dfe8f2;
     border-radius:16px;
     padding:20px;
     margin-bottom:18px;
-
     display:flex;
     justify-content:space-between;
     align-items:center;
     gap:15px;
     flex-wrap:wrap;
-
     box-shadow:0 4px 14px rgba(0,0,0,.04);
 }
 
@@ -87,11 +80,6 @@ body{
     color:#fff;
 }
 
-
-/* =========================================================
-   FILTERS
-========================================================= */
-
 .filters{
     background:#fff;
     border:1px solid #dfe8f2;
@@ -127,11 +115,6 @@ body{
     font-size:13px;
 }
 
-
-/* =========================================================
-   KPI
-========================================================= */
-
 .stats-grid{
     display:grid;
     grid-template-columns:repeat(4,1fr);
@@ -161,26 +144,10 @@ body{
     font-size:11px;
 }
 
-.stat-blue{
-    border-top:4px solid #0759a6;
-}
-
-.stat-green{
-    border-top:4px solid #15936c;
-}
-
-.stat-orange{
-    border-top:4px solid #ef8d22;
-}
-
-.stat-purple{
-    border-top:4px solid #5f3dc4;
-}
-
-
-/* =========================================================
-   SECTIONS
-========================================================= */
+.stat-blue{border-top:4px solid #0759a6;}
+.stat-green{border-top:4px solid #15936c;}
+.stat-orange{border-top:4px solid #ef8d22;}
+.stat-purple{border-top:4px solid #5f3dc4;}
 
 .section-card{
     background:#fff;
@@ -198,11 +165,6 @@ body{
     padding-right:10px;
     font-size:18px;
 }
-
-
-/* =========================================================
-   COMPARISON
-========================================================= */
 
 .comparison-grid{
     display:grid;
@@ -252,11 +214,6 @@ body{
 .progress-green{
     background:#15936c;
 }
-
-
-/* =========================================================
-   TABLE
-========================================================= */
 
 .table-wrap{
     overflow-x:auto;
@@ -316,11 +273,6 @@ body{
     color:#81909d;
 }
 
-
-/* =========================================================
-   TREND
-========================================================= */
-
 .trend-grid{
     display:grid;
     grid-template-columns:repeat(12,1fr);
@@ -365,11 +317,6 @@ body{
     color:#718293;
 }
 
-
-/* =========================================================
-   PRINT
-========================================================= */
-
 @page{
     size:A4 landscape;
     margin:9mm;
@@ -410,11 +357,6 @@ body{
 
 }
 
-
-/* =========================================================
-   RESPONSIVE
-========================================================= */
-
 @media(max-width:1000px){
 
     .filters-grid{
@@ -450,17 +392,13 @@ body{
 
 </style>
 
-</head>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+</head>
 
 <body>
 
 <div class="page">
-
-
-<!-- =========================================================
-     HEADER
-========================================================= -->
 
 <section class="header">
 
@@ -481,17 +419,13 @@ body{
 <a
     href="control.html"
     class="btn btn-back">
-
 ← العودة لصندوق التحكم
-
 </a>
 
 <button
     class="btn btn-print"
     onclick="window.print()">
-
 🖨️ طباعة / حفظ PDF
-
 </button>
 
 </div>
@@ -499,48 +433,23 @@ body{
 </section>
 
 
-<!-- =========================================================
-     FILTERS
-========================================================= -->
-
 <section class="filters">
 
 <div class="filters-grid">
 
-
 <div class="filter-group">
-
-<label>
-الفترة
-</label>
+<label>الفترة</label>
 
 <select
     id="periodFilter"
     onchange="periodChanged()">
 
-<option value="month">
-شهري
-</option>
-
-<option value="quarter">
-ربع سنوي
-</option>
-
-<option value="half">
-نصف سنوي
-</option>
-
-<option value="year">
-سنوي
-</option>
-
-<option value="custom">
-فترة مخصصة
-</option>
-
-<option value="all">
-جميع الفترات
-</option>
+<option value="month">شهري</option>
+<option value="quarter">ربع سنوي</option>
+<option value="half">نصف سنوي</option>
+<option value="year">سنوي</option>
+<option value="custom">فترة مخصصة</option>
+<option value="all">جميع الفترات</option>
 
 </select>
 
@@ -549,9 +458,7 @@ body{
 
 <div class="filter-group">
 
-<label>
-السنة
-</label>
+<label>السنة</label>
 
 <select
     id="yearFilter"
@@ -563,9 +470,7 @@ body{
 
 <div class="filter-group">
 
-<label>
-الشهر
-</label>
+<label>الشهر</label>
 
 <select
     id="monthFilter"
@@ -591,25 +496,15 @@ body{
 
 <div class="filter-group">
 
-<label>
-نوع الجولة
-</label>
+<label>نوع الجولة</label>
 
 <select
     id="roundTypeFilter"
     onchange="refreshDashboard()">
 
-<option value="">
-جميع الجولات
-</option>
-
-<option value="publicHealth">
-الصحة العامة
-</option>
-
-<option value="medicalWaste">
-النفايات الطبية
-</option>
+<option value="">جميع الجولات</option>
+<option value="publicHealth">الصحة العامة</option>
+<option value="medicalWaste">النفايات الطبية</option>
 
 </select>
 
@@ -618,9 +513,7 @@ body{
 
 <div class="filter-group">
 
-<label>
-من تاريخ
-</label>
+<label>من تاريخ</label>
 
 <input
     id="fromDate"
@@ -632,9 +525,7 @@ body{
 
 <div class="filter-group">
 
-<label>
-إلى تاريخ
-</label>
+<label>إلى تاريخ</label>
 
 <input
     id="toDate"
@@ -643,75 +534,35 @@ body{
 
 </div>
 
-
 </div>
 
 </section>
 
-
-<!-- =========================================================
-     KPI
-========================================================= -->
 
 <section class="stats-grid">
 
 <div class="stat-card stat-blue">
-
-<strong id="totalRounds">
-0
-</strong>
-
-<span>
-إجمالي الجولات
-</span>
-
+<strong id="totalRounds">0</strong>
+<span>إجمالي الجولات</span>
 </div>
-
 
 <div class="stat-card stat-green">
-
-<strong id="averageCompliance">
-0%
-</strong>
-
-<span>
-متوسط نسبة الالتزام
-</span>
-
+<strong id="averageCompliance">0%</strong>
+<span>متوسط نسبة الالتزام</span>
 </div>
-
 
 <div class="stat-card stat-orange">
-
-<strong id="totalNonCompliance">
-0
-</strong>
-
-<span>
-إجمالي حالات عدم التطبيق
-</span>
-
+<strong id="totalNonCompliance">0</strong>
+<span>إجمالي حالات عدم التطبيق</span>
 </div>
 
-
 <div class="stat-card stat-purple">
-
-<strong id="roundsWithIssues">
-0
-</strong>
-
-<span>
-جولات بها ملاحظات
-</span>
-
+<strong id="roundsWithIssues">0</strong>
+<span>جولات بها ملاحظات</span>
 </div>
 
 </section>
 
-
-<!-- =========================================================
-     COMPARISON
-========================================================= -->
 
 <section class="section-card">
 
@@ -721,35 +572,23 @@ body{
 
 <div class="comparison-grid">
 
-
 <div class="comparison-box">
 
-<h3>
-جولات الصحة العامة
-</h3>
+<h3>جولات الصحة العامة</h3>
 
 <div class="comparison-row">
 
 <div class="comparison-label">
-
-<span>
-عدد الجولات
-</span>
-
-<strong id="publicCount">
-0
-</strong>
-
+<span>عدد الجولات</span>
+<strong id="publicCount">0</strong>
 </div>
 
 <div class="progress-track">
-
 <div
     id="publicRoundsBar"
     class="progress-fill"
     style="width:0%">
 </div>
-
 </div>
 
 </div>
@@ -758,25 +597,16 @@ body{
 <div class="comparison-row">
 
 <div class="comparison-label">
-
-<span>
-متوسط الالتزام
-</span>
-
-<strong id="publicCompliance">
-0%
-</strong>
-
+<span>متوسط الالتزام</span>
+<strong id="publicCompliance">0%</strong>
 </div>
 
 <div class="progress-track">
-
 <div
     id="publicComplianceBar"
     class="progress-fill progress-green"
     style="width:0%">
 </div>
-
 </div>
 
 </div>
@@ -786,32 +616,21 @@ body{
 
 <div class="comparison-box">
 
-<h3>
-جولات النفايات الطبية
-</h3>
+<h3>جولات النفايات الطبية</h3>
 
 <div class="comparison-row">
 
 <div class="comparison-label">
-
-<span>
-عدد الجولات
-</span>
-
-<strong id="wasteCount">
-0
-</strong>
-
+<span>عدد الجولات</span>
+<strong id="wasteCount">0</strong>
 </div>
 
 <div class="progress-track">
-
 <div
     id="wasteRoundsBar"
     class="progress-fill"
     style="width:0%">
 </div>
-
 </div>
 
 </div>
@@ -820,40 +639,26 @@ body{
 <div class="comparison-row">
 
 <div class="comparison-label">
-
-<span>
-متوسط الالتزام
-</span>
-
-<strong id="wasteCompliance">
-0%
-</strong>
-
+<span>متوسط الالتزام</span>
+<strong id="wasteCompliance">0%</strong>
 </div>
 
 <div class="progress-track">
-
 <div
     id="wasteComplianceBar"
     class="progress-fill progress-green"
     style="width:0%">
 </div>
-
 </div>
 
 </div>
 
 </div>
-
 
 </div>
 
 </section>
 
-
-<!-- =========================================================
-     MONTHLY TREND
-========================================================= -->
 
 <section class="section-card">
 
@@ -869,10 +674,6 @@ body{
 </section>
 
 
-<!-- =========================================================
-     LOCATIONS
-========================================================= -->
-
 <section class="section-card">
 
 <h2 class="section-title">
@@ -886,23 +687,10 @@ body{
 <thead>
 
 <tr>
-
-<th>
-الموقع
-</th>
-
-<th>
-عدد الجولات
-</th>
-
-<th>
-عدم التطبيق
-</th>
-
-<th>
-متوسط الالتزام
-</th>
-
+<th>الموقع</th>
+<th>عدد الجولات</th>
+<th>عدم التطبيق</th>
+<th>متوسط الالتزام</th>
 </tr>
 
 </thead>
@@ -917,10 +705,6 @@ body{
 </section>
 
 
-<!-- =========================================================
-     TOP ISSUES
-========================================================= -->
-
 <section class="section-card">
 
 <h2 class="section-title">
@@ -934,27 +718,11 @@ body{
 <thead>
 
 <tr>
-
-<th>
-الترتيب
-</th>
-
-<th>
-الموقع
-</th>
-
-<th>
-عدد الجولات
-</th>
-
-<th>
-إجمالي عدم التطبيق
-</th>
-
-<th>
-نسبة الالتزام
-</th>
-
+<th>الترتيب</th>
+<th>الموقع</th>
+<th>عدد الجولات</th>
+<th>إجمالي عدم التطبيق</th>
+<th>نسبة الالتزام</th>
 </tr>
 
 </thead>
@@ -968,11 +736,27 @@ body{
 
 </section>
 
-
 </div>
 
 
 <script>
+
+/* =========================================================
+   SUPABASE
+========================================================= */
+
+const SUPABASE_URL =
+    "https://xbivmhkqxmrkpjxfvemc.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_jTXNyxYwDMmJDUzg46rcdA_rySASiuE";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
+
 
 /* =========================================================
    STORAGE
@@ -996,9 +780,9 @@ let allRounds = [];
 
 document.addEventListener(
     "DOMContentLoaded",
-    function(){
+    async function(){
 
-        loadData();
+        await loadData();
 
         buildYearFilter();
 
@@ -1014,18 +798,177 @@ document.addEventListener(
    LOAD DATA
 ========================================================= */
 
-function loadData(){
+async function loadData(){
 
-    publicRounds =
+    const localPublicRounds =
         getArray(
             PUBLIC_KEY
         );
 
-
-    wasteRounds =
+    const localWasteRounds =
         getArray(
             WASTE_KEY
         );
+
+
+    let remoteRounds = [];
+
+    let supabaseLoaded = false;
+
+
+    try{
+
+        const {
+            data,
+            error
+        } = await supabaseClient
+            .from(
+                "inspection_records"
+            )
+            .select(
+                "round_id, round_type, record_data, created_at"
+            )
+            .order(
+                "created_at",
+                {
+                    ascending:false
+                }
+            );
+
+
+        if(error){
+
+            console.error(
+                "Supabase analytics load error:",
+                error
+            );
+
+        }
+        else{
+
+            supabaseLoaded = true;
+
+
+            remoteRounds =
+                (data || [])
+                .map(
+                    function(row){
+
+                        if(
+                            row.record_data &&
+                            typeof row.record_data ===
+                            "object"
+                        ){
+
+                            return row.record_data;
+
+                        }
+
+                        return null;
+
+                    }
+                )
+                .filter(
+                    function(round){
+
+                        return !!round;
+
+                    }
+                );
+
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            "Supabase analytics connection error:",
+            error
+        );
+
+    }
+
+
+    if(supabaseLoaded){
+
+        const remotePublic =
+            remoteRounds.filter(
+                function(round){
+
+                    return (
+                        round.roundType !==
+                        "medicalWaste"
+                    );
+
+                }
+            );
+
+
+        const remoteWaste =
+            remoteRounds.filter(
+                function(round){
+
+                    return (
+                        round.roundType ===
+                        "medicalWaste"
+                    );
+
+                }
+            );
+
+
+        publicRounds =
+            mergeRounds(
+                remotePublic,
+                localPublicRounds
+            );
+
+
+        wasteRounds =
+            mergeRounds(
+                remoteWaste,
+                localWasteRounds
+            );
+
+
+        try{
+
+            localStorage.setItem(
+                PUBLIC_KEY,
+                JSON.stringify(
+                    publicRounds
+                )
+            );
+
+
+            localStorage.setItem(
+                WASTE_KEY,
+                JSON.stringify(
+                    wasteRounds
+                )
+            );
+
+        }
+        catch(error){
+
+            console.error(
+                "Analytics local backup error:",
+                error
+            );
+
+        }
+
+    }
+    else{
+
+        publicRounds =
+            localPublicRounds;
+
+
+        wasteRounds =
+            localWasteRounds;
+
+    }
 
 
     allRounds = [
@@ -1036,11 +979,101 @@ function loadData(){
 
     ];
 
+
+    console.log(
+        "Analytics rounds loaded:",
+        allRounds.length
+    );
+
 }
 
 
 /* =========================================================
-   STORAGE
+   MERGE ROUNDS
+========================================================= */
+
+function mergeRounds(
+    primary,
+    secondary
+){
+
+    const map =
+        new Map();
+
+
+    [
+        ...(Array.isArray(primary)
+            ? primary
+            : []),
+
+        ...(Array.isArray(secondary)
+            ? secondary
+            : [])
+
+    ]
+    .forEach(
+        function(round){
+
+            if(
+                !round ||
+                typeof round !==
+                "object"
+            ){
+
+                return;
+
+            }
+
+
+            const key =
+                String(
+                    round.id ||
+                    (
+                        round.roundType ||
+                        ""
+                    ) +
+                    "|" +
+                    (
+                        round.employeeNumber ||
+                        ""
+                    ) +
+                    "|" +
+                    (
+                        round.inspectionDate ||
+                        ""
+                    ) +
+                    "|" +
+                    (
+                        round.inspectionTime ||
+                        ""
+                    )
+                );
+
+
+            if(
+                !map.has(key)
+            ){
+
+                map.set(
+                    key,
+                    round
+                );
+
+            }
+
+        }
+    );
+
+
+    return Array.from(
+        map.values()
+    );
+
+}
+
+
+/* =========================================================
+   LOCAL STORAGE
 ========================================================= */
 
 function getArray(key){
@@ -1049,7 +1082,9 @@ function getArray(key){
 
         const data =
             JSON.parse(
-                localStorage.getItem(key)
+                localStorage.getItem(
+                    key
+                )
             ) || [];
 
 
@@ -1108,6 +1143,9 @@ function buildYearFilter(){
         document.getElementById(
             "yearFilter"
         );
+
+
+    select.innerHTML = "";
 
 
     [...years]
@@ -1242,10 +1280,8 @@ function getSelectedRange(){
     ){
 
         return {
-
             from:"",
             to:""
-
         };
 
     }
@@ -1685,6 +1721,7 @@ function renderMonthlyTrend(rounds){
     const months =
         [];
 
+
     for(
         let month = 1;
         month <= 12;
@@ -1831,7 +1868,7 @@ function renderMonthlyTrend(rounds){
 
 
 /* =========================================================
-   LOCATIONS
+   LOCATION STATS
 ========================================================= */
 
 function buildLocationStats(rounds){
