@@ -16,11 +16,59 @@
     box-sizing:border-box;
 }
 
+html{
+    background:#f3f6f8;
+}
+
 body{
     margin:0;
     background:#f3f6f8;
     font-family:Arial,Tahoma,sans-serif;
     color:#294b6a;
+}
+
+
+/* =========================================================
+   AUTH LOADING
+========================================================= */
+
+#adminPage{
+    display:none;
+}
+
+.auth-loading{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+
+    background:#f3f6f8;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+    padding:20px;
+}
+
+.auth-loading-box{
+    background:#fff;
+    border:1px solid #dfe8f2;
+    border-radius:16px;
+
+    padding:25px 35px;
+
+    box-shadow:0 4px 18px rgba(0,0,0,.05);
+
+    color:#607387;
+    font-size:14px;
+}
+
+.auth-loading-box strong{
+    display:block;
+    color:#5f3dc4;
+    margin-bottom:7px;
+    font-size:16px;
 }
 
 
@@ -483,6 +531,12 @@ body{
     color:#fff;
 }
 
+.logout-btn{
+    background:#fdecec;
+    color:#b42318;
+    border:1px solid #efc3c3 !important;
+}
+
 
 /* =========================================================
    RESPONSIVE
@@ -548,10 +602,36 @@ body{
 
 </style>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 </head>
 
 
 <body>
+
+
+<!-- =========================================================
+     AUTH CHECK
+========================================================= -->
+
+<div
+    id="authLoading"
+    class="auth-loading">
+
+    <div class="auth-loading-box">
+
+        <strong>
+            🔐 التحقق من صلاحية الدخول
+        </strong>
+
+        يرجى الانتظار...
+
+    </div>
+
+</div>
+
+
+<div id="adminPage">
 
 
 <header class="control-header">
@@ -596,10 +676,6 @@ Public Health Rounds Control Center
 <main class="page">
 
 
-<!-- =========================================================
-     INTRO
-========================================================= -->
-
 <section class="intro-card">
 
 <div class="intro-top">
@@ -625,10 +701,6 @@ Public Health Rounds Control Center
 
 </section>
 
-
-<!-- =========================================================
-     KPI
-========================================================= -->
 
 <section class="stats-grid">
 
@@ -687,14 +759,8 @@ Public Health Rounds Control Center
 </section>
 
 
-<!-- =========================================================
-     CONTROL CARDS
-========================================================= -->
-
 <section class="management-grid">
 
-
-<!-- إدارة الجولات والبنود -->
 
 <article class="management-card card-purple">
 
@@ -718,8 +784,6 @@ Public Health Rounds Control Center
 </article>
 
 
-<!-- جميع الجولات -->
-
 <article class="management-card card-blue">
 
 <div class="card-icon">
@@ -742,8 +806,6 @@ Public Health Rounds Control Center
 </article>
 
 
-<!-- الإحصائيات -->
-
 <article class="management-card card-green">
 
 <div class="card-icon">
@@ -765,10 +827,6 @@ Public Health Rounds Control Center
 
 </article>
 
-
-<!-- =========================================================
-     أداء الموظفين + المهام
-========================================================= -->
 
 <article class="management-card card-orange">
 
@@ -815,17 +873,20 @@ Public Health Rounds Control Center
 
 </a>
 
+
 <a
     href="report-signatures.html"
     class="employee-report-btn">
-    👥 إدارة الموظفين والتواقيع
+
+👥 إدارة الموظفين والتواقيع
+
 </a>
+
+
 </div>
 
 </article>
 
-
-<!-- التقارير -->
 
 <article class="management-card card-gray">
 
@@ -848,8 +909,6 @@ Public Health Rounds Control Center
 
 </article>
 
-
-<!-- بوابة الموظفين -->
 
 <article class="management-card card-blue">
 
@@ -875,10 +934,6 @@ Public Health Rounds Control Center
 
 </section>
 
-
-<!-- =========================================================
-     EMPLOYEE PERFORMANCE SUMMARY
-========================================================= -->
 
 <section
     id="employeePerformance"
@@ -956,33 +1011,13 @@ Public Health Rounds Control Center
 
 <tr>
 
-<th>
-الموظف
-</th>
-
-<th>
-الرقم الوظيفي
-</th>
-
-<th>
-عدد الجولات
-</th>
-
-<th>
-جولات الصحة العامة
-</th>
-
-<th>
-جولات النفايات
-</th>
-
-<th>
-الملاحظات
-</th>
-
-<th>
-متوسط الالتزام
-</th>
+<th>الموظف</th>
+<th>الرقم الوظيفي</th>
+<th>عدد الجولات</th>
+<th>جولات الصحة العامة</th>
+<th>جولات النفايات</th>
+<th>الملاحظات</th>
+<th>متوسط الالتزام</th>
 
 </tr>
 
@@ -997,10 +1032,6 @@ Public Health Rounds Control Center
 
 </section>
 
-
-<!-- =========================================================
-     RECENT ROUNDS
-========================================================= -->
 
 <section
     id="recentRounds"
@@ -1019,37 +1050,14 @@ Public Health Rounds Control Center
 
 <tr>
 
-<th>
-رقم الجولة
-</th>
-
-<th>
-نوع الجولة
-</th>
-
-<th>
-التاريخ
-</th>
-
-<th>
-الموظف
-</th>
-
-<th>
-القسم / الموقع
-</th>
-
-<th>
-عدم التطبيق
-</th>
-
-<th>
-نسبة الالتزام
-</th>
-
-<th>
-الإجراء
-</th>
+<th>رقم الجولة</th>
+<th>نوع الجولة</th>
+<th>التاريخ</th>
+<th>الموظف</th>
+<th>القسم / الموقع</th>
+<th>عدم التطبيق</th>
+<th>نسبة الالتزام</th>
+<th>الإجراء</th>
 
 </tr>
 
@@ -1066,11 +1074,8 @@ Public Health Rounds Control Center
 </section>
 
 
-<!-- =========================================================
-     FOOTER ACTIONS
-========================================================= -->
-
 <div class="footer-actions">
+
 
 <a
     href="portal.html"
@@ -1089,13 +1094,42 @@ Public Health Rounds Control Center
 
 </button>
 
+
+<button
+    class="logout-btn"
+    onclick="logoutAdmin()">
+
+🚪 تسجيل الخروج
+
+</button>
+
+
 </div>
 
 
 </main>
 
+</div>
+
 
 <script>
+
+/* =========================================================
+   SUPABASE
+========================================================= */
+
+const SUPABASE_URL =
+    "https://xbivmhkqxmrkpjxfvemc.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_jTXNyxYwDMmJDUzg46rcdA_rySASiuE";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
+
 
 /* =========================================================
    STORAGE
@@ -1106,6 +1140,7 @@ const PUBLIC_KEY =
 
 const WASTE_KEY =
     "phrmsMedicalWasteRounds";
+
 
 let publicRounds = [];
 
@@ -1120,33 +1155,353 @@ let allRounds = [];
 
 document.addEventListener(
     "DOMContentLoaded",
-    function(){
+    async function(){
 
-        refreshDashboard();
+        const allowed =
+            await protectAdminPage();
+
+
+        if(!allowed){
+
+            return;
+
+        }
+
+
+        await refreshDashboard();
 
     }
 );
 
 
 /* =========================================================
-   LOAD
+   ADMIN PROTECTION
 ========================================================= */
 
-function loadRecords(){
+async function protectAdminPage(){
 
-    publicRounds =
+    try{
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient.auth.getUser();
+
+
+        if(
+            error ||
+            !data ||
+            !data.user
+        ){
+
+            window.location.replace(
+                "admin-login.html"
+            );
+
+
+            return false;
+
+        }
+
+
+        document.getElementById(
+            "authLoading"
+        ).style.display =
+            "none";
+
+
+        document.getElementById(
+            "adminPage"
+        ).style.display =
+            "block";
+
+
+        return true;
+
+    }
+    catch(error){
+
+        console.error(
+            "Admin authentication error:",
+            error
+        );
+
+
+        window.location.replace(
+            "admin-login.html"
+        );
+
+
+        return false;
+
+    }
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+async function logoutAdmin(){
+
+    const confirmed =
+        confirm(
+            "هل تريد تسجيل الخروج من لوحة الإدارة؟"
+        );
+
+
+    if(!confirmed){
+
+        return;
+
+    }
+
+
+    try{
+
+        await supabaseClient.auth.signOut({
+            scope:"local"
+        });
+
+    }
+    catch(error){
+
+        console.error(
+            "Logout error:",
+            error
+        );
+
+    }
+
+
+    window.location.replace(
+        "admin-login.html"
+    );
+
+}
+
+
+/* =========================================================
+   LOCAL STORAGE
+========================================================= */
+
+function getArrayFromStorage(
+    key
+){
+
+    try{
+
+        const data =
+            JSON.parse(
+                localStorage.getItem(
+                    key
+                )
+            ) || [];
+
+
+        return Array.isArray(
+            data
+        )
+        ? data
+        : [];
+
+    }
+    catch(error){
+
+        console.error(
+            "Storage error:",
+            error
+        );
+
+
+        return [];
+
+    }
+
+}
+
+
+/* =========================================================
+   LOAD CENTRAL ROUNDS
+========================================================= */
+
+async function loadRecords(){
+
+    const localPublic =
         getArrayFromStorage(
             PUBLIC_KEY
         );
 
-    wasteRounds =
+
+    const localWaste =
         getArrayFromStorage(
             WASTE_KEY
         );
 
+
+    try{
+
+        const {
+            data,
+            error
+        } = await supabaseClient
+            .from(
+                "inspection_records"
+            )
+            .select(
+                "round_id, round_type, record_data, created_at"
+            )
+            .order(
+                "created_at",
+                {
+                    ascending:false
+                }
+            );
+
+
+        if(error){
+
+            console.error(
+                "Central rounds load error:",
+                error
+            );
+
+
+            publicRounds =
+                localPublic;
+
+
+            wasteRounds =
+                localWaste;
+
+        }
+        else{
+
+            const remoteRounds =
+                (data || [])
+                .map(
+                    function(row){
+
+                        if(
+                            row.record_data &&
+                            typeof row.record_data ===
+                            "object"
+                        ){
+
+                            return row.record_data;
+
+                        }
+
+
+                        return null;
+
+                    }
+                )
+                .filter(
+                    function(round){
+
+                        return !!round;
+
+                    }
+                );
+
+
+            const remotePublic =
+                remoteRounds.filter(
+                    function(round){
+
+                        return (
+                            round.roundType !==
+                            "medicalWaste"
+                        );
+
+                    }
+                );
+
+
+            const remoteWaste =
+                remoteRounds.filter(
+                    function(round){
+
+                        return (
+                            round.roundType ===
+                            "medicalWaste"
+                        );
+
+                    }
+                );
+
+
+            publicRounds =
+                mergeRounds(
+                    remotePublic,
+                    localPublic
+                );
+
+
+            wasteRounds =
+                mergeRounds(
+                    remoteWaste,
+                    localWaste
+                );
+
+
+            try{
+
+                localStorage.setItem(
+                    PUBLIC_KEY,
+                    JSON.stringify(
+                        publicRounds
+                    )
+                );
+
+
+                localStorage.setItem(
+                    WASTE_KEY,
+                    JSON.stringify(
+                        wasteRounds
+                    )
+                );
+
+            }
+            catch(error){
+
+                console.error(
+                    "Local rounds cache error:",
+                    error
+                );
+
+            }
+
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            "Central rounds connection error:",
+            error
+        );
+
+
+        publicRounds =
+            localPublic;
+
+
+        wasteRounds =
+            localWaste;
+
+    }
+
+
     allRounds = [
+
         ...publicRounds,
+
         ...wasteRounds
+
     ];
 
 
@@ -1178,33 +1533,87 @@ function loadRecords(){
 
 
 /* =========================================================
-   STORAGE HELPER
+   MERGE ROUNDS
 ========================================================= */
 
-function getArrayFromStorage(key){
+function mergeRounds(
+    primary,
+    secondary
+){
 
-    try{
+    const map =
+        new Map();
 
-        const data =
-            JSON.parse(
-                localStorage.getItem(key)
-            ) || [];
 
-        return Array.isArray(data)
-            ? data
-            : [];
+    [
+        ...(Array.isArray(primary)
+            ? primary
+            : []),
 
-    }
-    catch(error){
+        ...(Array.isArray(secondary)
+            ? secondary
+            : [])
 
-        console.error(
-            "Storage error:",
-            error
-        );
+    ]
+    .forEach(
+        function(round){
 
-        return [];
+            if(
+                !round ||
+                typeof round !==
+                "object"
+            ){
 
-    }
+                return;
+
+            }
+
+
+            const key =
+                String(
+                    round.id ||
+                    (
+                        round.roundType ||
+                        ""
+                    ) +
+                    "|" +
+                    (
+                        round.employeeNumber ||
+                        ""
+                    ) +
+                    "|" +
+                    (
+                        round.inspectionDate ||
+                        ""
+                    ) +
+                    "|" +
+                    (
+                        round.inspectionTime ||
+                        ""
+                    )
+                );
+
+
+            if(
+                !map.has(
+                    key
+                )
+            ){
+
+                map.set(
+                    key,
+                    round
+                );
+
+            }
+
+        }
+    );
+
+
+    return Array.from(
+        map.values()
+    );
 
 }
 
@@ -1213,9 +1622,9 @@ function getArrayFromStorage(key){
    REFRESH
 ========================================================= */
 
-function refreshDashboard(){
+async function refreshDashboard(){
 
-    loadRecords();
+    await loadRecords();
 
     renderMainStats();
 
@@ -1246,7 +1655,10 @@ function renderMainStats(){
 
     const nonCompliance =
         allRounds.reduce(
-            function(sum,round){
+            function(
+                sum,
+                round
+            ){
 
                 return (
                     sum +
@@ -1282,7 +1694,9 @@ function renderMainStats(){
         .filter(
             function(value){
 
-                return !isNaN(value);
+                return !isNaN(
+                    value
+                );
 
             }
         );
@@ -1294,9 +1708,15 @@ function renderMainStats(){
         ? Math.round(
 
             complianceValues.reduce(
-                function(sum,value){
+                function(
+                    sum,
+                    value
+                ){
 
-                    return sum + value;
+                    return (
+                        sum +
+                        value
+                    );
 
                 },
                 0
@@ -1314,7 +1734,8 @@ function renderMainStats(){
     document.getElementById(
         "averageCompliance"
     ).textContent =
-        average + "%";
+        average +
+        "%";
 
 }
 
@@ -1325,7 +1746,8 @@ function renderMainStats(){
 
 function renderEmployeePerformance(){
 
-    const employeeMap = {};
+    const employeeMap =
+        {};
 
 
     allRounds.forEach(
@@ -1345,7 +1767,9 @@ function renderEmployeePerformance(){
                 );
 
 
-            if(!employeeMap[key]){
+            if(
+                !employeeMap[key]
+            ){
 
                 employeeMap[key] = {
 
@@ -1356,17 +1780,23 @@ function renderEmployeePerformance(){
                     employeeNumber:
                         employeeNumber,
 
-                    totalRounds:0,
+                    totalRounds:
+                        0,
 
-                    publicRounds:0,
+                    publicRounds:
+                        0,
 
-                    wasteRounds:0,
+                    wasteRounds:
+                        0,
 
-                    notes:0,
+                    notes:
+                        0,
 
-                    complianceTotal:0,
+                    complianceTotal:
+                        0,
 
-                    complianceCount:0
+                    complianceCount:
+                        0
 
                 };
 
@@ -1407,10 +1837,15 @@ function renderEmployeePerformance(){
                 );
 
 
-            if(!isNaN(compliance)){
+            if(
+                !isNaN(
+                    compliance
+                )
+            ){
 
                 employee.complianceTotal +=
                     compliance;
+
 
                 employee.complianceCount++;
 
@@ -1468,7 +1903,9 @@ function renderEmployeePerformance(){
             ...employees.map(
                 function(item){
 
-                    return item.totalRounds;
+                    return (
+                        item.totalRounds
+                    );
 
                 }
             )
@@ -1507,7 +1944,9 @@ function renderEmployeePerformance(){
             ...employees.map(
                 function(item){
 
-                    return item.averageCompliance;
+                    return (
+                        item.averageCompliance
+                    );
 
                 }
             )
@@ -1519,7 +1958,8 @@ function renderEmployeePerformance(){
     document.getElementById(
         "bestEmployeeCompliance"
     ).textContent =
-        bestCompliance + "%";
+        bestCompliance +
+        "%";
 
 
     const body =
@@ -1528,21 +1968,24 @@ function renderEmployeePerformance(){
         );
 
 
-    if(!employees.length){
+    if(
+        !employees.length
+    ){
 
         body.innerHTML = `
 
-        <tr>
+            <tr>
 
-        <td colspan="7">
+                <td colspan="7">
 
-        لا توجد جولات مسجلة حتى الآن.
+                    لا توجد جولات مسجلة حتى الآن.
 
-        </td>
+                </td>
 
-        </tr>
+            </tr>
 
         `;
+
 
         return;
 
@@ -1555,41 +1998,45 @@ function renderEmployeePerformance(){
 
                 return `
 
-                <tr>
+                    <tr>
 
-                <td>
-                ${escapeHtml(employee.employeeName)}
-                </td>
+                        <td>
+                            ${escapeHtml(
+                                employee.employeeName
+                            )}
+                        </td>
 
-                <td>
-                ${escapeHtml(employee.employeeNumber)}
-                </td>
+                        <td>
+                            ${escapeHtml(
+                                employee.employeeNumber
+                            )}
+                        </td>
 
-                <td>
-                ${employee.totalRounds}
-                </td>
+                        <td>
+                            ${employee.totalRounds}
+                        </td>
 
-                <td>
-                ${employee.publicRounds}
-                </td>
+                        <td>
+                            ${employee.publicRounds}
+                        </td>
 
-                <td>
-                ${employee.wasteRounds}
-                </td>
+                        <td>
+                            ${employee.wasteRounds}
+                        </td>
 
-                <td>
-                ${employee.notes}
-                </td>
+                        <td>
+                            ${employee.notes}
+                        </td>
 
-                <td>
+                        <td>
 
-                ${complianceBadge(
-                    employee.averageCompliance
-                )}
+                            ${complianceBadge(
+                                employee.averageCompliance
+                            )}
 
-                </td>
+                        </td>
 
-                </tr>
+                    </tr>
 
                 `;
 
@@ -1612,21 +2059,24 @@ function renderRoundsTable(){
         );
 
 
-    if(!allRounds.length){
+    if(
+        !allRounds.length
+    ){
 
         body.innerHTML = `
 
-        <tr>
+            <tr>
 
-        <td colspan="8">
+                <td colspan="8">
 
-        لا توجد جولات مسجلة حتى الآن.
+                    لا توجد جولات مسجلة حتى الآن.
 
-        </td>
+                </td>
 
-        </tr>
+            </tr>
 
         `;
+
 
         return;
 
@@ -1635,7 +2085,10 @@ function renderRoundsTable(){
 
     body.innerHTML =
         allRounds
-        .slice(0,25)
+        .slice(
+            0,
+            25
+        )
         .map(
             function(round){
 
@@ -1662,94 +2115,101 @@ function renderRoundsTable(){
 
                 return `
 
-                <tr>
+                    <tr>
 
-                <td>
-                ${escapeHtml(round.id || "—")}
-                </td>
-
-
-                <td>
-
-                <span class="badge ${badgeClass}">
-
-                ${escapeHtml(typeName)}
-
-                </span>
-
-                </td>
+                        <td>
+                            ${escapeHtml(
+                                round.id ||
+                                "—"
+                            )}
+                        </td>
 
 
-                <td>
+                        <td>
 
-                ${formatDate(
-                    round.inspectionDate
-                )}
+                            <span class="badge ${badgeClass}">
 
-                </td>
+                                ${escapeHtml(
+                                    typeName
+                                )}
 
+                            </span>
 
-                <td>
-
-                ${escapeHtml(
-                    round.employeeName ||
-                    "—"
-                )}
-
-                </td>
+                        </td>
 
 
-                <td>
+                        <td>
 
-                ${escapeHtml(
-                    round.locationName ||
-                    "—"
-                )}
+                            ${formatDate(
+                                round.inspectionDate
+                            )}
 
-                </td>
-
-
-                <td>
-
-                ${Number(
-                    round.noCount
-                ) || 0}
-
-                </td>
+                        </td>
 
 
-                <td>
+                        <td>
 
-                ${complianceBadge(
-                    Number(
-                        round.complianceRate
-                    ) || 0
-                )}
+                            ${escapeHtml(
+                                round.employeeName ||
+                                "—"
+                            )}
 
-                </td>
+                        </td>
 
 
-                <td>
+                        <td>
 
-                <button
-                    onclick="openRound('${encodeURIComponent(round.id || "")}')"
-                    style="
-                        border:none;
-                        background:#0759a6;
-                        color:#fff;
-                        padding:7px 10px;
-                        border-radius:7px;
-                        cursor:pointer;
-                        font-weight:bold;
-                    ">
+                            ${escapeHtml(
+                                round.locationName ||
+                                "—"
+                            )}
 
-                عرض
+                        </td>
 
-                </button>
 
-                </td>
+                        <td>
 
-                </tr>
+                            ${
+                                Number(
+                                    round.noCount
+                                ) || 0
+                            }
+
+                        </td>
+
+
+                        <td>
+
+                            ${complianceBadge(
+                                Number(
+                                    round.complianceRate
+                                ) || 0
+                            )}
+
+                        </td>
+
+
+                        <td>
+
+                            <button
+                                onclick="openRound('${encodeURIComponent(round.id || "")}')"
+                                style="
+                                    border:none;
+                                    background:#0759a6;
+                                    color:#fff;
+                                    padding:7px 10px;
+                                    border-radius:7px;
+                                    cursor:pointer;
+                                    font-weight:bold;
+                                ">
+
+                                عرض
+
+                            </button>
+
+                        </td>
+
+                    </tr>
 
                 `;
 
@@ -1764,19 +2224,25 @@ function renderRoundsTable(){
    COMPLIANCE BADGE
 ========================================================= */
 
-function complianceBadge(value){
+function complianceBadge(
+    value
+){
 
     let className =
         "badge-good";
 
 
-    if(value < 70){
+    if(
+        value < 70
+    ){
 
         className =
             "badge-low";
 
     }
-    else if(value < 90){
+    else if(
+        value < 90
+    ){
 
         className =
             "badge-medium";
@@ -1786,9 +2252,9 @@ function complianceBadge(value){
 
     return `
 
-    <span class="badge ${className}">
-    ${value}%
-    </span>
+        <span class="badge ${className}">
+            ${value}%
+        </span>
 
     `;
 
@@ -1799,7 +2265,9 @@ function complianceBadge(value){
    OPEN ROUND
 ========================================================= */
 
-function openRound(encodedId){
+function openRound(
+    encodedId
+){
 
     const id =
         decodeURIComponent(
@@ -1823,9 +2291,13 @@ function openRound(encodedId){
    DATE
 ========================================================= */
 
-function formatDate(value){
+function formatDate(
+    value
+){
 
-    if(!value){
+    if(
+        !value
+    ){
 
         return "—";
 
@@ -1839,7 +2311,11 @@ function formatDate(value){
         );
 
 
-    if(isNaN(date.getTime())){
+    if(
+        isNaN(
+            date.getTime()
+        )
+    ){
 
         return value;
 
@@ -1857,10 +2333,13 @@ function formatDate(value){
    ESCAPE
 ========================================================= */
 
-function escapeHtml(value){
+function escapeHtml(
+    value
+){
 
     return String(
-        value || ""
+        value ||
+        ""
     )
     .replaceAll(
         "&",
