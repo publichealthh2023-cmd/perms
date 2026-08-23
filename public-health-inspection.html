@@ -12,10 +12,6 @@
 
 <style>
 
-/* =========================================================
-   GENERAL
-========================================================= */
-
 *{
     box-sizing:border-box;
 }
@@ -41,11 +37,9 @@ body{
 .mobile-header-grid{
     max-width:1100px;
     margin:auto;
-
     display:grid;
     grid-template-columns:115px 1fr 115px;
     align-items:center;
-
     gap:10px;
     padding:15px 12px;
 }
@@ -112,11 +106,9 @@ body{
     height:60px;
     border-radius:16px;
     background:#eaf4ff;
-
     display:flex;
     align-items:center;
     justify-content:center;
-
     font-size:30px;
     flex-shrink:0;
 }
@@ -291,7 +283,7 @@ body{
 
 
 /* =========================================================
-   EMPLOYEE SIGNATURE LINK
+   EMPLOYEE SIGNATURE
 ========================================================= */
 
 .employee-signature-status{
@@ -572,7 +564,7 @@ body{
 
 
 /* =========================================================
-   AUTO SIGNATURE NOTICE
+   AUTO SIGNATURE
 ========================================================= */
 
 .auto-signature-box{
@@ -721,11 +713,6 @@ body{
 
 }
 
-
-/* =========================================================
-   PRINT
-========================================================= */
-
 @media print{
 
     .final-actions,
@@ -741,34 +728,51 @@ body{
 
 </head>
 
+
 <body>
+
 
 <header class="mobile-header">
 
 <div class="mobile-header-grid">
 
 <div class="mobile-logo">
+
 <img
     src="./images/cluster-logo.png"
     alt="شعار تجمع حفر الباطن الصحي">
+
 </div>
+
 
 <div class="mobile-title">
-<h1>جولة الصحة العامة</h1>
-<h2>Public Health Inspection</h2>
+
+<h1>
+جولة الصحة العامة
+</h1>
+
+<h2>
+Public Health Inspection
+</h2>
+
 </div>
 
+
 <div class="mobile-logo">
+
 <img
     src="./images/hospital-logo.png"
     alt="شعار المستشفى">
+
 </div>
 
 </div>
 
 </header>
 
+
 <main class="inspection-page">
+
 
 <section class="round-intro">
 
@@ -780,7 +784,9 @@ body{
 
 <div>
 
-<h2>استمارة الجولة الميدانية</h2>
+<h2>
+استمارة الجولة الميدانية
+</h2>
 
 <p>
 قم بتعبئة بيانات الجولة ثم تقييم جميع البنود.
@@ -793,10 +799,12 @@ body{
 
 </section>
 
+
 <div
     id="formAlert"
     class="mobile-alert">
 </div>
+
 
 <section class="progress-area">
 
@@ -812,6 +820,7 @@ body{
 
 </div>
 
+
 <div class="progress-track">
 
 <div
@@ -823,15 +832,18 @@ body{
 
 </section>
 
+
 <section class="mobile-section">
 
 <div class="mobile-section-header">
 👤 بيانات الجولة
 </div>
 
+
 <div class="mobile-section-body">
 
 <div class="mobile-form-grid">
+
 
 <div class="mobile-group">
 
@@ -851,6 +863,7 @@ body{
 
 </div>
 
+
 <div class="mobile-group">
 
 <label>
@@ -864,6 +877,7 @@ body{
     placeholder="يظهر تلقائياً بعد اختيار الموظف">
 
 </div>
+
 
 <div class="mobile-group">
 
@@ -925,6 +939,7 @@ body{
 
 </div>
 
+
 <div class="mobile-group">
 
 <label>
@@ -955,6 +970,7 @@ body{
 
 </div>
 
+
 <div class="mobile-group">
 
 <label>
@@ -967,6 +983,7 @@ body{
 
 </div>
 
+
 <div class="mobile-group">
 
 <label>
@@ -978,6 +995,7 @@ body{
     type="time">
 
 </div>
+
 
 <div
     id="otherLocationGroup"
@@ -997,6 +1015,7 @@ body{
 
 </div>
 
+
 <div
     id="employeeSignatureStatus"
     class="employee-signature-status">
@@ -1013,6 +1032,7 @@ body{
 
 </div>
 
+
 <div
     id="employeeSignaturePreview"
     class="employee-signature-preview">
@@ -1024,11 +1044,13 @@ body{
 
 </section>
 
+
 <section class="mobile-section">
 
 <div class="mobile-section-header">
 📋 بنود الجولة
 </div>
+
 
 <div class="mobile-section-body">
 
@@ -1036,9 +1058,10 @@ body{
     id="categoryMessage"
     class="category-message">
 
-اختر نوع جولة الصحة العامة لعرض البنود المعتمدة.
+جاري تحميل البنود المعتمدة...
 
 </div>
+
 
 <div
     id="inspectionItems"
@@ -1049,32 +1072,58 @@ body{
 
 </section>
 
+
 <section class="mobile-section">
 
 <div class="mobile-section-header">
 📊 ملخص الجولة
 </div>
 
+
 <div class="mobile-section-body">
 
 <div class="result-preview">
 
 <div class="result-box">
-<strong id="yesCount">0</strong>
-<span>يطبق</span>
+
+<strong id="yesCount">
+0
+</strong>
+
+<span>
+يطبق
+</span>
+
 </div>
+
 
 <div class="result-box">
-<strong id="noCount">0</strong>
-<span>لا يطبق</span>
+
+<strong id="noCount">
+0
+</strong>
+
+<span>
+لا يطبق
+</span>
+
 </div>
+
 
 <div class="result-box">
-<strong id="naCount">0</strong>
-<span>لا ينطبق</span>
+
+<strong id="naCount">
+0
+</strong>
+
+<span>
+لا ينطبق
+</span>
+
 </div>
 
 </div>
+
 
 <div class="compliance-box">
 
@@ -1092,11 +1141,13 @@ body{
 
 </section>
 
+
 <section class="mobile-section">
 
 <div class="mobile-section-header">
 📝 الملاحظات العامة
 </div>
+
 
 <div class="mobile-section-body">
 
@@ -1116,11 +1167,13 @@ body{
 
 </section>
 
+
 <section class="mobile-section">
 
 <div class="mobile-section-header">
 ✍️ التوقيع الإلكتروني
 </div>
+
 
 <div class="mobile-section-body">
 
@@ -1129,6 +1182,7 @@ body{
 <div class="auto-signature-icon">
 🔐
 </div>
+
 
 <div class="auto-signature-text">
 
@@ -1148,6 +1202,7 @@ body{
 
 </section>
 
+
 <div class="final-actions">
 
 <button
@@ -1157,6 +1212,7 @@ body{
 ✅ إرسال الجولة
 
 </button>
+
 
 <button
     class="cancel-btn"
@@ -1168,9 +1224,15 @@ body{
 
 </div>
 
+
 </main>
 
+
 <script>
+
+/* =========================================================
+   SUPABASE
+========================================================= */
 
 const SUPABASE_URL =
     "https://xbivmhkqxmrkpjxfvemc.supabase.co";
@@ -1203,9 +1265,14 @@ const EMPLOYEE_SIGNATURES_KEY =
    STATE
 ========================================================= */
 
-let currentItems = [];
+let currentItems =
+    [];
 
-let employees = [];
+let employees =
+    [];
+
+let roundsConfig =
+    {};
 
 
 /* =========================================================
@@ -1220,7 +1287,12 @@ document.addEventListener(
 
         setupLocation();
 
-        await loadEmployees();
+
+        await Promise.all([
+            loadEmployees(),
+            loadRoundsConfig()
+        ]);
+
 
         verifyConfiguration();
 
@@ -1229,7 +1301,203 @@ document.addEventListener(
 
 
 /* =========================================================
-   EMPLOYEES LOCAL BACKUP
+   CONFIG LOCAL BACKUP
+========================================================= */
+
+function getLocalRoundsConfig(){
+
+    try{
+
+        const raw =
+            localStorage.getItem(
+                CONFIG_KEY
+            );
+
+
+        if(!raw){
+
+            return {};
+
+        }
+
+
+        const config =
+            JSON.parse(
+                raw
+            );
+
+
+        if(
+            config &&
+            typeof config ===
+            "object"
+        ){
+
+            return config;
+
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            "Local rounds config error:",
+            error
+        );
+
+    }
+
+
+    return {};
+
+}
+
+
+function saveLocalRoundsConfig(
+    config
+){
+
+    try{
+
+        localStorage.setItem(
+            CONFIG_KEY,
+            JSON.stringify(
+                config
+            )
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "Rounds config backup error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   LOAD CENTRAL CONFIG
+========================================================= */
+
+async function loadRoundsConfig(){
+
+    const localConfig =
+        getLocalRoundsConfig();
+
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+                .from(
+                    "rounds_config"
+                )
+                .select(
+                    "round_type, config_data, updated_at"
+                );
+
+
+        if(error){
+
+            console.error(
+                "Supabase rounds config error:",
+                error
+            );
+
+
+            roundsConfig =
+                localConfig;
+
+
+            return false;
+
+        }
+
+
+        if(
+            !data ||
+            data.length === 0
+        ){
+
+            roundsConfig =
+                localConfig;
+
+
+            return false;
+
+        }
+
+
+        const centralConfig =
+            {};
+
+
+        data.forEach(
+            function(row){
+
+                if(
+                    row.round_type &&
+                    row.config_data &&
+                    typeof row.config_data ===
+                    "object"
+                ){
+
+                    centralConfig[
+                        row.round_type
+                    ] =
+                        row.config_data;
+
+                }
+
+            }
+        );
+
+
+        roundsConfig =
+            centralConfig;
+
+
+        saveLocalRoundsConfig(
+            roundsConfig
+        );
+
+
+        console.log(
+            "✅ Central rounds configuration loaded."
+        );
+
+
+        return true;
+
+    }
+    catch(error){
+
+        console.error(
+            "Rounds configuration connection error:",
+            error
+        );
+
+
+        roundsConfig =
+            localConfig;
+
+
+        return false;
+
+    }
+
+}
+
+
+/* =========================================================
+   EMPLOYEE LOCAL BACKUP
 ========================================================= */
 
 function getEmployeeSignatures(){
@@ -1243,7 +1511,10 @@ function getEmployeeSignatures(){
                 )
             ) || [];
 
-        return Array.isArray(data)
+
+        return Array.isArray(
+            data
+        )
             ? data
             : [];
 
@@ -1268,29 +1539,30 @@ async function loadEmployees(){
             "employeeName"
         );
 
-    employees = [];
 
+    employees =
+        [];
 
-    // ==========================================
-    // 1) Supabase
-    // ==========================================
 
     try{
 
         const {
             data,
             error
-        } = await supabaseClient
-            .from("employees")
-            .select(
-                "employee_name, employee_number, signature_data"
-            )
-            .order(
-                "created_at",
-                {
-                    ascending:true
-                }
-            );
+        } =
+            await supabaseClient
+                .from(
+                    "employees"
+                )
+                .select(
+                    "employee_name, employee_number, signature_data"
+                )
+                .order(
+                    "created_at",
+                    {
+                        ascending:true
+                    }
+                );
 
 
         if(error){
@@ -1300,6 +1572,7 @@ async function loadEmployees(){
                 error
             );
 
+
             employees =
                 getEmployeeSignatures();
 
@@ -1307,29 +1580,29 @@ async function loadEmployees(){
         else{
 
             employees =
-                (data || []).map(
+                (data || [])
+                .map(
                     function(item){
 
                         return {
 
                             employeeName:
-                                item.employee_name || "",
+                                item.employee_name ||
+                                "",
 
                             employeeNumber:
-                                item.employee_number || "",
+                                item.employee_number ||
+                                "",
 
                             signature:
-                                item.signature_data || ""
+                                item.signature_data ||
+                                ""
 
                         };
 
                     }
                 );
 
-
-            // ==========================================
-            // نسخة محلية احتياطية
-            // ==========================================
 
             try{
 
@@ -1344,7 +1617,7 @@ async function loadEmployees(){
             catch(error){
 
                 console.error(
-                    "Employee local backup error:",
+                    "Employee backup error:",
                     error
                 );
 
@@ -1356,19 +1629,16 @@ async function loadEmployees(){
     catch(error){
 
         console.error(
-            "Supabase employees connection error:",
+            "Employees connection error:",
             error
         );
+
 
         employees =
             getEmployeeSignatures();
 
     }
 
-
-    // ==========================================
-    // 2) عرض القائمة
-    // ==========================================
 
     select.innerHTML = `
 
@@ -1405,7 +1675,9 @@ async function loadEmployees(){
     );
 
 
-    if(!employees.length){
+    if(
+        !employees.length
+    ){
 
         const option =
             document.createElement(
@@ -1470,16 +1742,22 @@ function employeeChanged(){
         );
 
 
-    numberInput.value = "";
+    numberInput.value =
+        "";
 
-    preview.innerHTML = "";
+
+    preview.innerHTML =
+        "";
+
 
     statusBox.classList.remove(
         "active"
     );
 
 
-    if(!value){
+    if(
+        !value
+    ){
 
         return;
 
@@ -1494,15 +1772,20 @@ function employeeChanged(){
                     String(
                         item.employeeNumber ||
                         item.employeeName
-                    ) ===
-                    String(value)
+                    )
+                    ===
+                    String(
+                        value
+                    )
                 );
 
             }
         );
 
 
-    if(!employee){
+    if(
+        !employee
+    ){
 
         return;
 
@@ -1510,7 +1793,8 @@ function employeeChanged(){
 
 
     numberInput.value =
-        employee.employeeNumber || "";
+        employee.employeeNumber ||
+        "";
 
 
     statusBox.classList.add(
@@ -1518,7 +1802,9 @@ function employeeChanged(){
     );
 
 
-    if(employee.signature){
+    if(
+        employee.signature
+    ){
 
         message.className =
             "signature-ok";
@@ -1541,7 +1827,7 @@ function employeeChanged(){
 
 
         message.textContent =
-            "⚠ لا يوجد توقيع إلكتروني لهذا الموظف. يرجى تسجيله من إدارة التواقيع.";
+            "⚠ لا يوجد توقيع إلكتروني لهذا الموظف.";
 
     }
 
@@ -1549,66 +1835,38 @@ function employeeChanged(){
 
 
 /* =========================================================
-   CONFIGURATION
+   GET CONFIG
 ========================================================= */
 
 function getRoundsConfig(){
 
-    try{
-
-        const raw =
-            localStorage.getItem(
-                CONFIG_KEY
-            );
-
-
-        if(!raw){
-
-            return {};
-
-        }
-
-
-        const config =
-            JSON.parse(
-                raw
-            );
-
-
-        return (
-            config &&
-            typeof config === "object"
-        )
-        ? config
+    return (
+        roundsConfig &&
+        typeof roundsConfig ===
+        "object"
+    )
+        ? roundsConfig
         : {};
-
-    }
-    catch(error){
-
-        console.error(
-            "Rounds configuration error:",
-            error
-        );
-
-        return {};
-
-    }
 
 }
 
 
 /* =========================================================
-   CATEGORY
+   CATEGORY DATA
 ========================================================= */
 
-function getCategoryData(category){
+function getCategoryData(
+    category
+){
 
     const config =
         getRoundsConfig();
 
 
     return (
-        config[category] ||
+        config[
+            category
+        ] ||
         null
     );
 
@@ -1616,7 +1874,7 @@ function getCategoryData(category){
 
 
 /* =========================================================
-   VERIFY CONFIGURATION
+   VERIFY CONFIG
 ========================================================= */
 
 function verifyConfiguration(){
@@ -1625,27 +1883,36 @@ function verifyConfiguration(){
         getRoundsConfig();
 
 
+    const message =
+        document.getElementById(
+            "categoryMessage"
+        );
+
+
     if(
         !config.environment &&
         !config.food &&
         !config.laundry
     ){
 
-        document.getElementById(
-            "categoryMessage"
-        ).innerHTML = `
+        message.innerHTML = `
 
-        ⚠️ لم يتم العثور على إعدادات نماذج الجولات.
+            ⚠️ تعذر تحميل بنود الجولات.
 
-        <br><br>
+            <br><br>
 
-        افتح صفحة
-        <strong>إدارة الجولات والبنود</strong>
-        مرة واحدة لحفظ النموذج الأساسي.
+            تأكد من الاتصال بالإنترنت
+            ثم أعد فتح الصفحة.
 
         `;
 
+        return;
+
     }
+
+
+    message.innerHTML =
+        "اختر نوع جولة الصحة العامة لعرض البنود المعتمدة.";
 
 }
 
@@ -1666,26 +1933,39 @@ function setCurrentDateTime(){
 
     const month =
         String(
-            now.getMonth()+1
-        ).padStart(2,"0");
+            now.getMonth() +
+            1
+        ).padStart(
+            2,
+            "0"
+        );
 
 
     const day =
         String(
             now.getDate()
-        ).padStart(2,"0");
+        ).padStart(
+            2,
+            "0"
+        );
 
 
     const hours =
         String(
             now.getHours()
-        ).padStart(2,"0");
+        ).padStart(
+            2,
+            "0"
+        );
 
 
     const minutes =
         String(
             now.getMinutes()
-        ).padStart(2,"0");
+        ).padStart(
+            2,
+            "0"
+        );
 
 
     document.getElementById(
@@ -1718,9 +1998,10 @@ function setupLocation(){
             document.getElementById(
                 "otherLocationGroup"
             ).style.display =
-                this.value === "other"
-                ? "flex"
-                : "none";
+                this.value ===
+                "other"
+                    ? "flex"
+                    : "none";
 
         }
     );
@@ -1752,20 +2033,28 @@ function categoryChanged(){
         );
 
 
-    currentItems = [];
+    currentItems =
+        [];
 
-    container.innerHTML = "";
+
+    container.innerHTML =
+        "";
 
 
-    if(!category){
+    if(
+        !category
+    ){
 
         message.style.display =
             "block";
 
+
         message.innerHTML =
             "اختر نوع جولة الصحة العامة لعرض البنود المعتمدة.";
 
+
         updateResults();
+
 
         return;
 
@@ -1789,18 +2078,12 @@ function categoryChanged(){
             "block";
 
 
-        message.innerHTML = `
-
-        ⚠️ لا توجد إعدادات محفوظة لهذه الجولة.
-
-        <br>
-
-        يرجى مراجعة صفحة إدارة الجولات والبنود.
-
-        `;
+        message.innerHTML =
+            "⚠️ لا توجد إعدادات محفوظة لهذه الجولة.";
 
 
         updateResults();
+
 
         return;
 
@@ -1810,7 +2093,10 @@ function categoryChanged(){
     categoryData.sections.forEach(
         function(section){
 
-            if(section.active === false){
+            if(
+                section.active ===
+                false
+            ){
 
                 return;
 
@@ -1821,14 +2107,17 @@ function categoryChanged(){
                 Array.isArray(
                     section.items
                 )
-                ? section.items
-                : [];
+                    ? section.items
+                    : [];
 
 
             items.forEach(
                 function(item){
 
-                    if(item.active === false){
+                    if(
+                        item.active ===
+                        false
+                    ){
 
                         return;
 
@@ -1837,7 +2126,8 @@ function categoryChanged(){
 
                     currentItems.push({
 
-                        id:item.id,
+                        id:
+                            item.id,
 
                         sectionId:
                             section.id,
@@ -1848,9 +2138,11 @@ function categoryChanged(){
                         text:
                             item.text,
 
-                        status:"",
+                        status:
+                            "",
 
-                        note:""
+                        note:
+                            ""
 
                     });
 
@@ -1861,15 +2153,21 @@ function categoryChanged(){
     );
 
 
-    if(currentItems.length === 0){
+    if(
+        currentItems.length ===
+        0
+    ){
 
         message.style.display =
             "block";
 
+
         message.innerHTML =
             "لا توجد بنود مفعلة لهذه الجولة حالياً.";
 
+
         updateResults();
+
 
         return;
 
@@ -1897,11 +2195,15 @@ function renderInspectionItems(){
         );
 
 
-    const groups = [];
+    const groups =
+        [];
 
 
     currentItems.forEach(
-        function(item,index){
+        function(
+            item,
+            index
+        ){
 
             let group =
                 groups.find(
@@ -1916,7 +2218,9 @@ function renderInspectionItems(){
                 );
 
 
-            if(!group){
+            if(
+                !group
+            ){
 
                 group = {
 
@@ -1926,21 +2230,26 @@ function renderInspectionItems(){
                     sectionName:
                         item.sectionName,
 
-                    items:[]
+                    items:
+                        []
 
                 };
 
 
-                groups.push(group);
+                groups.push(
+                    group
+                );
 
             }
 
 
             group.items.push({
 
-                item:item,
+                item:
+                    item,
 
-                index:index
+                index:
+                    index
 
             });
 
@@ -1955,35 +2264,37 @@ function renderInspectionItems(){
 
                 return `
 
-                <section class="dynamic-section">
+                    <section class="dynamic-section">
 
-                    <div class="dynamic-section-title">
+                        <div class="dynamic-section-title">
 
-                        ${escapeHtml(group.sectionName)}
+                            ${escapeHtml(
+                                group.sectionName
+                            )}
 
-                    </div>
+                        </div>
 
 
-                    <div class="dynamic-section-items">
+                        <div class="dynamic-section-items">
 
-                        ${
-                            group.items
-                            .map(
-                                function(entry){
+                            ${
+                                group.items
+                                .map(
+                                    function(entry){
 
-                                    return renderInspectionItem(
-                                        entry.item,
-                                        entry.index
-                                    );
+                                        return renderInspectionItem(
+                                            entry.item,
+                                            entry.index
+                                        );
 
-                                }
-                            )
-                            .join("")
-                        }
+                                    }
+                                )
+                                .join("")
+                            }
 
-                    </div>
+                        </div>
 
-                </section>
+                    </section>
 
                 `;
 
@@ -1998,7 +2309,7 @@ function renderInspectionItems(){
 
 
 /* =========================================================
-   RENDER SINGLE ITEM
+   SINGLE ITEM
 ========================================================= */
 
 function renderInspectionItem(
@@ -2008,83 +2319,87 @@ function renderInspectionItem(
 
     return `
 
-    <div
-        class="inspection-item"
-        data-index="${index}">
-
-        <div class="item-head">
-
-            <div class="item-number-badge">
-                ${index + 1}
-            </div>
-
-            <div class="item-text">
-                ${escapeHtml(item.text)}
-            </div>
-
-        </div>
-
-
-        <div class="item-status">
-
-            <label
-                class="status-button yes"
-                id="status-${index}-yes">
-
-                <input
-                    type="radio"
-                    name="item-${index}"
-                    value="yes"
-                    onchange="setItemStatus(${index},'yes')">
-
-                ✓ يطبق
-
-            </label>
-
-
-            <label
-                class="status-button no"
-                id="status-${index}-no">
-
-                <input
-                    type="radio"
-                    name="item-${index}"
-                    value="no"
-                    onchange="setItemStatus(${index},'no')">
-
-                ✕ لا يطبق
-
-            </label>
-
-
-            <label
-                class="status-button na"
-                id="status-${index}-na">
-
-                <input
-                    type="radio"
-                    name="item-${index}"
-                    value="na"
-                    onchange="setItemStatus(${index},'na')">
-
-                — لا ينطبق
-
-            </label>
-
-        </div>
-
-
         <div
-            id="note-${index}"
-            class="item-note">
+            class="inspection-item"
+            data-index="${index}">
 
-            <textarea
-                placeholder="اكتب الملاحظة الخاصة بعدم التطبيق..."
-                oninput="setItemNote(${index},this.value)"></textarea>
+            <div class="item-head">
+
+                <div class="item-number-badge">
+                    ${index + 1}
+                </div>
+
+                <div class="item-text">
+
+                    ${escapeHtml(
+                        item.text
+                    )}
+
+                </div>
+
+            </div>
+
+
+            <div class="item-status">
+
+                <label
+                    class="status-button yes"
+                    id="status-${index}-yes">
+
+                    <input
+                        type="radio"
+                        name="item-${index}"
+                        value="yes"
+                        onchange="setItemStatus(${index},'yes')">
+
+                    ✓ يطبق
+
+                </label>
+
+
+                <label
+                    class="status-button no"
+                    id="status-${index}-no">
+
+                    <input
+                        type="radio"
+                        name="item-${index}"
+                        value="no"
+                        onchange="setItemStatus(${index},'no')">
+
+                    ✕ لا يطبق
+
+                </label>
+
+
+                <label
+                    class="status-button na"
+                    id="status-${index}-na">
+
+                    <input
+                        type="radio"
+                        name="item-${index}"
+                        value="na"
+                        onchange="setItemStatus(${index},'na')">
+
+                    — لا ينطبق
+
+                </label>
+
+            </div>
+
+
+            <div
+                id="note-${index}"
+                class="item-note">
+
+                <textarea
+                    placeholder="اكتب الملاحظة الخاصة بعدم التطبيق..."
+                    oninput="setItemNote(${index},this.value)"></textarea>
+
+            </div>
 
         </div>
-
-    </div>
 
     `;
 
@@ -2095,16 +2410,25 @@ function renderInspectionItem(
    STATUS
 ========================================================= */
 
-function setItemStatus(index,status){
+function setItemStatus(
+    index,
+    status
+){
 
-    if(!currentItems[index]){
+    if(
+        !currentItems[
+            index
+        ]
+    ){
 
         return;
 
     }
 
 
-    currentItems[index].status =
+    currentItems[
+        index
+    ].status =
         status;
 
 
@@ -2122,11 +2446,14 @@ function setItemStatus(index,status){
                 );
 
 
-            if(element){
+            if(
+                element
+            ){
 
                 element.classList.toggle(
                     "selected",
-                    value === status
+                    value ===
+                    status
                 );
 
             }
@@ -2141,9 +2468,14 @@ function setItemStatus(index,status){
         );
 
 
-    if(note){
+    if(
+        note
+    ){
 
-        if(status === "no"){
+        if(
+            status ===
+            "no"
+        ){
 
             note.classList.add(
                 "active"
@@ -2157,7 +2489,10 @@ function setItemStatus(index,status){
             );
 
 
-            currentItems[index].note = "";
+            currentItems[
+                index
+            ].note =
+                "";
 
 
             const textarea =
@@ -2166,9 +2501,12 @@ function setItemStatus(index,status){
                 );
 
 
-            if(textarea){
+            if(
+                textarea
+            ){
 
-                textarea.value = "";
+                textarea.value =
+                    "";
 
             }
 
@@ -2186,16 +2524,25 @@ function setItemStatus(index,status){
    ITEM NOTE
 ========================================================= */
 
-function setItemNote(index,value){
+function setItemNote(
+    index,
+    value
+){
 
-    if(!currentItems[index]){
+    if(
+        !currentItems[
+            index
+        ]
+    ){
 
         return;
 
     }
 
 
-    currentItems[index].note =
+    currentItems[
+        index
+    ].note =
         value.trim();
 
 }
@@ -2225,7 +2572,10 @@ function updateResults(){
         currentItems.filter(
             function(item){
 
-                return item.status === "yes";
+                return (
+                    item.status ===
+                    "yes"
+                );
 
             }
         ).length;
@@ -2235,7 +2585,10 @@ function updateResults(){
         currentItems.filter(
             function(item){
 
-                return item.status === "no";
+                return (
+                    item.status ===
+                    "no"
+                );
 
             }
         ).length;
@@ -2245,34 +2598,42 @@ function updateResults(){
         currentItems.filter(
             function(item){
 
-                return item.status === "na";
+                return (
+                    item.status ===
+                    "na"
+                );
 
             }
         ).length;
 
 
     const applicable =
-        yes + no;
+        yes +
+        no;
 
 
     const compliance =
         applicable
-        ? Math.round(
-            yes /
-            applicable *
-            100
-        )
-        : 0;
+
+            ? Math.round(
+                yes /
+                applicable *
+                100
+            )
+
+            : 0;
 
 
     const completion =
         total
-        ? Math.round(
-            answered /
-            total *
-            100
-        )
-        : 0;
+
+            ? Math.round(
+                answered /
+                total *
+                100
+            )
+
+            : 0;
 
 
     document.getElementById(
@@ -2296,27 +2657,32 @@ function updateResults(){
     document.getElementById(
         "complianceRate"
     ).textContent =
-        compliance + "%";
+        compliance +
+        "%";
 
 
     document.getElementById(
         "progressText"
     ).textContent =
-        completion + "%";
+        completion +
+        "%";
 
 
     document.getElementById(
         "progressLabel"
     ).textContent =
         total
-        ? `تم تقييم ${answered} من ${total} بند`
-        : "اكتمال بنود الجولة";
+
+            ? `تم تقييم ${answered} من ${total} بند`
+
+            : "اكتمال بنود الجولة";
 
 
     document.getElementById(
         "progressFill"
     ).style.width =
-        completion + "%";
+        completion +
+        "%";
 
 }
 
@@ -2334,11 +2700,18 @@ function generateRoundId(){
     const date =
         now.getFullYear() +
         String(
-            now.getMonth()+1
-        ).padStart(2,"0") +
+            now.getMonth() +
+            1
+        ).padStart(
+            2,
+            "0"
+        ) +
         String(
             now.getDate()
-        ).padStart(2,"0");
+        ).padStart(
+            2,
+            "0"
+        );
 
 
     const random =
@@ -2363,7 +2736,9 @@ function generateRoundId(){
    LOCATION NAME
 ========================================================= */
 
-function getLocationName(value){
+function getLocationName(
+    value
+){
 
     const map = {
 
@@ -2404,7 +2779,9 @@ function getLocationName(value){
 
 
     return (
-        map[value] ||
+        map[
+            value
+        ] ||
         value
     );
 
@@ -2415,7 +2792,10 @@ function getLocationName(value){
    ALERT
 ========================================================= */
 
-function showAlert(message,type){
+function showAlert(
+    message,
+    type
+){
 
     const box =
         document.getElementById(
@@ -2437,9 +2817,11 @@ function showAlert(message,type){
 
     box.scrollIntoView({
 
-        behavior:"smooth",
+        behavior:
+            "smooth",
 
-        block:"center"
+        block:
+            "center"
 
     });
 
@@ -2472,7 +2854,8 @@ async function submitInspection(){
                     String(
                         item.employeeNumber ||
                         item.employeeName
-                    ) ===
+                    )
+                    ===
                     String(
                         employeeSelect.value
                     )
@@ -2484,8 +2867,8 @@ async function submitInspection(){
 
     const employeeName =
         selectedEmployee
-        ? selectedEmployee.employeeName
-        : "";
+            ? selectedEmployee.employeeName
+            : "";
 
 
     const location =
@@ -2536,7 +2919,7 @@ async function submitInspection(){
     ){
 
         showAlert(
-            "لا يوجد توقيع إلكتروني مسجل لهذا الموظف. يرجى تسجيل التوقيع أولاً من إدارة التواقيع والتقارير.",
+            "لا يوجد توقيع إلكتروني مسجل لهذا الموظف.",
             "error"
         );
 
@@ -2545,7 +2928,9 @@ async function submitInspection(){
     }
 
 
-    if(!currentItems.length){
+    if(
+        !currentItems.length
+    ){
 
         showAlert(
             "لا توجد بنود مفعلة لهذه الجولة.",
@@ -2561,13 +2946,17 @@ async function submitInspection(){
         currentItems.filter(
             function(item){
 
-                return !item.status;
+                return (
+                    !item.status
+                );
 
             }
         );
 
 
-    if(unanswered.length){
+    if(
+        unanswered.length
+    ){
 
         showAlert(
             "يرجى تقييم جميع بنود الجولة. بقي " +
@@ -2586,7 +2975,8 @@ async function submitInspection(){
             function(item){
 
                 return (
-                    item.status === "no" &&
+                    item.status ===
+                    "no" &&
                     !item.note
                 );
 
@@ -2594,7 +2984,9 @@ async function submitInspection(){
         );
 
 
-    if(missingNotes.length){
+    if(
+        missingNotes.length
+    ){
 
         showAlert(
             "كل بند تم اختياره «لا يطبق» يجب كتابة الملاحظة الخاصة به.",
@@ -2612,7 +3004,10 @@ async function submitInspection(){
         );
 
 
-    if(location === "other"){
+    if(
+        location ===
+        "other"
+    ){
 
         const otherLocation =
             document.getElementById(
@@ -2620,7 +3015,9 @@ async function submitInspection(){
             ).value.trim();
 
 
-        if(!otherLocation){
+        if(
+            !otherLocation
+        ){
 
             showAlert(
                 "يرجى كتابة اسم الموقع الآخر.",
@@ -2642,7 +3039,10 @@ async function submitInspection(){
         currentItems.filter(
             function(item){
 
-                return item.status === "yes";
+                return (
+                    item.status ===
+                    "yes"
+                );
 
             }
         ).length;
@@ -2652,7 +3052,10 @@ async function submitInspection(){
         currentItems.filter(
             function(item){
 
-                return item.status === "no";
+                return (
+                    item.status ===
+                    "no"
+                );
 
             }
         ).length;
@@ -2662,24 +3065,30 @@ async function submitInspection(){
         currentItems.filter(
             function(item){
 
-                return item.status === "na";
+                return (
+                    item.status ===
+                    "na"
+                );
 
             }
         ).length;
 
 
     const applicable =
-        yes + no;
+        yes +
+        no;
 
 
     const complianceRate =
         applicable
-        ? Math.round(
-            yes /
-            applicable *
-            100
-        )
-        : 0;
+
+            ? Math.round(
+                yes /
+                applicable *
+                100
+            )
+
+            : 0;
 
 
     const categoryData =
@@ -2701,8 +3110,8 @@ async function submitInspection(){
 
         categoryName:
             categoryData
-            ? categoryData.name
-            : category,
+                ? categoryData.name
+                : category,
 
         employeeName:
             employeeName,
@@ -2728,7 +3137,8 @@ async function submitInspection(){
 
                     return {
 
-                        id:item.id,
+                        id:
+                            item.id,
 
                         sectionId:
                             item.sectionId,
@@ -2775,7 +3185,7 @@ async function submitInspection(){
 
         createdAt:
             new Date()
-                .toISOString()
+            .toISOString()
 
     };
 
@@ -2786,10 +3196,12 @@ async function submitInspection(){
         );
 
 
-    if(!saved){
+    if(
+        !saved
+    ){
 
         showAlert(
-            "⚠️ تم حفظ الجولة محلياً، لكن تعذر إرسالها إلى قاعدة البيانات المركزية. تحقق من الاتصال ثم حاول مرة أخرى.",
+            "⚠️ تم حفظ الجولة محلياً، لكن تعذر إرسالها إلى قاعدة البيانات المركزية.",
             "error"
         );
 
@@ -2800,7 +3212,6 @@ async function submitInspection(){
 
     showAlert(
         "✅ تم إرسال الجولة بنجاح.<br>" +
-        "تم ربط التوقيع الإلكتروني تلقائياً.<br>" +
         "رقم الجولة: <strong>" +
         record.id +
         "</strong>",
@@ -2825,14 +3236,13 @@ async function submitInspection(){
    SAVE RECORD
 ========================================================= */
 
-async function saveInspectionRecord(record){
+async function saveInspectionRecord(
+    record
+){
 
-    let records = [];
+    let records =
+        [];
 
-
-    // ==========================================
-    // 1) LocalStorage
-    // ==========================================
 
     try{
 
@@ -2844,21 +3254,22 @@ async function saveInspectionRecord(record){
             ) || [];
 
 
-        if(!Array.isArray(records)){
+        if(
+            !Array.isArray(
+                records
+            )
+        ){
 
-            records = [];
+            records =
+                [];
 
         }
 
     }
     catch(error){
 
-        records = [];
-
-        console.error(
-            "LocalStorage read error:",
-            error
-        );
+        records =
+            [];
 
     }
 
@@ -2877,71 +3288,58 @@ async function saveInspectionRecord(record){
             )
         );
 
-        console.log(
-            "✅ Round saved locally:",
-            record.id
-        );
-
     }
     catch(error){
 
         console.error(
-            "LocalStorage save error:",
+            "Local save error:",
             error
         );
 
     }
 
-
-    // ==========================================
-    // 2) Supabase
-    // ==========================================
 
     try{
 
         const {
             error
-        } = await supabaseClient
-            .from(
-                "inspection_records"
-            )
-            .insert([
-                {
+        } =
+            await supabaseClient
+                .from(
+                    "inspection_records"
+                )
+                .insert([
+                    {
 
-                    round_id:
-                        String(
-                            record.id || ""
-                        ),
+                        round_id:
+                            String(
+                                record.id ||
+                                ""
+                            ),
 
-                    round_type:
-                        String(
-                            record.roundType ||
-                            "publicHealth"
-                        ),
+                        round_type:
+                            "publicHealth",
 
-                    record_data:
-                        record
+                        record_data:
+                            record
 
-                }
-            ]);
+                    }
+                ]);
 
 
-        if(error){
+        if(
+            error
+        ){
 
             console.error(
-                "❌ Supabase save error:",
+                "Supabase save error:",
                 error
             );
+
 
             return false;
 
         }
-
-
-        console.log(
-            "☁️ Round saved to Supabase:",
-            record.id
-        );
 
 
         return true;
@@ -2950,9 +3348,10 @@ async function saveInspectionRecord(record){
     catch(error){
 
         console.error(
-            "❌ Supabase connection error:",
+            "Supabase connection error:",
             error
         );
+
 
         return false;
 
@@ -2973,7 +3372,9 @@ function cancelInspection(){
         );
 
 
-    if(!confirmed){
+    if(
+        !confirmed
+    ){
 
         return;
 
@@ -2990,10 +3391,13 @@ function cancelInspection(){
    ESCAPE
 ========================================================= */
 
-function escapeHtml(value){
+function escapeHtml(
+    value
+){
 
     return String(
-        value || ""
+        value ||
+        ""
     )
     .replaceAll(
         "&",
