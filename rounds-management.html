@@ -40,11 +40,9 @@ body{
 .management-header-grid{
     max-width:1300px;
     margin:auto;
-
     display:grid;
     grid-template-columns:150px 1fr 150px;
     align-items:center;
-
     gap:15px;
     padding:18px;
 }
@@ -100,14 +98,11 @@ body{
     width:64px;
     height:64px;
     border-radius:17px;
-
     display:flex;
     align-items:center;
     justify-content:center;
-
     background:#f0ebff;
     color:#5f3dc4;
-
     font-size:32px;
 }
 
@@ -121,6 +116,35 @@ body{
     color:#607387;
     line-height:1.8;
     font-size:13px;
+}
+
+
+/* =========================================================
+   SYNC STATUS
+========================================================= */
+
+.sync-status{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-top:12px;
+    font-size:12px;
+    color:#607387;
+}
+
+.sync-dot{
+    width:9px;
+    height:9px;
+    border-radius:50%;
+    background:#9aa8b5;
+}
+
+.sync-status.online .sync-dot{
+    background:#15936c;
+}
+
+.sync-status.offline .sync-dot{
+    background:#ef8d22;
 }
 
 
@@ -166,11 +190,9 @@ body{
     border:1px solid #dfe8f2;
     border-radius:14px;
     padding:15px;
-
     display:flex;
     gap:9px;
     flex-wrap:wrap;
-
     margin-bottom:18px;
 }
 
@@ -179,7 +201,6 @@ body{
     border:none;
     border-radius:9px;
     padding:11px 15px;
-
     font-weight:bold;
     cursor:pointer;
     text-decoration:none;
@@ -220,16 +241,11 @@ body{
 
 .round-type-card{
     position:relative;
-
     border:1px solid #dfe8f2;
     border-radius:14px;
-
     padding:17px;
-
     background:#fff;
-
     cursor:pointer;
-
     transition:.15s;
 }
 
@@ -276,11 +292,8 @@ body{
     align-items:center;
     justify-content:space-between;
     gap:12px;
-
     background:#d9ebf8;
-
     padding:13px 16px;
-
     border-bottom:1px solid #c9dce9;
 }
 
@@ -300,9 +313,7 @@ body{
     border:none;
     border-radius:7px;
     padding:7px 10px;
-
     cursor:pointer;
-
     font-size:11px;
     font-weight:bold;
 }
@@ -414,7 +425,6 @@ body{
     border:none;
     border-radius:6px;
     padding:6px 8px;
-
     font-size:11px;
     cursor:pointer;
 }
@@ -463,15 +473,11 @@ body{
 .modal-overlay{
     position:fixed;
     inset:0;
-
     background:rgba(21,40,55,.48);
-
     z-index:9999;
-
     display:none;
     align-items:center;
     justify-content:center;
-
     padding:15px;
 }
 
@@ -482,14 +488,10 @@ body{
 .modal{
     width:100%;
     max-width:650px;
-
     max-height:90vh;
     overflow-y:auto;
-
     background:#fff;
-
     border-radius:16px;
-
     box-shadow:0 15px 50px rgba(0,0,0,.22);
 }
 
@@ -497,9 +499,7 @@ body{
     display:flex;
     justify-content:space-between;
     align-items:center;
-
     padding:17px 20px;
-
     border-bottom:1px solid #e3eaf0;
 }
 
@@ -511,12 +511,9 @@ body{
 .close-modal{
     width:34px;
     height:34px;
-
     border:none;
     border-radius:50%;
-
     background:#edf1f5;
-
     font-size:18px;
     cursor:pointer;
 }
@@ -553,9 +550,7 @@ body{
     width:100%;
     border:1px solid #ccd9e5;
     border-radius:8px;
-
     padding:11px;
-
     font-size:14px;
 }
 
@@ -566,9 +561,7 @@ body{
 
 .modal-footer{
     padding:15px 20px;
-
     border-top:1px solid #e3eaf0;
-
     display:flex;
     justify-content:flex-end;
     gap:8px;
@@ -577,12 +570,9 @@ body{
 .modal-save{
     border:none;
     border-radius:8px;
-
     padding:11px 18px;
-
     background:#0759a6;
     color:#fff;
-
     font-weight:bold;
     cursor:pointer;
 }
@@ -590,12 +580,9 @@ body{
 .modal-cancel{
     border:none;
     border-radius:8px;
-
     padding:11px 18px;
-
     background:#eaf1f7;
     color:#064c92;
-
     font-weight:bold;
     cursor:pointer;
 }
@@ -607,12 +594,9 @@ body{
 
 .alert-box{
     display:none;
-
     padding:13px 15px;
     margin-bottom:15px;
-
     border-radius:9px;
-
     font-size:13px;
 }
 
@@ -689,20 +673,17 @@ body{
 
 </style>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 </head>
 
 
 <body>
 
 
-<!-- =========================================================
-     HEADER
-========================================================= -->
-
 <header class="management-header">
 
 <div class="management-header-grid">
-
 
 <div class="management-logo">
 
@@ -734,7 +715,6 @@ Rounds & Inspection Items Management
 
 </div>
 
-
 </div>
 
 </header>
@@ -742,10 +722,6 @@ Rounds & Inspection Items Management
 
 <main class="management-page">
 
-
-<!-- =========================================================
-     INTRO
-========================================================= -->
 
 <section class="intro-card">
 
@@ -768,6 +744,18 @@ Rounds & Inspection Items Management
 والتفعيل أو الإيقاف.
 </p>
 
+<div
+    id="syncStatus"
+    class="sync-status">
+
+    <span class="sync-dot"></span>
+
+    <span id="syncStatusText">
+        جاري تحميل الإعدادات...
+    </span>
+
+</div>
+
 </div>
 
 </div>
@@ -780,10 +768,6 @@ Rounds & Inspection Items Management
     class="alert-box">
 </div>
 
-
-<!-- =========================================================
-     STATS
-========================================================= -->
 
 <section class="management-stats">
 
@@ -810,10 +794,6 @@ Rounds & Inspection Items Management
 </section>
 
 
-<!-- =========================================================
-     TOOLBAR
-========================================================= -->
-
 <section class="toolbar">
 
 <button
@@ -827,7 +807,7 @@ Rounds & Inspection Items Management
 
 <button
     class="btn-save"
-    onclick="saveConfig()">
+    onclick="saveConfig(true)">
 
 💾 حفظ التعديلات
 
@@ -843,7 +823,9 @@ Rounds & Inspection Items Management
 </button>
 
 
-<a class="btn-back" href="control.html">
+<a
+    class="btn-back"
+    href="control.html">
 
 ← العودة لصندوق التحكم
 
@@ -851,10 +833,6 @@ Rounds & Inspection Items Management
 
 </section>
 
-
-<!-- =========================================================
-     TYPE SELECTOR
-========================================================= -->
 
 <section class="round-selector">
 
@@ -938,17 +916,11 @@ Medical Waste Inspection
 
 </div>
 
-
 </section>
 
 
-<!-- =========================================================
-     CONTENT
-========================================================= -->
-
 <div id="sectionsContainer">
 </div>
-
 
 </main>
 
@@ -963,7 +935,6 @@ Medical Waste Inspection
 
 <div class="modal">
 
-
 <div class="modal-header">
 
 <h3 id="sectionModalTitle">
@@ -973,7 +944,6 @@ Medical Waste Inspection
 <button
     class="close-modal"
     onclick="closeSectionModal()">
-
 ×
 </button>
 
@@ -982,9 +952,7 @@ Medical Waste Inspection
 
 <div class="modal-body">
 
-
 <div class="modal-form">
-
 
 <div class="modal-group full">
 
@@ -1020,9 +988,7 @@ Medical Waste Inspection
 
 </div>
 
-
 </div>
-
 
 </div>
 
@@ -1047,7 +1013,6 @@ Medical Waste Inspection
 
 </div>
 
-
 </div>
 
 </div>
@@ -1063,7 +1028,6 @@ Medical Waste Inspection
 
 <div class="modal">
 
-
 <div class="modal-header">
 
 <h3 id="itemModalTitle">
@@ -1073,7 +1037,6 @@ Medical Waste Inspection
 <button
     class="close-modal"
     onclick="closeItemModal()">
-
 ×
 </button>
 
@@ -1082,9 +1045,7 @@ Medical Waste Inspection
 
 <div class="modal-body">
 
-
 <div class="modal-form">
-
 
 <div class="modal-group full">
 
@@ -1119,9 +1080,7 @@ Medical Waste Inspection
 
 </div>
 
-
 </div>
-
 
 </div>
 
@@ -1146,13 +1105,28 @@ Medical Waste Inspection
 
 </div>
 
-
 </div>
 
 </div>
 
 
 <script>
+
+/* =========================================================
+   SUPABASE
+========================================================= */
+
+const SUPABASE_URL =
+    "https://xbivmhkqxmrkpjxfvemc.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_jTXNyxYwDMmJDUzg46rcdA_rySASiuE";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
 
 
 /* =========================================================
@@ -1165,23 +1139,15 @@ const CONFIG_KEY =
 
 /* =========================================================
    DEFAULT CONFIGURATION
-   مأخوذ من النماذج الأصلية المرسلة
 ========================================================= */
 
 const defaultConfig = {
 
-
-/* =========================================================
-   الصحة العامة والبيئة
-========================================================= */
-
 environment:{
 
-    name:
-        "الصحة العامة والبيئة",
+    name:"الصحة العامة والبيئة",
 
     sections:[
-
 
         {
             id:"water",
@@ -1209,7 +1175,6 @@ environment:{
                 }
 
             ]
-
         },
 
 
@@ -1263,7 +1228,6 @@ environment:{
                 }
 
             ]
-
         },
 
 
@@ -1299,22 +1263,15 @@ environment:{
                 }
 
             ]
-
         }
 
     ]
-
 },
 
 
-/* =========================================================
-   التغذية
-========================================================= */
-
 food:{
 
-    name:
-        "التغذية",
+    name:"التغذية",
 
     sections:[
 
@@ -1416,22 +1373,15 @@ food:{
                 }
 
             ]
-
         }
 
     ]
-
 },
 
 
-/* =========================================================
-   المغسلة
-========================================================= */
-
 laundry:{
 
-    name:
-        "المغسلة",
+    name:"المغسلة",
 
     sections:[
 
@@ -1533,25 +1483,17 @@ laundry:{
                 }
 
             ]
-
         }
 
     ]
-
 },
 
 
-/* =========================================================
-   النفايات الطبية
-========================================================= */
-
 medicalWaste:{
 
-    name:
-        "النفايات الطبية",
+    name:"النفايات الطبية",
 
     sections:[
-
 
         {
             id:"waste-containers",
@@ -1615,7 +1557,6 @@ medicalWaste:{
                 }
 
             ]
-
         },
 
 
@@ -1639,7 +1580,6 @@ medicalWaste:{
                 }
 
             ]
-
         },
 
 
@@ -1675,7 +1615,6 @@ medicalWaste:{
                 }
 
             ]
-
         },
 
 
@@ -1693,11 +1632,9 @@ medicalWaste:{
                 }
 
             ]
-
         }
 
     ]
-
 }
 
 };
@@ -1707,8 +1644,7 @@ medicalWaste:{
    STATE
 ========================================================= */
 
-let roundsConfig =
-    {};
+let roundsConfig = {};
 
 let currentType =
     "environment";
@@ -1728,69 +1664,17 @@ let editingItemId =
 ========================================================= */
 
 document.addEventListener(
-
     "DOMContentLoaded",
+    async function(){
 
-    function(){
-
-        loadConfig();
+        await loadConfig();
 
         renderCurrentType();
 
         updateStats();
 
     }
-
 );
-
-
-/* =========================================================
-   LOAD CONFIG
-========================================================= */
-
-function loadConfig(){
-
-    try{
-
-        const stored =
-            localStorage.getItem(
-                CONFIG_KEY
-            );
-
-
-        if(stored){
-
-            roundsConfig =
-                JSON.parse(
-                    stored
-                );
-
-        }
-        else{
-
-            roundsConfig =
-                deepClone(
-                    defaultConfig
-                );
-
-
-            saveConfig(
-                false
-            );
-
-        }
-
-    }
-    catch(error){
-
-        roundsConfig =
-            deepClone(
-                defaultConfig
-            );
-
-    }
-
-}
 
 
 /* =========================================================
@@ -1811,35 +1695,482 @@ function deepClone(
 
 
 /* =========================================================
-   SAVE CONFIG
+   LOCAL CONFIG
 ========================================================= */
 
-function saveConfig(
-    showMessage = true
-){
+function getLocalConfig(){
 
-    localStorage.setItem(
+    try{
 
-        CONFIG_KEY,
-
-        JSON.stringify(
-            roundsConfig
-        )
-
-    );
+        const stored =
+            localStorage.getItem(
+                CONFIG_KEY
+            );
 
 
-    if(showMessage){
+        if(!stored){
 
-        showAlert(
-            "✅ تم حفظ إعدادات الجولات والبنود بنجاح.",
-            "success"
+            return null;
+
+        }
+
+
+        const parsed =
+            JSON.parse(
+                stored
+            );
+
+
+        if(
+            parsed &&
+            typeof parsed ===
+            "object"
+        ){
+
+            return parsed;
+
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            "Local config read error:",
+            error
         );
 
     }
 
 
+    return null;
+
+}
+
+
+function saveLocalConfig(){
+
+    try{
+
+        localStorage.setItem(
+            CONFIG_KEY,
+            JSON.stringify(
+                roundsConfig
+            )
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "Local config save error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   LOAD CONFIG
+========================================================= */
+
+async function loadConfig(){
+
+    setSyncStatus(
+        "loading",
+        "جاري تحميل البنود المركزية..."
+    );
+
+
+    const localConfig =
+        getLocalConfig();
+
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+                .from(
+                    "rounds_config"
+                )
+                .select(
+                    "round_type, config_data, updated_at"
+                );
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        /* ==========================================
+           إذا كان الجدول فارغاً لأول مرة
+        ========================================== */
+
+        if(
+            !data ||
+            data.length === 0
+        ){
+
+            roundsConfig =
+                localConfig
+                ? deepClone(
+                    localConfig
+                )
+                : deepClone(
+                    defaultConfig
+                );
+
+
+            saveLocalConfig();
+
+
+            const saved =
+                await saveCentralConfig();
+
+
+            if(saved){
+
+                setSyncStatus(
+                    "online",
+                    "تم إنشاء البنود المركزية ومزامنتها."
+                );
+
+            }
+            else{
+
+                setSyncStatus(
+                    "offline",
+                    "تم تحميل البنود محليًا، وتعذر رفعها مركزيًا."
+                );
+
+            }
+
+
+            return;
+
+        }
+
+
+        /* ==========================================
+           البدء بالنسخة المحلية أو الأصلية
+           ثم استبدال الموجود بالنسخة المركزية
+        ========================================== */
+
+        roundsConfig =
+            localConfig
+            ? deepClone(
+                localConfig
+            )
+            : deepClone(
+                defaultConfig
+            );
+
+
+        data.forEach(
+            function(row){
+
+                if(
+                    row.round_type &&
+                    row.config_data &&
+                    typeof row.config_data ===
+                    "object"
+                ){
+
+                    roundsConfig[
+                        row.round_type
+                    ] =
+                        row.config_data;
+
+                }
+
+            }
+        );
+
+
+        /* ==========================================
+           التأكد من وجود الأنواع الأربعة
+        ========================================== */
+
+        Object.keys(
+            defaultConfig
+        )
+        .forEach(
+            function(type){
+
+                if(
+                    !roundsConfig[
+                        type
+                    ]
+                ){
+
+                    roundsConfig[
+                        type
+                    ] =
+                        deepClone(
+                            defaultConfig[
+                                type
+                            ]
+                        );
+
+                }
+
+            }
+        );
+
+
+        saveLocalConfig();
+
+
+        setSyncStatus(
+            "online",
+            "تم تحميل البنود من النظام المركزي."
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "Central config load error:",
+            error
+        );
+
+
+        roundsConfig =
+            localConfig
+            ? deepClone(
+                localConfig
+            )
+            : deepClone(
+                defaultConfig
+            );
+
+
+        saveLocalConfig();
+
+
+        setSyncStatus(
+            "offline",
+            "تعذر الاتصال المركزي، تم استخدام النسخة المحلية."
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   SAVE CENTRAL CONFIG
+========================================================= */
+
+async function saveCentralConfig(){
+
+    try{
+
+        const now =
+            new Date()
+            .toISOString();
+
+
+        const rows =
+            Object.keys(
+                roundsConfig
+            )
+            .map(
+                function(type){
+
+                    return {
+
+                        round_type:
+                            type,
+
+                        config_data:
+                            roundsConfig[
+                                type
+                            ],
+
+                        updated_at:
+                            now
+
+                    };
+
+                }
+            );
+
+
+        const {
+            error
+        } =
+            await supabaseClient
+                .from(
+                    "rounds_config"
+                )
+                .upsert(
+                    rows,
+                    {
+                        onConflict:
+                            "round_type"
+                    }
+                );
+
+
+        if(error){
+
+            console.error(
+                "Central config save error:",
+                error
+            );
+
+            return false;
+
+        }
+
+
+        return true;
+
+    }
+    catch(error){
+
+        console.error(
+            "Central config connection error:",
+            error
+        );
+
+        return false;
+
+    }
+
+}
+
+
+/* =========================================================
+   SAVE CONFIG
+========================================================= */
+
+async function saveConfig(
+    showMessage = true
+){
+
+    saveLocalConfig();
+
+
+    setSyncStatus(
+        "loading",
+        "جاري حفظ التعديلات..."
+    );
+
+
+    const centralSaved =
+        await saveCentralConfig();
+
+
+    if(
+        centralSaved
+    ){
+
+        setSyncStatus(
+            "online",
+            "البنود متزامنة مع النظام المركزي."
+        );
+
+
+        if(
+            showMessage
+        ){
+
+            showAlert(
+                "✅ تم حفظ إعدادات الجولات والبنود مركزيًا بنجاح.",
+                "success"
+            );
+
+        }
+
+    }
+    else{
+
+        setSyncStatus(
+            "offline",
+            "تم الحفظ محليًا، لكن تعذر الحفظ المركزي."
+        );
+
+
+        if(
+            showMessage
+        ){
+
+            showAlert(
+                "⚠️ تم حفظ التعديلات على هذا الجهاز، لكن تعذر إرسالها للنظام المركزي.",
+                "error"
+            );
+
+        }
+
+    }
+
+
     updateStats();
+
+
+    return centralSaved;
+
+}
+
+
+/* =========================================================
+   SYNC STATUS
+========================================================= */
+
+function setSyncStatus(
+    status,
+    message
+){
+
+    const box =
+        document.getElementById(
+            "syncStatus"
+        );
+
+
+    const text =
+        document.getElementById(
+            "syncStatusText"
+        );
+
+
+    box.className =
+        "sync-status";
+
+
+    if(
+        status ===
+        "online"
+    ){
+
+        box.classList.add(
+            "online"
+        );
+
+    }
+    else if(
+        status ===
+        "offline"
+    ){
+
+        box.classList.add(
+            "offline"
+        );
+
+    }
+
+
+    text.textContent =
+        message;
 
 }
 
@@ -1909,15 +2240,15 @@ function renderCurrentType(){
 
         container.innerHTML = `
 
-        <div class="empty-state">
+            <div class="empty-state">
 
-        <div>
-        📭
-        </div>
+                <div>
+                    📭
+                </div>
 
-        لا توجد أقسام مسجلة.
+                لا توجد أقسام مسجلة.
 
-        </div>
+            </div>
 
         `;
 
@@ -1933,16 +2264,16 @@ function renderCurrentType(){
 
         container.innerHTML = `
 
-        <div class="empty-state">
+            <div class="empty-state">
 
-        <div>
-        📋
-        </div>
+                <div>
+                    📋
+                </div>
 
-        لا توجد محاور حالياً.
-        استخدم زر «إضافة محور جديد».
+                لا توجد محاور حالياً.
+                استخدم زر «إضافة محور جديد».
 
-        </div>
+            </div>
 
         `;
 
@@ -1985,133 +2316,126 @@ function renderSectionCard(
 
     return `
 
-    <section class="section-card">
+        <section class="section-card">
+
+            <div class="section-head">
+
+                <h3>
+
+                    ${escapeHtml(
+                        section.name
+                    )}
+
+                    ${
+                        section.active === false
+
+                        ? '<span class="disabled-badge">موقوف</span>'
+
+                        : ""
+                    }
+
+                </h3>
 
 
-    <div class="section-head">
+                <div class="section-head-actions">
+
+                    <button
+                        class="small-btn add-item-btn"
+                        onclick="openItemModal('${section.id}')">
+
+                        ➕ إضافة بند
+
+                    </button>
 
 
-    <h3>
+                    <button
+                        class="small-btn edit-section-btn"
+                        onclick="editSection('${section.id}')">
 
-    ${escapeHtml(section.name)}
+                        ✏️ تعديل المحور
 
-    ${
-        section.active === false
+                    </button>
 
-        ? '<span class="disabled-badge">موقوف</span>'
+                </div>
 
-        : ""
-    }
-
-    </h3>
+            </div>
 
 
-    <div class="section-head-actions">
+            <div class="section-body">
+
+                ${
+                    items.length
+
+                    ? `
+
+                        <div class="items-table-wrap">
+
+                            <table class="items-table">
+
+                                <thead>
+
+                                    <tr>
+
+                                        <th>م</th>
+
+                                        <th>
+                                            الإجراء / البند
+                                        </th>
+
+                                        <th>
+                                            الحالة
+                                        </th>
+
+                                        <th>
+                                            الإدارة
+                                        </th>
+
+                                    </tr>
+
+                                </thead>
 
 
-    <button
-        class="small-btn add-item-btn"
-        onclick="openItemModal('${section.id}')">
+                                <tbody>
 
-    ➕ إضافة بند
+                                    ${
+                                        items
+                                        .map(
+                                            function(
+                                                item,
+                                                index
+                                            ){
 
-    </button>
+                                                return renderItemRow(
+                                                    section,
+                                                    item,
+                                                    index
+                                                );
 
+                                            }
+                                        )
+                                        .join("")
+                                    }
 
-    <button
-        class="small-btn edit-section-btn"
-        onclick="editSection('${section.id}')">
+                                </tbody>
 
-    ✏️ تعديل المحور
+                            </table>
 
-    </button>
+                        </div>
 
+                    `
 
-    </div>
+                    : `
 
+                        <div class="empty-state">
+                            لا توجد بنود داخل هذا المحور.
+                        </div>
 
-    </div>
-
-
-    <div class="section-body">
-
-
-    ${
-        items.length
-
-        ? `
-
-        <div class="items-table-wrap">
-
-        <table class="items-table">
-
-        <thead>
-
-        <tr>
-
-        <th>
-        م
-        </th>
-
-        <th>
-        الإجراء / البند
-        </th>
-
-        <th>
-        الحالة
-        </th>
-
-        <th>
-        الإدارة
-        </th>
-
-        </tr>
-
-        </thead>
-
-
-        <tbody>
-
-        ${
-            items
-            .map(
-                function(item,index){
-
-                    return renderItemRow(
-                        section,
-                        item,
-                        index
-                    );
-
+                    `
                 }
-            )
-            .join("")
-        }
 
-        </tbody>
+            </div>
 
-        </table>
-
-        </div>
-
-        `
-
-        : `
-
-        <div class="empty-state">
-
-        لا توجد بنود داخل هذا المحور.
-
-        </div>
-
-        `
-    }
-
-
-    </div>
-
-
-    </section>
+        </section>
 
     `;
 
@@ -2130,129 +2454,106 @@ function renderItemRow(
 
     return `
 
-    <tr>
+        <tr>
+
+            <td class="item-number">
+                ${index + 1}
+            </td>
 
 
-    <td class="item-number">
+            <td class="item-text">
 
-    ${index + 1}
+                ${escapeHtml(
+                    item.text
+                )}
 
-    </td>
-
-
-    <td class="item-text">
-
-    ${escapeHtml(item.text)}
-
-    </td>
+            </td>
 
 
-    <td class="item-status">
+            <td class="item-status">
 
-    ${
-        item.active === false
+                ${
+                    item.active === false
 
-        ? `
+                    ? `
 
-        <span class="disabled-badge">
-        موقوف
-        </span>
+                        <span class="disabled-badge">
+                            موقوف
+                        </span>
 
-        `
+                    `
 
-        : `
+                    : `
 
-        <span class="active-badge">
-        مفعل
-        </span>
+                        <span class="active-badge">
+                            مفعل
+                        </span>
 
-        `
-    }
+                    `
+                }
 
-    </td>
-
-
-    <td class="item-actions">
+            </td>
 
 
-    <div class="item-action-buttons">
+            <td class="item-actions">
+
+                <div class="item-action-buttons">
+
+                    <button
+                        class="move-btn"
+                        title="تحريك لأعلى"
+                        onclick="moveItem('${section.id}','${item.id}',-1)">
+
+                        ↑
+
+                    </button>
 
 
-    <button
-        class="move-btn"
-        title="تحريك لأعلى"
-        onclick="moveItem(
-            '${section.id}',
-            '${item.id}',
-            -1
-        )">
+                    <button
+                        class="move-btn"
+                        title="تحريك لأسفل"
+                        onclick="moveItem('${section.id}','${item.id}',1)">
 
-    ↑
+                        ↓
 
-    </button>
+                    </button>
 
 
-    <button
-        class="move-btn"
-        title="تحريك لأسفل"
-        onclick="moveItem(
-            '${section.id}',
-            '${item.id}',
-            1
-        )">
+                    <button
+                        class="edit-btn"
+                        onclick="editItem('${section.id}','${item.id}')">
 
-    ↓
+                        تعديل
 
-    </button>
+                    </button>
 
 
-    <button
-        class="edit-btn"
-        onclick="editItem(
-            '${section.id}',
-            '${item.id}'
-        )">
+                    <button
+                        class="toggle-btn"
+                        onclick="toggleItem('${section.id}','${item.id}')">
 
-    تعديل
+                        ${
+                            item.active === false
+                            ? "تفعيل"
+                            : "إيقاف"
+                        }
 
-    </button>
-
-
-    <button
-        class="toggle-btn"
-        onclick="toggleItem(
-            '${section.id}',
-            '${item.id}'
-        )">
-
-    ${
-        item.active === false
-        ? "تفعيل"
-        : "إيقاف"
-    }
-
-    </button>
+                    </button>
 
 
-    <button
-        class="delete-btn"
-        onclick="deleteItem(
-            '${section.id}',
-            '${item.id}'
-        )">
+                    <button
+                        class="delete-btn"
+                        onclick="deleteItem('${section.id}','${item.id}')">
 
-    حذف
+                        حذف
 
-    </button>
+                    </button>
 
+                </div>
 
-    </div>
+            </td>
 
-
-    </td>
-
-
-    </tr>
+        </tr>
 
     `;
 
@@ -2375,7 +2676,7 @@ function closeSectionModal(){
    SAVE SECTION
 ========================================================= */
 
-function saveSectionFromModal(){
+async function saveSectionFromModal(){
 
     const name =
         document.getElementById(
@@ -2407,7 +2708,9 @@ function saveSectionFromModal(){
         ].sections;
 
 
-    if(editingSectionId){
+    if(
+        editingSectionId
+    ){
 
         const section =
             findSection(
@@ -2419,7 +2722,6 @@ function saveSectionFromModal(){
 
             section.name =
                 name;
-
 
             section.active =
                 active;
@@ -2450,16 +2752,16 @@ function saveSectionFromModal(){
     }
 
 
-    saveConfig(
-        false
-    );
-
-
     closeSectionModal();
 
     renderCurrentType();
 
     updateStats();
+
+
+    await saveConfig(
+        false
+    );
 
 
     showAlert(
@@ -2598,7 +2900,7 @@ function closeItemModal(){
    SAVE ITEM
 ========================================================= */
 
-function saveItemFromModal(){
+async function saveItemFromModal(){
 
     const text =
         document.getElementById(
@@ -2637,7 +2939,9 @@ function saveItemFromModal(){
     }
 
 
-    if(editingItemId){
+    if(
+        editingItemId
+    ){
 
         const item =
             findItem(
@@ -2650,7 +2954,6 @@ function saveItemFromModal(){
 
             item.text =
                 text;
-
 
             item.active =
                 active;
@@ -2678,16 +2981,16 @@ function saveItemFromModal(){
     }
 
 
-    saveConfig(
-        false
-    );
-
-
     closeItemModal();
 
     renderCurrentType();
 
     updateStats();
+
+
+    await saveConfig(
+        false
+    );
 
 
     showAlert(
@@ -2702,7 +3005,7 @@ function saveItemFromModal(){
    DELETE ITEM
 ========================================================= */
 
-function deleteItem(
+async function deleteItem(
     sectionId,
     itemId
 ){
@@ -2746,14 +3049,14 @@ function deleteItem(
         );
 
 
-    saveConfig(
-        false
-    );
-
-
     renderCurrentType();
 
     updateStats();
+
+
+    await saveConfig(
+        false
+    );
 
 
     showAlert(
@@ -2768,7 +3071,7 @@ function deleteItem(
    TOGGLE ITEM
 ========================================================= */
 
-function toggleItem(
+async function toggleItem(
     sectionId,
     itemId
 ){
@@ -2791,14 +3094,14 @@ function toggleItem(
         item.active === false;
 
 
-    saveConfig(
-        false
-    );
-
-
     renderCurrentType();
 
     updateStats();
+
+
+    await saveConfig(
+        false
+    );
 
 }
 
@@ -2807,7 +3110,7 @@ function toggleItem(
    MOVE ITEM
 ========================================================= */
 
-function moveItem(
+async function moveItem(
     sectionId,
     itemId,
     direction
@@ -2839,7 +3142,9 @@ function moveItem(
         );
 
 
-    if(index < 0){
+    if(
+        index < 0
+    ){
 
         return;
 
@@ -2882,12 +3187,12 @@ function moveItem(
         temp;
 
 
-    saveConfig(
+    renderCurrentType();
+
+
+    await saveConfig(
         false
     );
-
-
-    renderCurrentType();
 
 }
 
@@ -2906,7 +3211,9 @@ function findSection(
         ];
 
 
-    if(!round){
+    if(
+        !round
+    ){
 
         return null;
 
@@ -2945,7 +3252,9 @@ function findItem(
         );
 
 
-    if(!section){
+    if(
+        !section
+    ){
 
         return null;
 
@@ -2973,15 +3282,17 @@ function findItem(
    RESET
 ========================================================= */
 
-function resetToDefault(){
+async function resetToDefault(){
 
     const confirmed =
         confirm(
-            "سيتم حذف جميع التعديلات واستعادة البنود الأصلية. هل أنت متأكد؟"
+            "سيتم حذف جميع التعديلات واستعادة البنود الأصلية لجميع الموظفين. هل أنت متأكد؟"
         );
 
 
-    if(!confirmed){
+    if(
+        !confirmed
+    ){
 
         return;
 
@@ -2994,20 +3305,33 @@ function resetToDefault(){
         );
 
 
-    saveConfig(
-        false
-    );
-
-
     renderCurrentType();
 
     updateStats();
 
 
-    showAlert(
-        "✅ تم استعادة النموذج الأصلي.",
-        "success"
-    );
+    const saved =
+        await saveConfig(
+            false
+        );
+
+
+    if(saved){
+
+        showAlert(
+            "✅ تم استعادة النموذج الأصلي وحفظه مركزيًا.",
+            "success"
+        );
+
+    }
+    else{
+
+        showAlert(
+            "⚠️ تم الاستعادة محليًا، لكن تعذر تحديث النظام المركزي.",
+            "error"
+        );
+
+    }
 
 }
 
@@ -3021,10 +3345,8 @@ function updateStats(){
     let sections =
         0;
 
-
     let items =
         0;
-
 
     let active =
         0;
@@ -3213,9 +3535,7 @@ function showAlert(
 ========================================================= */
 
 document.addEventListener(
-
     "click",
-
     function(event){
 
         if(
@@ -3238,7 +3558,6 @@ document.addEventListener(
         }
 
     }
-
 );
 
 </script>
