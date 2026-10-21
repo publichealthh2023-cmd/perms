@@ -1,0 +1,318 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>جولة جودة الهواء والفلاتر</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f3f6f8;font-family:Arial,Tahoma,sans-serif;color:#294b6a}
+.container{max-width:850px;margin:auto;padding:16px}
+header{background:#fff;border-bottom:4px solid #0759a6;text-align:center;padding:20px}
+header img{max-width:130px;max-height:80px;object-fit:contain}
+h1{font-size:22px;color:#0759a6;margin:10px 0}
+h2{font-size:17px;color:#0759a6;margin:0 0 15px}
+.card{background:white;border:1px solid #dce5ed;border-radius:14px;padding:18px;margin-bottom:15px;box-shadow:0 3px 10px #00000008}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+label{display:block;font-size:13px;font-weight:bold}
+input,select,textarea{width:100%;padding:11px;margin-top:6px;border:1px solid #ccd7df;border-radius:8px;font:inherit;background:white}
+textarea{min-height:85px}
+.item{display:grid;grid-template-columns:1fr 145px;gap:12px;align-items:center;border-bottom:1px solid #edf0f3;padding:11px 0;font-size:14px}
+.item:last-child{border-bottom:0}
+.item select{margin:0;font-size:12px}
+.btn{padding:13px;border:0;border-radius:9px;font-weight:bold;cursor:pointer;background:#0759a6;color:white}
+.buttons{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}
+.info{background:#eaf4fc;padding:12px;border-radius:8px;font-size:12px;line-height:1.8;margin-top:10px}
+a{color:#0759a6}
+@media(max-width:600px){
+.grid{grid-template-columns:1fr}
+.item{grid-template-columns:1fr 120px;font-size:12px}
+.item select{font-size:11px;padding:8px 3px}
+}
+@media print{
+body{background:white}
+.buttons,.back{display:none}
+.card{box-shadow:none;break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<header>
+<img src="images/hospital-logo.png" alt="شعار المستشفى">
+<h1>استمارة فحص جودة الهواء والفلاتر</h1>
+<p>مستشفى إرادة والصحة النفسية بحفر الباطن</p>
+<p>قسم الصحة العامة</p>
+</header>
+
+<div class="container">
+
+<p class="back"><a href="index.html">← العودة للرئيسية</a></p>
+
+<div class="card">
+<h2>1. بيانات الجولة</h2>
+<div class="grid">
+<label>القسم / الموقع
+<input id="location" placeholder="اسم القسم">
+</label>
+<label>اسم الفاحص
+<input id="inspector" placeholder="اسم الموظف">
+</label>
+<label>تاريخ الجولة
+<input type="date" id="date">
+</label>
+<label>نوع الجولة
+<select id="type">
+<option>دورية</option>
+<option>متابعة</option>
+<option>بلاغ</option>
+</select>
+</label>
+</div>
+</div>
+
+<div class="card">
+<h2>2. المعاينة الميدانية</h2>
+<div id="visual"></div>
+</div>
+
+<div class="card">
+<h2>3. فلاتر التكييف والصيانة</h2>
+<div id="filters"></div>
+</div>
+
+<div class="card">
+<h2>4. جودة الهواء والتهوية</h2>
+<div id="air"></div>
+
+<details style="margin-top:15px">
+<summary>إدخال القراءات الفنية (اختياري)</summary>
+<div class="grid" style="margin-top:12px">
+<label>PM2.5 (µg/m³)
+<input type="number" step="any" id="pm25">
+</label>
+<label>PM10 (µg/m³)
+<input type="number" step="any" id="pm10">
+</label>
+<label>CO₂ (ppm)
+<input type="number" step="any" id="co2">
+</label>
+<label>درجة الحرارة °C
+<input type="number" step="any" id="temp">
+</label>
+<label>الرطوبة %
+<input type="number" step="any" id="humidity">
+</label>
+<label>ACH (مرة/ساعة)
+<input type="number" step="any" id="ach">
+</label>
+</div>
+</details>
+
+<div class="info">
+تُسجل القياسات من جهاز معاير أو تقرير فني.
+فحص كفاءة الفلاتر والتهوية يتم بالتنسيق مع التشغيل والصيانة.
+</div>
+</div>
+
+<div class="card">
+<h2>5. الملاحظات والإجراءات التصحيحية</h2>
+
+<label>الملاحظات والإجراء المطلوب
+<textarea id="notes"></textarea>
+</label>
+
+<div class="grid">
+<label>الجهة المسؤولة
+<select id="owner">
+<option value="">اختر الجهة</option>
+<option>التشغيل والصيانة</option>
+<option>الصحة العامة</option>
+<option>مكافحة العدوى</option>
+<option>جهة فنية متخصصة</option>
+</select>
+</label>
+<label>تاريخ المتابعة
+<input type="date" id="followup">
+</label>
+</div>
+
+<p id="summary"></p>
+
+<div class="buttons">
+<button class="btn" onclick="saveRound()">💾 حفظ الجولة</button>
+<button class="btn" onclick="exportCSV()">📥 تصدير CSV</button>
+<button class="btn" onclick="window.print()">🖨️ طباعة</button>
+</div>
+
+<p id="message" style="font-size:13px"></p>
+</div>
+
+</div>
+
+<script>
+"use strict";
+
+const items = [
+["v1","سلامة ونظافة فتحات التكييف","visual"],
+["v2","عدم وجود روائح أو رطوبة أو عفن ظاهر","visual"],
+["f1","توفر سجل تنظيف واستبدال الفلاتر","filters"],
+["f2","توفر تقرير فني عن سلامة الفلاتر","filters"],
+["f3","فحص فرق الضغط أو HEPA عند الانطباق","filters"],
+["a1","توثيق قياسات PM2.5 وPM10","air"],
+["a2","توثيق CO₂ والحرارة والرطوبة عند الحاجة","air"],
+["a3","توثيق كفاءة التهوية والضغط عند الانطباق","air"]
+];
+
+const readings = ["pm25","pm10","co2","temp","humidity","ach"];
+const statuses = {
+"pass":"مطابق",
+"fail":"غير مطابق",
+"unchecked":"لم يُتحقق",
+"na":"لا ينطبق"
+};
+
+function drawItems(){
+items.forEach(([id,title,group])=>{
+const div=document.createElement("div");
+div.className="item";
+
+const label=document.createElement("span");
+label.textContent=title;
+
+const select=document.createElement("select");
+select.id=id;
+
+Object.entries(statuses).forEach(([value,text])=>{
+const option=document.createElement("option");
+option.value=value;
+option.textContent=text;
+select.appendChild(option);
+});
+
+select.onchange=updateSummary;
+div.append(label,select);
+document.getElementById(group).appendChild(div);
+});
+}
+
+function getValue(id){
+return document.getElementById(id).value;
+}
+
+function collect(){
+const result={
+location:getValue("location").trim(),
+inspector:getValue("inspector").trim(),
+date:getValue("date"),
+type:getValue("type"),
+notes:getValue("notes"),
+owner:getValue("owner"),
+followup:getValue("followup"),
+checks:{},
+readings:{},
+savedAt:new Date().toISOString()
+};
+
+items.forEach(([id])=>{
+result.checks[id]=getValue(id);
+});
+
+readings.forEach(id=>{
+result.readings[id]=getValue(id);
+});
+
+return result;
+}
+
+function updateSummary(){
+let pass=0,fail=0,unchecked=0,na=0;
+items.forEach(([id])=>{
+const v=getValue(id);
+if(v==="pass")pass++;
+if(v==="fail")fail++;
+if(v==="unchecked")unchecked++;
+if(v==="na")na++;
+});
+
+document.getElementById("summary").textContent=
+`مطابق: ${pass} | غير مطابق: ${fail} | لم يُتحقق: ${unchecked} | لا ينطبق: ${na}`;
+}
+
+function saveRound(){
+const data=collect();
+const msg=document.getElementById("message");
+
+if(!data.location||!data.inspector||!data.date){
+msg.textContent="يرجى تعبئة القسم واسم الفاحص والتاريخ.";
+msg.style.color="red";
+return;
+}
+
+try{
+const key="PHRMS_AIR_QUALITY_ROUNDS";
+const all=JSON.parse(localStorage.getItem(key)||"[]");
+all.push(data);
+localStorage.setItem(key,JSON.stringify(all));
+msg.textContent="تم حفظ الجولة على هذا الجهاز فقط.";
+msg.style.color="green";
+}catch(error){
+msg.textContent="تعذر الحفظ على المتصفح.";
+msg.style.color="red";
+}
+}
+
+function exportCSV(){
+const d=collect();
+const rows=[
+["الحقل","القيمة"],
+["القسم",d.location],
+["الفاحص",d.inspector],
+["التاريخ",d.date],
+["نوع الجولة",d.type],
+["المحور","البند","النتيجة"]
+];
+
+const groups={
+visual:"المعاينة الميدانية",
+filters:"الفلاتر والصيانة",
+air:"جودة الهواء والتهوية"
+};
+
+items.forEach(([id,title,group])=>{
+rows.push([groups[group],title,statuses[d.checks[id]]]);
+});
+
+rows.push(["الملاحظات",d.notes]);
+rows.push(["الجهة المسؤولة",d.owner]);
+rows.push(["المتابعة",d.followup]);
+
+readings.forEach(id=>{
+rows.push([id,d.readings[id]]);
+});
+
+const csv="\uFEFF"+rows.map(row=>
+row.map(cell=>
+'"'+String(cell??"").replace(/"/g,'""')+'"'
+).join(",")
+).join("\r\n");
+
+const blob=new Blob([csv],{type:"text/csv;charset=utf-8"});
+const url=URL.createObjectURL(blob);
+const link=document.createElement("a");
+link.href=url;
+link.download="air-quality-round.csv";
+link.click();
+setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+
+const now=new Date();
+const local=new Date(now.getTime()-now.getTimezoneOffset()*60000);
+document.getElementById("date").value=local.toISOString().slice(0,10);
+
+drawItems();
+updateSummary();
+</script>
+</body>
+</html>
