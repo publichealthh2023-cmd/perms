@@ -1,7 +1,9 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -21,6 +23,10 @@ body{
     background:#f3f6f8;
     color:#294b6a;
 }
+
+/* =========================
+   HEADER
+========================= */
 
 .header{
     background:#ffffff;
@@ -72,11 +78,19 @@ body{
     font-size:14px;
 }
 
+/* =========================
+   PAGE
+========================= */
+
 .page{
     max-width:1150px;
     margin:35px auto;
     padding:0 20px 60px;
 }
+
+/* =========================
+   INTRO
+========================= */
 
 .intro{
     background:#fff;
@@ -117,9 +131,13 @@ body{
     font-size:14px;
 }
 
+/* =========================
+   CARDS
+========================= */
+
 .cards{
     display:grid;
-    grid-template-columns:repeat(3,1fr);
+    grid-template-columns:repeat(2,minmax(0,1fr));
     gap:20px;
 }
 
@@ -133,6 +151,9 @@ body{
     padding:26px;
 
     box-shadow:0 5px 16px rgba(0,0,0,.05);
+
+    display:flex;
+    flex-direction:column;
 
     transition:
         transform .18s,
@@ -153,6 +174,10 @@ body{
     height:6px;
 }
 
+/* =========================
+   CARD COLORS
+========================= */
+
 .public-card::before{
     background:#0759a6;
 }
@@ -161,9 +186,17 @@ body{
     background:#15936c;
 }
 
+.air-card::before{
+    background:#0b8292;
+}
+
 .admin-card::before{
     background:#5f3dc4;
 }
+
+/* =========================
+   ICONS
+========================= */
 
 .card-icon{
     width:72px;
@@ -186,9 +219,17 @@ body{
     background:#e9f8f2;
 }
 
+.air-card .card-icon{
+    background:#e5f6f8;
+}
+
 .admin-card .card-icon{
     background:#f0ebff;
 }
+
+/* =========================
+   CARD TEXT
+========================= */
 
 .card h2{
     margin:0 0 7px;
@@ -208,9 +249,15 @@ body{
     line-height:1.8;
     font-size:14px;
     min-height:90px;
+    flex:1;
 }
 
+/* =========================
+   BUTTONS
+========================= */
+
 .open-btn{
+    display:block;
     width:100%;
     border:none;
     border-radius:10px;
@@ -219,6 +266,8 @@ body{
     cursor:pointer;
     font-weight:bold;
     font-size:14px;
+    text-align:center;
+    text-decoration:none;
 }
 
 .public-btn{
@@ -231,10 +280,23 @@ body{
     color:white;
 }
 
+.air-btn{
+    background:#0b8292;
+    color:white;
+}
+
 .admin-btn{
     background:#5f3dc4;
     color:white;
 }
+
+.open-btn:hover{
+    filter:brightness(.94);
+}
+
+/* =========================
+   NOTE
+========================= */
 
 .note{
     margin-top:25px;
@@ -254,10 +316,18 @@ body{
     color:#064c92;
 }
 
+/* =========================
+   RESPONSIVE
+========================= */
+
 @media(max-width:900px){
 
     .cards{
         grid-template-columns:1fr;
+    }
+
+    .card p{
+        min-height:auto;
     }
 
 }
@@ -287,6 +357,23 @@ body{
         font-size:10px;
     }
 
+    .page{
+        margin:18px auto;
+        padding:0 12px 45px;
+    }
+
+    .intro{
+        padding:20px 16px;
+    }
+
+    .intro h2{
+        font-size:21px;
+    }
+
+    .card{
+        padding:22px;
+    }
+
 }
 
 </style>
@@ -295,12 +382,18 @@ body{
 
 <body>
 
+<!-- =========================
+     HEADER
+========================= -->
+
 <header class="header">
 
 <div class="header-grid">
 
 <div class="logo">
-<img src="images/cluster-logo.png" alt="شعار تجمع حفر الباطن الصحي">
+<img
+    src="images/cluster-logo.png"
+    alt="شعار تجمع حفر الباطن الصحي">
 </div>
 
 <div class="header-center">
@@ -320,7 +413,9 @@ Public Health Rounds Management System
 </div>
 
 <div class="logo">
-<img src="images/hospital-logo.png" alt="شعار المستشفى">
+<img
+    src="images/hospital-logo.png"
+    alt="شعار المستشفى">
 </div>
 
 </div>
@@ -330,6 +425,10 @@ Public Health Rounds Management System
 
 <main class="page">
 
+
+<!-- =========================
+     INTRODUCTION
+========================= -->
 
 <section class="intro">
 
@@ -342,18 +441,26 @@ Public Health Rounds Management System
 </h2>
 
 <p>
-
-نظام مستقل لإدارة وتوثيق جولات الصحة العامة والنفايات الطبية،
-وحفظ الاستمارات والملاحظات والتوقيعات،
-مع توفير صندوق تحكم للإدارة والتقارير والإحصائيات ومؤشرات الإنجاز.
-
+نظام مستقل لإدارة وتوثيق جولات الصحة العامة
+والنفايات الطبية وجودة الهواء والفلاتر،
+وحفظ الاستمارات والملاحظات والتوقيعات الإلكترونية،
+مع توفير صندوق تحكم للإدارة والتقارير
+والإحصائيات ومؤشرات الإنجاز.
 </p>
 
 </section>
 
 
+<!-- =========================
+     MAIN CARDS
+========================= -->
+
 <section class="cards">
 
+
+<!-- =========================
+     PUBLIC HEALTH
+========================= -->
 
 <article class="card public-card">
 
@@ -370,23 +477,26 @@ Public Health Inspection
 </h3>
 
 <p>
-
 تنفيذ جولات الصحة العامة وفق النماذج المعتمدة،
-وتوثيق تطبيق البنود والملاحظات والتوقيع الإلكتروني.
-
+وتوثيق تطبيق البنود والملاحظات
+والتوقيع الإلكتروني.
 </p>
 
 <button
+    type="button"
     class="open-btn public-btn"
     onclick="openPublicHealthRound()">
 
-بدء جولة صحة عامة
-←
+بدء جولة صحة عامة ←
 
 </button>
 
 </article>
 
+
+<!-- =========================
+     MEDICAL WASTE
+========================= -->
 
 <article class="card waste-card">
 
@@ -403,23 +513,64 @@ Medical Waste Inspection
 </h3>
 
 <p>
-
-تنفيذ جولات النفايات الطبية ومتابعة الحاويات
-والتخزين والنقل والمستودعات وفق النموذج المعتمد.
-
+تنفيذ جولات النفايات الطبية،
+ومتابعة الحاويات والتخزين والنقل
+والمستودعات وفق النموذج المعتمد.
 </p>
 
 <button
+    type="button"
     class="open-btn waste-btn"
     onclick="openWasteRound()">
 
-بدء جولة نفايات طبية
-←
+بدء جولة نفايات طبية ←
 
 </button>
 
 </article>
 
+
+<!-- =========================
+     AIR QUALITY & FILTERS
+========================= -->
+
+<article class="card air-card">
+
+<div class="card-icon">
+🌬️
+</div>
+
+<h2>
+جولات جودة الهواء والفلاتر
+</h2>
+
+<h3>
+Air Quality &amp; Filters Inspection
+</h3>
+
+<p>
+تنفيذ جولات فحص جودة الهواء الداخلي،
+ومتابعة فلاتر التكييف والتهوية
+وسجلات الصيانة والقراءات الفنية،
+مع توثيق الملاحظات والإجراءات التصحيحية
+والتوقيع الإلكتروني وإصدار التقرير الرسمي.
+</p>
+
+<button
+    type="button"
+    class="open-btn air-btn"
+    onclick="openAirQualityRound()">
+
+بدء جولة جودة الهواء ←
+
+</button>
+
+</article>
+
+
+<!-- =========================
+     CONTROL CENTER
+========================= -->
 
 <article class="card admin-card">
 
@@ -436,20 +587,19 @@ Control Center
 </h3>
 
 <p>
-
-استعراض جميع الجولات،
-إدارة الملاحظات،
-طباعة الاستمارات،
-ومتابعة الإحصائيات ومؤشرات أداء الموظفين.
-
+استعراض جميع الجولات المسجلة،
+وإدارة الملاحظات،
+وطباعة التقارير والاستمارات،
+ومتابعة الإحصائيات
+ومؤشرات أداء الموظفين.
 </p>
 
 <button
+    type="button"
     class="open-btn admin-btn"
     onclick="openControlCenter()">
 
-فتح صندوق التحكم
-←
+فتح صندوق التحكم ←
 
 </button>
 
@@ -459,13 +609,18 @@ Control Center
 </section>
 
 
+<!-- =========================
+     NOTE
+========================= -->
+
 <section class="note">
 
 <strong>
 🔒 نظام مستقل:
 </strong>
 
-هذا المشروع مستقل تمامًا عن بوابة الفرز الذكي والأمراض المعدية،
+هذا المشروع مستقل تمامًا عن بوابة الفرز الذكي
+والأمراض المعدية،
 ولا يشارك معها الملفات أو البيانات أو التخزين.
 
 </section>
@@ -473,6 +628,10 @@ Control Center
 
 </main>
 
+
+<!-- =========================
+     NAVIGATION
+========================= -->
 
 <script>
 
@@ -483,7 +642,6 @@ function openPublicHealthRound(){
 
 }
 
-
 function openWasteRound(){
 
     window.location.href =
@@ -491,6 +649,12 @@ function openWasteRound(){
 
 }
 
+function openAirQualityRound(){
+
+    window.location.href =
+        "air-quality-round.html";
+
+}
 
 function openControlCenter(){
 
