@@ -5,94 +5,553 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>جولة جودة الهواء والفلاتر | PHRMS</title>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#f3f6f8;font-family:Arial,Tahoma,sans-serif;color:#294b6a}
-header{background:#fff;border-bottom:4px solid #0b8292;text-align:center;padding:15px}
-header img{max-height:68px;max-width:140px;object-fit:contain}
-header h1{font-size:22px;margin:8px 0;color:#086a7a}
-header p{margin:5px 0;font-size:13px;color:#718293}
-.container{max-width:850px;margin:18px auto;padding:0 13px 45px}
-.card{background:#fff;border:1px solid #dce5ed;border-radius:14px;padding:18px;margin-bottom:13px;box-shadow:0 3px 10px #00000008}
-h2{font-size:17px;color:#0759a6;margin:0 0 14px;border-right:4px solid #0b8292;padding-right:9px}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-label{display:block;font-size:13px;font-weight:bold;color:#40566b}
-input,select,textarea{width:100%;min-width:0;padding:10px;margin-top:6px;border:1px solid #c9d6df;border-radius:8px;background:#fff;font:inherit;color:#294b6a}
-textarea{min-height:80px;resize:vertical}
-.item{display:grid;grid-template-columns:minmax(0,1fr) 150px;align-items:center;gap:12px;border-bottom:1px solid #edf0f3;padding:11px 0;font-size:13px}
-.item:last-child{border:0}
-.item select{margin:0;font-size:12px}
-.note{background:#eaf5f8;border-right:4px solid #0b8292;border-radius:8px;padding:12px;line-height:1.8;font-size:12px;margin:12px 0 0}
-.actions{display:flex;flex-wrap:wrap;gap:8px}
-button{border:0;padding:12px 15px;border-radius:9px;background:#0b8292;color:white;font-size:13px;font-weight:bold;cursor:pointer}
-button.secondary{background:#e7eef5;color:#0759a6}
-button:disabled{opacity:.5;cursor:not-allowed}
-#message{font-size:13px;white-space:pre-line;line-height:1.7;margin:12px 0 0}
-#summary{margin:0 0 13px;font-weight:bold;font-size:13px}
-a{color:#0759a6}
-.signature-status{margin-top:13px;padding:11px;border:1px solid #dce5ed;border-radius:9px;background:#f5f9fb;color:#53697c;font-size:12px;line-height:1.8}
-.signature-status.ok{border-color:#a7dabc;color:#1b7547;background:#f2faf4}
-.signature-status.warn{border-color:#e7c9a9;color:#9b5c14;background:#fff9ed}
-.signature-status img{max-height:60px;max-width:130px;vertical-align:middle;margin-inline-start:10px}
-#employee option{max-width:100%}
-summary{cursor:pointer;font-weight:bold;font-size:13px}
-@media(max-width:580px){
- .grid{grid-template-columns:1fr}
- .item{grid-template-columns:minmax(0,1fr) 125px}
- .item select{padding:8px 3px;font-size:11px}
+
+body{
+ margin:0;
+ background:#f3f6f8;
+ font-family:Arial,Tahoma,sans-serif;
+ color:#294b6a;
 }
+
+header{
+ background:#fff;
+ border-bottom:4px solid #0b8292;
+ text-align:center;
+ padding:15px;
+}
+
+header img{
+ max-height:68px;
+ max-width:140px;
+ object-fit:contain;
+}
+
+header h1{
+ font-size:22px;
+ margin:8px 0;
+ color:#086a7a;
+}
+
+header p{
+ margin:5px 0;
+ font-size:13px;
+ color:#718293;
+}
+
+.container{
+ max-width:850px;
+ margin:18px auto;
+ padding:0 13px 45px;
+}
+
+.card{
+ background:#fff;
+ border:1px solid #dce5ed;
+ border-radius:14px;
+ padding:18px;
+ margin-bottom:13px;
+ box-shadow:0 3px 10px #00000008;
+}
+
+h2{
+ font-size:17px;
+ color:#0759a6;
+ margin:0 0 14px;
+ border-right:4px solid #0b8292;
+ padding-right:9px;
+}
+
+.grid{
+ display:grid;
+ grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:12px;
+}
+
+label{
+ display:block;
+ font-size:13px;
+ font-weight:bold;
+ color:#40566b;
+}
+
+input,select,textarea{
+ width:100%;
+ min-width:0;
+ padding:10px;
+ margin-top:6px;
+ border:1px solid #c9d6df;
+ border-radius:8px;
+ background:#fff;
+ font:inherit;
+ color:#294b6a;
+}
+
+textarea{
+ min-height:80px;
+ resize:vertical;
+}
+
+.item{
+ display:grid;
+ grid-template-columns:minmax(0,1fr) 150px;
+ align-items:center;
+ gap:12px;
+ border-bottom:1px solid #edf0f3;
+ padding:11px 0;
+ font-size:13px;
+}
+
+.item:last-child{
+ border:0;
+}
+
+.item select{
+ margin:0;
+ font-size:12px;
+}
+
+.note{
+ background:#eaf5f8;
+ border-right:4px solid #0b8292;
+ border-radius:8px;
+ padding:12px;
+ line-height:1.8;
+ font-size:12px;
+ margin:12px 0 0;
+}
+
+.actions{
+ display:flex;
+ flex-wrap:wrap;
+ gap:8px;
+}
+
+button{
+ border:0;
+ padding:12px 15px;
+ border-radius:9px;
+ background:#0b8292;
+ color:white;
+ font-size:13px;
+ font-weight:bold;
+ cursor:pointer;
+}
+
+button.secondary{
+ background:#e7eef5;
+ color:#0759a6;
+}
+
+button:disabled{
+ opacity:.5;
+ cursor:not-allowed;
+}
+
+#message{
+ font-size:13px;
+ white-space:pre-line;
+ line-height:1.7;
+ margin:12px 0 0;
+}
+
+#summary{
+ margin:0 0 13px;
+ font-weight:bold;
+ font-size:13px;
+}
+
+a{
+ color:#0759a6;
+}
+
+.signature-status{
+ margin-top:13px;
+ padding:11px;
+ border:1px solid #dce5ed;
+ border-radius:9px;
+ background:#f5f9fb;
+ color:#53697c;
+ font-size:12px;
+ line-height:1.8;
+}
+
+.signature-status.ok{
+ border-color:#a7dabc;
+ color:#1b7547;
+ background:#f2faf4;
+}
+
+.signature-status.warn{
+ border-color:#e7c9a9;
+ color:#9b5c14;
+ background:#fff9ed;
+}
+
+@media(max-width:580px){
+ .grid{
+  grid-template-columns:1fr;
+ }
+ .item{
+  grid-template-columns:minmax(0,1fr) 125px;
+ }
+ .item select{
+  padding:8px 3px;
+  font-size:11px;
+ }
+}
+
+/* =============================
+   OFFICIAL REPORT
+============================= */
+
+#reportView{
+ display:none;
+ max-width:210mm;
+ margin:20px auto;
+ padding:14px;
+ background:#fff;
+ color:#263c4e;
+}
+
+body.report-open>header,
+body.report-open>main{
+ display:none!important;
+}
+
+body.report-open #reportView{
+ display:block;
+}
+
+.report-toolbar{
+ display:flex;
+ gap:10px;
+ flex-wrap:wrap;
+ margin-bottom:15px;
+}
+
+.report-paper{
+ background:white;
+ padding:20px;
+ border:1px solid #dce5ed;
+ border-radius:10px;
+}
+
+.report-header{
+ display:grid;
+ grid-template-columns:110px 1fr 110px;
+ gap:10px;
+ align-items:center;
+ text-align:center;
+ border-bottom:3px solid #0759a6;
+ padding-bottom:14px;
+ margin-bottom:14px;
+}
+
+.report-header img{
+ width:100%;
+ max-width:100px;
+ max-height:70px;
+ object-fit:contain;
+}
+
+.report-header h1{
+ font-size:20px;
+ color:#064c92;
+ margin:4px 0;
+}
+
+.report-header h3{
+ font-size:12px;
+ font-weight:normal;
+ color:#607387;
+ margin:4px 0;
+}
+
+.report-header .facility{
+ font-size:12px;
+ font-weight:bold;
+ margin-bottom:5px;
+}
+
+.report-subtitle{
+ font-size:11px;
+ color:#667787;
+ text-align:center;
+ margin-bottom:14px;
+}
+
+.report-section{
+ margin:14px 0;
+ break-inside:avoid;
+}
+
+.report-section h2{
+ font-size:15px;
+ margin:0 0 7px;
+ padding:7px 10px;
+ background:#eaf2fa;
+ border:0;
+ color:#064c92;
+}
+
+.report-meta{
+ display:grid;
+ grid-template-columns:repeat(2,minmax(0,1fr));
+ border:1px solid #dce5ed;
+}
+
+.report-meta div{
+ padding:9px;
+ border:1px solid #dce5ed;
+ font-size:12px;
+}
+
+.report-meta strong{
+ color:#064c92;
+ margin-left:8px;
+}
+
+.report-table{
+ width:100%;
+ border-collapse:collapse;
+ table-layout:fixed;
+ font-size:12px;
+}
+
+.report-table th{
+ background:#eef5fa;
+ color:#064c92;
+}
+
+.report-table th,
+.report-table td{
+ border:1px solid #dce5ed;
+ padding:8px;
+ text-align:right;
+ vertical-align:top;
+ overflow-wrap:anywhere;
+}
+
+.report-table th:first-child,
+.report-table td:first-child{
+ width:35px;
+ text-align:center;
+}
+
+.report-table th:last-child,
+.report-table td:last-child{
+ width:95px;
+ text-align:center;
+}
+
+.report-summary{
+ display:grid;
+ grid-template-columns:repeat(5,minmax(0,1fr));
+ gap:8px;
+}
+
+.report-summary div{
+ text-align:center;
+ border:1px solid #dce5ed;
+ border-radius:7px;
+ padding:9px 4px;
+}
+
+.report-summary strong{
+ display:block;
+ font-size:17px;
+ color:#064c92;
+}
+
+.report-summary span{
+ font-size:10px;
+ color:#607387;
+}
+
+.report-note{
+ white-space:pre-wrap;
+ word-break:break-word;
+ border:1px solid #dce5ed;
+ min-height:42px;
+ padding:10px;
+ font-size:12px;
+ line-height:1.8;
+}
+
+.report-signature{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:12px;
+ min-height:110px;
+ border:1px solid #dce5ed;
+ padding:10px;
+ font-size:12px;
+}
+
+.report-signature img{
+ max-height:90px;
+ max-width:220px;
+ object-fit:contain;
+}
+
+.report-footer{
+ border-top:1px solid #aab9c6;
+ margin-top:18px;
+ padding-top:9px;
+ color:#667787;
+ font-size:10px;
+ line-height:1.6;
+}
+
+@media(max-width:580px){
+ .report-paper{
+  padding:11px;
+ }
+ .report-header{
+  grid-template-columns:65px 1fr 65px;
+ }
+ .report-header h1{
+  font-size:16px;
+ }
+ .report-meta{
+  grid-template-columns:1fr;
+ }
+ .report-summary{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+ }
+ .report-table th,
+ .report-table td{
+  padding:5px;
+  font-size:11px;
+ }
+}
+
+@page{
+ size:A4;
+ margin:11mm;
+}
+
 @media print{
- body{background:#fff}
- .card{box-shadow:none;break-inside:avoid}
- .actions,.back,.note.no-print{display:none}
- header{padding:6px}
- #message{display:none}
+ html,body{
+  background:#fff!important;
+ }
+
+ body>header,
+ body>main{
+  display:none!important;
+ }
+
+ #reportView{
+  display:block!important;
+  margin:0;
+  max-width:none;
+  padding:0;
+ }
+
+ .report-toolbar{
+  display:none!important;
+ }
+
+ .report-paper{
+  padding:0;
+  border:none;
+  border-radius:0;
+ }
+
+ .report-header{
+  grid-template-columns:95px 1fr 95px;
+ }
+
+ .report-meta{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+ }
+
+ .report-summary{
+  grid-template-columns:repeat(5,minmax(0,1fr));
+ }
+
+ .report-table{
+  font-size:11px;
+ }
+
+ .report-table th,
+ .report-table td{
+  padding:6px;
+ }
+
+ .report-header,
+ .report-table th,
+ .report-section h2{
+  -webkit-print-color-adjust:exact;
+  print-color-adjust:exact;
+ }
 }
 </style>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
+
 <body>
 
 <header>
-<img src="images/hospital-logo.png" alt="شعار مستشفى إرادة والصحة النفسية">
+<img src="images/hospital-logo.png" alt="شعار المستشفى">
 <h1 id="pageTitle">استمارة فحص جودة الهواء والفلاتر</h1>
 <p>مستشفى إرادة والصحة النفسية بحفر الباطن — قسم الصحة العامة</p>
 </header>
 
 <main class="container">
 
-<p class="back"><a href="index.html">← العودة إلى بوابة الجولات</a></p>
+<p><a href="index.html">← العودة إلى بوابة الجولات</a></p>
 
 <section class="card">
 <h2>1. بيانات الجولة</h2>
+
 <div class="grid">
-<label>القسم / الموقع *
-<input id="location" placeholder="مثال: جناح التنويم" maxlength="120">
+
+<label>
+القسم / الموقع *
+<input id="location" maxlength="120" placeholder="مثال: جناح التنويم">
 </label>
-<label>منفذ الجولة *
+
+<label>
+منفذ الجولة *
 <select id="employee" onchange="employeeChanged()">
 <option value="">جارٍ تحميل الموظفين...</option>
 </select>
 </label>
-<label>الرقم الوظيفي *
-<input id="employeeNumber" readonly placeholder="يظهر تلقائيًا بعد اختيار الموظف">
+
+<label>
+الرقم الوظيفي *
+<input id="employeeNumber" readonly>
 </label>
-<label>تاريخ الجولة *
+
+<label>
+تاريخ الجولة *
 <input type="date" id="date">
 </label>
-<label>نوع الجولة
+
+<label>
+نوع الجولة
 <select id="type">
 <option value="دورية">دورية</option>
 <option value="متابعة">متابعة</option>
 <option value="بلاغ">بلاغ</option>
 </select>
 </label>
-<label>وقت الجولة
+
+<label>
+وقت الجولة
 <input type="time" id="time">
 </label>
+
 </div>
-<div class="signature-status" id="signatureStatus" role="status">
-يتم تحميل قائمة الموظفين وتواقيعهم من النظام المركزي.
+
+<div class="signature-status" id="signatureStatus">
+جاري تحميل بيانات الموظفين والتواقيع الإلكترونية.
 </div>
 </section>
 
@@ -112,53 +571,77 @@ summary{cursor:pointer;font-weight:bold;font-size:13px}
 
 <details style="margin-top:15px">
 <summary>إدخال القراءات الفنية عند توفرها (اختياري)</summary>
+
 <div class="grid" style="margin-top:12px">
-<label>PM2.5 (µg/m³)
+
+<label>
+PM2.5 (µg/m³)
 <input type="number" step="any" min="0" id="pm25">
 </label>
-<label>PM10 (µg/m³)
+
+<label>
+PM10 (µg/m³)
 <input type="number" step="any" min="0" id="pm10">
 </label>
-<label>CO₂ (ppm)
+
+<label>
+CO₂ (ppm)
 <input type="number" step="any" min="0" id="co2">
 </label>
-<label>درجة الحرارة (°C)
+
+<label>
+درجة الحرارة (°C)
 <input type="number" step="any" id="temp">
 </label>
-<label>الرطوبة النسبية (%)
+
+<label>
+الرطوبة النسبية (%)
 <input type="number" step="any" min="0" max="100" id="humidity">
 </label>
-<label>معدل تبديل الهواء ACH
+
+<label>
+معدل تبديل الهواء ACH
 <input type="number" step="any" min="0" id="ach">
 </label>
-<label>الجهاز / رقم التقرير
+
+<label>
+الجهاز / رقم التقرير
 <input id="device" maxlength="120">
 </label>
-<label>تاريخ معايرة الجهاز
+
+<label>
+تاريخ معايرة الجهاز
 <input type="date" id="calibration">
 </label>
-<label>مدة القياس (دقيقة)
+
+<label>
+مدة القياس (دقيقة)
 <input type="number" min="0" id="duration">
 </label>
+
 </div>
 </details>
 
 <div class="note">
-القراءات تُوثّق من جهاز ملائم ومعاير أو تقرير فني.
-اختبار كفاءة الفلاتر وACH والضغط يتم بواسطة التشغيل والصيانة
-أو جهة فنية مختصة، ولا تُعد قراءة الجسيمات وحدها
-إثباتًا لكفاءة HEPA.
+القراءات الفنية توثق من أجهزة قياس مناسبة أو تقارير فنية.
+فحص كفاءة HEPA واختبارات الضغط وتدفق الهواء
+يجب أن ينفذها المختصون وفق متطلبات الموقع.
 </div>
 </section>
 
 <section class="card">
 <h2>5. الملاحظات والإجراء التصحيحي</h2>
-<label>الملاحظات / الإجراء المطلوب
+
+<label>
+الملاحظات / الإجراء المطلوب
 <textarea id="notes" maxlength="2000"
-placeholder="يجب توثيق الملاحظة عند وجود بند غير مطابق"></textarea>
+placeholder="اكتب الملاحظات والإجراءات المطلوبة"></textarea>
 </label>
+
 <div class="grid" style="margin-top:12px">
-<label>الجهة المسؤولة
+
+<label>
+الجهة المسؤولة
 <select id="owner">
 <option value="">اختر الجهة</option>
 <option>التشغيل والصيانة</option>
@@ -167,32 +650,38 @@ placeholder="يجب توثيق الملاحظة عند وجود بند غير م
 <option>جهة فنية متخصصة</option>
 </select>
 </label>
-<label>تاريخ المتابعة
+
+<label>
+تاريخ المتابعة
 <input type="date" id="followup">
 </label>
+
 </div>
 </section>
 
 <section class="card">
 <h2>6. الحفظ والمتابعة</h2>
+
 <p id="summary"></p>
 
 <div class="actions" id="actions">
 
 <button id="saveBtn" type="button" onclick="saveRound()">
-💾 حفظ مركزي في Supabase
+💾 حفظ الجولة مركزيًا
 </button>
 
 <button type="button" class="secondary" onclick="retryPending()">
-↻ إعادة إرسال الجولات المعلّقة (<span id="pendingCount">0</span>)
+↻ إعادة إرسال الجولات المعلقة
+(<span id="pendingCount">0</span>)
+</button>
+
+<button id="reportBtn" type="button" class="secondary"
+onclick="showReport()" disabled>
+🖨️ عرض التقرير الرسمي والطباعة
 </button>
 
 <button type="button" class="secondary" onclick="exportCSV()">
-📥 CSV
-</button>
-
-<button type="button" class="secondary" onclick="window.print()">
-🖨️ طباعة
+📥 تصدير CSV
 </button>
 
 <button type="button" class="secondary" onclick="newRound()">
@@ -203,21 +692,44 @@ placeholder="يجب توثيق الملاحظة عند وجود بند غير م
 
 <p id="message" role="status" aria-live="polite"></p>
 
-<div class="note no-print">
-<strong>تنبيه:</strong>
-لا تُعد الجولة معتمدة مركزيًا إلا إذا ظهرت رسالة
-«تم الحفظ في قاعدة البيانات».
-عند فشل الاتصال تُحفظ نسخة معلّقة على الجهاز
-ويجب إعادة إرسالها.
-لا تُدخل معلومات تعريفية للمرضى.
+<div class="note">
+لا تُعد الجولة محفوظة مركزيًا إلا بعد تأكيد نجاح
+الإرسال إلى قاعدة البيانات. عند فشل الإرسال تُحفظ
+نسخة معلقة على الجهاز لإعادة المحاولة.
 </div>
+
 </section>
 </main>
+
+<!-- =============================
+     OFFICIAL REPORT VIEW
+============================= -->
+
+<section id="reportView">
+
+<div class="report-toolbar">
+
+<button type="button" onclick="window.print()">
+🖨️ طباعة / حفظ PDF
+</button>
+
+<button type="button" class="secondary" onclick="hideReport()">
+← العودة إلى تفاصيل الجولة
+</button>
+
+</div>
+
+<div id="reportPaper" class="report-paper"></div>
+
+</section>
 
 <script>
 'use strict';
 
-/* SUPABASE */
+/* =============================
+   SUPABASE
+============================= */
+
 const SUPABASE_URL =
 'https://xbivmhkqxmrkpjxfvemc.supabase.co';
 
@@ -226,10 +738,14 @@ const SUPABASE_PUBLISHABLE_KEY =
 
 const db = window.supabase
  ? window.supabase.createClient(
-     SUPABASE_URL,
-     SUPABASE_PUBLISHABLE_KEY
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
    )
  : null;
+
+/* =============================
+   CONFIGURATION
+============================= */
 
 const PENDING_KEY = 'PHRMS_AIR_QUALITY_PENDING';
 
@@ -259,8 +775,13 @@ const READINGS = [
 let currentId = null;
 let submitted = false;
 let viewMode = false;
+let savedRecord = null;
 let employees = [];
 let employeeLoadReady = false;
+
+/* =============================
+   HELPERS
+============================= */
 
 function el(id){
  return document.getElementById(id);
@@ -271,33 +792,66 @@ function value(id){
 }
 
 function showMessage(message,error=false){
- el('message').textContent=message;
- el('message').style.color=error?'#b42318':'#14784b';
+ el('message').textContent = message;
+ el('message').style.color =
+  error ? '#b42318' : '#14784b';
 }
+
+function safeHtml(v){
+ return String(v??'')
+  .replaceAll('&','&amp;')
+  .replaceAll('<','&lt;')
+  .replaceAll('>','&gt;')
+  .replaceAll('"','&quot;')
+  .replaceAll("'",'&#039;');
+}
+
+function display(v){
+ const s=String(v??'').trim();
+ return s?safeHtml(s):'—';
+}
+
+/* =============================
+   LOCAL PENDING QUEUE
+============================= */
 
 function getPending(){
  try{
-  const a=JSON.parse(
+  const data=JSON.parse(
    localStorage.getItem(PENDING_KEY)||'[]'
   );
-  return Array.isArray(a)?a:[];
+  return Array.isArray(data)?data:[];
  }catch{
   return [];
  }
 }
 
 function setPending(rows){
- localStorage.setItem(PENDING_KEY,JSON.stringify(rows));
+ localStorage.setItem(
+  PENDING_KEY,
+  JSON.stringify(rows)
+ );
  el('pendingCount').textContent=rows.length;
 }
+
+function cachePending(record){
+ const rows=getPending()
+  .filter(r=>r.id!==record.id);
+
+ rows.push(record);
+ setPending(rows);
+}
+
+/* =============================
+   LOAD EMPLOYEES
+============================= */
 
 async function loadEmployees(){
  const select=el('employee');
 
  if(!db){
-  select.innerHTML='<option value="">تعذّر الاتصال بالخدمة</option>';
-  el('signatureStatus').textContent=
-   'تعذّر الاتصال بقاعدة بيانات الموظفين.';
+  select.innerHTML=
+   '<option value="">تعذّر الاتصال بالخدمة</option>';
   return;
  }
 
@@ -309,66 +863,65 @@ async function loadEmployees(){
 
   if(error)throw error;
 
-  employees=(data||[])
-   .map(row=>({
-    name:String(row.employee_name||'').trim(),
-    number:String(row.employee_number||'').trim(),
-    signature:row.signature_data||''
-   }))
-   .filter(r=>r.name&&r.number);
+  employees=(data||[]).map(row=>({
+   name:String(row.employee_name||'').trim(),
+   number:String(row.employee_number||'').trim(),
+   signature:row.signature_data||''
+  })).filter(r=>r.name&&r.number);
 
   select.innerHTML=
    '<option value="">اختر منفذ الجولة</option>';
 
   employees.forEach(item=>{
-   const opt=document.createElement('option');
-   opt.value=item.number;
-   opt.textContent=item.name;
-   select.appendChild(opt);
+   const option=document.createElement('option');
+   option.value=item.number;
+   option.textContent=item.name;
+   select.appendChild(option);
   });
 
   employeeLoadReady=true;
-  el('signatureStatus').textContent=employees.length
-   ?'اختر الموظف لإظهار حالة التوقيع الإلكتروني.'
-   :'لا يوجد موظفون مسجلون؛ الرجاء إضافتهم في إدارة الموظفين والتواقيع.';
 
- }catch(err){
+  el('signatureStatus').textContent=
+   'اختر الموظف لعرض حالة توقيعه الإلكتروني.';
+
+ }catch(error){
+  console.error('Employee load error:',error);
   select.innerHTML=
    '<option value="">تعذّر تحميل الموظفين</option>';
   el('signatureStatus').textContent=
-   'تعذّر تحميل الموظفين من Supabase. أعد فتح الصفحة أو راجع الصلاحيات.';
-  console.error('Employees loading failed',err);
+   'تعذّر تحميل الموظفين من قاعدة البيانات.';
  }
 }
 
 function employeeChanged(){
- const match=employees.find(
+ const employee=employees.find(
   e=>e.number===value('employee')
  );
 
- el('employeeNumber').value=match?.number||'';
+ el('employeeNumber').value=employee?.number||'';
 
  const box=el('signatureStatus');
- box.textContent='';
  box.className='signature-status';
 
- if(!match){
-  box.textContent=
-   'اختر الموظف لإظهار حالة التوقيع الإلكتروني.';
+ if(!employee){
+  box.textContent='اختر الموظف أولًا.';
   return;
  }
 
- if(!match.signature){
+ if(!employee.signature){
   box.classList.add('warn');
   box.textContent=
-   '⚠️ لا يوجد توقيع إلكتروني مسجّل لهذا الموظف. راجع إدارة الموظفين والتواقيع.';
-  return;
+   'لا يوجد توقيع إلكتروني مسجل لهذا الموظف.';
+ }else{
+  box.classList.add('ok');
+  box.textContent=
+   '✓ يوجد توقيع إلكتروني مسجل لهذا الموظف.';
  }
-
- box.classList.add('ok');
- box.textContent=
-  '✓ التوقيع الإلكتروني للموظف مسجّل في النظام.';
 }
+
+/* =============================
+   RENDER INSPECTION ITEMS
+============================= */
 
 function drawChecks(){
  CHECKS.forEach(item=>{
@@ -382,31 +935,40 @@ function drawChecks(){
   select.id=item.id;
 
   Object.entries(STATUSES).forEach(([key,name])=>{
-   const opt=document.createElement('option');
-   opt.value=key;
-   opt.textContent=name;
-   select.appendChild(opt);
+   const option=document.createElement('option');
+   option.value=key;
+   option.textContent=name;
+   select.appendChild(option);
   });
 
   select.addEventListener('change',updateSummary);
+
   row.append(title,select);
   el(item.group).appendChild(row);
  });
 }
 
 function counts(){
- const counts={pass:0,fail:0,na:0,unchecked:0};
+ const result={
+  pass:0,
+  fail:0,
+  na:0,
+  unchecked:0
+ };
 
- CHECKS.forEach(x=>{
-  counts[value(x.id)]++;
+ CHECKS.forEach(item=>{
+  const status=value(item.id);
+  if(Object.hasOwn(result,status)){
+   result[status]++;
+  }
  });
 
- const applicable=counts.pass+counts.fail;
+ const applicable=result.pass+result.fail;
 
  return {
-  ...counts,
+  ...result,
   complianceRate:applicable
-   ?Math.round(counts.pass/applicable*100)
+   ?Math.round(result.pass/applicable*100)
    :null
  };
 }
@@ -415,8 +977,16 @@ function updateSummary(){
  const c=counts();
 
  el('summary').textContent=
-  `مطابق: ${c.pass} | غير مطابق: ${c.fail} | لم يُتحقق: ${c.unchecked} | لا ينطبق: ${c.na} | الالتزام: ${c.complianceRate===null?'غير محسوب':c.complianceRate+'%'}`;
+  `مطابق: ${c.pass} | غير مطابق: ${c.fail} | لم يُتحقق: ${c.unchecked} | لا ينطبق: ${c.na} | نسبة الالتزام: ${
+   c.complianceRate===null
+    ?'غير محسوبة'
+    :c.complianceRate+'%'
+  }`;
 }
+
+/* =============================
+   RECORD COLLECTION
+============================= */
 
 function generateId(){
  return 'AQ-'
@@ -429,25 +999,21 @@ function generateId(){
 
 function collect(){
  const c=counts();
- const results={};
-
- CHECKS.forEach(x=>{
-  results[x.id]=value(x.id);
- });
 
  const readings={};
- READINGS.forEach(x=>{
-  readings[x]=value(x);
+ READINGS.forEach(id=>{
+  readings[id]=value(id);
  });
+
+ const employee=employees.find(
+  e=>e.number===value('employee')
+ );
 
  return {
   id:currentId||generateId(),
   roundType:'airQuality',
   categoryName:'جودة الهواء والفلاتر',
-  employeeName:
-   employees.find(
-    e=>e.number===value('employee')
-   )?.name||'',
+  employeeName:employee?.name||'',
   employeeNumber:value('employeeNumber').trim(),
   inspectionDate:value('date'),
   inspectionTime:value('time'),
@@ -459,57 +1025,63 @@ function collect(){
   uncheckedCount:c.unchecked,
   complianceRate:c.complianceRate,
   totalItems:CHECKS.length,
-  checks:CHECKS.map(x=>({
-   id:x.id,
-   label:x.label,
-   status:results[x.id]
+  checks:CHECKS.map(item=>({
+   id:item.id,
+   label:item.label,
+   status:value(item.id)
   })),
-  checkResults:results,
   notes:value('notes').trim(),
   actionOwner:value('owner'),
   followupDate:value('followup'),
-  readings,
+  readings:readings,
   createdAt:new Date().toISOString()
  };
 }
 
-function validateRound(r){
- if(!employeeLoadReady)
-  return 'لم يكتمل تحميل قائمة الموظفين من قاعدة البيانات.';
+function validateRound(record){
+ if(!employeeLoadReady){
+  return 'لم يتم تحميل قائمة الموظفين بعد.';
+ }
 
- if(!r.locationName||!r.employeeName||
-    !r.employeeNumber||!r.inspectionDate)
-  return 'يرجى تعبئة القسم والموظف والتاريخ.';
+ if(
+  !record.locationName||
+  !record.employeeName||
+  !record.employeeNumber||
+  !record.inspectionDate
+ ){
+  return 'يرجى استكمال بيانات الجولة الأساسية.';
+ }
 
- const emp=employees.find(
-  e=>e.number===r.employeeNumber
+ const employee=employees.find(
+  e=>e.number===record.employeeNumber
  );
 
- if(!emp?.signature)
-  return 'لا يوجد توقيع إلكتروني مسجّل للموظف. يرجى استكماله أولًا.';
+ if(!employee?.signature){
+  return 'لا يوجد توقيع إلكتروني مسجل لهذا الموظف.';
+ }
 
- if(r.yesCount+r.noCount+r.naCount===0)
-  return 'يجب تقييم بند واحد على الأقل قبل الحفظ.';
+ const answered=
+  record.yesCount+record.noCount+record.naCount;
 
- if(r.noCount>0&&!r.notes)
-  return 'يجب توثيق الملاحظات عند وجود بند غير مطابق.';
+ if(answered===0){
+  return 'يرجى تقييم بنود الجولة قبل الحفظ.';
+ }
+
+ if(record.noCount>0&&!record.notes){
+  return 'عند وجود عدم مطابقة يجب تسجيل الملاحظة.';
+ }
 
  return '';
 }
 
-function cachePending(record){
- const rows=getPending()
-  .filter(x=>x.id!==record.id);
-
- rows.push(record);
- setPending(rows);
-}
+/* =============================
+   CENTRAL SAVE
+============================= */
 
 async function insertCentral(record){
- if(!db)
-  throw new Error(
-   'تعذر تحميل مكتبة Supabase؛ تحقق من اتصال الإنترنت.'
-  );
+ if(!db){
+  throw new Error('خدمة Supabase غير متاحة.');
+ }
 
  const {error}=await db
   .from('inspection_records')
@@ -521,15 +1093,18 @@ async function insertCentral(record){
 
  if(!error)return;
 
- const {data:existing,error:lookupError}=await db
+ const {data:existing,error:checkError}=await db
   .from('inspection_records')
   .select('round_id')
   .eq('round_id',record.id)
   .limit(1);
 
- if(!lookupError&&existing?.some(
-  row=>row.round_id===record.id
- ))return;
+ if(
+  !checkError &&
+  existing?.some(r=>r.round_id===record.id)
+ ){
+  return;
+ }
 
  throw error;
 }
@@ -546,84 +1121,208 @@ async function saveRound(){
  }
 
  currentId=record.id;
+
  const btn=el('saveBtn');
  btn.disabled=true;
 
- showMessage(
-  'جارٍ إرسال الجولة إلى قاعدة البيانات...'
- );
+ showMessage('جارٍ حفظ الجولة مركزيًا...');
 
  try{
   await insertCentral(record);
 
   setPending(
-   getPending().filter(x=>x.id!==record.id)
+   getPending().filter(r=>r.id!==record.id)
   );
 
   submitted=true;
+  savedRecord=record;
+
+  el('reportBtn').disabled=false;
 
   showMessage(
-   '✓ تم الحفظ في قاعدة البيانات المركزية بنجاح. رقم الجولة: '
-   +record.id
+   '✅ تم الحفظ في قاعدة البيانات المركزية.\nرقم الجولة: '
+   +record.id+
+   '\nيمكنك الآن عرض التقرير الرسمي وطباعته.'
   );
 
- }catch(err){
+ }catch(error){
+  console.error('Central save failed:',error);
+
   try{
    cachePending(record);
 
    showMessage(
-    'لم يتم الحفظ مركزيًا. حُفظت نسخة معلّقة على هذا الجهاز. اضغط «إعادة إرسال» لاحقًا.\nالسبب: '
-    +(err.message||'تعذر الاتصال'),
+    'تعذر الحفظ المركزي. تم الاحتفاظ بالجولة على هذا الجهاز لإعادة إرسالها.\n'
+    +(error.message||'خطأ اتصال'),
     true
    );
 
-  }catch(e){
+  }catch(localError){
    showMessage(
-    'فشل الحفظ المركزي والمحلي: '
-    +(err.message||'خطأ اتصال'),
+    'تعذر الحفظ المركزي والمحلي. لا تغلق الصفحة.',
     true
    );
   }
+
  }finally{
   btn.disabled=submitted;
  }
 }
 
+/* =============================
+   RETRY PENDING
+============================= */
+
 async function retryPending(){
  const queue=getPending();
 
  if(!queue.length){
-  showMessage(
-   'لا توجد جولات معلّقة على هذا الجهاز.'
-  );
+  showMessage('لا توجد جولات معلقة.');
   return;
  }
 
- let success=0;
  const failed=[];
+ let successful=0;
 
  for(const round of queue){
   try{
    await insertCentral(round);
-   success++;
-  }catch(e){
+   successful++;
+  }catch(error){
    failed.push(round);
   }
  }
 
  setPending(failed);
 
+ if(
+  currentId&&
+  queue.some(r=>r.id===currentId)&&
+  !failed.some(r=>r.id===currentId)
+ ){
+  submitted=true;
+  savedRecord=queue.find(r=>r.id===currentId);
+  el('saveBtn').disabled=true;
+  el('reportBtn').disabled=false;
+ }
+
  showMessage(
-  `تم إرسال ${success} جولة بنجاح. المتبقي ${failed.length} جولة معلّقة.`,
+  `تم إرسال ${successful} جولة. المتبقي ${failed.length} جولة معلقة.`,
   failed.length>0
  );
+}
 
- if(!submitted&&currentId&&
-    !failed.some(x=>x.id===currentId)&&success>0){
-  submitted=true;
-  el('saveBtn').disabled=true;
+/* =============================
+   VIEW SAVED ROUND
+============================= */
+
+async function loadView(id){
+ if(!db){
+  showMessage('لا يوجد اتصال بقاعدة البيانات.',true);
+  return;
+ }
+
+ try{
+  const {data:auth,error:authError}=
+   await db.auth.getUser();
+
+  if(authError||!auth?.user){
+   throw new Error(
+    'يلزم تسجيل الدخول الإداري لعرض الجولة.'
+   );
+  }
+
+  const {data,error}=await db
+   .from('inspection_records')
+   .select('record_data')
+   .eq('round_id',id)
+   .single();
+
+  if(error)throw error;
+
+  if(!data?.record_data){
+   throw new Error('لم يتم العثور على الجولة.');
+  }
+
+  fillView(data.record_data);
+
+ }catch(error){
+  showMessage(
+   'تعذر تحميل الجولة: '+error.message,
+   true
+  );
  }
 }
+
+function fillView(record){
+ viewMode=true;
+ currentId=record.id;
+ savedRecord=record;
+
+ el('pageTitle').textContent=
+  'تفاصيل جولة جودة الهواء والفلاتر';
+
+ const fields={
+  location:record.locationName,
+  employeeNumber:record.employeeNumber,
+  date:record.inspectionDate,
+  time:record.inspectionTime,
+  type:record.inspectionType||'دورية',
+  notes:record.notes,
+  owner:record.actionOwner,
+  followup:record.followupDate
+ };
+
+ Object.entries(fields).forEach(([id,val])=>{
+  if(el(id))el(id).value=val||'';
+ });
+
+ const option=document.createElement('option');
+ option.value=record.employeeNumber||'';
+ option.textContent=record.employeeName||'—';
+ option.selected=true;
+ el('employee').appendChild(option);
+
+ (record.checks||[]).forEach(item=>{
+  if(el(item.id)){
+   el(item.id).value=item.status||'unchecked';
+  }
+ });
+
+ if(record.checkResults){
+  Object.entries(record.checkResults).forEach(
+   ([id,status])=>{
+    if(el(id))el(id).value=status;
+   }
+  );
+ }
+
+ Object.entries(record.readings||{}).forEach(
+  ([id,val])=>{
+   if(el(id))el(id).value=val??'';
+  }
+ );
+
+ document.querySelectorAll(
+  'input,select,textarea'
+ ).forEach(input=>{
+  input.disabled=true;
+ });
+
+ el('saveBtn').style.display='none';
+ el('reportBtn').disabled=false;
+
+ updateSummary();
+
+ showMessage(
+  'تم تحميل الجولة المحفوظة. رقم الجولة: '
+  +record.id
+ );
+}
+
+/* =============================
+   CSV EXPORT
+============================= */
 
 function csvEscape(v){
  return '"'+String(v??'')
@@ -631,35 +1330,32 @@ function csvEscape(v){
 }
 
 function exportCSV(){
- const r=collect();
+ const record=savedRecord||collect();
 
  const rows=[
   ['الحقل','القيمة'],
-  ['رقم الجولة',r.id],
-  ['الموقع',r.locationName],
-  ['الموظف',r.employeeName],
-  ['الرقم الوظيفي',r.employeeNumber],
-  ['التاريخ',r.inspectionDate],
-  ['نوع الجولة',r.inspectionType],
-  ['البند','الحالة']
+  ['رقم الجولة',record.id],
+  ['الموقع',record.locationName],
+  ['الموظف',record.employeeName],
+  ['التاريخ',record.inspectionDate],
+  ['البند','النتيجة']
  ];
 
- r.checks.forEach(x=>{
-  rows.push([x.label,STATUSES[x.status]]);
- });
-
- Object.entries(r.readings).forEach(([k,v])=>{
-  rows.push([k,v]);
+ (record.checks||[]).forEach(item=>{
+  rows.push([
+   item.label,
+   STATUSES[item.status]||'لم يُتحقق'
+  ]);
  });
 
  rows.push(
-  ['الملاحظات',r.notes],
-  ['المسؤول',r.actionOwner],
-  ['المتابعة',r.followupDate]
+  ['الملاحظات',record.notes],
+  ['الجهة المسؤولة',record.actionOwner],
+  ['تاريخ المتابعة',record.followupDate]
  );
 
  const content='\ufeff'+rows
-  .map(a=>a.map(csvEscape).join(','))
+  .map(row=>row.map(csvEscape).join(','))
   .join('\r\n');
 
  const blob=new Blob(
@@ -671,133 +1367,311 @@ function exportCSV(){
  const a=document.createElement('a');
 
  a.href=url;
- a.download=
-  'air-quality-round-'+r.inspectionDate+'.csv';
-
+ a.download='air-quality-'+record.inspectionDate+'.csv';
  a.click();
 
- setTimeout(()=>{
-  URL.revokeObjectURL(url);
- },1000);
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
+
+/* =============================
+   ELECTRONIC SIGNATURE
+============================= */
+
+function permittedSignatureUrl(url){
+ const s=String(url||'');
+
+ if(
+  /^data:image\/(png|jpeg|jpg|webp);base64,[A-Za-z0-9+/=]+$/i.test(s)
+ ){
+  return s;
+ }
+
+ if(/^https:\/\//i.test(s)){
+  return s;
+ }
+
+ return '';
+}
+
+async function getRoundSignature(record){
+ const found=employees.find(
+  e=>e.number===String(record.employeeNumber||'')
+ );
+
+ if(found?.signature){
+  return permittedSignatureUrl(found.signature);
+ }
+
+ if(!db||!record.employeeNumber){
+  return '';
+ }
+
+ try{
+  const {data,error}=await db
+   .from('employees')
+   .select('signature_data')
+   .eq('employee_number',String(record.employeeNumber))
+   .limit(1);
+
+  if(!error&&data?.[0]?.signature_data){
+   return permittedSignatureUrl(
+    data[0].signature_data
+   );
+  }
+
+ }catch(error){
+  console.error('Signature load error:',error);
+ }
+
+ return '';
+}
+
+/* =============================
+   OFFICIAL REPORT
+============================= */
+
+function reportCell(label,value){
+ return `<div>
+  <strong>${safeHtml(label)}:</strong>
+  ${display(value)}
+ </div>`;
+}
+
+function printableReadings(readings){
+ const fields=[
+  ['PM2.5','pm25','µg/m³'],
+  ['PM10','pm10','µg/m³'],
+  ['CO₂','co2','ppm'],
+  ['درجة الحرارة','temp','°C'],
+  ['الرطوبة النسبية','humidity','%'],
+  ['معدل تبديل الهواء','ach','ACH'],
+  ['الجهاز / التقرير','device',''],
+  ['تاريخ المعايرة','calibration',''],
+  ['مدة القياس','duration','دقيقة']
+ ];
+
+ const available=fields.filter(([,id])=>
+  readings?.[id]!==undefined&&
+  readings?.[id]!==null&&
+  String(readings[id]).trim()!==''
+ );
+
+ if(!available.length){
+  return '<p class="report-note">لم تسجل قراءات فنية لهذه الجولة.</p>';
+ }
+
+ return `
+ <table class="report-table">
+ <thead>
+ <tr>
+ <th>م</th><th>البيان</th><th>القيمة</th>
+ </tr>
+ </thead>
+ <tbody>
+ ${available.map(([label,key,unit],i)=>`
+ <tr>
+ <td>${i+1}</td>
+ <td>${safeHtml(label)}</td>
+ <td>${display(readings[key])} ${safeHtml(unit)}</td>
+ </tr>
+ `).join('')}
+ </tbody>
+ </table>`;
+}
+
+async function showReport(){
+ const record=savedRecord;
+
+ if(!record){
+  showMessage(
+   'احفظ الجولة مركزيًا أو افتح جولة محفوظة أولًا.',
+   true
+  );
+  return;
+ }
+
+ const signature=await getRoundSignature(record);
+
+ const signatureMarkup=signature
+  ?`<img src="${safeHtml(signature)}"
+      alt="توقيع منفذ الجولة">`
+  :'<span>تعذّر تحميل التوقيع الإلكتروني المسجل.</span>';
+
+ const checks=Array.isArray(record.checks)&&record.checks.length
+  ?record.checks
+  :CHECKS.map(item=>({
+    id:item.id,
+    label:item.label,
+    status:record.checkResults?.[item.id]||'unchecked'
+   }));
+
+ const compliance=
+  record.complianceRate===null||
+  record.complianceRate===undefined
+   ?'غير محسوبة'
+   :record.complianceRate+'%';
+
+ const summary=[
+  ['مطابق',record.yesCount??0],
+  ['غير مطابق',record.noCount??0],
+  ['لم يُتحقق',record.uncheckedCount??0],
+  ['لا ينطبق',record.naCount??0],
+  ['نسبة الالتزام',compliance]
+ ];
+
+ const report=document.getElementById('reportPaper');
+
+ report.innerHTML=`
+
+ <div class="report-header">
+
+ <img src="images/cluster-logo.png"
+ alt="شعار تجمع حفر الباطن الصحي">
+
+ <div>
+ <div class="facility">
+ مستشفى إرادة والصحة النفسية بحفر الباطن
+ </div>
+
+ <h1>تقرير جولة جودة الهواء والفلاتر</h1>
+
+ <h3>
+ Air Quality &amp; Filters Inspection Report
+ </h3>
+
+ <div class="report-subtitle">
+ قسم الصحة العامة — نظام إدارة جولات الصحة العامة
+ </div>
+ </div>
+
+ <img src="images/hospital-logo.png"
+ alt="شعار المستشفى">
+
+ </div>
+
+ <section class="report-section">
+ <h2>أولًا: بيانات الجولة</h2>
+
+ <div class="report-meta">
+ ${reportCell('رقم الجولة',record.id)}
+ ${reportCell('نوع الجولة',record.inspectionType)}
+ ${reportCell('التاريخ',record.inspectionDate)}
+ ${reportCell('الوقت',record.inspectionTime)}
+ ${reportCell('اسم الموظف',record.employeeName)}
+ ${reportCell('الرقم الوظيفي',record.employeeNumber)}
+ ${reportCell('القسم / الموقع',record.locationName)}
+ ${reportCell('حالة الحفظ','محفوظة مركزيًا')}
+ </div>
+ </section>
+
+ <section class="report-section">
+ <h2>ثانيًا: ملخص النتائج</h2>
+
+ <div class="report-summary">
+ ${summary.map(([label,val])=>`
+ <div>
+ <strong>${display(val)}</strong>
+ <span>${safeHtml(label)}</span>
+ </div>
+ `).join('')}
+ </div>
+ </section>
+
+ <section class="report-section">
+ <h2>ثالثًا: بنود جولة جودة الهواء والفلاتر</h2>
+
+ <table class="report-table">
+ <thead>
+ <tr>
+ <th>م</th>
+ <th>البند</th>
+ <th>النتيجة</th>
+ </tr>
+ </thead>
+
+ <tbody>
+ ${checks.map((item,i)=>`
+ <tr>
+ <td>${i+1}</td>
+ <td>${display(item.label)}</td>
+ <td>${safeHtml(
+  STATUSES[item.status]||'لم يُتحقق'
+ )}</td>
+ </tr>
+ `).join('')}
+ </tbody>
+ </table>
+ </section>
+
+ <section class="report-section">
+ <h2>رابعًا: القراءات الفنية</h2>
+ ${printableReadings(record.readings)}
+ </section>
+
+ <section class="report-section">
+ <h2>خامسًا: الملاحظات والإجراءات التصحيحية</h2>
+
+ <div class="report-note">
+ ${display(record.notes||'لا توجد ملاحظات عامة.')}
+ </div>
+
+ <div class="report-meta">
+ ${reportCell('الجهة المسؤولة',record.actionOwner)}
+ ${reportCell('تاريخ المتابعة',record.followupDate)}
+ </div>
+ </section>
+
+ <section class="report-section">
+ <h2>سادسًا: توقيع منفذ الجولة</h2>
+
+ <div class="report-signature">
+ <div>
+ <strong>${display(record.employeeName)}</strong>
+ <p>الرقم الوظيفي:
+ ${display(record.employeeNumber)}</p>
+ <p>التوقيع الإلكتروني المسجل في النظام</p>
+ </div>
+
+ <div>${signatureMarkup}</div>
+ </div>
+ </section>
+
+ <footer class="report-footer">
+ رقم الجولة: ${display(record.id)}
+ —
+ تاريخ استخراج التقرير:
+ ${safeHtml(new Date().toLocaleString('ar-SA'))}
+
+ <p>
+ نتائج الجولة تعكس البنود التي تم التحقق منها.
+ ولا تمثل القراءات وحدها شهادة فنية
+ باختبار كفاءة فلاتر HEPA.
+ </p>
+ </footer>
+ `;
+
+ document.body.classList.add('report-open');
+ window.scrollTo(0,0);
+}
+
+function hideReport(){
+ document.body.classList.remove('report-open');
+ window.scrollTo(0,0);
+}
+
+/* =============================
+   NEW ROUND
+============================= */
 
 function newRound(){
- if(!confirm(
-  'بدء جولة جديدة ومسح البيانات المعروضة؟'
- ))return;
-
- window.location.href='air-quality-round.html';
+ if(confirm('هل تريد بدء جولة جديدة؟')){
+  location.href='air-quality-round.html';
+ }
 }
 
-function fillView(r){
- viewMode=true;
- currentId=r.id;
-
- el('pageTitle').textContent=
-  'تفاصيل جولة جودة الهواء والفلاتر';
-
- const fields={
-  location:r.locationName,
-  employeeNumber:r.employeeNumber,
-  date:r.inspectionDate,
-  type:r.inspectionType||'دورية',
-  time:r.inspectionTime,
-  notes:r.notes,
-  owner:r.actionOwner,
-  followup:r.followupDate
- };
-
- Object.entries(fields).forEach(([id,v])=>{
-  if(el(id))el(id).value=v||'';
- });
-
- const opt=document.createElement('option');
- opt.value=r.employeeNumber||'';
- opt.textContent=r.employeeName||'—';
- opt.selected=true;
- el('employee').appendChild(opt);
-
- el('signatureStatus').textContent=
-  'اسم الموظف مرتبط بالسجل المحفوظ؛ تعرض التواقيع من النظام الرئيسي عند الحاجة.';
-
- (r.checks||[]).forEach(x=>{
-  if(el(x.id))
-   el(x.id).value=x.status||'unchecked';
- });
-
- if(r.checkResults){
-  Object.entries(r.checkResults)
-   .forEach(([id,v])=>{
-    if(el(id))el(id).value=v;
-   });
- }
-
- Object.entries(r.readings||{})
-  .forEach(([id,v])=>{
-   if(el(id))el(id).value=v??'';
-  });
-
- document
-  .querySelectorAll('input,select,textarea')
-  .forEach(e=>e.disabled=true);
-
- el('saveBtn').style.display='none';
-
- el('actions')
-  .querySelectorAll('button')
-  .forEach(b=>{
-   if(
-    b.textContent.includes('إعادة إرسال')||
-    b.textContent.includes('جولة جديدة')
-   ){
-    b.style.display='none';
-   }
-  });
-
- updateSummary();
-
- showMessage(
-  'سجل محفوظ مركزيًا | رقم الجولة: '+r.id
- );
-}
-
-async function loadView(id){
- if(!db){
-  showMessage(
-   'فشل الاتصال بخدمة حفظ الجولات.',
-   true
-  );
-  return;
- }
-
- const {data:auth,error:authError}=
-  await db.auth.getUser();
-
- if(authError||!auth?.user){
-  showMessage(
-   'يلزم تسجيل الدخول الإداري لعرض تفاصيل الجولة المحفوظة.',
-   true
-  );
-  return;
- }
-
- const {data,error}=await db
-  .from('inspection_records')
-  .select('record_data')
-  .eq('round_id',id)
-  .single();
-
- if(error||!data?.record_data){
-  showMessage(
-   'تعذر فتح تفاصيل الجولة أو لا توجد صلاحية لقراءتها: '
-   +(error?.message||''),
-   true
-  );
-  return;
- }
-
- fillView(data.record_data);
-}
+/* =============================
+   START
+============================= */
 
 function start(){
  drawChecks();
@@ -809,7 +1683,8 @@ function start(){
    now.getTime()-now.getTimezoneOffset()*60000
   ).toISOString().slice(0,10);
 
- el('time').value=now.toTimeString().slice(0,5);
+ el('time').value=
+  now.toTimeString().slice(0,5);
 
  el('pendingCount').textContent=
   getPending().length;
@@ -822,9 +1697,7 @@ function start(){
 
  if(id){
   el('saveBtn').disabled=true;
-  showMessage(
-   'جارٍ تحميل تفاصيل الجولة...'
-  );
+  showMessage('جارٍ تحميل الجولة...');
   loadView(id);
  }else{
   loadEmployees();
