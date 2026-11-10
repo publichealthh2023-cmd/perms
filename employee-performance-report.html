@@ -1,2492 +1,302 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>تقرير أداء الموظفين | PHRMS</title>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-
-*{
-    box-sizing:border-box;
-}
-
-body{
-    margin:0;
-    background:#f3f6f8;
-    font-family:Arial,Tahoma,sans-serif;
-    color:#294b6a;
-}
-
-.page{
-    max-width:1350px;
-    margin:25px auto;
-    padding:0 15px 60px;
-}
-
-
-/* =========================================================
-   HEADER
-========================================================= */
-
-.header{
-    background:#fff;
-    border:1px solid #dfe8f2;
-    border-radius:16px;
-    padding:20px;
-    margin-bottom:18px;
-
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:15px;
-    flex-wrap:wrap;
-
-    box-shadow:0 4px 14px rgba(0,0,0,.04);
-}
-
-.header h1{
-    margin:0;
-    color:#d98200;
-    font-size:25px;
-}
-
-.header p{
-    margin:6px 0 0;
-    color:#718293;
-    font-size:13px;
-    line-height:1.7;
-}
-
-.header-actions{
-    display:flex;
-    gap:8px;
-    flex-wrap:wrap;
-}
-
-.btn{
-    border:none;
-    border-radius:9px;
-    padding:10px 15px;
-    font-weight:bold;
-    cursor:pointer;
-    text-decoration:none;
-    font-size:13px;
-}
-
-.btn-back{
-    background:#eaf1f7;
-    color:#0759a6;
-}
-
-.btn-tasks{
-    background:#0759a6;
-    color:#fff;
-}
-
-.btn-print{
-    background:#d98200;
-    color:#fff;
-}
-
-
-/* =========================================================
-   FILTERS
-========================================================= */
-
-.filters{
-    background:#fff;
-    border:1px solid #dfe8f2;
-    border-radius:15px;
-    padding:18px;
-    margin-bottom:18px;
-}
-
-.filters-grid{
-    display:grid;
-    grid-template-columns:repeat(6,1fr);
-    gap:10px;
-}
-
-.filter-group{
-    display:flex;
-    flex-direction:column;
-    gap:6px;
-}
-
-.filter-group label{
-    font-size:12px;
-    font-weight:bold;
-}
-
-.filter-group input,
-.filter-group select{
-    padding:10px;
-    border:1px solid #ccd9e5;
-    border-radius:8px;
-    background:#fff;
-}
-
-
-/* =========================================================
-   KPI
-========================================================= */
-
-.stats-grid{
-    display:grid;
-    grid-template-columns:repeat(5,1fr);
-    gap:12px;
-    margin-bottom:18px;
-}
-
-.stat-card{
-    background:#fff;
-    border:1px solid #dfe8f2;
-    border-radius:14px;
-    padding:18px;
-    text-align:center;
-    box-shadow:0 3px 10px rgba(0,0,0,.03);
-}
-
-.stat-card strong{
-    display:block;
-    font-size:27px;
-    color:#d98200;
-}
-
-.stat-card span{
-    display:block;
-    margin-top:5px;
-    color:#718293;
-    font-size:11px;
-}
-
-
-/* =========================================================
-   SECTION
-========================================================= */
-
-.section-card{
-    background:#fff;
-    border:1px solid #dfe8f2;
-    border-radius:15px;
-    padding:18px;
-    margin-bottom:18px;
-    box-shadow:0 3px 10px rgba(0,0,0,.03);
-}
-
-.section-title{
-    margin:0 0 15px;
-    color:#d98200;
-    border-right:5px solid #d98200;
-    padding-right:10px;
-    font-size:18px;
-}
-
-
-/* =========================================================
-   TABLE
-========================================================= */
-
-.table-wrap{
-    overflow-x:auto;
-}
-
-.data-table{
-    width:100%;
-    border-collapse:collapse;
-    min-width:1300px;
-}
-
-.data-table th{
-    background:#fff3df;
-    color:#8d5600;
-    padding:10px;
-    border:1px solid #ead9bd;
-    font-size:12px;
-}
-
-.data-table td{
-    padding:10px;
-    border:1px solid #e3e9ee;
-    text-align:center;
-    font-size:12px;
-}
-
-.data-table tbody tr:nth-child(even){
-    background:#fafcfd;
-}
-
-
-/* =========================================================
-   BADGES
-========================================================= */
-
-.badge{
-    display:inline-block;
-    padding:5px 9px;
-    border-radius:15px;
-    font-size:10px;
-    font-weight:bold;
-}
-
-.badge-good{
-    background:#e8f6ec;
-    color:#187b43;
-}
-
-.badge-mid{
-    background:#fff4d7;
-    color:#8a6200;
-}
-
-.badge-low{
-    background:#fdecec;
-    color:#b42318;
-}
-
-.badge-neutral{
-    background:#eef1f4;
-    color:#687786;
-}
-
-
-/* =========================================================
-   PROGRESS
-========================================================= */
-
-.progress-wrap{
-    min-width:110px;
-}
-
-.progress-track{
-    height:8px;
-    background:#e8edf1;
-    border-radius:20px;
-    overflow:hidden;
-    margin-top:5px;
-}
-
-.progress-fill{
-    height:100%;
-    background:#d98200;
-    border-radius:20px;
-}
-
-
-/* =========================================================
-   EMPLOYEE REPORT BUTTON
-========================================================= */
-
-.employee-report-btn{
-    border:none;
-    background:#0759a6;
-    color:#fff;
-
-    padding:8px 11px;
-
-    border-radius:8px;
-
-    font-size:11px;
-    font-weight:bold;
-
-    cursor:pointer;
-
-    white-space:nowrap;
-}
-
-.employee-report-btn:hover{
-    background:#064b8c;
-}
-
-.empty{
-    text-align:center;
-    padding:25px;
-    color:#81909d;
-}
-
-
-/* =========================================================
-   PRINT
-========================================================= */
-
-@page{
-    size:A4 landscape;
-    margin:10mm;
-}
-
-@media print{
-
-    body{
-        background:#fff;
-    }
-
-    .header-actions,
-    .filters{
-        display:none !important;
-    }
-
-    .page{
-        max-width:none;
-        margin:0;
-        padding:0;
-    }
-
-    .section-card,
-    .stat-card{
-        break-inside:avoid;
-        page-break-inside:avoid;
-    }
-
-    tr{
-        break-inside:avoid;
-        page-break-inside:avoid;
-    }
-
-    .employee-report-btn{
-        display:none !important;
-    }
-
-}
-
-
-/* =========================================================
-   RESPONSIVE
-========================================================= */
-
-@media(max-width:1000px){
-
-    .filters-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .stats-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-}
-
-@media(max-width:600px){
-
-    .filters-grid,
-    .stats-grid{
-        grid-template-columns:1fr;
-    }
-
-}
-
+*{box-sizing:border-box}
+body{margin:0;background:#f3f6f8;font-family:Arial,Tahoma,sans-serif;color:#294b6a;line-height:1.6}
+.page{max-width:1350px;margin:25px auto;padding:0 15px 60px}
+.header,.filters,.section-card,.stat-card{background:#fff;border:1px solid #dfe8f2;border-radius:15px;box-shadow:0 3px 10px rgba(0,0,0,.03)}
+.header{padding:20px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+.header h1{margin:0;color:#d98200;font-size:25px}
+.header p{margin:6px 0 0;color:#718293;font-size:13px}
+.header-actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:0;border-radius:9px;padding:10px 15px;font-weight:bold;cursor:pointer;text-decoration:none;font-size:13px;display:inline-block}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-back{background:#eaf1f7;color:#0759a6}.btn-tasks{background:#0759a6;color:#fff}.btn-print{background:#d98200;color:#fff}
+.filters{padding:18px;margin-bottom:18px}.filters-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.filter-group{display:flex;flex-direction:column;gap:6px}.filter-group label{font-size:12px;font-weight:bold}
+.filter-group input,.filter-group select{padding:10px;border:1px solid #ccd9e5;border-radius:8px;background:#fff;min-width:0;font-family:inherit}
+.stats-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:18px}
+.stat-card{padding:16px 10px;text-align:center}.stat-card strong{display:block;font-size:26px;color:#d98200}.stat-card span{display:block;margin-top:5px;color:#718293;font-size:11px}
+.section-card{padding:18px;margin-bottom:18px}.section-title{margin:0 0 15px;color:#d98200;border-right:5px solid #d98200;padding-right:10px;font-size:18px}
+.table-wrap{overflow-x:auto}.data-table{width:100%;border-collapse:collapse;min-width:1150px}
+.data-table th{background:#fff3df;color:#8d5600;padding:10px;border:1px solid #ead9bd;font-size:12px}
+.data-table td{padding:10px;border:1px solid #e3e9ee;text-align:center;font-size:12px}
+.data-table tbody tr:nth-child(even){background:#fafcfd}
+.badge{display:inline-block;padding:5px 9px;border-radius:15px;font-size:10px;font-weight:bold}
+.badge-good{background:#e8f6ec;color:#187b43}.badge-mid{background:#fff4d7;color:#8a6200}.badge-low{background:#fdecec;color:#b42318}.badge-neutral{background:#eef1f4;color:#687786}
+.progress-wrap{min-width:110px}.progress-track{height:8px;background:#e8edf1;border-radius:20px;overflow:hidden;margin-top:5px}
+.progress-fill{height:100%;background:#d98200;border-radius:20px}
+.employee-report-btn{border:0;background:#0759a6;color:#fff;padding:8px 11px;border-radius:8px;font-size:11px;font-weight:bold;cursor:pointer;white-space:nowrap}
+.employee-report-btn:hover{background:#064b8c}.empty{text-align:center;padding:25px;color:#81909d}
+.notice{margin-bottom:18px;padding:13px 16px;border-radius:10px;border-right:5px solid #0759a6;background:#eaf3fb;color:#294b6a;font-size:13px}
+.notice.error{border-right-color:#b42318;background:#fff0f0;color:#8f2626}.notice.warning{border-right-color:#d98200;background:#fff7e8;color:#79520f}
+.muted{color:#738395;font-size:12px}.note-row{font-size:12px;color:#687786;margin-top:12px}
+@page{size:A4 landscape;margin:10mm}
+@media print{body{background:#fff}.header-actions,.filters,.employee-report-btn,.no-print{display:none!important}.page{max-width:none;margin:0;padding:0}.section-card,.stat-card,tr{break-inside:avoid;page-break-inside:avoid} .data-table{min-width:0;font-size:10px}.data-table td,.data-table th{padding:6px}}
+@media(max-width:1050px){.filters-grid{grid-template-columns:repeat(3,1fr)}.stats-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:600px){.filters-grid{grid-template-columns:repeat(2,1fr)}.stats-grid{grid-template-columns:repeat(2,1fr)}.header h1{font-size:21px}}
 </style>
-
 </head>
-
-
 <body>
-
 <div class="page">
-
-
-<!-- =========================================================
-     HEADER
-========================================================= -->
-
 <section class="header">
-
-<div>
-
-<h1>
-تقرير أداء الموظفين
-</h1>
-
-<p>
-مقارنة الجولات المطلوبة بالجولات المنفذة فعليًا واحتساب نسب الإنجاز حسب الفترة،
-مع إمكانية إصدار تقرير تقييم مستقل لكل موظف.
-</p>
-
-</div>
-
-
-<div class="header-actions">
-
-<a
-    href="control.html"
-    class="btn btn-back">
-
-← العودة لصندوق التحكم
-
-</a>
-
-
-<a
-    href="employee-tasks.html"
-    class="btn btn-tasks">
-
-📅 إدارة المهام والجولات
-
-</a>
-
-
-<button
-    class="btn btn-print"
-    onclick="window.print()">
-
-🖨️ طباعة التقرير
-
-</button>
-
-</div>
-
+  <div><h1>تقرير أداء الموظفين</h1><p>متابعة المهام والجولات المطلوبة والمنفذة من السجلات المركزية، بما فيها فحص صلاحية المواد الغذائية وجودة الهواء.</p></div>
+  <div class="header-actions">
+    <a class="btn btn-back" href="control.html">← العودة لصندوق التحكم</a>
+    <a class="btn btn-tasks" href="employee-tasks.html">📅 إدارة المهام والجولات</a>
+    <button id="reloadButton" class="btn btn-back" onclick="loadAllData()">↻ تحديث البيانات</button>
+    <button class="btn btn-print" onclick="window.print()">🖨️ طباعة التقرير</button>
+  </div>
 </section>
-
-
-<!-- =========================================================
-     FILTERS
-========================================================= -->
-
+<div id="loadMessage" class="notice" role="status" aria-live="polite">جارٍ التحقق من صلاحيات الحساب وتحميل البيانات المركزية...</div>
 <section class="filters">
-
-<div class="filters-grid">
-
-
-<div class="filter-group">
-
-<label>
-الفترة
-</label>
-
-<select
-    id="periodFilter"
-    onchange="periodChanged()">
-
-<option value="month">
-شهري
-</option>
-
-<option value="quarter">
-ربع سنوي
-</option>
-
-<option value="half">
-نصف سنوي
-</option>
-
-<option value="year">
-سنوي
-</option>
-
-<option value="custom">
-فترة مخصصة
-</option>
-
-</select>
-
-</div>
-
-
-<div class="filter-group">
-
-<label>
-السنة
-</label>
-
-<select
-    id="yearFilter"
-    onchange="refreshReport()">
-</select>
-
-</div>
-
-
-<div class="filter-group">
-
-<label>
-الشهر
-</label>
-
-<select
-    id="monthFilter"
-    onchange="refreshReport()">
-
-<option value="1">يناير</option>
-<option value="2">فبراير</option>
-<option value="3">مارس</option>
-<option value="4">أبريل</option>
-<option value="5">مايو</option>
-<option value="6">يونيو</option>
-<option value="7">يوليو</option>
-<option value="8">أغسطس</option>
-<option value="9">سبتمبر</option>
-<option value="10">أكتوبر</option>
-<option value="11">نوفمبر</option>
-<option value="12">ديسمبر</option>
-
-</select>
-
-</div>
-
-
-<div class="filter-group">
-
-<label>
-الموظف
-</label>
-
-<select
-    id="employeeFilter"
-    onchange="refreshReport()">
-
-<option value="">
-جميع الموظفين
-</option>
-
-</select>
-
-</div>
-
-
-<div class="filter-group">
-
-<label>
-من تاريخ
-</label>
-
-<input
-    id="fromDate"
-    type="date"
-    onchange="refreshReport()">
-
-</div>
-
-
-<div class="filter-group">
-
-<label>
-إلى تاريخ
-</label>
-
-<input
-    id="toDate"
-    type="date"
-    onchange="refreshReport()">
-
-</div>
-
-
-</div>
-
+  <div class="filters-grid">
+    <div class="filter-group"><label for="periodFilter">الفترة</label><select id="periodFilter" onchange="periodChanged()">
+      <option value="month">شهري</option><option value="quarter">ربع سنوي</option><option value="half">نصف سنوي</option><option value="year">سنوي</option><option value="custom">فترة مخصصة</option>
+    </select></div>
+    <div class="filter-group"><label for="yearFilter">السنة</label><select id="yearFilter" onchange="refreshReport()"></select></div>
+    <div class="filter-group"><label for="monthFilter">الشهر المرجعي</label><select id="monthFilter" onchange="refreshReport()">
+      <option value="1">يناير</option><option value="2">فبراير</option><option value="3">مارس</option><option value="4">أبريل</option><option value="5">مايو</option><option value="6">يونيو</option><option value="7">يوليو</option><option value="8">أغسطس</option><option value="9">سبتمبر</option><option value="10">أكتوبر</option><option value="11">نوفمبر</option><option value="12">ديسمبر</option>
+    </select></div>
+    <div class="filter-group"><label for="employeeFilter">الموظف</label><select id="employeeFilter" onchange="refreshReport()"><option value="">جميع الموظفين</option></select></div>
+    <div class="filter-group"><label for="fromDate">من تاريخ</label><input id="fromDate" type="date" onchange="refreshReport()"></div>
+    <div class="filter-group"><label for="toDate">إلى تاريخ</label><input id="toDate" type="date" onchange="refreshReport()"></div>
+  </div>
+  <div class="note-row">تُحسب المهام حسب تاريخ التنفيذ المطلوب، حتى إذا حُفظت الجولة لاحقًا. لا تدخل الجولات الإضافية غير المجدولة ضمن عدد المهام المنجزة.</div>
 </section>
-
-
-<!-- =========================================================
-     KPI
-========================================================= -->
-
 <section class="stats-grid">
-
-<div class="stat-card">
-
-<strong id="employeesCount">
-0
-</strong>
-
-<span>
-عدد الموظفين
-</span>
-
-</div>
-
-
-<div class="stat-card">
-
-<strong id="requiredCount">
-0
-</strong>
-
-<span>
-الجولات المطلوبة
-</span>
-
-</div>
-
-
-<div class="stat-card">
-
-<strong id="completedCount">
-0
-</strong>
-
-<span>
-الجولات المنفذة
-</span>
-
-</div>
-
-
-<div class="stat-card">
-
-<strong id="lateCount">
-0
-</strong>
-
-<span>
-الجولات المتأخرة
-</span>
-
-</div>
-
-
-<div class="stat-card">
-
-<strong id="overallAchievement">
-0%
-</strong>
-
-<span>
-نسبة الإنجاز العامة
-</span>
-
-</div>
-
+  <div class="stat-card"><strong id="employeesCount">—</strong><span>عدد الموظفين</span></div>
+  <div class="stat-card"><strong id="requiredCount">—</strong><span>المهام المطلوبة</span></div>
+  <div class="stat-card"><strong id="completedCount">—</strong><span>المهام المنفذة</span></div>
+  <div class="stat-card"><strong id="remainingCount">—</strong><span>المهام المتبقية</span></div>
+  <div class="stat-card"><strong id="lateCount">—</strong><span>المهام المتأخرة غير المنفذة</span></div>
+  <div class="stat-card"><strong id="overallAchievement">—</strong><span>نسبة الإنجاز العامة</span></div>
 </section>
-
-
-<!-- =========================================================
-     TABLE
-========================================================= -->
-
 <section class="section-card">
-
-<h2 class="section-title">
-👥 تقييم أداء الموظفين
-</h2>
-
-<div class="table-wrap">
-
-<table class="data-table">
-
-<thead>
-
-<tr>
-
-<th>
-الموظف
-</th>
-
-<th>
-الرقم الوظيفي
-</th>
-
-<th>
-المطلوب
-</th>
-
-<th>
-المنفذ
-</th>
-
-<th>
-المتبقي
-</th>
-
-<th>
-المتأخر
-</th>
-
-<th>
-نسبة الإنجاز
-</th>
-
-<th>
-متوسط الالتزام
-</th>
-
-<th>
-عدم التطبيق
-</th>
-
-<th>
-تقرير الموظف
-</th>
-
-</tr>
-
-</thead>
-
-
-<tbody id="employeesTableBody">
-</tbody>
-
-</table>
-
-</div>
-
+  <h2 class="section-title">👥 تقييم أداء الموظفين</h2>
+  <div class="table-wrap"><table class="data-table"><thead><tr>
+    <th>الموظف</th><th>الرقم الوظيفي</th><th>المطلوب</th><th>المنفذ</th><th>المتبقي</th><th>المتأخر</th><th>نسبة الإنجاز</th><th>متوسط الالتزام</th><th>عدم التطبيق</th><th>تقرير الموظف</th>
+  </tr></thead><tbody id="employeesTableBody"><tr><td colspan="10" class="empty">جارٍ التحميل...</td></tr></tbody></table></div>
 </section>
-
-
+<section class="section-card">
+  <h2 class="section-title">📋 تفاصيل الإنجاز حسب نوع الجولة / المهمة</h2>
+  <div class="table-wrap"><table class="data-table" style="min-width:800px"><thead><tr>
+    <th>الموظف</th><th>نوع المهمة</th><th>المطلوب</th><th>المنفذ</th><th>المتبقي</th><th>المتأخر</th><th>نسبة الإنجاز</th>
+  </tr></thead><tbody id="typesTableBody"><tr><td colspan="7" class="empty">جارٍ التحميل...</td></tr></tbody></table></div>
+  <p class="note-row">الربط الدقيق بواسطة رقم المهمة <code>taskId</code>. قد تُستخدم مطابقة تقريبية للجولات القديمة فقط (حسب الموظف والنوع والموقع وفارق 14 يومًا)، ولا تُستخدم مع جولات الصلاحية. «مهمة أخرى» تبقى ضمن المطلوب ولا تُعد منجزة تلقائيًا بدون تقرير موثق.</p>
+</section>
 </div>
-
-
 <script>
-
-/* =========================================================
-   STORAGE
-========================================================= */
-
-const TASKS_KEY =
-    "phrmsEmployeeTasks";
-
-const PUBLIC_KEY =
-    "phrmsPublicHealthRounds";
-
-const WASTE_KEY =
-    "phrmsMedicalWasteRounds";
-
-const EMPLOYEE_SIGNATURES_KEY =
-    "phrmsEmployeeSignatures";
-
-
-let tasks = [];
-
-let rounds = [];
-
-let employees = [];
-
-
-/* =========================================================
-   START
-========================================================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function(){
-
-        loadData();
-
-        buildYearFilter();
-
-        buildEmployeeFilter();
-
-        setDefaults();
-
-        periodChanged();
-
-    }
-);
-
-
-/* =========================================================
-   LOAD DATA
-========================================================= */
-
-function loadData(){
-
-    tasks =
-        getArray(
-            TASKS_KEY
-        );
-
-
-    rounds = [
-
-        ...getArray(
-            PUBLIC_KEY
-        ),
-
-        ...getArray(
-            WASTE_KEY
-        )
-
-    ];
-
-
-    employees =
-        getArray(
-            EMPLOYEE_SIGNATURES_KEY
-        );
-
+'use strict';
+// يستخدم المفتاح العلني فقط؛ لا تضع service_role أو كلمة مرور في GitHub.
+const SUPABASE_URL='https://xbivmhkqxmrkpjxfvemc.supabase.co';
+const SUPABASE_PUBLISHABLE_KEY='sb_publishable_jTXNyxYwDMmJDUzg46rcdA_rySASiuE';
+const db=window.supabase?.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY)||null;
+const TYPES={publicHealth:'الصحة العامة',medicalWaste:'النفايات الطبية',airQuality:'جودة الهواء والفلاتر',foodExpiry:'فحص صلاحية المواد الغذائية',other:'مهمة أخرى'};
+let tasks=[],rounds=[],employees=[],dataReady=false;
+let renderedEmployeeByKey=new Map();
+const $=id=>document.getElementById(id);
+const pad=n=>String(n).padStart(2,'0');
+const todayLocal=()=>{const d=new Date();return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`};
+const employeeKey=x=>String(x?.employeeNumber||x?.employeeName||'').trim();
+const norm=x=>String(x??'').trim().replace(/\s+/g,' ').toLowerCase();
+const safe=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+const dateValue=x=>String(x||'').slice(0,10);
+const isValidDate=x=>/^\d{4}-\d{2}-\d{2}$/.test(String(x||''))&&!Number.isNaN(Date.parse(x+'T12:00:00'));
+function setMessage(message,kind='info'){$('loadMessage').className='notice'+(kind==='error'?' error':kind==='warning'?' warning':'');$('loadMessage').textContent=message}
+function setEmpty(message){$('employeesTableBody').innerHTML=`<tr><td colspan="10" class="empty">${safe(message)}</td></tr>`;$('typesTableBody').innerHTML=`<tr><td colspan="7" class="empty">${safe(message)}</td></tr>`}
+function resetStats(){for(const id of ['employeesCount','requiredCount','completedCount','remainingCount','lateCount','overallAchievement'])$(id).textContent='—'}
+async function fetchAll(table,columns,orderColumn){
+  if(!db)throw Error('مكتبة Supabase غير متاحة.');
+  const all=[],batchSize=500,maxPages=200;
+  for(let page=0;page<maxPages;page++){
+    let q=db.from(table).select(columns).range(page*batchSize,(page+1)*batchSize-1);
+    if(orderColumn)q=q.order(orderColumn,{ascending:false});
+    const {data,error}=await q;
+    if(error)throw Error(`${table}: ${error.message||error}`);
+    const chunk=data||[];all.push(...chunk);
+    if(chunk.length<batchSize)return all;
+  }
+  throw Error(`تجاوز عدد سجلات ${table} الحد المسموح للتحميل؛ لا يمكن إصدار تقرير ناقص.`);
 }
-
-
-/* =========================================================
-   STORAGE
-========================================================= */
-
-function getArray(key){
-
-    try{
-
-        const data =
-            JSON.parse(
-                localStorage.getItem(key)
-            ) || [];
-
-
-        return Array.isArray(data)
-            ? data
-            : [];
-
-    }
-    catch(error){
-
-        return [];
-
-    }
-
+async function ensureManagerSession(){
+  if(!db)throw Error('لم يتم تحميل مكتبة الاتصال بـ Supabase.');
+  // لا نتعامل مع دخول لوحة Supabase باعتباره دخولًا تلقائيًا إلى الموقع.
+  const {data,error}=await db.auth.getUser();
+  if(error||!data?.user)throw Error('يلزم تسجيل الدخول إلى نظام PHRMS عبر Supabase Auth قبل عرض تقارير الموظفين. تسجيل الدخول إلى لوحة Supabase وحده لا يكفي.');
+  if(data.user.app_metadata?.role!=='phrms_manager')throw Error('الحساب الحالي لا يحمل صلاحية phrms_manager لعرض تقارير الموظفين. أعد تسجيل الدخول بعد إضافة الدور.');
 }
-
-
-/* =========================================================
-   YEAR FILTER
-========================================================= */
-
+async function loadAllData(){
+  const button=$('reloadButton');button.disabled=true;dataReady=false;resetStats();setEmpty('جارٍ تحميل السجلات المركزية...');setMessage('جارٍ التحقق من دخول المدير وتحميل السجلات من Supabase...');
+  try{
+    await ensureManagerSession();
+    const [taskRows,roundRows,employeeRows]=await Promise.all([
+      fetchAll('employee_tasks','task_id,task_data,created_at','created_at'),
+      fetchAll('inspection_records','round_id,round_type,record_data,created_at','created_at'),
+      fetchAll('employees','employee_name,employee_number','employee_name')
+    ]);
+    const taskMap=new Map();
+    for(const row of taskRows){const value=row.task_data;if(!value||typeof value!=='object')continue;const id=String(row.task_id||value.id||'');if(id&&!taskMap.has(id))taskMap.set(id,{...value,id});}
+    const roundMap=new Map();
+    for(const row of roundRows){const value=row.record_data;if(!value||typeof value!=='object')continue;const id=String(row.round_id||value.id||'');if(id&&!roundMap.has(id))roundMap.set(id,{...value,id,roundType:row.round_type||value.roundType,inspectionDate:dateValue(value.inspectionDate||row.created_at)});}
+    tasks=[...taskMap.values()];rounds=[...roundMap.values()];employees=employeeRows.map(x=>({employeeName:x.employee_name||'',employeeNumber:String(x.employee_number||'')}));
+    dataReady=true;buildYearFilter();buildEmployeeFilter();refreshReport();
+    setMessage(`تم تحميل البيانات المركزية: ${tasks.length} مهمة، ${rounds.length} جولة، ${employees.length} موظف. المهام غير المحفوظة مركزيًا لا تدخل في هذا التقرير.`);
+  }catch(e){tasks=[];rounds=[];employees=[];dataReady=false;console.error('PHRMS performance report:',e);resetStats();setEmpty('لا يمكن إصدار تقرير موثوق دون صلاحية المدير والاتصال المركزي.');setMessage(`تعذر إصدار التقرير: ${e?.message||String(e)}`,'error');}
+  finally{button.disabled=false}
+}
 function buildYearFilter(){
-
-    const years =
-        new Set();
-
-
-    tasks.forEach(
-        function(task){
-
-            if(task.requiredDate){
-
-                years.add(
-                    Number(
-                        task.requiredDate.slice(
-                            0,
-                            4
-                        )
-                    )
-                );
-
-            }
-
-        }
-    );
-
-
-    rounds.forEach(
-        function(round){
-
-            if(round.inspectionDate){
-
-                years.add(
-                    Number(
-                        round.inspectionDate.slice(
-                            0,
-                            4
-                        )
-                    )
-                );
-
-            }
-
-        }
-    );
-
-
-    years.add(
-        new Date().getFullYear()
-    );
-
-
-    const select =
-        document.getElementById(
-            "yearFilter"
-        );
-
-
-    [...years]
-    .filter(
-        function(year){
-
-            return (
-                year &&
-                year > 2000
-            );
-
-        }
-    )
-    .sort(
-        function(a,b){
-
-            return b-a;
-
-        }
-    )
-    .forEach(
-        function(year){
-
-            const option =
-                document.createElement(
-                    "option"
-                );
-
-
-            option.value =
-                year;
-
-
-            option.textContent =
-                year;
-
-
-            select.appendChild(
-                option
-            );
-
-        }
-    );
-
+  const selected=$('yearFilter').value||String(new Date().getFullYear()),years=new Set([new Date().getFullYear()]);
+  for(const x of [...tasks,...rounds]){const v=dateValue(x.requiredDate||x.inspectionDate);if(isValidDate(v))years.add(Number(v.slice(0,4)));}
+  $('yearFilter').innerHTML=[...years].filter(x=>x>2000).sort((a,b)=>b-a).map(x=>`<option value="${x}">${x}</option>`).join('');
+  $('yearFilter').value=[...years].includes(Number(selected))?selected:String(new Date().getFullYear());
 }
-
-
-/* =========================================================
-   EMPLOYEE FILTER
-========================================================= */
-
 function buildEmployeeFilter(){
-
-    const select =
-        document.getElementById(
-            "employeeFilter"
-        );
-
-
-    const map =
-        new Map();
-
-
-    employees.forEach(
-        function(employee){
-
-            const key =
-                employeeKey(
-                    employee
-                );
-
-
-            if(
-                key &&
-                !map.has(key)
-            ){
-
-                map.set(
-                    key,
-                    employee
-                );
-
-            }
-
-        }
-    );
-
-
-    tasks.forEach(
-        function(task){
-
-            const key =
-                employeeKey(
-                    task
-                );
-
-
-            if(
-                key &&
-                !map.has(key)
-            ){
-
-                map.set(
-                    key,
-                    task
-                );
-
-            }
-
-        }
-    );
-
-
-    rounds.forEach(
-        function(round){
-
-            const key =
-                employeeKey(
-                    round
-                );
-
-
-            if(
-                key &&
-                !map.has(key)
-            ){
-
-                map.set(
-                    key,
-                    round
-                );
-
-            }
-
-        }
-    );
-
-
-    map.forEach(
-        function(employee,key){
-
-            const option =
-                document.createElement(
-                    "option"
-                );
-
-
-            option.value =
-                key;
-
-
-            option.textContent =
-                employee.employeeName ||
-                key;
-
-
-            select.appendChild(
-                option
-            );
-
-        }
-    );
-
+  const old=$('employeeFilter').value,options=new Map();
+  for(const item of [...employees,...tasks,...rounds]){const key=employeeKey(item);if(key&&!options.has(key))options.set(key,item.employeeName||key);}
+  $('employeeFilter').innerHTML='<option value="">جميع الموظفين</option>';
+  for(const [key,name] of [...options.entries()].sort((a,b)=>a[1].localeCompare(b[1],'ar'))){const o=document.createElement('option');o.value=key;o.textContent=name;$('employeeFilter').appendChild(o);}
+  $('employeeFilter').value=options.has(old)?old:'';
 }
-
-
-/* =========================================================
-   DEFAULTS
-========================================================= */
-
-function setDefaults(){
-
-    const now =
-        new Date();
-
-
-    document.getElementById(
-        "yearFilter"
-    ).value =
-        now.getFullYear();
-
-
-    document.getElementById(
-        "monthFilter"
-    ).value =
-        now.getMonth()+1;
-
-}
-
-
-/* =========================================================
-   PERIOD
-========================================================= */
-
 function periodChanged(){
-
-    const period =
-        document.getElementById(
-            "periodFilter"
-        ).value;
-
-
-    document.getElementById(
-        "monthFilter"
-    ).disabled =
-        period !==
-        "month";
-
-
-    document.getElementById(
-        "fromDate"
-    ).disabled =
-        period !==
-        "custom";
-
-
-    document.getElementById(
-        "toDate"
-    ).disabled =
-        period !==
-        "custom";
-
-
-    refreshReport();
-
+  const p=$('periodFilter').value;
+  $('monthFilter').disabled=(p==='year'||p==='custom');
+  $('yearFilter').disabled=p==='custom';
+  $('fromDate').disabled=p!=='custom';$('toDate').disabled=p!=='custom';
+  refreshReport();
 }
-
-
-/* =========================================================
-   RANGE
-========================================================= */
-
+function lastDateOfMonth(y,m){return `${y}-${pad(m)}-${pad(new Date(y,m,0).getDate())}`;}
 function getSelectedRange(){
-
-    const period =
-        document.getElementById(
-            "periodFilter"
-        ).value;
-
-
-    const year =
-        Number(
-            document.getElementById(
-                "yearFilter"
-            ).value
-        );
-
-
-    const month =
-        Number(
-            document.getElementById(
-                "monthFilter"
-            ).value
-        );
-
-
-    if(
-        period ===
-        "custom"
-    ){
-
-        return {
-
-            from:
-                document.getElementById(
-                    "fromDate"
-                ).value,
-
-            to:
-                document.getElementById(
-                    "toDate"
-                ).value
-
-        };
-
-    }
-
-
-    if(
-        period ===
-        "month"
-    ){
-
-        return {
-
-            from:
-                `${year}-${pad(month)}-01`,
-
-            to:
-                lastDateOfMonth(
-                    year,
-                    month
-                )
-
-        };
-
-    }
-
-
-    if(
-        period ===
-        "quarter"
-    ){
-
-        const currentMonth =
-            new Date().getMonth()+1;
-
-
-        const quarter =
-            Math.ceil(
-                currentMonth /
-                3
-            );
-
-
-        const firstMonth =
-            (
-                quarter - 1
-            ) * 3 + 1;
-
-
-        const lastMonth =
-            firstMonth + 2;
-
-
-        return {
-
-            from:
-                `${year}-${pad(firstMonth)}-01`,
-
-            to:
-                lastDateOfMonth(
-                    year,
-                    lastMonth
-                )
-
-        };
-
-    }
-
-
-    if(
-        period ===
-        "half"
-    ){
-
-        const currentMonth =
-            new Date().getMonth()+1;
-
-
-        const firstMonth =
-            currentMonth <= 6
-            ? 1
-            : 7;
-
-
-        const lastMonth =
-            currentMonth <= 6
-            ? 6
-            : 12;
-
-
-        return {
-
-            from:
-                `${year}-${pad(firstMonth)}-01`,
-
-            to:
-                lastDateOfMonth(
-                    year,
-                    lastMonth
-                )
-
-        };
-
-    }
-
-
-    return {
-
-        from:
-            `${year}-01-01`,
-
-        to:
-            `${year}-12-31`
-
-    };
-
+  const p=$('periodFilter').value,y=Number($('yearFilter').value),m=Number($('monthFilter').value);
+  if(p==='custom'){const from=$('fromDate').value,to=$('toDate').value;return {from,to,valid:isValidDate(from)&&isValidDate(to)&&from<=to};}
+  if(!y||m<1||m>12)return {valid:false};
+  if(p==='month')return {from:`${y}-${pad(m)}-01`,to:lastDateOfMonth(y,m),valid:true};
+  if(p==='quarter'){const start=(Math.ceil(m/3)-1)*3+1;return {from:`${y}-${pad(start)}-01`,to:lastDateOfMonth(y,start+2),valid:true};}
+  if(p==='half'){const start=m<=6?1:7;return {from:`${y}-${pad(start)}-01`,to:lastDateOfMonth(y,start+5),valid:true};}
+  return {from:`${y}-01-01`,to:`${y}-12-31`,valid:true};
 }
-
-
-/* =========================================================
-   REFRESH
-========================================================= */
-
+function dateInside(date,range){const v=dateValue(date);return isValidDate(v)&&v>=range.from&&v<=range.to;}
+function sameRoundType(task,round){
+  const t=String(task?.roundType||''),r=String(round?.roundType||'');
+  if(t==='publicHealth')return r==='publicHealth';
+  if(t==='medicalWaste')return r==='medicalWaste';
+  if(t==='airQuality')return r==='airQuality'||r==='airQualityRound';
+  if(t==='foodExpiry')return r==='foodExpiry';
+  return false;
+}
+function dateDistance(a,b){const x=Date.parse(dateValue(a)+'T12:00:00'),y=Date.parse(dateValue(b)+'T12:00:00');return Number.isFinite(x)&&Number.isFinite(y)?Math.abs(Math.round((x-y)/86400000)):Infinity;}
+/* قاعدة المطابقة متطابقة مع employee-tasks.html: taskId أولًا ثم المطابقة القديمة المقيدة. */
+function matchTasksWithRounds(taskList,roundList){
+  const matches=new Map(),usedRoundIds=new Set();
+  const ordered=[...taskList].sort((a,b)=>String(a.requiredDate||'').localeCompare(String(b.requiredDate||'')));
+  for(const task of ordered){
+    const id=String(task.id||'');if(!id)continue;
+    if(task.status==='cancelled'){matches.set(id,{task,state:'cancelled',matchedRound:null});continue;}
+    const exact=roundList.find(r=>r.taskId&&String(r.taskId)===id&&!usedRoundIds.has(String(r.id))&&sameRoundType(task,r)&&employeeKey(task)===employeeKey(r));
+    if(exact){usedRoundIds.add(String(exact.id));matches.set(id,{task,state:'completed',matchedRound:exact,matching:'exact'});continue;}
+    matches.set(id,{task,state:dateValue(task.requiredDate)<todayLocal()?'late':'pending',matchedRound:null,matching:''});
+  }
+  for(const task of ordered){
+    const m=matches.get(String(task.id||''));
+    if(!m||m.state==='completed'||m.state==='cancelled'||task.roundType==='foodExpiry'||task.roundType==='other')continue;
+    let best=null,bestDistance=Infinity;
+    for(const r of roundList){
+      if(r.taskId||usedRoundIds.has(String(r.id))||!sameRoundType(task,r)||employeeKey(task)!==employeeKey(r))continue;
+      if(task.locationName&&r.locationName&&norm(task.locationName)!==norm(r.locationName))continue;
+      const delta=dateDistance(task.requiredDate,r.inspectionDate);
+      if(delta<bestDistance){bestDistance=delta;best=r;}
+    }
+    if(best&&bestDistance<=14){usedRoundIds.add(String(best.id));matches.set(String(task.id),{task,state:'completed',matchedRound:best,matching:'legacy'});}
+  }
+  return taskList.map(t=>matches.get(String(t.id||''))).filter(Boolean);
+}
 function refreshReport(){
-
-    const range =
-        getSelectedRange();
-
-
-    const selectedEmployee =
-        document.getElementById(
-            "employeeFilter"
-        ).value;
-
-
-    const filteredTasks =
-        tasks.filter(
-            function(task){
-
-                if(
-                    !dateInside(
-                        task.requiredDate,
-                        range
-                    )
-                ){
-
-                    return false;
-
-                }
-
-
-                if(
-                    selectedEmployee &&
-                    employeeKey(task) !==
-                    selectedEmployee
-                ){
-
-                    return false;
-
-                }
-
-
-                return true;
-
-            }
-        );
-
-
-    const filteredRounds =
-        rounds.filter(
-            function(round){
-
-                if(
-                    !dateInside(
-                        round.inspectionDate,
-                        range
-                    )
-                ){
-
-                    return false;
-
-                }
-
-
-                if(
-                    selectedEmployee &&
-                    employeeKey(round) !==
-                    selectedEmployee
-                ){
-
-                    return false;
-
-                }
-
-
-                return true;
-
-            }
-        );
-
-
-    renderEmployeeReport(
-        filteredTasks,
-        filteredRounds,
-        range
-    );
-
+  if(!dataReady)return;
+  const range=getSelectedRange();if(!range.valid){resetStats();setEmpty('اختر تاريخ بداية ونهاية صحيحين للفترة المخصصة.');return;}
+  const selected=$('employeeFilter').value;
+  // نطابق كافة المهام المركزية مع كافة الجولات المركزية أولًا؛ لا نقص جولات منفذة في شهر مختلف عن شهر التكليف.
+  const allMatches=matchTasksWithRounds(tasks,rounds);
+  const matches=allMatches.filter(x=>x.state!=='cancelled'&&dateInside(x.task.requiredDate,range)&&(!selected||employeeKey(x.task)===selected));
+  const extraRounds=rounds.filter(r=>dateInside(r.inspectionDate,range)&&(!selected||employeeKey(r)===selected));
+  renderReport(matches,extraRounds,range,selected);
 }
-
-
-/* =========================================================
-   MATCH TASKS WITH ROUNDS
-========================================================= */
-
-function matchTasksWithRounds(
-    filteredTasks,
-    filteredRounds
-){
-
-    const availableRounds =
-        filteredRounds.map(
-            function(round){
-
-                return {
-
-                    ...round,
-
-                    _used:false
-
-                };
-
-            }
-        );
-
-
-    return filteredTasks.map(
-        function(task){
-
-            if(
-                task.status ===
-                "cancelled"
-            ){
-
-                return {
-
-                    task:task,
-
-                    matchedRound:null,
-
-                    state:"cancelled"
-
-                };
-
-            }
-
-
-            if(
-                task.roundType !==
-                "publicHealth" &&
-                task.roundType !==
-                "medicalWaste"
-            ){
-
-                return {
-
-                    task:task,
-
-                    matchedRound:null,
-
-                    state:"other"
-
-                };
-
-            }
-
-
-            const candidates =
-                availableRounds.filter(
-                    function(round){
-
-                        if(
-                            round._used
-                        ){
-
-                            return false;
-
-                        }
-
-
-                        if(
-                            employeeKey(round) !==
-                            employeeKey(task)
-                        ){
-
-                            return false;
-
-                        }
-
-
-                        if(
-                            !sameRoundType(
-                                task,
-                                round
-                            )
-                        ){
-
-                            return false;
-
-                        }
-
-
-                        if(
-                            task.locationName &&
-                            round.locationName &&
-                            normalizeText(
-                                task.locationName
-                            ) !==
-                            normalizeText(
-                                round.locationName
-                            )
-                        ){
-
-                            return false;
-
-                        }
-
-
-                        return true;
-
-                    }
-                );
-
-
-            let bestMatch =
-                null;
-
-
-            let bestDistance =
-                Infinity;
-
-
-            candidates.forEach(
-                function(round){
-
-                    const distance =
-                        dateDistance(
-                            task.requiredDate,
-                            round.inspectionDate
-                        );
-
-
-                    if(
-                        distance <
-                        bestDistance
-                    ){
-
-                        bestDistance =
-                            distance;
-
-
-                        bestMatch =
-                            round;
-
-                    }
-
-                }
-            );
-
-
-            if(
-                bestMatch &&
-                bestDistance <= 14
-            ){
-
-                bestMatch._used =
-                    true;
-
-
-                return {
-
-                    task:task,
-
-                    matchedRound:
-                        bestMatch,
-
-                    state:
-                        "completed"
-
-                };
-
-            }
-
-
-            return {
-
-                task:task,
-
-                matchedRound:null,
-
-                state:
-                    task.requiredDate <
-                    getToday()
-                    ? "late"
-                    : "pending"
-
-            };
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   EMPLOYEE REPORT
-========================================================= */
-
-function renderEmployeeReport(
-    filteredTasks,
-    filteredRounds,
-    range
-){
-
-    const map =
-        {};
-
-
-    function ensureEmployee(
-        name,
-        number
-    ){
-
-        const key =
-            String(
-                number ||
-                name ||
-                "غير محدد"
-            );
-
-
-        if(
-            !map[key]
-        ){
-
-            map[key] = {
-
-                name:
-                    name ||
-                    "غير محدد",
-
-                number:
-                    number ||
-                    "غير محدد",
-
-                required:
-                    0,
-
-                completed:
-                    0,
-
-                remaining:
-                    0,
-
-                late:
-                    0,
-
-                complianceValues:
-                    [],
-
-                noCount:
-                    0
-
-            };
-
-        }
-
-
-        return map[key];
-
+function makeEmployee(name,number){return {key:String(number||name||'غير محدد'),name:name||'غير محدد',number:String(number||'غير محدد'),required:0,completed:0,remaining:0,late:0,values:[],noCount:0,types:new Map(),actualRounds:0,legacyMatches:0};}
+function makeType(){return {required:0,completed:0,remaining:0,late:0};}
+function renderReport(matches,periodRounds,range,selected){
+  const map=new Map();
+  const ensure=item=>{const key=employeeKey(item);if(!key)return null;if(!map.has(key))map.set(key,makeEmployee(item.employeeName,item.employeeNumber));return map.get(key);};
+  // احتساب جميع أنواع المهام المطلوبة، بما فيها "مهمة أخرى"؛ ولا تدخل الملغاة أو الجولات الإضافية.
+  for(const result of matches){
+    const t=result.task,emp=ensure(t);if(!emp)continue;
+    const type=TYPES[t.roundType]||t.roundType||'غير محدد';
+    if(!emp.types.has(type))emp.types.set(type,makeType());
+    const count=emp.types.get(type);emp.required++;count.required++;
+    if(result.state==='completed'){
+      emp.completed++;count.completed++;
+      if(result.matching==='legacy')emp.legacyMatches++;
+      const r=result.matchedRound,compliance=r?.complianceRate;
+      if(compliance!==null&&compliance!==undefined&&compliance!==''&&Number.isFinite(Number(compliance)))emp.values.push(Number(compliance));
+      emp.noCount+=Number(r?.noCount)||0;
+    }else{
+      emp.remaining++;count.remaining++;
+      if(result.state==='late'){emp.late++;count.late++;}
     }
-
-
-    const matches =
-        matchTasksWithRounds(
-            filteredTasks,
-            filteredRounds
-        );
-
-
-    matches.forEach(
-        function(result){
-
-            const task =
-                result.task;
-
-
-            if(
-                task.roundType !==
-                "publicHealth" &&
-                task.roundType !==
-                "medicalWaste"
-            ){
-
-                return;
-
-            }
-
-
-            if(
-                result.state ===
-                "cancelled"
-            ){
-
-                return;
-
-            }
-
-
-            const employee =
-                ensureEmployee(
-                    task.employeeName,
-                    task.employeeNumber
-                );
-
-
-            employee.required++;
-
-
-            if(
-                result.state ===
-                "completed"
-            ){
-
-                employee.completed++;
-
-
-                const compliance =
-                    Number(
-                        result.matchedRound.complianceRate
-                    );
-
-
-                if(
-                    !isNaN(
-                        compliance
-                    )
-                ){
-
-                    employee.complianceValues.push(
-                        compliance
-                    );
-
-                }
-
-
-                employee.noCount +=
-                    Number(
-                        result.matchedRound.noCount
-                    ) || 0;
-
-            }
-            else{
-
-                employee.remaining++;
-
-
-                if(
-                    result.state ===
-                    "late"
-                ){
-
-                    employee.late++;
-
-                }
-
-            }
-
-        }
-    );
-
-
-    /*
-    إضافة الموظفين الذين لديهم جولات فعلية
-    حتى لو لم توجد لهم مهام مخططة
-    */
-
-    filteredRounds.forEach(
-        function(round){
-
-            const employee =
-                ensureEmployee(
-                    round.employeeName,
-                    round.employeeNumber
-                );
-
-
-            const compliance =
-                Number(
-                    round.complianceRate
-                );
-
-
-            if(
-                !isNaN(
-                    compliance
-                ) &&
-                employee.required === 0
-            ){
-
-                employee.complianceValues.push(
-                    compliance
-                );
-
-            }
-
-
-            if(
-                employee.required === 0
-            ){
-
-                employee.noCount +=
-                    Number(
-                        round.noCount
-                    ) || 0;
-
-            }
-
-        }
-    );
-
-
-    const employeeList =
-        Object.values(
-            map
-        );
-
-
-    employeeList.forEach(
-        function(employee){
-
-            employee.achievement =
-                employee.required
-
-                ? Math.round(
-                    employee.completed /
-                    employee.required *
-                    100
-                )
-
-                : 0;
-
-
-            employee.averageCompliance =
-                employee.complianceValues.length
-
-                ? Math.round(
-
-                    employee.complianceValues.reduce(
-                        function(sum,value){
-
-                            return sum + value;
-
-                        },
-                        0
-                    )
-
-                    /
-
-                    employee.complianceValues.length
-
-                )
-
-                : 0;
-
-        }
-    );
-
-
-    employeeList.sort(
-        function(a,b){
-
-            return (
-                b.achievement -
-                a.achievement
-            );
-
-        }
-    );
-
-
-    renderStats(
-        employeeList
-    );
-
-
-    const body =
-        document.getElementById(
-            "employeesTableBody"
-        );
-
-
-    if(
-        !employeeList.length
-    ){
-
-        body.innerHTML = `
-
-            <tr>
-
-                <td
-                    colspan="10"
-                    class="empty">
-
-                    لا توجد بيانات في الفترة المحددة.
-
-                </td>
-
-            </tr>
-
-        `;
-
-
-        return;
-
-    }
-
-
-    body.innerHTML =
-        employeeList.map(
-            function(employee){
-
-                return `
-
-                    <tr>
-
-                        <td>
-
-                            ${escapeHtml(
-                                employee.name
-                            )}
-
-                        </td>
-
-
-                        <td>
-
-                            ${escapeHtml(
-                                employee.number
-                            )}
-
-                        </td>
-
-
-                        <td>
-
-                            ${employee.required}
-
-                        </td>
-
-
-                        <td>
-
-                            ${employee.completed}
-
-                        </td>
-
-
-                        <td>
-
-                            ${employee.remaining}
-
-                        </td>
-
-
-                        <td>
-
-                            ${employee.late}
-
-                        </td>
-
-
-                        <td>
-
-                            <div class="progress-wrap">
-
-                                <strong>
-
-                                    ${employee.achievement}%
-
-                                </strong>
-
-
-                                <div class="progress-track">
-
-                                    <div
-                                        class="progress-fill"
-                                        style="
-                                            width:${Math.min(employee.achievement,100)}%
-                                        ">
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </td>
-
-
-                        <td>
-
-                            ${complianceBadge(
-                                employee.averageCompliance
-                            )}
-
-                        </td>
-
-
-                        <td>
-
-                            ${employee.noCount}
-
-                        </td>
-
-
-                        <td>
-
-                            <button
-                                class="employee-report-btn"
-                                onclick="openEmployeeEvaluation(
-                                    '${encodeURIComponent(employee.name)}',
-                                    '${encodeURIComponent(employee.number)}'
-                                )">
-
-                                📄 تقرير تقييم الموظف
-
-                            </button>
-
-                        </td>
-
-                    </tr>
-
-                `;
-
-            }
-        )
-        .join("");
-
+  }
+  // أظهر أصحاب الجولات الإضافية، دون اعتبارها مهامًا منجزة إذا لم تُجدول.
+  for(const round of periodRounds){const emp=ensure(round);if(emp)emp.actualRounds++;}
+  const list=[...map.values()].sort((a,b)=>{
+    const rateA=a.required?a.completed/a.required:-1,rateB=b.required?b.completed/b.required:-1;
+    return rateB-rateA||a.name.localeCompare(b.name,'ar');
+  });
+  renderedEmployeeByKey=new Map(list.map(x=>[x.key,{name:x.name,number:x.number}]));
+  const total=id=>list.reduce((s,x)=>s+x[id],0);
+  const required=total('required'),completed=total('completed');
+  $('employeesCount').textContent=list.length;
+  $('requiredCount').textContent=required;
+  $('completedCount').textContent=completed;
+  $('remainingCount').textContent=total('remaining');
+  $('lateCount').textContent=total('late');
+  $('overallAchievement').textContent=required?`${Math.round(completed/required*100)}%`:'—';
+  if(!list.length){setEmpty('لا توجد بيانات ضمن الفترة المحددة.');return;}
+  $('employeesTableBody').innerHTML=list.map(e=>{
+    const pct=e.required?Math.round(e.completed/e.required*100):null;
+    const avg=e.values.length?Math.round(e.values.reduce((s,x)=>s+x,0)/e.values.length):null;
+    const badge=avg===null?'<span class="badge badge-neutral">—</span>':`<span class="badge ${avg<70?'badge-low':avg<90?'badge-mid':'badge-good'}">${avg}%</span>`;
+    const percentLabel=pct===null?'—':pct+'%';
+    const progress=pct===null?0:Math.min(pct,100);
+    return `<tr><td>${safe(e.name)}</td><td>${safe(e.number)}</td><td>${e.required}</td><td>${e.completed}</td><td>${e.remaining}</td><td>${e.late}</td><td><div class="progress-wrap"><strong>${percentLabel}</strong><div class="progress-track"><div class="progress-fill" style="width:${progress}%"></div></div></div>${e.legacyMatches?`<div class="muted">${e.legacyMatches} مطابقة قديمة</div>`:''}</td><td>${badge}</td><td>${e.noCount}</td><td><button class="employee-report-btn" data-employee-key="${safe(e.key)}" type="button">📄 تقرير تقييم الموظف</button></td></tr>`;
+  }).join('');
+  const typeRows=[];
+  for(const e of list){for(const [type,v] of e.types){const percent=v.required?Math.round(v.completed/v.required*100):0;typeRows.push(`<tr><td>${safe(e.name)}</td><td>${safe(type)}</td><td>${v.required}</td><td>${v.completed}</td><td>${v.remaining}</td><td>${v.late}</td><td>${percent}%</td></tr>`);}}
+  $('typesTableBody').innerHTML=typeRows.join('')||'<tr><td colspan="7" class="empty">لا توجد مهام مخططة في الفترة المحددة.</td></tr>';
 }
-
-
-/* =========================================================
-   OPEN INDIVIDUAL EMPLOYEE REPORT
-========================================================= */
-
-function openEmployeeEvaluation(
-    encodedName,
-    encodedNumber
-){
-
-    const employeeName =
-        decodeURIComponent(
-            encodedName
-        );
-
-
-    const employeeNumber =
-        decodeURIComponent(
-            encodedNumber
-        );
-
-
-    const range =
-        getSelectedRange();
-
-
-    /*
-    نحفظ بيانات الموظف والفترة
-    لتقرأها صفحة تقرير التقييم
-    */
-
-
-    sessionStorage.setItem(
-
-        "phrmsEmployeeEvaluationFilter",
-
-        JSON.stringify({
-
-            employeeName:
-                employeeName,
-
-            employeeNumber:
-                employeeNumber,
-
-            fromDate:
-                range.from || "",
-
-            toDate:
-                range.to || ""
-
-        })
-
-    );
-
-
-    /*
-    دعم إضافي للمفاتيح
-    الموجودة في صفحة التقرير
-    */
-
-    sessionStorage.setItem(
-        "phrmsEvaluationEmployeeName",
-        employeeName
-    );
-
-
-    sessionStorage.setItem(
-        "phrmsEvaluationEmployeeNumber",
-        employeeNumber
-    );
-
-
-    sessionStorage.setItem(
-        "phrmsEvaluationFromDate",
-        range.from || ""
-    );
-
-
-    sessionStorage.setItem(
-        "phrmsEvaluationToDate",
-        range.to || ""
-    );
-
-
-    window.location.href =
-        "employee-evaluation-report.html";
-
+function openEmployeeEvaluation(key){
+  const emp=renderedEmployeeByKey.get(key);if(!emp)return;
+  const range=getSelectedRange();if(!range.valid)return;
+  const selection={employeeName:emp.name,employeeNumber:emp.number,fromDate:range.from,toDate:range.to};
+  try{
+    sessionStorage.setItem('phrmsEmployeeEvaluationFilter',JSON.stringify(selection));
+    sessionStorage.setItem('phrmsEvaluationEmployeeName',emp.name);
+    sessionStorage.setItem('phrmsEvaluationEmployeeNumber',emp.number);
+    sessionStorage.setItem('phrmsEvaluationFromDate',range.from);
+    sessionStorage.setItem('phrmsEvaluationToDate',range.to);
+  }catch(e){setMessage('تعذر تمرير نطاق التقرير الفردي إلى الصفحة التالية: '+e.message,'error');return;}
+  // يجب تحديث هذه الصفحة منفصلًا لتقرأ المهام المركزية أيضًا، كما يفعل هذا التقرير.
+  window.location.href='employee-evaluation-report.html';
 }
-
-
-/* =========================================================
-   KPI
-========================================================= */
-
-function renderStats(
-    employees
-){
-
-    document.getElementById(
-        "employeesCount"
-    ).textContent =
-        employees.length;
-
-
-    const required =
-        employees.reduce(
-            function(sum,item){
-
-                return (
-                    sum +
-                    item.required
-                );
-
-            },
-            0
-        );
-
-
-    const completed =
-        employees.reduce(
-            function(sum,item){
-
-                return (
-                    sum +
-                    item.completed
-                );
-
-            },
-            0
-        );
-
-
-    const late =
-        employees.reduce(
-            function(sum,item){
-
-                return (
-                    sum +
-                    item.late
-                );
-
-            },
-            0
-        );
-
-
-    const achievement =
-        required
-
-        ? Math.round(
-            completed /
-            required *
-            100
-        )
-
-        : 0;
-
-
-    document.getElementById(
-        "requiredCount"
-    ).textContent =
-        required;
-
-
-    document.getElementById(
-        "completedCount"
-    ).textContent =
-        completed;
-
-
-    document.getElementById(
-        "lateCount"
-    ).textContent =
-        late;
-
-
-    document.getElementById(
-        "overallAchievement"
-    ).textContent =
-        achievement +
-        "%";
-
-}
-
-
-/* =========================================================
-   HELPERS
-========================================================= */
-
-function employeeKey(item){
-
-    return String(
-        item.employeeNumber ||
-        item.employeeName ||
-        ""
-    ).trim();
-
-}
-
-
-function sameRoundType(
-    task,
-    round
-){
-
-    if(
-        task.roundType ===
-        "medicalWaste"
-    ){
-
-        return (
-            round.roundType ===
-            "medicalWaste"
-        );
-
-    }
-
-
-    return (
-        round.roundType !==
-        "medicalWaste"
-    );
-
-}
-
-
-function normalizeText(value){
-
-    return String(
-        value ||
-        ""
-    )
-    .trim()
-    .replace(
-        /\s+/g,
-        " "
-    )
-    .toLowerCase();
-
-}
-
-
-function dateDistance(
-    date1,
-    date2
-){
-
-    if(
-        !date1 ||
-        !date2
-    ){
-
-        return Infinity;
-
-    }
-
-
-    const a =
-        new Date(
-            date1 +
-            "T12:00:00"
-        );
-
-
-    const b =
-        new Date(
-            date2 +
-            "T12:00:00"
-        );
-
-
-    if(
-        isNaN(a.getTime()) ||
-        isNaN(b.getTime())
-    ){
-
-        return Infinity;
-
-    }
-
-
-    return Math.abs(
-
-        Math.round(
-
-            (
-                b-a
-            )
-
-            /
-
-            86400000
-
-        )
-
-    );
-
-}
-
-
-function complianceBadge(
-    value
-){
-
-    let className =
-        "badge-good";
-
-
-    if(
-        value === 0
-    ){
-
-        className =
-            "badge-neutral";
-
-    }
-    else if(
-        value < 70
-    ){
-
-        className =
-            "badge-low";
-
-    }
-    else if(
-        value < 90
-    ){
-
-        className =
-            "badge-mid";
-
-    }
-
-
-    return `
-
-        <span class="badge ${className}">
-            ${value}%
-        </span>
-
-    `;
-
-}
-
-
-function dateInside(
-    value,
-    range
-){
-
-    if(
-        !value
-    ){
-
-        return false;
-
-    }
-
-
-    if(
-        range.from &&
-        value <
-        range.from
-    ){
-
-        return false;
-
-    }
-
-
-    if(
-        range.to &&
-        value >
-        range.to
-    ){
-
-        return false;
-
-    }
-
-
-    return true;
-
-}
-
-
-function lastDateOfMonth(
-    year,
-    month
-){
-
-    const lastDay =
-        new Date(
-            year,
-            month,
-            0
-        ).getDate();
-
-
-    return (
-        `${year}-${pad(month)}-${pad(lastDay)}`
-    );
-
-}
-
-
-function getToday(){
-
-    const now =
-        new Date();
-
-
-    return (
-        now.getFullYear() +
-        "-" +
-        pad(
-            now.getMonth()+1
-        ) +
-        "-" +
-        pad(
-            now.getDate()
-        )
-    );
-
-}
-
-
-function pad(value){
-
-    return String(
-        value
-    ).padStart(
-        2,
-        "0"
-    );
-
-}
-
-
-function escapeHtml(value){
-
-    return String(
-        value ||
-        ""
-    )
-    .replaceAll(
-        "&",
-        "&amp;"
-    )
-    .replaceAll(
-        "<",
-        "&lt;"
-    )
-    .replaceAll(
-        ">",
-        "&gt;"
-    )
-    .replaceAll(
-        '"',
-        "&quot;"
-    )
-    .replaceAll(
-        "'",
-        "&#039;"
-    );
-
-}
-
+document.addEventListener('DOMContentLoaded',()=>{
+  $('monthFilter').value=String(new Date().getMonth()+1);
+  $('yearFilter').innerHTML=`<option value="${new Date().getFullYear()}">${new Date().getFullYear()}</option>`;
+  $('fromDate').value=`${new Date().getFullYear()}-${pad(new Date().getMonth()+1)}-01`;
+  $('toDate').value=todayLocal();
+  $('employeesTableBody').addEventListener('click',event=>{const b=event.target.closest('button[data-employee-key]');if(b)openEmployeeEvaluation(b.getAttribute('data-employee-key'));});
+  periodChanged();loadAllData();
+});
 </script>
-
 </body>
-
 </html>
