@@ -1,156 +1,242 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>جولة التحقق من صلاحية المواد الغذائية | PHRMS</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>قائمة التحقق من صلاحية الأغذية | PHRMS</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root{--blue:#0759a6;--dark:#173955;--line:#dce5ed;--bg:#f4f7fa;--red:#b42318;--green:#147a48;--orange:#a86000}*{box-sizing:border-box}body{font-family:Tahoma,Arial,sans-serif;margin:0;background:var(--bg);color:var(--dark);line-height:1.8}header{background:white;border-bottom:4px solid var(--blue);padding:18px;text-align:center}header h1{margin:0;color:#07539b;font-size:23px}header p{margin:5px;font-size:13px;color:#647b90}.shell{max-width:1230px;margin:20px auto;padding:0 14px 45px}.card{background:white;border:1px solid var(--line);box-shadow:0 2px 12px #152a3b09;border-radius:13px;padding:20px;margin-bottom:16px}.card h2{font-size:17px;color:var(--blue);margin:0 0 14px;border-right:4px solid var(--blue);padding-right:12px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}label{display:block;font-size:12px;font-weight:bold}input,select,textarea{display:block;width:100%;padding:10px 9px;border:1px solid #c6d6e1;border-radius:7px;font:inherit;font-size:12px;color:#25465e;background:#fff;min-width:0}textarea{min-height:85px;resize:vertical}.cat{background:#f6fafc;border:1px solid #d9e6ef;border-radius:12px;margin-bottom:12px;padding:12px}.cathead{display:flex;justify-content:space-between;align-items:center;gap:10px}.cathead h3{font-size:15px;color:#105786;margin:0}.cat small{color:#667f94;display:block;margin-bottom:8px}.product{display:grid;grid-template-columns:2fr 1.2fr 1fr 1fr 1fr 1.2fr 1.4fr;gap:8px;align-items:end;margin:9px 0;padding:12px;background:white;border:1px solid #dae5eb;border-radius:9px}.product .wide{grid-column:span 2}.product .full{grid-column:span 5}.product .end{display:flex;gap:8px;align-items:center;justify-content:flex-start;flex-wrap:wrap}.product .end button{padding:7px 10px}.flag{display:inline-block;border-radius:50px;background:#ecf1f5;padding:3px 9px;font-size:11px;font-weight:bold}.flag.expired,.flag.damaged{color:#a52118;background:#ffefee}.flag.near{color:#8c5400;background:#fff2db}.flag.valid{color:#126b40;background:#e9f8ee}.flag.unverified{color:#626b79;background:#eef1f4}button,.action-link{background:var(--blue);border:none;color:white;border-radius:8px;padding:11px 15px;font:inherit;font-size:12px;cursor:pointer;text-decoration:none;font-weight:bold;display:inline-block}button:disabled{cursor:not-allowed;opacity:.55}.outline{background:white;color:var(--blue);border:1px solid var(--blue)}.danger{background:white;border:1px solid #e6c5c3;color:var(--red)}.actions{display:flex;gap:9px;flex-wrap:wrap}.hint{background:#ecf5fc;border-right:4px solid var(--blue);padding:11px;font-size:12px;border-radius:7px;margin:9px 0}.message{white-space:pre-wrap;font-weight:bold;font-size:13px;margin-top:12px}.muted{font-size:12px;color:#637b8d}.state{border:1px solid #c9dfd4;background:#f0f9f3;padding:10px;border-radius:9px;font-size:12px}.state.warn{background:#fff8e9;border-color:#e6d6b3}.report{display:none;max-width:1050px;margin:0 auto;background:white;padding:18px}.report-toolbar{margin-bottom:12px;display:flex;gap:8px;flex-wrap:wrap}.paper{background:white;border:1px solid var(--line);padding:20px}.report-head{display:grid;grid-template-columns:95px 1fr 95px;align-items:center;text-align:center;border-bottom:3px solid var(--blue);padding:8px}.report-head img{max-height:76px;max-width:90px;object-fit:contain}.report-head h1{font-size:19px;margin:2px}.report-head p{font-size:11px;margin:0}.section{margin:14px 0;break-inside:avoid}.section h3{font-size:14px;padding:6px;background:#eaf2f9;margin:0 0 8px}.meta{display:grid;grid-template-columns:1fr 1fr;gap:0}.meta>div{border:1px solid var(--line);padding:7px;font-size:12px}table{width:100%;border-collapse:collapse;font-size:11px}th,td{border:1px solid #d1dfe8;padding:6px;text-align:right;word-break:break-word}th{background:#ecf4fb}.signatures{display:grid;grid-template-columns:1fr 1fr;gap:14px}.sig{border:1px solid var(--line);padding:11px;min-height:135px}.sig img{display:block;max-width:195px;max-height:85px;object-fit:contain}.stamp{color:#a52118;border:2px solid #d99693;padding:10px;text-align:center;font-weight:bold}.report-note{white-space:pre-wrap;border:1px solid var(--line);padding:12px}.report-foot{font-size:10px;color:#607387;border-top:1px solid var(--line);padding-top:9px}@media(max-width:1050px){.product{grid-template-columns:repeat(3,minmax(0,1fr))}.product .wide,.product .full{grid-column:span 1}}@media(max-width:650px){.grid,.product{grid-template-columns:1fr 1fr}.product .wide,.product .full{grid-column:span 2}.cathead{align-items:flex-start}.report-head{grid-template-columns:55px 1fr 55px}.report-head img{max-height:45px;max-width:55px}}@media print{@page{size:A4 landscape;margin:10mm}body{background:white!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}body>header,body>.shell,.report-toolbar{display:none!important}.report{display:block!important;margin:0;padding:0;max-width:none}.paper{padding:0;border:0}.section{break-inside:avoid}tr{break-inside:avoid}table{font-size:10px}.signatures{break-inside:avoid}}
+:root{--blue:#0759a6;--dark:#23445e;--muted:#657c8e;--border:#dce6ee;--bg:#f3f7fb;--ok:#147d50;--warn:#a36100;--danger:#b42318}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Tahoma,Arial,sans-serif;color:var(--dark);line-height:1.7}
+.site-header{background:#fff;border-bottom:4px solid var(--blue);padding:13px 16px;text-align:center}
+.site-header h1{font-size:20px;color:#07549b;margin:0}.site-header p{font-size:12px;color:var(--muted);margin:4px}
+.wrap{max-width:930px;margin:14px auto 50px;padding:0 12px}
+.box{background:#fff;border:1px solid var(--border);border-radius:15px;padding:17px;margin-bottom:13px;box-shadow:0 3px 13px #183b570a}
+.box h2{font-size:17px;color:var(--blue);margin:0 0 12px}
+.note{padding:10px 12px;border-radius:9px;background:#ebf5fd;color:#285675;font-size:12px;margin:10px 0}
+.subtle{font-size:12px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+label{display:block;font-size:12px;font-weight:bold}input,select,textarea{font:inherit;font-size:14px;color:var(--dark);border:1px solid #c7d7e3;background:#fff;border-radius:9px;padding:11px;width:100%;min-width:0}
+label input,label select,label textarea{margin-top:5px}textarea{min-height:74px;resize:vertical}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid #78abe3;outline-offset:1px}
+.btn,.link{border:0;border-radius:10px;padding:11px 15px;font:inherit;font-size:13px;font-weight:bold;cursor:pointer;background:var(--blue);color:white;text-decoration:none;display:inline-flex;gap:5px;justify-content:center;align-items:center}
+.btn:disabled{opacity:.55;cursor:not-allowed}.btn.light,.link.light{background:#e9f2fa;color:var(--blue)}.btn.small{font-size:12px;padding:7px 10px}.btn.danger{background:#fdecec;color:var(--danger)}
+.actions{display:flex;gap:8px;flex-wrap:wrap}.message{white-space:pre-wrap;font-weight:bold;font-size:13px;margin-top:10px}
+.progress-row{display:flex;justify-content:space-between;gap:8px;align-items:center;font-weight:bold;font-size:13px}
+.track{height:9px;background:#e7eef4;overflow:hidden;border-radius:99px;margin:9px 0}.fill{height:100%;background:#16845c;width:0%;transition:width .2s}
+.category{border:1px solid var(--border);border-radius:12px;padding:12px 13px;margin-bottom:11px;background:#fff}
+.category[data-status="valid"]{border-right:5px solid var(--ok)}
+.category[data-status="near"]{border-right:5px solid var(--warn)}
+.category[data-status="expired"],.category[data-status="damaged"]{border-right:5px solid var(--danger)}
+.category[data-status="na"]{border-right:5px solid #8b98a5}
+.category-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.category-name{font-weight:bold;font-size:15px;color:#155883}
+.category-detail{font-size:11px;color:var(--muted);margin-top:1px}
+.category-state{white-space:nowrap;color:#66798c;font-size:11px}
+.choices{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin-top:12px}
+.choice{border:1px solid #cedde7;border-radius:10px;background:#f8fafc;min-height:43px;padding:7px 4px;font-size:12px;font-weight:bold;color:#365b72;cursor:pointer}
+.choice.selected[data-kind="valid"]{background:#e2f5e9;border:2px solid var(--ok);color:var(--ok)}
+.choice.selected[data-kind="near"]{background:#fff1d7;border:2px solid var(--warn);color:#865000}
+.choice.selected[data-kind="expired"],.choice.selected[data-kind="damaged"]{background:#ffe9e8;border:2px solid var(--danger);color:var(--danger)}
+.choice.selected[data-kind="na"]{background:#e8edf1;border:2px solid #6b7886;color:#415363}
+.details{margin-top:11px;padding:11px;border-radius:9px;background:#f5f9fc;border:1px solid #dbe7ef}
+.details[hidden],.extra[hidden]{display:none!important}
+.details h4{font-size:13px;margin:0 0 6px;color:#0759a6}
+.finding{background:white;border:1px solid #d5e2ec;border-radius:10px;padding:10px;margin:8px 0}
+.finding .grid{margin-top:6px}
+.finding-head{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:12px;font-weight:bold}
+.finding details{font-size:12px;margin-top:7px}.finding summary{color:var(--blue);cursor:pointer}
+.optional-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}
+.summary-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:9px 0}
+.summary-card{text-align:center;border:1px solid #dce6ef;border-radius:9px;padding:9px 6px;background:#f9fcff}
+.summary-card strong{display:block;font-size:20px;color:#0759a6}.summary-card span{font-size:10px;color:var(--muted)}
+.report{display:none;max-width:1120px;margin:0 auto;padding:15px;background:white}.report-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.paper{background:#fff;padding:14px;border:1px solid var(--border)}
+.report-head{display:grid;grid-template-columns:90px 1fr 90px;gap:8px;align-items:center;text-align:center;border-bottom:3px solid var(--blue);padding:8px}
+.report-head img{max-height:75px;max-width:90px;object-fit:contain}.report-head h1{font-size:17px;margin:0}.report-head p{margin:2px;font-size:11px}
+.section{margin:14px 0}.section h3{font-size:14px;margin:0 0 7px;background:#eaf3fa;padding:7px}
+.meta{display:grid;grid-template-columns:1fr 1fr}.meta div{border:1px solid var(--border);padding:7px;font-size:11px}
+table{border-collapse:collapse;width:100%;font-size:11px}th,td{border:1px solid #c9d8e3;padding:7px;text-align:right;vertical-align:top;word-break:break-word}th{background:#edf5fb}
+.signatures{display:grid;grid-template-columns:1fr 1fr;gap:12px}.signature{border:1px solid var(--border);min-height:130px;padding:10px;font-size:12px}.signature img{max-width:210px;max-height:75px;display:block;object-fit:contain}.stamp{border:2px solid #d6a1a1;color:#a52118;font-weight:bold;text-align:center;padding:10px;margin:8px 0}
+.report-footer{border-top:1px solid #d1dce5;padding-top:8px;color:#607387;font-size:10px}
+@media(max-width:650px){.grid,.optional-row{grid-template-columns:1fr}.choices{grid-template-columns:repeat(2,minmax(0,1fr))}.choice:last-child{grid-column:span 2}.category{padding:11px}.summary-cards{grid-template-columns:repeat(2,1fr)}.report-head{grid-template-columns:55px 1fr 55px}.report-head img{max-width:52px;max-height:48px}.meta{grid-template-columns:1fr}.signatures{grid-template-columns:1fr}.site-header h1{font-size:18px}}
+@media print{@page{size:A4 landscape;margin:10mm}body{background:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.site-header,.wrap,.report-toolbar{display:none!important}.report{display:block!important;margin:0;max-width:none;padding:0}.paper{border:0;padding:0}.section,.signatures{break-inside:avoid}tr{break-inside:avoid}}
 </style>
 </head>
 <body>
-<header><h1 id="title">استمارة التحقق من تواريخ صلاحية المواد الغذائية</h1><p>نظام إدارة جولات الصحة العامة — مستشفى إرادة والصحة النفسية بحفر الباطن</p></header>
-<main class="shell" id="entry">
-<a class="action-link outline" href="index.html">العودة إلى بوابة الجولات</a>
-<section class="card"><h2>1. بيانات الجولة</h2><div class="grid">
-<label>الموقع / القسم *<select id="site"><option value="">اختر الموقع</option><option>المطبخ الرئيسي</option><option>المستودع الجاف</option><option>ثلاجات حفظ المواد الغذائية</option><option>المجمدات</option><option>منطقة تجهيز الوجبات</option><option>منطقة تقديم الوجبات</option><option>موقع آخر</option></select></label>
-<label>اسم منفذ الجولة *<select id="employee" onchange="employeeChanged()"><option>جارٍ تحميل الموظفين...</option></select></label>
-<label>الرقم الوظيفي<input id="employeeNo" readonly></label>
-<label>المهمة المكلّف بها<select id="assignedTask" onchange="taskChanged()"><option value="">جولة إضافية دون تكليف (لا تحتسب ضمن المهام المجدولة)</option></select></label>
-<label>تاريخ الجولة *<input type="date" id="date"></label>
-<label>وقت الجولة<input type="time" id="time"></label>
-<label>الغرض من الجولة<select id="type"><option>دورية</option><option>متابعة</option><option>بلاغ</option></select></label>
-<label>تنبيه قرب انتهاء الصلاحية<select id="nearDays" onchange="refreshStatuses()"><option value="7">خلال 7 أيام</option><option value="14">خلال 14 يومًا</option><option value="30">خلال 30 يومًا</option></select></label>
-</div><div id="taskState" class="hint" style="margin-top:12px">اختر الموظف لعرض مهام فحص الصلاحية المسندة إليه من جدول المهام المركزي.</div><div id="signatureState" class="state warn" style="margin-top:12px">تحميل بيانات الموظفين وتواقيعهم...</div></section>
-<section class="card"><h2>2. الفحص حسب تصنيف المواد الغذائية</h2><div class="hint">أضف كل صنف تم فحصه في القسم المناسب. يتم تحديد الحالة تلقائيًا من تاريخ الانتهاء، مع تسجيل كمية الصنف والملاحظات والإجراء المتخذ. تاريخ الانتهاء في يوم الجولة نفسه لا يعد منتهيًا حتى نهاية ذلك اليوم.</div><div id="categories"></div></section>
-<section class="card"><h2>3. الملاحظات العامة والمتابعة</h2><label>ملاحظات عامة عن الجولة<textarea id="notes" maxlength="3000" placeholder="أي ملاحظة أو توصية شاملة"></textarea></label><div class="grid" style="margin-top:12px"><label>الجهة المسؤولة عن الإجراء<select id="owner"><option value="">غير محدد</option><option>التغذية</option><option>الخدمات الغذائية</option><option>المستودعات</option><option>الصحة العامة</option><option>الخدمات الإدارية والتشغيل</option></select></label><label>تاريخ المتابعة<input type="date" id="followup"></label></div></section>
-<section class="card"><h2>4. حفظ الجولة وإرسالها لصندوق الصحة العامة</h2><div id="summary" class="hint"></div><div class="actions"><button id="saveBtn" onclick="saveRound()">حفظ مركزي وإرسال للصندوق</button><button type="button" class="outline" onclick="retryPending()">إعادة إرسال الجولات المعلقة (<span id="pendingCount">0</span>)</button><button type="button" class="outline" onclick="showReport()">عرض التقرير / الطباعة</button><a href="food-expiry-inbox.html" class="action-link outline">صندوق جولات صلاحية الأغذية</a><button type="button" class="outline" onclick="location.href='food-expiry-round.html'">جولة جديدة</button></div><div id="message" class="message" role="status" aria-live="polite"></div><div class="muted">الجولة لا تصل إلى الصندوق إلا بعد نجاح الحفظ المركزي؛ المسودات المعلقة تبقى على جهازك لإعادة الإرسال. توقيع المدير لا يظهر إلا بعد اعتماده للجولة من الصندوق.</div></section>
+<header class="site-header"><h1>قائمة التحقق من تواريخ صلاحية المواد الغذائية</h1><p>إدارة الصحة العامة — مستشفى إرادة والصحة النفسية</p></header>
+<main class="wrap" id="entry">
+ <div class="actions" style="margin-bottom:12px"><a class="link light" href="portal.html">العودة للبوابة</a><a class="link light" href="employee-tasks.html">مهامي المجدولة</a></div>
+ <section class="box">
+  <h2>1. بيانات الجولة</h2>
+  <div class="grid">
+   <label>الموظف المنفذ *<select id="employee" onchange="employeeChanged()"><option value="">تحميل الموظفين...</option></select></label>
+   <label>الرقم الوظيفي<input id="employeeNo" readonly></label>
+   <label>موقع الفحص *<select id="site"><option value="">اختر الموقع</option><option>التغذية / المطبخ</option><option>المطبخ الرئيسي</option><option>المستودع الجاف</option><option>ثلاجات حفظ المواد الغذائية</option><option>المجمدات</option><option>منطقة تجهيز الوجبات</option><option>منطقة تقديم الوجبات</option><option>موقع آخر</option></select></label>
+   <label>المهمة المجدولة<select id="assignedTask" onchange="taskChanged()"><option value="">جولة إضافية غير مرتبطة بتكليف</option></select></label>
+   <label>تاريخ الجولة *<input id="date" type="date" onchange="refreshUI()"></label>
+   <label>وقت الجولة<input id="time" type="time"></label>
+   <label>نوع الجولة<select id="type"><option>دورية</option><option>متابعة</option><option>بلاغ</option></select></label>
+   <label>حد التنبيه بقرب الانتهاء<select id="nearDays" onchange="refreshUI()"><option value="7">7 أيام</option><option value="14">14 يومًا</option><option value="30" selected>30 يومًا</option></select></label>
+  </div>
+  <p class="note" id="taskState">اختر الموظف لتحميل التكليفات المجدولة.</p>
+  <p class="subtle" id="signatureState">يجري التحقق من تسجيل توقيع الموظف.</p>
+ </section>
+ <section class="box">
+  <h2>2. قائمة التحقق السريعة</h2>
+  <div class="note">افحص تواريخ الصلاحية فعليًا، ثم اختر نتيجة واحدة لكل مجموعة. «سليم» يعني عدم وجود مخالفة في المنتجات التي فُحصت. تظهر تفاصيل المنتج فقط إذا وجدت مخالفة أو منتجًا قريب الانتهاء. اختر «لا ينطبق» للمجموعة غير الموجودة في الموقع.</div>
+  <div class="progress-row"><span>المجموعات التي تم التحقق منها</span><span id="progressText">0 / 6</span></div>
+  <div class="track"><div class="fill" id="progressFill"></div></div>
+  <div id="categories"></div>
+ </section>
+ <section class="box">
+  <h2>3. الملاحظات العامة والمتابعة</h2>
+  <label>ملاحظات أو توصيات إضافية<textarea id="notes" maxlength="3000" placeholder="يمكن تركه فارغًا إذا لم توجد ملاحظات عامة"></textarea></label>
+  <div class="grid" style="margin-top:10px">
+   <label>الجهة المسؤولة عن المتابعة<select id="owner"><option value="">غير محددة</option><option>التغذية</option><option>الخدمات الغذائية</option><option>المستودعات</option><option>الصحة العامة</option><option>الخدمات الإدارية والتشغيل</option></select></label>
+   <label>تاريخ المتابعة<input type="date" id="followup"></label>
+  </div>
+ </section>
+ <section class="box">
+  <h2>4. ملخص الجولة وإرسال التقرير</h2>
+  <div class="summary-cards">
+   <div class="summary-card"><strong id="sumValid">0</strong><span>سليم</span></div>
+   <div class="summary-card"><strong id="sumNear">0</strong><span>قريب الانتهاء</span></div>
+   <div class="summary-card"><strong id="sumIssues">0</strong><span>منتهي / تالف</span></div>
+   <div class="summary-card"><strong id="sumNa">0</strong><span>لا ينطبق</span></div>
+  </div>
+  <div class="actions">
+   <button class="btn" id="saveBtn" onclick="saveRound()">حفظ الجولة وإرسالها للصندوق</button>
+   <button class="btn light" type="button" onclick="showReport()">معاينة التقرير / طباعة</button>
+   <button class="btn light" type="button" onclick="retryPending()">إعادة إرسال المعلق (<span id="pendingCount">0</span>)</button>
+   <a class="link light" href="food-expiry-inbox.html">صندوق تقارير الصلاحية</a>
+  </div>
+  <div class="message" id="message" aria-live="polite"></div>
+  <p class="subtle">لا تُحتسب المهمة منجزة إلا بعد نجاح الحفظ المركزي. ولا يظهر توقيع المدير في التقرير قبل اعتماده من الصندوق.</p>
+ </section>
 </main>
-<section class="report" id="reportView"><div class="report-toolbar"><button onclick="window.print()">طباعة / حفظ PDF</button><button class="outline" onclick="downloadReport()">حفظ التقرير HTML</button><button class="outline" onclick="hideReport()">العودة للجولة</button></div><div id="paper" class="paper"></div></section>
+<section class="report" id="reportView"><div class="report-toolbar"><button class="btn" onclick="window.print()">طباعة / حفظ PDF</button><button class="btn light" onclick="hideReport()">العودة للنموذج</button></div><div id="paper" class="paper"></div></section>
 <script>
 'use strict';
 const SUPABASE_URL='https://xbivmhkqxmrkpjxfvemc.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY='sb_publishable_jTXNyxYwDMmJDUzg46rcdA_rySASiuE';
 const db=window.supabase?window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY):null;
-const ROUND_TYPE='foodExpiry',PENDING_KEY='PHRMS_FOOD_EXPIRY_PENDING';
+const ROUND_TYPE='foodExpiry';
+const PENDING_KEY='PHRMS_FOOD_EXPIRY_PENDING';
 const CATEGORIES=[
- {key:'dry',label:'المواد الجافة',detail:'الأرز، الدقيق، السكر، البقوليات، المكرونة، الحبوب'},
- {key:'dairy',label:'الألبان ومشتقاتها والبيض',detail:'الحليب، اللبن، الجبن، الزبدة، القشطة، البيض'},
- {key:'meat',label:'اللحوم والدواجن والأسماك',detail:'المبردة أو المجمدة'},
- {key:'produce',label:'الخضروات والفواكه',detail:'الطازجة أو المجمدة'},
- {key:'canned',label:'المعلبات والمشروبات والزيوت والتوابل',detail:'المعلبات، الصلصات، العصائر، الزيوت، البهارات'},
- {key:'prepared',label:'الأغذية المحضّرة والمخبوزات',detail:'الوجبات المحضّرة والخبز والحلويات الغذائية، عند وجودها'}
+ {key:'dry',label:'المواد الجافة',example:'الدقيق، الأرز، السكر، البقوليات، المكرونة'},
+ {key:'dairy',label:'الألبان ومشتقاتها والبيض',example:'الحليب، الجبن، اللبن، القشطة، البيض'},
+ {key:'meat',label:'اللحوم والدواجن والأسماك',example:'المنتجات المبردة والمجمدة'},
+ {key:'produce',label:'الخضروات والفواكه',example:'الطازجة والمجمدة'},
+ {key:'canned',label:'المعلبات والزيوت والتوابل',example:'المعلبات، الصلصات، العصائر، الزيوت، البهارات'},
+ {key:'prepared',label:'الأغذية المحضرة والمخبوزات',example:'الوجبات المحضرة، الخبز، الحلويات'}
 ];
-let employees=[],manager=null,saved=null,currentId='',viewMode=false,confirmed=false,employeeLoaded=false;
-let assignedTasks=[],finishedTaskIds=new Set(),taskLoadReady=false;
-const $=id=>document.getElementById(id),v=id=>$(id).value.trim();
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const imageUrl=s=>/^data:image\/(?:png|jpeg|jpg|webp);base64,[\w+/=]+$/i.test(String(s||''))?String(s):'';
-const getPending=()=>{try{const a=JSON.parse(localStorage.getItem(PENDING_KEY)||'[]');return Array.isArray(a)?a:[]}catch{return[]}};
-function setPending(a){localStorage.setItem(PENDING_KEY,JSON.stringify(a));$('pendingCount').textContent=a.length}
+const STATUS_LABEL={valid:'سليم',near:'قريب الانتهاء',expired:'منتهي الصلاحية',damaged:'تالف / غير سليم',na:'لا ينطبق'};
+const ACTION_LABEL={none:'لم يحدد',monitor:'متابعة قرب الانتهاء',isolate:'عزل المنتج',remove:'سحب المنتج',dispose:'إحالة للإتلاف',return:'إرجاع للمورد',other:'إجراء آخر'};
+const $=id=>document.getElementById(id);
+const v=id=>String($(id)?.value||'').trim();
+const esc=x=>String(x??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+const safeImage=x=>/^data:image\/(png|jpe?g|webp);base64,[\w+/=]+$/i.test(String(x||''))?String(x):'';
+let employees=[],assignedTasks=[],finishedTaskIds=new Set(),taskLoadReady=false,employeeLoaded=false;
+let states={},currentId='',saved=null,confirmed=false,viewMode=false;
+function today(){let d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
+function nowTime(){let d=new Date();return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`}
+function getPending(){try{const a=JSON.parse(localStorage.getItem(PENDING_KEY)||'[]');return Array.isArray(a)?a:[]}catch{return[]}}
+function setPending(a){try{localStorage.setItem(PENDING_KEY,JSON.stringify(a));$('pendingCount').textContent=a.length}catch(e){message('تعذر حفظ النسخة المحلية المعلقة: '+err(e),true)}}
 function message(s,bad=false){$('message').textContent=s;$('message').style.color=bad?'#b42318':'#147a48'}
-function todayLocal(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
-function timeLocal(){const d=new Date();return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`}
-function daysUntil(date,base){if(!date||!base)return null;return Math.round((Date.parse(date+'T12:00:00')-Date.parse(base+'T12:00:00'))/86400000)}
-function rowStatus(r,base,days){if(r.notApplicable)return 'na';if(!r.expiry)return 'unverified';const delta=daysUntil(r.expiry,base);if(delta===null||!Number.isFinite(delta))return 'unverified';if(delta<0)return 'expired';if(r.condition==='damaged')return 'damaged';if(delta<=days)return 'near';return 'valid'}
-const LABELS={valid:'سليم',near:'قريب الانتهاء',expired:'منتهي الصلاحية',damaged:'تالف / غير سليم',na:'لا ينطبق',unverified:'لم يُتحقق'};
-function addRow(cat,item={}){const c=$('cat-'+cat);const row=document.createElement('div');row.className='product';row.dataset.cat=cat;row.innerHTML=`
-<label class="wide">اسم المنتج *<input class="name" maxlength="140" placeholder="اسم المادة / العلامة" value="${esc(item.name||'')}"></label>
-<label>رقم التشغيلة (اختياري)<input class="batch" maxlength="70" value="${esc(item.batch||'')}"></label>
-<label>تاريخ الإنتاج<input type="date" class="production" value="${esc(item.production||'')}"></label>
-<label>تاريخ الانتهاء<input type="date" class="expiry" value="${esc(item.expiry||'')}"></label>
-<label>الكمية<input type="text" class="qty" maxlength="70" placeholder="مثال: 12 عبوة" value="${esc(item.quantity||'')}"></label>
-<label>سلامة العبوة / المنتج<select class="condition"><option value="ok">سليم ظاهريًا</option><option value="damaged">تالف / غير سليم</option></select></label>
-<label class="wide">الإجراء المتخذ<select class="action"><option value="none">لا يلزم</option><option value="isolate">عزل المنتج ومنع الاستخدام</option><option value="remove">سحب المنتج من التداول</option><option value="dispose">إحالة للإتلاف حسب السياسة</option><option value="return">إرجاع للمورد</option><option value="monitor">متابعة قرب انتهاء الصلاحية</option><option value="other">إجراء آخر (في الملاحظات)</option></select></label>
-<label class="full">ملاحظات المنتج / تفاصيل الإجراء<input class="note" maxlength="350" placeholder="مطلوبة عند الانتهاء أو التلف أو عدم وجود تاريخ"></label>
-<div style="font-size:12px;font-weight:bold">استثناء تاريخ الانتهاء<label style="display:flex;align-items:center;gap:6px"><input type="checkbox" class="na" style="width:auto" ${item.notApplicable?'checked':''}> لا ينطبق (مع ذكر السبب)</label></div>
-<div class="end"><span class="flag unverified">لم يُتحقق</span><button class="danger remove" type="button">حذف الصنف</button></div>`;
- c.appendChild(row);row.querySelector('.condition').value=item.condition||'ok';row.querySelector('.action').value=item.action||'none';row.querySelector('.note').value=item.note||'';
- row.querySelector('.remove').onclick=()=>{if(!confirm('حذف الصنف من الجولة؟'))return;row.remove();refreshStatuses()};
- row.querySelectorAll('input,select').forEach(x=>x.addEventListener('input',refreshStatuses));row.querySelectorAll('input,select').forEach(x=>x.addEventListener('change',refreshStatuses));refreshStatuses();}
-function initCats(){CATEGORIES.forEach(c=>{const section=document.createElement('div');section.className='cat';section.innerHTML=`<div class="cathead"><h3>${esc(c.label)}</h3><button type="button" class="outline">+ إضافة صنف</button></div><small>${esc(c.detail)}</small><div id="cat-${c.key}"></div>`;section.querySelector('button').onclick=()=>addRow(c.key);$('categories').appendChild(section)})}
-function readRows(){return Array.from(document.querySelectorAll('.product')).map(row=>({category:row.dataset.cat,name:row.querySelector('.name').value.trim(),batch:row.querySelector('.batch').value.trim(),production:row.querySelector('.production').value,expiry:row.querySelector('.expiry').value,quantity:row.querySelector('.qty').value.trim(),condition:row.querySelector('.condition').value,action:row.querySelector('.action').value,note:row.querySelector('.note').value.trim(),notApplicable:row.querySelector('.na').checked})).filter(x=>x.name||x.expiry||x.production||x.note||x.batch)}
-function withStatus(rows){return rows.map(r=>({...r,status:rowStatus(r,v('date'),Number(v('nearDays')))}))}
-function counts(rows){const o={valid:0,near:0,expired:0,damaged:0,na:0,unverified:0};rows.forEach(r=>o[r.status]++);return o}
-function refreshStatuses(){const base=v('date'),days=Number(v('nearDays'));Array.from(document.querySelectorAll('.product')).forEach(row=>{const data={expiry:row.querySelector('.expiry').value,notApplicable:row.querySelector('.na').checked,condition:row.querySelector('.condition').value};const status=rowStatus(data,base,days),flag=row.querySelector('.flag');flag.textContent=LABELS[status];flag.className='flag '+status;row.querySelector('.expiry').disabled=data.notApplicable});const a=withStatus(readRows()),c=counts(a);$('summary').textContent=`تم إدخال ${a.length} صنف | سليم: ${c.valid} | قريب الانتهاء: ${c.near} | منتهي: ${c.expired} | تالف: ${c.damaged} | غير متحقق: ${c.unverified} | لا ينطبق: ${c.na}`}
-async function loadPeople(){if(!db){$('employee').innerHTML='<option>تعذر الاتصال بالخدمة</option>';return}try{const {data,error}=await db.from('employees').select('employee_name,employee_number,signature_data').order('created_at',{ascending:true});if(error)throw error;employees=(data||[]).map(x=>({name:x.employee_name||'',number:String(x.employee_number||''),signature:x.signature_data||''})).filter(x=>x.name&&x.number);$('employee').innerHTML='<option value="">اختر الموظف</option>';employees.forEach(e=>{const o=document.createElement('option');o.value=e.number;o.textContent=e.name;$('employee').appendChild(o)});employeeLoaded=true;$('signatureState').textContent='اختر موظفًا مسجلًا لعرض حالة توقيعه الإلكتروني.'}catch(e){$('employee').innerHTML='<option>تعذر تحميل الموظفين</option>';$('signatureState').textContent='تعذر الاتصال بقاعدة الموظفين: '+e.message}try{const {data,error}=await db.from('manager_signature').select('manager_name,signature_data').limit(1);if(!error&&data?.length)manager={name:data[0].manager_name,signature:data[0].signature_data}}catch(e){console.warn('manager_signature',e)}}
-function employeeChanged(){const e=employees.find(x=>x.number===v('employee'));$('employeeNo').value=e?.number||'';$('signatureState').textContent=!e?'اختر منفذ الجولة':e.signature?'✓ التوقيع الإلكتروني للموظف مسجل.':'⚠ توقيع الموظف غير مسجل في إدارة التواقيع.';$('signatureState').className=e?.signature?'state':'state warn';if(!viewMode)loadAssignedTasks();}
-
-// المهام المجدولة موجودة في employee_tasks وتعد منجزة فقط عند ربطها بجولة محفوظة مركزيًا.
-async function loadAssignedTasks(preferredId=''){
- const employeeNo=v('employee');
- assignedTasks=[];finishedTaskIds=new Set();taskLoadReady=false;
- const sel=$('assignedTask');sel.innerHTML='<option value="">جولة إضافية دون تكليف (لا تحتسب ضمن المهام المجدولة)</option>';
- if(!employeeNo){$('taskState').textContent='اختر الموظف لعرض تكليفاته.';return;}
- if(!db){$('taskState').textContent='تعذر الاتصال بقاعدة البيانات.';return;}
- $('taskState').textContent='جارٍ تحميل مهام الصلاحية المجدولة لهذا الموظف...';
- try{
-  // تصفية المهام على مستوى قاعدة البيانات بحسب نوع الجولة والرقم الوظيفي.
-  const {data:tasks,error:te}=await db.from('employee_tasks')
-    .select('task_id,task_data')
-    .eq('task_data->>roundType',ROUND_TYPE)
-    .eq('task_data->>employeeNumber',employeeNo)
-    .limit(1000);
-  if(te)throw te;
-  if(employeeNo!==v('employee'))return;
-  assignedTasks=(tasks||[]).map(row=>({...row.task_data,id:String(row.task_id||row.task_data?.id||'')}))
-   .filter(t=>t.id&&t.roundType===ROUND_TYPE&&String(t.employeeNumber)===employeeNo)
-   .sort((a,b)=>String(a.requiredDate||'').localeCompare(String(b.requiredDate||'')));
-  // نطابق taskId مع جولات منتهية الحفظ؛ لا تكفي حالة planned وحدها لإثبات الإنجاز.
-  const {data:rounds,error:re}=await db.from('inspection_records')
-   .select('record_data')
-   .eq('round_type',ROUND_TYPE)
-   .eq('record_data->>employeeNumber',employeeNo)
-   .limit(1000);
-  if(re)throw re;
-  if(employeeNo!==v('employee'))return;
-  finishedTaskIds=new Set((rounds||[]).map(x=>String(x.record_data?.taskId||'')).filter(Boolean));
-  for(const task of assignedTasks){
-   if(finishedTaskIds.has(task.id))continue;
-   const opt=document.createElement('option');opt.value=task.id;
-   opt.textContent=(task.requiredDate||'دون تاريخ')+' — '+(task.taskName||'فحص تواريخ صلاحية الأغذية')+' — '+(task.locationName||'المطبخ');
-   sel.appendChild(opt);
-  }
-  taskLoadReady=true;
-  if(preferredId&&!finishedTaskIds.has(preferredId)&&assignedTasks.some(x=>x.id===preferredId))sel.value=preferredId;
-  const openCount=assignedTasks.filter(x=>!finishedTaskIds.has(x.id)).length;
-  $('taskState').textContent='المهام المسندة: '+assignedTasks.length+' | المنجزة بجولة محفوظة: '+(assignedTasks.length-openCount)+' | المتاحة للتنفيذ: '+openCount+'. المهام الإضافية غير المجدولة لا تدخل في مجموع المطلوب.';
-  taskChanged();
- }catch(e){if(employeeNo!==v('employee'))return;taskLoadReady=false;$('taskState').textContent='تعذر تحميل مهام الموظف من Supabase. '+errInfo(e);}
-}
-function taskChanged(){
- const task=assignedTasks.find(t=>t.id===v('assignedTask'));
- if(!task)return;
- if(task.locationName){const site=$('site');const match=[...site.options].find(o=>o.value===task.locationName);if(match)site.value=match.value;}
- $('taskState').textContent='مهمة مجدولة: '+(task.taskName||'فحص الصلاحية')+' | موعدها: '+(task.requiredDate||'غير محدد')+' | رقم التكليف: '+task.id+' — تُحسب منجزة بعد نجاح الحفظ المركزي.';
-}
-async function openTaskFromUrl(){
- const id=new URLSearchParams(location.search).get('taskId');
- if(!id||!db)return;
- try{
-  const {data,error}=await db.from('employee_tasks').select('task_id,task_data').eq('task_id',id).maybeSingle();
-  if(error)throw error;
-  const t=data?.task_data;if(!t||t.roundType!==ROUND_TYPE){$('taskState').textContent='التكليف في الرابط غير موجود أو ليس جولة صلاحية.';return;}
-  const employeeNo=String(t.employeeNumber||'');
-  if(!employees.some(e=>e.number===employeeNo)){$('taskState').textContent='الموظف المكلف غير موجود ضمن سجل التوقيعات.';return;}
-  $('employee').value=employeeNo;const e=employees.find(x=>x.number===employeeNo);$('employeeNo').value=employeeNo;$('signatureState').textContent=e?.signature?'✓ التوقيع الإلكتروني للموظف مسجل.':'⚠ توقيع الموظف غير مسجل.';$('signatureState').className=e?.signature?'state':'state warn';
-  await loadAssignedTasks(id);
- }catch(e){$('taskState').textContent='تعذر فتح التكليف من الرابط: '+errInfo(e);}
-}
-
+function err(e){return [e?.message,e?.details,e?.hint,e?.code].filter(Boolean).join(' | ')||String(e)}
+function defaultFinding(){return{status:'',name:'',quantity:'',expiry:'',production:'',batch:'',note:'',action:'none'}}
+function initChecklist(){states={};$('categories').innerHTML='';for(const cat of CATEGORIES){states[cat.key]={status:'',inspected:'',note:'',findings:[]};const section=document.createElement('article');section.className='category';section.id='category-'+cat.key;section.dataset.status='';section.innerHTML=`
+ <div class="category-top"><div><div class="category-name">${esc(cat.label)}</div><div class="category-detail">${esc(cat.example)}</div></div><span class="category-state">لم يُفحص</span></div>
+ <div class="choices" role="group" aria-label="حالة ${esc(cat.label)}">
+  ${Object.entries(STATUS_LABEL).map(([key,label])=>`<button type="button" class="choice" data-kind="${key}" aria-pressed="false">${esc(label)}</button>`).join('')}
+ </div>
+ <div class="details" hidden>
+  <h4>تفاصيل المنتج الذي يحتاج متابعة</h4>
+  <p class="subtle" style="margin:0">سجل المنتج المتأثر فقط. يمكنك إضافة أكثر من منتج عند الحاجة.</p>
+  <div class="findings"></div>
+  <button type="button" class="btn light small add-finding">+ إضافة منتج آخر</button>
+ </div>
+ <div class="optional-row extra" hidden>
+  <label>عدد الأصناف التي فُحصت (اختياري)<input class="inspected" type="number" min="0" max="99999" inputmode="numeric" placeholder="مثال: 12"></label>
+  <label>ملاحظة على المجموعة (اختياري)<input class="category-note" maxlength="300" placeholder="ملاحظة عامة على الفئة"></label>
+ </div>`;
+ section.querySelectorAll('.choice').forEach(btn=>btn.addEventListener('click',()=>choose(cat.key,btn.dataset.kind)));
+ section.querySelector('.add-finding').onclick=()=>addFinding(cat.key);
+ section.querySelector('.inspected').oninput=e=>{states[cat.key].inspected=e.target.value};
+ section.querySelector('.category-note').oninput=e=>{states[cat.key].note=e.target.value};
+ $('categories').appendChild(section)}refreshUI()}
+function choose(catKey,status){if(viewMode||confirmed)return;const state=states[catKey];const before=state.status;state.status=status;
+ if(['near','expired','damaged'].includes(status)&&!state.findings.length){state.findings.push(defaultFinding())}
+ if(!['near','expired','damaged'].includes(status)&&before!==status){state.findings=[]}
+ syncCategory(catKey);refreshUI()}
+function syncCategory(catKey){const s=states[catKey],card=$('category-'+catKey);card.dataset.status=s.status;card.querySelector('.category-state').textContent=s.status?STATUS_LABEL[s.status]:'لم يُفحص';card.querySelectorAll('.choice').forEach(b=>{const selected=b.dataset.kind===s.status;b.classList.toggle('selected',selected);b.setAttribute('aria-pressed',String(selected))});card.querySelector('.details').hidden=!['near','expired','damaged'].includes(s.status);card.querySelector('.extra').hidden=!s.status;card.querySelector('.inspected').value=s.inspected;card.querySelector('.category-note').value=s.note;renderFindings(catKey)}
+function addFinding(catKey){if(viewMode||confirmed)return;states[catKey].findings.push(defaultFinding());renderFindings(catKey)}
+function removeFinding(catKey,index){if(viewMode||confirmed)return;if(states[catKey].findings.length<=1){message('يجب تسجيل منتج واحد على الأقل في المجموعة التي بها ملاحظة.',true);return}states[catKey].findings.splice(index,1);renderFindings(catKey)}
+function renderFindings(catKey){const cat=states[catKey],root=$('category-'+catKey).querySelector('.findings');root.innerHTML='';if(!['near','expired','damaged'].includes(cat.status))return;
+ cat.findings.forEach((f,i)=>{const node=document.createElement('div');node.className='finding';node.innerHTML=`
+ <div class="finding-head"><span>المنتج ${i+1}</span><button type="button" class="btn danger small remove">حذف المنتج</button></div>
+ <div class="grid">
+  <label>اسم المنتج *<input data-field="name" maxlength="140" placeholder="اسم المادة أو المنتج" value="${esc(f.name)}"></label>
+  <label>تاريخ الانتهاء ${cat.status!=='damaged'?'*':''}<input data-field="expiry" type="date" value="${esc(f.expiry)}"></label>
+  <label>الكمية (اختياري)<input data-field="quantity" maxlength="80" placeholder="مثال: 3 عبوات" value="${esc(f.quantity)}"></label>
+  <label>الإجراء المتخذ *<select data-field="action">${Object.entries(ACTION_LABEL).map(([k,l])=>`<option value="${k}">${esc(l)}</option>`).join('')}</select></label>
+ </div>
+ <label style="margin-top:8px">الملاحظة / تفاصيل الحالة ${cat.status==='near'?'(اختياري)':'*'}<textarea data-field="note" maxlength="500" placeholder="مثال: تم عزل المنتج ومنع استخدامه">${esc(f.note)}</textarea></label>
+ <details><summary>بيانات إضافية (اختياري)</summary><div class="grid" style="margin-top:8px"><label>تاريخ الإنتاج<input type="date" data-field="production" value="${esc(f.production)}"></label><label>رقم التشغيلة<input data-field="batch" maxlength="80" value="${esc(f.batch)}"></label></div></details>`;
+ node.querySelector('.remove').onclick=()=>removeFinding(catKey,i);
+ node.querySelector('[data-field="action"]').value=f.action==='none'&&cat.status==='near'?'monitor':f.action;
+ if(f.action==='none'&&cat.status==='near')f.action='monitor';
+ node.querySelectorAll('[data-field]').forEach(el=>{const change=()=>{f[el.dataset.field]=el.value};el.addEventListener('input',change);el.addEventListener('change',change)});
+ root.appendChild(node)})}
+function refreshUI(){const checked=Object.values(states).filter(x=>x.status).length;const list=Object.values(states);$('progressText').textContent=`${checked} / ${CATEGORIES.length}`;$('progressFill').style.width=`${100*checked/CATEGORIES.length}%`;
+ $('sumValid').textContent=list.filter(x=>x.status==='valid').length;$('sumNear').textContent=list.filter(x=>x.status==='near').length;$('sumIssues').textContent=list.filter(x=>['expired','damaged'].includes(x.status)).length;$('sumNa').textContent=list.filter(x=>x.status==='na').length}
+async function loadEmployees(){if(!db){$('employee').innerHTML='<option value="">فشل تحميل خدمة Supabase</option>';return}try{const {data,error}=await db.from('employees').select('employee_name,employee_number,signature_data').order('created_at',{ascending:true});if(error)throw error;employees=(data||[]).map(x=>({name:x.employee_name||'',number:String(x.employee_number||''),signature:x.signature_data||''})).filter(x=>x.name&&x.number);$('employee').innerHTML='<option value="">اختر الموظف</option>';employees.forEach(e=>{const opt=document.createElement('option');opt.value=e.number;opt.textContent=e.name;$('employee').appendChild(opt)});employeeLoaded=true;$('signatureState').textContent='اختر الموظف للتحقق من التوقيع.'}catch(e){$('signatureState').textContent='تعذر تحميل الموظفين: '+err(e);$('employee').innerHTML='<option value="">تعذر التحميل</option>'}}
+function employeeChanged(){const e=employees.find(x=>x.number===v('employee'));$('employeeNo').value=e?.number||'';$('signatureState').textContent=!e?'اختر موظفًا':e.signature?'✓ يوجد توقيع إلكتروني مسجل للموظف':'⚠ توقيع الموظف غير مسجل';if(!viewMode)loadTasks()}
+async function loadTasks(preferred=''){const number=v('employee');assignedTasks=[];finishedTaskIds=new Set();taskLoadReady=false;$('assignedTask').innerHTML='<option value="">جولة إضافية غير مرتبطة بتكليف</option>';if(!number){$('taskState').textContent='اختر الموظف أولًا.';return}if(!db){$('taskState').textContent='تعذر الاتصال بالمهام المركزية.';return}$('taskState').textContent='تحميل التكليفات...';try{
+ const {data:t,error:te}=await db.from('employee_tasks').select('task_id,task_data').eq('task_data->>roundType',ROUND_TYPE).eq('task_data->>employeeNumber',number).limit(1000);if(te)throw te;if(number!==v('employee'))return;
+ assignedTasks=(t||[]).map(x=>({...x.task_data,id:String(x.task_id||x.task_data?.id||'')})).filter(x=>x.id&&String(x.employeeNumber)===number&&x.roundType===ROUND_TYPE&&x.status!=='cancelled');
+ const {data:r,error:re}=await db.from('inspection_records').select('record_data').eq('round_type',ROUND_TYPE).eq('record_data->>employeeNumber',number).limit(1000);if(re)throw re;if(number!==v('employee'))return;
+ finishedTaskIds=new Set((r||[]).map(x=>String(x.record_data?.taskId||'')).filter(Boolean));
+ assignedTasks.sort((a,b)=>String(a.requiredDate||'').localeCompare(String(b.requiredDate||'')));
+ for(const t of assignedTasks){if(finishedTaskIds.has(t.id))continue;const option=document.createElement('option');option.value=t.id;option.textContent=(t.requiredDate||'دون تاريخ')+' — '+(t.taskName||'فحص الصلاحية');$('assignedTask').appendChild(option)}
+ taskLoadReady=true;if(preferred&&!finishedTaskIds.has(preferred))$('assignedTask').value=preferred;
+ $('taskState').textContent=`تكليفات الصلاحية: ${assignedTasks.length} | المنجزة: ${finishedTaskIds.size} | المتاحة: ${assignedTasks.filter(x=>!finishedTaskIds.has(x.id)).length}`;taskChanged()
+ }catch(e){$('taskState').textContent='تعذر تحميل المهام: '+err(e)}}
+function taskChanged(){const t=assignedTasks.find(x=>x.id===v('assignedTask'));if(!t)return;const site=$('site');if(t.locationName){if(![...site.options].some(o=>o.value===t.locationName)){const o=document.createElement('option');o.value=t.locationName;o.textContent=t.locationName;site.appendChild(o)}site.value=t.locationName}$('taskState').textContent='المهمة: '+(t.taskName||'فحص الصلاحية')+' | رقم التكليف: '+t.id+' | تاريخ التنفيذ: '+(t.requiredDate||'—')}
+async function openTaskFromUrl(){const id=new URLSearchParams(location.search).get('taskId');if(!id||!db)return;try{const {data,error}=await db.from('employee_tasks').select('task_id,task_data').eq('task_id',id).maybeSingle();if(error)throw error;const task=data?.task_data;if(!task||task.roundType!==ROUND_TYPE){$('taskState').textContent='التكليف غير موجود أو ليس جولة صلاحية.';return}const number=String(task.employeeNumber||'');if(!employees.some(x=>x.number===number)){$('taskState').textContent='الموظف غير موجود في سجل الموظفين.';return}$('employee').value=number;const e=employees.find(x=>x.number===number);$('employeeNo').value=number;$('signatureState').textContent=e?.signature?'✓ يوجد توقيع إلكتروني مسجل للموظف':'⚠ توقيع الموظف غير مسجل';await loadTasks(id)}catch(e){$('taskState').textContent='تعذر فتح المهمة: '+err(e)}}
+function dateDistance(date,base){if(!date||!base)return null;return Math.round((Date.parse(date+'T12:00:00')-Date.parse(base+'T12:00:00'))/86400000)}
 function genId(){return 'FE-'+Date.now()+'-'+Math.random().toString(36).slice(2,8)}
-function collect(){const rows=withStatus(readRows()),c=counts(rows),employee=employees.find(x=>x.number===v('employee'));const validCount=c.valid+c.near+c.expired+c.damaged;const assigned=assignedTasks.find(t=>t.id===v('assignedTask'));return {id:currentId||genId(),taskId:assigned?.id||'',taskName:assigned?.taskName||'',taskRequiredDate:assigned?.requiredDate||'',roundType:ROUND_TYPE,categoryName:'تواريخ صلاحية المواد الغذائية',employeeName:employee?.name||'',employeeNumber:employee?.number||'',inspectionDate:v('date'),inspectionTime:v('time'),inspectionType:v('type'),locationName:v('site'),nearExpiryDays:Number(v('nearDays')),items:rows,checks:rows.map((r,i)=>({id:'item'+(i+1),label:r.name,status:['expired','damaged'].includes(r.status)?'fail':r.status==='unverified'?'unchecked':r.status==='na'?'na':'pass'})),yesCount:c.valid+c.near,noCount:c.expired+c.damaged,naCount:c.na,uncheckedCount:c.unverified,complianceRate:validCount?Math.round((c.valid+c.near)/validCount*100):null,totalItems:rows.length,counts:c,notes:v('notes'),actionOwner:v('owner'),followupDate:v('followup'),createdAt:new Date().toISOString(),reportStatus:'submitted',approval:{status:'pending'}}}
-function validate(r){if(!employeeLoaded)return 'لم تُحمّل بيانات الموظفين.';if(!r.employeeName||!r.employeeNumber||!r.locationName||!r.inspectionDate)return 'أكمل موقع الجولة والموظف وتاريخ الجولة.';const emp=employees.find(x=>x.number===r.employeeNumber);if(!emp?.signature)return 'يلزم وجود توقيع إلكتروني مسجل للموظف قبل إرسال الجولة.';if(r.taskId&&(!taskLoadReady||!assignedTasks.some(t=>t.id===r.taskId&&t.employeeNumber===r.employeeNumber)||finishedTaskIds.has(r.taskId)))return 'المهمة المحددة غير متاحة أو سبق تنفيذها. أعد تحميل المهام.';if(!r.items.length)return 'أضف صنفًا واحدًا على الأقل.';for(const [i,x] of r.items.entries()){const n=i+1;if(!x.name)return 'اسم المادة مطلوب في الصنف رقم '+n;if(x.production&&x.expiry&&x.production>x.expiry)return 'تاريخ الإنتاج بعد الانتهاء للصنف '+x.name;if(x.notApplicable){if(!x.note)return 'اذكر سبب عدم انطباق تاريخ الانتهاء على '+x.name;}else if(!x.expiry)return 'يجب إدخال تاريخ الانتهاء أو اختيار لا ينطبق مع تبرير: '+x.name;if(['expired','damaged'].includes(x.status)&&(!x.note||x.action==='none'))return 'سجل ملاحظة وإجراء تصحيحي محدد للمادة المخالفة: '+x.name;if(x.status==='near'&&x.action==='none')return 'حدد إجراء متابعة للصنف قريب الانتهاء: '+x.name}return ''}
-function errInfo(e){return [e?.message,e?.details,e?.hint,e?.code].filter(Boolean).join(' | ')||String(e)}
-async function insertRecord(record){if(!db)throw Error('لم يتم تحميل Supabase');if(record.taskId){const {data:existing,error:checkError}=await db.from('inspection_records').select('round_id').eq('round_type',ROUND_TYPE).eq('record_data->>taskId',record.taskId).limit(1);if(checkError)throw checkError;if(existing?.length&&existing[0].round_id!==record.id)throw Error('تم تنفيذ هذا التكليف مسبقًا، ولا يمكن احتسابه مرتين.');}const {error}=await db.from('inspection_records').insert({round_id:record.id,round_type:ROUND_TYPE,record_data:record});if(!error)return;const {data}=await db.from('inspection_records').select('round_id').eq('round_id',record.id).limit(1);if(data?.length)return;throw error}
-async function saveRound(){if(viewMode||confirmed)return;const r=collect(),err=validate(r);if(err){message(err,true);return}currentId=r.id;$('saveBtn').disabled=true;message('جارٍ حفظ الجولة في النظام المركزي...');try{await insertRecord(r);confirmed=true;saved=r;setPending(getPending().filter(x=>x.id!==r.id));message('✓ تم حفظ الجولة وإيداعها في صندوق الصحة العامة بنجاح. رقم الجولة: '+r.id+'\nحالة اعتماد المدير: بانتظار المراجعة.'+(r.taskId?'\nتم ربط الجولة بالتكليف '+r.taskId+' لاحتسابه في تقرير المهام بعد تحديث صفحة الأداء.':'\nهذه جولة إضافية غير مدرجة في خطة المهام.'))}catch(e){try{setPending([...getPending().filter(x=>x.id!==r.id),r]);saved=r;message('تعذر الحفظ المركزي، وتم الاحتفاظ بنسخة معلقة على هذا الجهاز. لم تصل الجولة إلى الصندوق.\n'+errInfo(e),true)}catch(localErr){message('تعذر الحفظ المركزي والمحلي: '+errInfo(e),true)}}finally{$('saveBtn').disabled=confirmed}}
-async function retryPending(){const q=getPending();if(!q.length){message('لا توجد جولات معلقة');return}const failed=[];let sent=0,problem='';for(const x of q){try{await insertRecord(x);sent++;if(x.id===currentId){confirmed=true;saved=x;$('saveBtn').disabled=true}}catch(e){failed.push(x);problem=problem||errInfo(e)}}setPending(failed);message(`تم إرسال ${sent} جولة إلى الصندوق، وتعذر إرسال ${failed.length}. ${problem}`,!!failed.length)}
-async function loadView(id){if(!db){message('فشل الاتصال بقاعدة البيانات',true);return}const {data:auth,error:aerr}=await db.auth.getUser();if(aerr||!auth?.user){message('عرض الجولة المحفوظة يتطلب تسجيل الدخول الإداري.',true);return}const {data,error}=await db.from('inspection_records').select('record_data').eq('round_id',id).eq('round_type',ROUND_TYPE).single();if(error||!data?.record_data){message('لا يمكن استرجاع الجولة: '+errInfo(error),true);return}const r=data.record_data;viewMode=true;confirmed=true;currentId=r.id;saved=r;$('title').textContent='تفاصيل جولة فحص الصلاحية';$('saveBtn').disabled=true;$('saveBtn').textContent='جولة محفوظة';const fields={site:r.locationName,date:r.inspectionDate,time:r.inspectionTime,type:r.inspectionType,nearDays:r.nearExpiryDays,notes:r.notes,owner:r.actionOwner,followup:r.followupDate};Object.entries(fields).forEach(([k,val])=>{if($(k))$(k).value=val??''});$('employee').innerHTML=`<option value="${esc(r.employeeNumber)}">${esc(r.employeeName)}</option>`;$('employeeNo').value=r.employeeNumber||'';r.items?.forEach(x=>addRow(x.category,x));document.querySelectorAll('#entry input,#entry select,#entry textarea').forEach(x=>x.disabled=true);document.querySelectorAll('#entry .cat button').forEach(x=>x.disabled=true);message('تم استرجاع الجولة المركزية. رقم الجولة: '+r.id);refreshStatuses()}
-async function employeeSignature(r){const cached=employees.find(x=>x.number===r.employeeNumber)?.signature;if(cached)return imageUrl(cached);if(!db)return '';try{const {data}=await db.from('employees').select('signature_data').eq('employee_number',r.employeeNumber).limit(1);return imageUrl(data?.[0]?.signature_data)}catch{return ''}}
-async function showReport(){const r=saved||collect(),isPending=getPending().some(x=>x.id===r.id),isSaved=confirmed&&!isPending,approved=isSaved&&r.approval?.status==='approved';const empSign=await employeeSignature(r);const managerName=r.approval?.managerName||manager?.name||'مدير إدارة الصحة العامة';const managerSign=approved?imageUrl(r.approval?.signature):'';const rowHtml=(r.items||[]).map((x,i)=>`<tr><td>${i+1}</td><td>${esc(CATEGORIES.find(c=>c.key===x.category)?.label||x.category)}</td><td>${esc(x.name)}</td><td>${esc(x.quantity||'—')}</td><td>${esc(x.production||'—')}</td><td>${esc(x.expiry||'—')}</td><td>${esc(LABELS[x.status]||'—')}</td><td>${esc(x.note||'—')}</td><td>${esc({none:'—',isolate:'عزل ومنع الاستخدام',remove:'سحب المنتج',dispose:'إحالة للإتلاف',return:'إرجاع للمورد',monitor:'المتابعة',other:'إجراء آخر'}[x.action]||'—')}</td></tr>`).join('');
- $('paper').innerHTML=`<div class="report-head"><img src="images/cluster-logo.png" alt="شعار التجمع"><div><p>مستشفى إرادة والصحة النفسية بحفر الباطن — إدارة الصحة العامة</p><h1>تقرير جولة التحقق من صلاحية المواد الغذائية</h1><p>Public Health Rounds Management System (PHRMS)</p></div><img src="images/hospital-logo.png" alt="شعار المستشفى"></div>${!isSaved?'<div class="stamp">تقرير غير معتمد — غير محفوظ مركزيًا ولم يصل إلى صندوق الصحة العامة</div>':''}<div class="section"><h3>بيانات الجولة</h3><div class="meta"><div>رقم الجولة: <b>${esc(r.id)}</b></div><div>المهمة المجدولة: ${r.taskId?esc(r.taskName||'فحص الصلاحية')+' — '+esc(r.taskId):'جولة إضافية غير مجدولة'}</div><div>تاريخ التكليف: ${esc(r.taskRequiredDate||'—')}</div><div>التاريخ والوقت: ${esc(r.inspectionDate)} — ${esc(r.inspectionTime||'')}</div><div>الموقع: ${esc(r.locationName)}</div><div>النوع: ${esc(r.inspectionType)}</div><div>اسم الموظف: ${esc(r.employeeName)}</div><div>الرقم الوظيفي: ${esc(r.employeeNumber)}</div><div>الحفظ: ${isSaved?'محفوظة مركزيًا':'غير محفوظة مركزيًا'}</div><div>اعتماد المدير: ${approved?'معتمد':'بانتظار اعتماد المدير'}</div></div></div><div class="section"><h3>ملخص الفحص</h3><div class="meta"><div>عدد الأصناف: ${r.items?.length||0}</div><div>سليم: ${r.counts?.valid||0}</div><div>قريب الانتهاء: ${r.counts?.near||0}</div><div>منتهي: ${r.counts?.expired||0}</div><div>تالف: ${r.counts?.damaged||0}</div><div>نسبة سلامة البنود المتحقق منها: ${r.complianceRate===null?'غير محسوب':esc(r.complianceRate)+'%'}</div></div></div><div class="section"><h3>تفاصيل الأصناف المفحوصة</h3><table><thead><tr><th>م</th><th>التصنيف</th><th>اسم المادة</th><th>الكمية</th><th>الإنتاج</th><th>الانتهاء</th><th>الحالة</th><th>الملاحظات</th><th>الإجراء</th></tr></thead><tbody>${rowHtml}</tbody></table></div><div class="section"><h3>الملاحظات والتوصيات والمتابعة</h3><div class="report-note">${esc(r.notes||'لا توجد ملاحظات عامة.')}<hr>الجهة المسؤولة: ${esc(r.actionOwner||'—')} — موعد المتابعة: ${esc(r.followupDate||'—')}</div></div><div class="section"><h3>التوقيعات</h3><div class="signatures"><div class="sig"><b>منفذ الجولة</b><div>الاسم: ${esc(r.employeeName)}</div><div>الرقم الوظيفي: ${esc(r.employeeNumber)}</div>${empSign?`<img src="${esc(empSign)}" alt="توقيع الموظف">`:'<p>التوقيع: _______________________</p>'}</div><div class="sig"><b>مدير إدارة الصحة العامة</b><div>الاسم: ${esc(managerName)}</div>${managerSign?`<img src="${esc(managerSign)}" alt="توقيع المدير بعد الاعتماد"><small>تم الاعتماد في ${esc(r.approval?.approvedAt||'')}</small>`:'<p>التوقيع: _______________________</p><small>بانتظار المراجعة والاعتماد</small>'}</div></div></div><div class="report-foot">صدر التقرير من نظام إدارة جولات الصحة العامة؛ السجل المركزي هو المرجع المعتمد. طبع في: ${esc(new Date().toLocaleString('ar-SA'))}</div>`;
- $('entry').style.display='none';document.querySelector('body>header').style.display='none';$('reportView').style.display='block';scrollTo(0,0)}
-function hideReport(){$('reportView').style.display='none';$('entry').style.display='block';document.querySelector('body>header').style.display='block'}
-function downloadReport(){const content=`<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>تقرير الجولة</title><style>${document.querySelector('style').textContent}</style></head><body><section class="report" style="display:block"><div class="paper">${$('paper').innerHTML}</div></section></body></html>`;const a=document.createElement('a'),url=URL.createObjectURL(new Blob([content],{type:'text/html;charset=utf-8'}));a.href=url;a.download='food-expiry-'+(saved?.id||'draft')+'.html';a.click();setTimeout(()=>URL.revokeObjectURL(url),2000)}
-window.addEventListener('DOMContentLoaded',async()=>{$('date').value=todayLocal();$('time').value=timeLocal();initCats();setPending(getPending());await loadPeople();const id=new URLSearchParams(location.search).get('view');if(id)await loadView(id);else{await openTaskFromUrl();refreshStatuses()}});
-</script></body></html>
+function collect(){const catRows=[],issues=[],counts={valid:0,near:0,expired:0,damaged:0,na:0,unverified:0};for(const cat of CATEGORIES){const state=states[cat.key],status=state.status||'unverified';counts[status]++;const findings=(state.findings||[]).map(f=>({...f,status:status,category:cat.key}));if(['near','expired','damaged'].includes(status))issues.push(...findings);const primary=findings[0]||{};
+ catRows.push({category:cat.key,name:cat.label,batch:primary.batch||'',production:primary.production||'',expiry:primary.expiry||'',quantity:state.inspected?state.inspected+' صنف':'',status:status,condition:status==='damaged'?'damaged':'ok',notApplicable:status==='na',action:primary.action||'none',note:[state.note,...findings.map(f=>`${f.name||'منتج'}: ${f.note||ACTION_LABEL[f.action]||''}`)].filter(Boolean).join(' | '),inspectedCount:state.inspected||'',findings:findings});}
+ const actual=counts.valid+counts.near+counts.expired+counts.damaged;const assigned=assignedTasks.find(t=>t.id===v('assignedTask'));const employee=employees.find(x=>x.number===v('employee'));return {id:currentId||genId(),schemaVersion:'checklist-v2',taskId:assigned?.id||'',taskName:assigned?.taskName||'',taskRequiredDate:assigned?.requiredDate||'',roundType:ROUND_TYPE,categoryName:'تواريخ صلاحية المواد الغذائية',employeeName:employee?.name||'',employeeNumber:employee?.number||'',inspectionDate:v('date'),inspectionTime:v('time'),inspectionType:v('type'),locationName:v('site'),nearExpiryDays:Number(v('nearDays')),items:catRows,findings:issues,checks:catRows.map(x=>({id:x.category,label:x.name,status:['expired','damaged'].includes(x.status)?'fail':x.status==='na'?'na':x.status==='unverified'?'unchecked':'pass'})),yesCount:counts.valid+counts.near,noCount:counts.expired+counts.damaged,naCount:counts.na,uncheckedCount:counts.unverified,complianceRate:actual?Math.round((counts.valid+counts.near)*100/actual):null,totalItems:catRows.length,checkedCategories:catRows.length-counts.unverified,issuesCount:issues.length,counts,notes:v('notes'),actionOwner:v('owner'),followupDate:v('followup'),createdAt:new Date().toISOString(),reportStatus:'submitted',approval:{status:'pending'}}}
+function validate(r){if(!employeeLoaded)return 'تعذر تحميل سجل الموظفين.';if(!r.employeeName||!r.employeeNumber||!r.locationName||!r.inspectionDate)return 'أكمل اسم الموظف والموقع وتاريخ الجولة.';if(!employees.find(e=>e.number===r.employeeNumber)?.signature)return 'لا يمكن الحفظ دون توقيع الموظف المسجل.';if(r.taskId&&(!taskLoadReady||!assignedTasks.some(t=>t.id===r.taskId&&String(t.employeeNumber)===r.employeeNumber)||finishedTaskIds.has(r.taskId)))return 'التكليف المحدد غير متاح أو سبق تنفيذه.';if(r.uncheckedCount)return `يرجى اختيار نتيجة لكل مجموعة غذائية (متبقي ${r.uncheckedCount}).`;if(r.counts.na===CATEGORIES.length)return 'لا يمكن اعتبار الجولة مكتملة دون فحص مجموعة غذائية واحدة على الأقل.';
+ const base=r.inspectionDate,days=r.nearExpiryDays;for(const category of r.items){if(!['near','expired','damaged'].includes(category.status))continue;if(!category.findings?.length)return 'أضف المنتج المتأثر في مجموعة '+category.name;for(const f of category.findings){if(!f.name)return 'اسم المنتج مطلوب ضمن '+category.name;if(category.status!=='damaged'&&!f.expiry)return 'أدخل تاريخ الانتهاء للمنتج '+f.name;if(f.production&&f.expiry&&f.production>f.expiry)return 'تاريخ الإنتاج بعد الانتهاء للمنتج '+f.name;if(!f.action||f.action==='none')return 'حدد الإجراء المتخذ للمنتج '+f.name;if(['expired','damaged'].includes(category.status)&&f.action==='monitor')return 'المنتج المنتهي أو التالف يتطلب إجراء عزل أو سحب أو إتلاف أو إجراءً موثقًا، وليس المتابعة فقط: '+f.name;if(category.status!=='near'&&!f.note)return 'سجل الملاحظة والإجراء للمنتج '+f.name;if(f.expiry){const delta=dateDistance(f.expiry,base);if(category.status==='near'&&(delta<0||delta>days))return `تاريخ ${f.name} لا يقع ضمن فترة قرب الانتهاء (${days} يومًا). اختر الحالة المناسبة.`;if(category.status==='expired'&&delta>=0)return 'تاريخ المنتج '+f.name+' لم ينته بعد؛ راجع الحالة المختارة.'}}}return ''}
+async function insertRecord(r){if(!db)throw Error('تعذر تحميل Supabase');if(r.taskId){const {data:previous,error:pe}=await db.from('inspection_records').select('round_id').eq('round_type',ROUND_TYPE).eq('record_data->>taskId',r.taskId).limit(1);if(pe)throw pe;if(previous?.length&&previous[0].round_id!==r.id)throw Error('هذا التكليف لديه جولة محفوظة مسبقًا.')}const {error}=await db.from('inspection_records').insert({round_id:r.id,round_type:ROUND_TYPE,record_data:r});if(error){const {data}=await db.from('inspection_records').select('round_id').eq('round_id',r.id).limit(1);if(!data?.length)throw error}}
+async function saveRound(){if(confirmed||viewMode)return;const r=collect();const problem=validate(r);if(problem){message(problem,true);return}currentId=r.id;$('saveBtn').disabled=true;message('جارٍ حفظ الجولة في Supabase...');try{await insertRecord(r);confirmed=true;saved=r;document.querySelectorAll('#entry input,#entry select,#entry textarea,#entry .choice,#entry .add-finding,#entry .remove').forEach(el=>el.disabled=true);setPending(getPending().filter(x=>x.id!==r.id));message('✓ تم حفظ قائمة التحقق في صندوق الصحة العامة بنجاح. رقم الجولة: '+r.id+(r.taskId?'\nتم ربطها بالمهمة: '+r.taskId:'\nجولة إضافية غير مجدولة.')+'\nاعتماد المدير: قيد المراجعة.')}catch(e){saved=r;setPending([...getPending().filter(x=>x.id!==r.id),r]);message('فشل الحفظ المركزي. احتُفظ بمسودة معلقة على هذا الجهاز، ولم تصل إلى الصندوق.\n'+err(e),true)}finally{$('saveBtn').disabled=confirmed}}
+async function retryPending(){const queue=getPending();if(!queue.length){message('لا توجد جولات معلقة.');return}const failed=[];let sent=0,errorText='';for(const r of queue){try{await insertRecord(r);sent++;if(r.id===currentId){confirmed=true;saved=r;$('saveBtn').disabled=true}}catch(e){failed.push(r);errorText=errorText||err(e)}}setPending(failed);message(`تم حفظ ${sent} جولة مركزيًا، وتعذر حفظ ${failed.length}. ${errorText}`,failed.length>0)}
+async function loadSavedView(id){if(!db){message('لا يوجد اتصال بقاعدة البيانات.',true);return}const {data:u,error:au}=await db.auth.getUser();if(au||!u?.user){message('استرجاع تقرير محفوظ يتطلب الدخول إلى الحساب الإداري.',true);return}const {data,error}=await db.from('inspection_records').select('record_data').eq('round_id',id).eq('round_type',ROUND_TYPE).maybeSingle();if(error||!data){message('تعذر استرجاع التقرير: '+err(error),true);return}saved=data.record_data;currentId=saved.id;confirmed=true;viewMode=true;$('saveBtn').disabled=true;$('saveBtn').textContent='جولة محفوظة';$('site').value=saved.locationName||'';$('date').value=saved.inspectionDate||'';$('time').value=saved.inspectionTime||'';$('type').value=saved.inspectionType||'دورية';$('nearDays').value=String(saved.nearExpiryDays||30);$('notes').value=saved.notes||'';$('owner').value=saved.actionOwner||'';$('followup').value=saved.followupDate||'';$('employee').innerHTML=`<option value="${esc(saved.employeeNumber)}">${esc(saved.employeeName)}</option>`;$('employeeNo').value=saved.employeeNumber||'';
+ if(saved.schemaVersion==='checklist-v2'){for(const cat of CATEGORIES){const old=(saved.items||[]).find(x=>x.category===cat.key);if(!old)continue;states[cat.key].status=old.status==='unverified'?'':old.status;states[cat.key].inspected=old.inspectedCount||'';states[cat.key].note='';states[cat.key].findings=(old.findings||[]).map(x=>({...x}));syncCategory(cat.key)}}
+ document.querySelectorAll('#entry input,#entry select,#entry textarea,#entry .choice,#entry .add-finding,#entry .remove').forEach(el=>el.disabled=true);message('تم استرجاع الجولة المحفوظة: '+saved.id);refreshUI()}
+async function employeeSignature(r){const local=employees.find(e=>e.number===r.employeeNumber)?.signature;if(safeImage(local))return local;try{const {data}=await db.from('employees').select('signature_data').eq('employee_number',r.employeeNumber).limit(1);return safeImage(data?.[0]?.signature_data)}catch{return ''}}
+function legacyRows(r){return (r.items||[]).map((x,i)=>`<tr><td>${i+1}</td><td>${esc(CATEGORIES.find(c=>c.key===x.category)?.label||x.category)}</td><td>${esc(x.name)}</td><td>${esc(x.expiry||'—')}</td><td>${esc(STATUS_LABEL[x.status]||x.status)}</td><td>${esc(x.note||'—')}</td><td>${esc(ACTION_LABEL[x.action]||x.action||'—')}</td></tr>`).join('')}
+async function showReport(){const r=saved||collect(),isPending=getPending().some(x=>x.id===r.id),isSaved=confirmed&&!isPending,approved=isSaved&&r.approval?.status==='approved';const sign=await employeeSignature(r),managerSign=approved?safeImage(r.approval?.signature):'';
+ const table=(r.schemaVersion==='checklist-v2')?`
+  <div class="section"><h3>قائمة التحقق حسب المجموعات الغذائية</h3><table><thead><tr><th>م</th><th>المجموعة الغذائية</th><th>النتيجة</th><th>عدد الأصناف المفحوصة</th><th>ملاحظات المجموعة</th></tr></thead><tbody>${(r.items||[]).map((x,i)=>`<tr><td>${i+1}</td><td>${esc(x.name)}</td><td>${esc(STATUS_LABEL[x.status]||'لم يفحص')}</td><td>${esc(x.inspectedCount||'—')}</td><td>${esc(x.note||'—')}</td></tr>`).join('')}</tbody></table></div>
+  ${(r.findings||[]).length?`<div class="section"><h3>تفاصيل المنتجات التي تحتاج متابعة</h3><table><thead><tr><th>المجموعة</th><th>اسم المنتج</th><th>الكمية</th><th>تاريخ الانتهاء</th><th>الملاحظة</th><th>الإجراء</th></tr></thead><tbody>${r.findings.map(x=>`<tr><td>${esc(CATEGORIES.find(c=>c.key===x.category)?.label||x.category)}</td><td>${esc(x.name)}</td><td>${esc(x.quantity||'—')}</td><td>${esc(x.expiry||'—')}</td><td>${esc(x.note||'—')}</td><td>${esc(ACTION_LABEL[x.action]||'—')}</td></tr>`).join('')}</tbody></table></div>`:''}`:
+  `<div class="section"><h3>تفاصيل الأصناف — نموذج سابق</h3><table><thead><tr><th>م</th><th>المجموعة</th><th>المنتج</th><th>تاريخ الانتهاء</th><th>الحالة</th><th>الملاحظات</th><th>الإجراء</th></tr></thead><tbody>${legacyRows(r)}</tbody></table></div>`;
+ $('paper').innerHTML=`<div class="report-head"><img src="images/cluster-logo.png" alt="شعار التجمع"><div><p>مستشفى إرادة والصحة النفسية — إدارة الصحة العامة</p><h1>تقرير قائمة التحقق من تواريخ صلاحية المواد الغذائية</h1><p>Public Health Rounds Management System — PHRMS</p></div><img src="images/hospital-logo.png" alt="شعار المستشفى"></div>
+ ${!isSaved?'<div class="stamp">مسودة غير محفوظة مركزيًا — لا تُعد تقريرًا رسميًا</div>':''}
+ ${isSaved&&!approved?'<div class="stamp">تم الحفظ مركزيًا — التقرير بانتظار اعتماد مدير الصحة العامة</div>':''}
+ <div class="section"><h3>بيانات الجولة</h3><div class="meta"><div>رقم الجولة: <b>${esc(r.id)}</b></div><div>رقم التكليف: ${esc(r.taskId||'جولة إضافية غير مجدولة')}</div><div>الموظف: ${esc(r.employeeName)} (${esc(r.employeeNumber)})</div><div>موقع الفحص: ${esc(r.locationName)}</div><div>تاريخ ووقت الجولة: ${esc(r.inspectionDate)} — ${esc(r.inspectionTime)}</div><div>حالة المدير: ${approved?'تم الاعتماد':'بانتظار الاعتماد'}</div></div></div>
+ <div class="section"><h3>ملخص نتائج التحقق</h3><div class="meta"><div>المجموعات المفحوصة: ${esc(r.checkedCategories??r.items?.length??0)}</div><div>سليمة: ${Number(r.counts?.valid||0)}</div><div>قريبة الانتهاء: ${Number(r.counts?.near||0)}</div><div>منتهية / تالفة: ${Number(r.noCount||0)}</div><div>لا ينطبق: ${Number(r.counts?.na||0)}</div><div>نسبة السلامة في المجموعات القابلة للتطبيق: ${r.complianceRate==null?'غير محسوبة':esc(r.complianceRate)+'%'}</div></div></div>
+ ${table}
+ <div class="section"><h3>الملاحظات والمتابعة</h3><div style="border:1px solid #ddd;padding:10px;font-size:12px;white-space:pre-wrap">${esc(r.notes||'لا توجد ملاحظات عامة.')}\nالجهة المسؤولة: ${esc(r.actionOwner||'—')} — تاريخ المتابعة: ${esc(r.followupDate||'—')}</div></div>
+ <div class="section"><h3>التوقيعات</h3><div class="signatures"><div class="signature"><b>منفذ الجولة</b><div>${esc(r.employeeName)}</div><div>الرقم الوظيفي: ${esc(r.employeeNumber)}</div>${sign?`<img src="${esc(sign)}" alt="توقيع الموظف">`:'<div>التوقيع: _______________</div>'}</div><div class="signature"><b>اعتماد مدير الصحة العامة</b><div>${esc(approved?r.approval?.managerName:'بانتظار الاعتماد')}</div>${managerSign?`<img src="${esc(managerSign)}" alt="توقيع المدير"><small>اعتمد بتاريخ ${esc(r.approval?.approvedAt||'')}</small>`:'<div>لا يظهر التوقيع قبل الاعتماد</div>'}</div></div></div>
+ <div class="report-footer">أُنشئ التقرير في نظام إدارة جولات الصحة العامة. مصدر البيانات الرسمي هو السجل المركزي.</div>`;
+ $('entry').style.display='none';document.querySelector('.site-header').style.display='none';$('reportView').style.display='block';window.scrollTo(0,0)}
+function hideReport(){$('reportView').style.display='none';$('entry').style.display='block';document.querySelector('.site-header').style.display='block'}
+window.addEventListener('DOMContentLoaded',async()=>{$('date').value=today();$('time').value=nowTime();initChecklist();$('pendingCount').textContent=getPending().length;await loadEmployees();const view=new URLSearchParams(location.search).get('view');if(view)await loadSavedView(view);else await openTaskFromUrl()});
+</script>
+</body>
+</html>
